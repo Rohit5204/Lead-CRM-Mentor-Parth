@@ -1,16 +1,79 @@
 export const navigations = [
   { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
-  { label: 'PAGES', type: 'label' },
+  // { label: 'PAGES', type: 'label' },
+  { label: 'LEADS', type: 'label' },
   {
-    name: 'Session/Auth',
+    name: 'Leads',
     icon: 'security',
     children: [
-      { name: 'Sign in', iconText: 'SI', path: '/session/signin' },
-      { name: 'Sign up', iconText: 'SU', path: '/session/signup' },
-      { name: 'Forgot Password', iconText: 'FP', path: '/session/forgot-password' },
-      { name: 'Error', iconText: '404', path: '/session/404' },
+      { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+      { name: 'Manage Leads', iconText: 'SU', path: '/leads/manageLeads' },
+      { name: 'Assign Leads', iconText: 'FP', path: '/material/buttons' },
+      { name: 'User Master', iconText: '404', path: '/leads/userMaster' },
     ],
   },
+  { label: 'QUTATIONS', type: 'label' },
+  {
+    name: 'Qutation List',
+    icon: 'favorite',
+    children: [
+      { name: 'Request For Qutation', path: '/material/autocomplete', iconText: 'A' },
+      { name: 'Draft', path: '/material/buttons', iconText: 'B' },
+      { name: 'Send', path: '/material/checkbox', iconText: 'C' },
+    ],
+  },
+  { name: 'Add Qutation', path: '/lead/addLeads', icon: 'dashboard' },
+  { label: 'INVOICE', type: 'label' },
+  {
+    name: 'Invoive',
+    icon: 'security',
+    children: [
+      { name: 'Send Qutation List', iconText: 'SI', path: '/session/signup' },
+      { name: 'Completed', iconText: 'SI', path: '/session/signup' },
+      { name: 'Add Invoice', iconText: 'SI', path: '/session/signup' },
+    ],
+  },
+
+  { label: 'MY DEALS', type: 'label' },
+  {
+    name: 'Deals',
+    icon: 'security',
+    children: [
+      { name: 'Completed (Invoive)', iconText: 'SI', path: '/session/signup' },
+      { name: 'Recovery', iconText: 'SI', path: '/session/signup' },
+      { name: 'Renewal', iconText: 'SI', path: '/session/signup' },
+    ],
+  },
+  { label: 'EMAIL', type: 'label' },
+  {
+    name: 'Email',
+    icon: 'security',
+    children: [
+      { name: 'Send Mail', iconText: 'SI', path: '/session/signup' },
+      { name: 'Email Catalog', iconText: 'SI', path: '/session/signup' },
+    ],
+  },
+  { label: 'REPORTS', type: 'label' },
+  {
+    name: 'Report',
+    icon: 'security',
+    children: [
+      { name: 'Employee Wise', iconText: 'SI', path: '/session/signup' },
+      { name: 'Duration Wise', iconText: 'SI', path: '/session/signup' },
+      { name: 'Product Service Wise', iconText: 'SI', path: '/session/signup' },
+    ],
+  },
+
+  // {
+  //   name: 'Session/Auth',
+  //   icon: 'security',
+  //   children: [
+  //     { name: 'Sign in', iconText: 'SI', path: '/session/signin' },
+  //     { name: 'Sign up', iconText: 'SU', path: '/session/signup' },
+  //     { name: 'Forgot Password', iconText: 'FP', path: '/session/forgot-password' },
+  //     { name: 'Error', iconText: '404', path: '/session/404' },
+  //   ],
+  // },
   { label: 'Components', type: 'label' },
   {
     name: 'Components',
