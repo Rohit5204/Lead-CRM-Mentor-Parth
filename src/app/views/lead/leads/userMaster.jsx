@@ -49,7 +49,7 @@ const UserMaster = () => {
     axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`).then((response) => {
       setUserData(response.data.data);
     });
-  }, []);
+  }, [userData]);
 
   //Add data in the table
   const postData = () => {
@@ -72,15 +72,17 @@ const UserMaster = () => {
   //Delete Object From the Array
   const deleteData = (e, i) => {
     console.log(i);
-    axios.post('http://35.89.6.16:4002/api/userMasterUpsert', {
-      id: i.userId,
-      firstName: i.firstName,
-      lastName: i.lastName,
-      email: i.email,
-      updatedBy: 1,
-      createdBy: 1,
-      lastActive: '',
-    });
+    axios
+      .post('http://35.89.6.16:4002/api/userMasterUpsert', {
+        id: i.userId,
+        firstName: i.firstName,
+        lastName: i.lastName,
+        email: i.email,
+        updatedBy: 1,
+        createdBy: 1,
+        lastActive: '',
+      })
+      .then(() => useEffect);
   };
   //Update Object in the API Array
   const Edit = (e) => {
@@ -104,6 +106,7 @@ const UserMaster = () => {
     setFirstName('');
     setLastName('');
     setEmail('');
+    setShow(show);
   };
   //Call Data in the Form when Edit Button is trigger
   const updateData = (event, i) => {

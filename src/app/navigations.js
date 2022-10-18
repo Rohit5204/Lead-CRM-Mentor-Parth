@@ -9,6 +9,7 @@ export const navigations = [
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Manage Leads', iconText: 'SU', path: '/leads/manageLeads' },
       { name: 'Assign Leads', iconText: 'FP', path: '/material/buttons' },
+      { name: 'System Master', iconText: '404', path: '/leads/systemMaster' },
       { name: 'User Master', iconText: '404', path: '/leads/userMaster' },
     ],
   },

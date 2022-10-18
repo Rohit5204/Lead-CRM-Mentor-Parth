@@ -1,29 +1,10 @@
-import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import {
-  TextField,
-  InputLabel,
-  MenuItem,
-  Button,
-  FormControl,
-  Select,
-  Box,
-  Icon,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  Grid,
-  TableRow,
-} from '@mui/material';
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Box, Grid } from '@mui/material';
+import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -33,132 +14,59 @@ const Container = styled('div')(({ theme }) => ({
     [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
   },
 }));
-
-const StyledTable = styled(Table)(() => ({
-  whiteSpace: 'pre',
-  '& thead': {
-    '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
-  },
-  '& tbody': {
-    '& tr': { '& td': { paddingLeft: 0 } },
-  },
+const Div = styled('div')(({ theme }) => ({
+  margin: '410px',
 }));
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 const LeadForm = () => {
-  const [masterName, setMasterName] = useState('platform');
-  const [inputText, setInputText] = useState('');
-  const [id, setId] = useState(null);
-  const [APIData, setAPIData] = useState([]);
-  const [edit, setEdit] = useState(false);
+  const [name, setName] = useState('');
+  const [mobileNo, setMobileNo] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [stateName, setStateName] = useState('');
+  const [cityName, setCityName] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [countryName, setCountryName] = useState('s');
+  const [intrestedIn, setIntrestedIn] = useState('interest');
+  //const [assignId, setAssignId] = useState('');
 
-  useEffect(() => {
-    axios
-      .get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`)
-      .then((response) => {
-        setAPIData(response.data.data);
-      });
-  }, [APIData]);
-
-  //add data in the table
+  //empty the form Text
+  const blankForm = () => {
+    setName('');
+    setMobileNo('');
+    setEmailId('');
+    setStreetName('');
+    setStateName('');
+    setCityName('');
+    setZipCode('');
+    setCountryName('');
+    setIntrestedIn('');
+  };
+  //Add data in the table
   const postData = () => {
-    console.log({
-      masterName: masterName,
-      inputText: inputText,
-    });
-    axios
-      .post(`http://35.89.6.16:4002/api/mastersUpsert`, {
-        id: 0,
-        masterName: masterName,
-        inputText: inputText,
-        recodStatus: 1,
-        addedBy: 1,
-        updatedBy: 1,
-      })
-      .then(() => useEffect);
-  };
-
-  const deleteData = (e, i) => {
-    console.log(i);
-    axios.post('http://35.89.6.16:4002/api/mastersUpsert', {
-      id: i.id,
-      masterName: 'platform',
-      inputText: i.platformName,
-      recodStatus: 0,
-      addedBy: 1,
-      updatedBy: 1,
-    });
-  };
-  const Edit = (e) => {
-    console.log({
-      masterName: masterName,
-      inputText: inputText,
-    });
-    e.preventDefault();
-    axios
-      .post(`http://35.89.6.16:4002/api/mastersUpsert`, {
-        id: id,
-        masterName: masterName,
-        inputText: inputText,
-        recodStatus: 1,
-        addedBy: 1,
-        updatedBy: 1,
-      })
-      .then(() => useEffect);
-    setInputText('');
-  };
-  const updateData = (event, i) => {
-    event.preventDefault();
-    setEdit(!edit);
-    setId(i.id);
-    setMasterName(masterName);
-    setInputText(i.platformName);
+    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [
+      {
+        name: name,
+        mobileNo: mobileNo,
+        emailId: emailId,
+        streetName: streetName,
+        cityName: cityName,
+        stateName: stateName,
+        zipCode: zipCode,
+        countryName: countryName,
+        intrestedIn: intrestedIn,
+        sourceId: 1,
+        assignId: null,
+        label: 1,
+        createdBy: 1,
+      },
+    ]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
-    setInputText('');
-  };
-  const [value, setValue] = useState(0);
-
-  const handleCChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const handelClose = (e) => {
-    setEdit(!edit);
-    e.preventDefault();
-    setInputText('');
+    blankForm();
+    alert('Lead Successfully Added');
   };
   return (
     <Container>
@@ -167,137 +75,181 @@ const LeadForm = () => {
           routeSegments={[{ name: 'Lead', path: '/leads/addLeads' }, { name: 'Add Lead Page' }]}
         />
       </Box>
-      {/* Form Section */}
-      <Stack>
-        <h2 className="ml-5">System Master Page</h2>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={4}>
-            <Grid item xs={4}>
-              <FormControl sx={{ m: 1, minWidth: 320 }}>
-                <InputLabel id="demo-simple-select-helper-label">System Master</InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={masterName}
-                  label="System Master"
-                  onChange={(e) => setMasterName(e.target.value)}
-                >
-                  <MenuItem value="platform">Platform</MenuItem>
-                  <MenuItem value="assign">Assign</MenuItem>
-                  <MenuItem value="label">Label</MenuItem>
-                  <MenuItem value="status">Status</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl sx={{ m: 1, minWidth: 620 }}>
-                <TextField
-                  name="inputText"
-                  label="Enter the Name"
-                  onChange={(e) => setInputText(e.target.value)}
-                  value={inputText}
+      <Row>
+        <Col xs={6}>
+          <SimpleCard title="Fill Lead Details">
+            <Row>
+              <Col>
+                <Form.Label>Lead Name</Form.Label>
+                <Form.Control
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  placeholder="Enter the Lead Name"
                 />
+              </Col>
+            </Row>
+            <Row className="mt-1">
+              <Col>
+                <Form.Label>Mobile Number</Form.Label>
+                <Form.Control
+                  onChange={(e) => setMobileNo(e.target.value)}
+                  value={mobileNo}
+                  placeholder="Customer Mobile Number"
+                />
+              </Col>
+            </Row>
+            <Row className="mt-1">
+              <Col>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  onChange={(e) => setEmailId(e.target.value)}
+                  value={emailId}
+                  placeholder="Customer Email"
+                />
+              </Col>
+            </Row>
+            <Row className="mt-1">
+              <Col>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>Street Name</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    onChange={(e) => setStreetName(e.target.value)}
+                    value={streetName}
+                    placeholder="Street"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>City Name</Form.Label>
+                <Form.Control
+                  onChange={(e) => setCityName(e.target.value)}
+                  value={cityName}
+                  placeholder="Enter The City"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>State Name</Form.Label>
+                <Form.Control
+                  onChange={(e) => setStateName(e.target.value)}
+                  value={stateName}
+                  placeholder="Enter Sate Name"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>Pin Code</Form.Label>
+                <Form.Control
+                  onChange={(e) => setZipCode(e.target.value)}
+                  value={zipCode}
+                  placeholder="Enter Zip Code"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6}>
+                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                  <Form.Label>Country</Form.Label>
+                  <Select
+                    value={countryName}
+                    label="Country"
+                    onChange={(e) => setCountryName(e.target.value)}
+                  >
+                    <MenuItem value="s">Select the Country</MenuItem>
+                    <MenuItem value="India">INDIA</MenuItem>
+                    <MenuItem value="USA">USA</MenuItem>
+                    <MenuItem value="Russia">RUSSIA</MenuItem>
+                    <MenuItem value="Australia">RUSSIA</MenuItem>
+                  </Select>
+                </FormControl>
+              </Col>
+            </Row>
+          </SimpleCard>
+        </Col>
+        <Col xs={6}>
+          <SimpleCard>
+            <Row>
+              <Col sm>
                 <br />
-                <div className="ml-2">
-                  {edit ? (
-                    <Button variant="contained" onClick={Edit}>
-                      Update Lead
-                    </Button>
-                  ) : (
-                    <Button variant="contained" onClick={handleSubmit}>
-                      Add Lead
-                    </Button>
-                  )}
-                  &nbsp;
-                  <Button variant="contained" onClick={handelClose}>
-                    Cancel
-                  </Button>
-                </div>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Box>
-
-        <br />
-      </Stack>
-      <h3>Lead Details</h3>
-      {/* Tab Section */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleCChange} aria-label="basic tabs example">
-          <Tab label="Active Leads" {...a11yProps(0)} />
-          <Tab label="Inactive Leads" {...a11yProps(1)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        {/* First Tab */}
-        <Box className="text-center" width="100%" overflow="auto">
-          {/* Table Section */}
-          <StyledTable>
-            <TableHead>
-              <TableRow>
-                <TableCell align="justify">Lead Id</TableCell>
-                <TableCell align="justify">Lead Name</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {APIData.map((subscriber, index) => {
-                if (subscriber.status == 1) {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell align="justify">{subscriber.id}</TableCell>
-                      <TableCell align="justify">{subscriber.platformName}</TableCell>
-                      <TableCell align="center">
-                        <IconButton onClick={(event) => updateData(event, subscriber)}>
-                          <Icon color="success">edit</Icon>
-                        </IconButton>
-                        <IconButton onClick={(event) => deleteData(event, subscriber)}>
-                          <Icon color="warning">delete</Icon>
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                }
-              })}
-            </TableBody>
-          </StyledTable>
-        </Box>
-      </TabPanel>
-      {/* Second Tab */}
-      <TabPanel value={value} index={1}>
-        <Box className="text-center" width="100%" overflow="auto">
-          {/* Inactive Table Section */}
-          <StyledTable>
-            <TableHead>
-              <TableRow>
-                <TableCell align="justify">Lead Id</TableCell>
-                <TableCell align="justify">Lead Name</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {APIData.map((subscriber, index) => {
-                if (subscriber.status == 0) {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell align="justify">{subscriber.id}</TableCell>
-                      <TableCell align="justify">{subscriber.platformName}</TableCell>
-                      <TableCell align="center">
-                        <IconButton onClick={(event) => updateData(event, subscriber)}>
-                          <Icon color="success">edit</Icon>
-                        </IconButton>
-                        <IconButton onClick={(event) => deleteData(event, subscriber)}>
-                          <Icon color="warning">delete</Icon>
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                }
-              })}
-            </TableBody>
-          </StyledTable>
-        </Box>
-      </TabPanel>
+                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                  <Form.Label>Interested In</Form.Label>
+                  <Select
+                    value={intrestedIn}
+                    label="Interested In"
+                    onChange={(e) => setIntrestedIn(e.target.value)}
+                  >
+                    <MenuItem value="interest">Your Interest</MenuItem>
+                    <MenuItem value="facebook">Facebook</MenuItem>
+                    <MenuItem value="instagram">Instagram</MenuItem>
+                    <MenuItem value="twitter">Twitter</MenuItem>
+                  </Select>
+                </FormControl>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>Source</Form.Label>
+                <Form.Control
+                  // onChange={(e) => setMobileNo(e.target.value)}
+                  // value={mobileNo}
+                  placeholder="Select the Source"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>Assigned To</Form.Label>
+                <Form.Control
+                  // onChange={(e) => setEmailId(e.target.value)}
+                  // value={emailId}
+                  placeholder="Select the Staff Member"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>Comment</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    // onChange={(e) => setStreetName(e.target.value)}
+                    // value={streetName}
+                    placeholder="Comment"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Label>Status</Form.Label>
+                <Form.Control
+                  // onChange={(e) => setCityName(e.target.value)}
+                  // value={cityName}
+                  placeholder="New"
+                />
+              </Col>
+            </Row>
+          </SimpleCard>
+        </Col>
+      </Row>
+      <Div className="mt-2">
+        <Row>
+          <Col>
+            <Button variant="success" onClick={handleSubmit}>
+              Add Lead
+            </Button>
+            &nbsp;
+            <Button variant="primary">Cancel</Button>
+          </Col>
+        </Row>
+      </Div>
     </Container>
   );
 };
