@@ -1,10 +1,11 @@
 import { styled } from '@mui/system';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Data } from 'app/components/Data';
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import * as XLSX from 'xlsx';
+import EditLead from './editLead';
 import {
   Box,
   Icon,
@@ -39,12 +40,16 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const ManageLead = () => {
+  const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   //Dialog Form
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (subscriber) => {
+    setObj1(subscriber);
+    setShow(true);
+  };
   // Import Dailog
   const closeImport = () => setShow1(false);
   const showImport = () => setShow1(true);
@@ -124,6 +129,7 @@ const ManageLead = () => {
             routeSegments={[{ name: 'Manage Lead', path: '/lead' }, { name: 'Lead Detail Page' }]}
           />
         </Box>
+        {/* Import Excel File Dialog Start */}
         <Box>
           {/* <Button variant="contained">Import Lead</Button> */}
           <Row>
@@ -236,6 +242,7 @@ const ManageLead = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+        {/* Import Excel File Dialog End */}
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
           <h4>Lead Table</h4>
@@ -261,7 +268,7 @@ const ManageLead = () => {
                     <TableCell align="center">
                       <IconButton
                         // onClick={(event) => updateData(event, subscriber)}
-                        onClick={handleShow}
+                        onClick={() => handleShow(subscriber)}
                       >
                         <Icon color="success">edit</Icon>
                       </IconButton>
@@ -291,7 +298,7 @@ const ManageLead = () => {
             <Modal.Title>Update Lead Page</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
+            {/* <Form>
               <Row>
                 <Col>
                   <Form.Label>Lead Name</Form.Label>
@@ -435,7 +442,8 @@ const ManageLead = () => {
                   </FormControl>
                 </Col>
               </Row>
-            </Form>
+            </Form> */}
+            <EditLead theEditLead={obj1} />
           </Modal.Body>
           <Modal.Footer>
             <button

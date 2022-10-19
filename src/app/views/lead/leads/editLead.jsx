@@ -3,21 +3,17 @@ import { Box, Grid, TextField, Typography, MenuItem, FormControl, Select } from 
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import { useState } from 'react';
 
-const EditUser = ({ theUser }) => {
-  const id = theUser.LeadId;
-  const [name, setName] = useState(theUser.name);
-  const [mobileNo, setMobileNo] = useState(theUser.mobileNo);
-  const [emailId, setEmailId] = useState(theUser.emailId);
-  const [streetName, setStreetName] = useState(theUser.streetName);
-  const [stateName, setStateName] = useState(theUser.stateName);
-  const [cityName, setCityName] = useState(theUser.cityName);
-  const [zipCode, setZipCode] = useState(theUser.zipCode);
-  //const [countryName, setCountryName] = useState(theUser.countryName);
-  //const [intrestedIn, setIntrestedIn] = useState(theUser.intrestedIn);
-
-  // const [firstName, setFirstName] = useState(theUser.firstName);
-  // const [email, setEmail] = useState(theUser.email);
-  // const [lastName, setLastName] = useState(theUser.lastName);
+const EditUser = ({ theEditLead }) => {
+  const id = theEditLead.LeadId;
+  const [name, setName] = useState(theEditLead.name);
+  const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
+  const [emailId, setEmailId] = useState(theEditLead.emailId);
+  const [streetName, setStreetName] = useState(theEditLead.streetName);
+  const [stateName, setStateName] = useState(theEditLead.stateName);
+  const [cityName, setCityName] = useState(theEditLead.cityName);
+  const [zipCode, setZipCode] = useState(theEditLead.zipCode);
+  //const [countryName, setCountryName] = useState(theEditLead.countryName);
+  //const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
 
   const UpdateUser = {
     name,
