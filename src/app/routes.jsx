@@ -7,7 +7,8 @@ import sessionRoutes from 'app/views/sessions/SessionRoutes';
 import { Navigate } from 'react-router-dom';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import leadRoutes from './views/lead/LeadRoutes';
-
+import catalogueRoutes from './views/catalogue/CatalogueRoute';
+import quotationRoutes from './views/quotation/quotationRoute';
 const routes = [
   {
     element: (
@@ -15,7 +16,14 @@ const routes = [
         <MatxLayout />
       </AuthGuard>
     ),
-    children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes, ...leadRoutes],
+    children: [
+      ...dashboardRoutes,
+      ...chartsRoute,
+      ...materialRoutes,
+      ...leadRoutes,
+      ...catalogueRoutes,
+      ...quotationRoutes,
+    ],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="dashboard/default" /> },

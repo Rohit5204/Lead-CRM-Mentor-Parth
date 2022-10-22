@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Box, Grid, TextField, Typography, MenuItem, FormControl, Select } from '@mui/material';
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const EditUser = ({ theEditLead }) => {
-  const id = theEditLead.LeadId;
+  const [leadId, setLeadId] = useState(theEditLead.leadId);
   const [name, setName] = useState(theEditLead.name);
   const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
   const [emailId, setEmailId] = useState(theEditLead.emailId);
@@ -12,61 +13,43 @@ const EditUser = ({ theEditLead }) => {
   const [stateName, setStateName] = useState(theEditLead.stateName);
   const [cityName, setCityName] = useState(theEditLead.cityName);
   const [zipCode, setZipCode] = useState(theEditLead.zipCode);
-  //const [countryName, setCountryName] = useState(theEditLead.countryName);
-  //const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
+  const [countryName, setCountryName] = useState(theEditLead.countryName);
+  const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
+  const [platformName, setPlatformName] = useState(theEditLead.intrestedIn);
+  //const [assignId, setAssignId] = useState(theEditLead.countryName);
+  const [assignedUser, setAssignedUser] = useState(theEditLead.intrestedIn);
+  const [statusName, setStatusName] = useState(theEditLead.intrestedIn);
+  const [labelName, setLabelName] = useState(theEditLead.intrestedIn);
+  const [remarks, setRemarks] = useState(theEditLead.intrestedIn);
 
   const UpdateUser = {
-    name,
-    mobileNo,
-    emailId,
-    streetName,
-    stateName,
-    cityName,
-    zipCode,
-    //countryName,
-    //intrestedIn,
+    leadId: leadId,
+    remarks: remarks,
+    statusId: 2,
+    actionBy: 1,
+    isMeeting: 1,
+    name: name,
+    mobileNo: mobileNo,
+    streetName: streetName,
+    cityName: cityName,
+    stateName: stateName,
+    zipCode: zipCode,
+    countryName: countryName,
+    intrestedIn: intrestedIn,
+    sourceId: 1,
+    assignId: 123,
+    label: 1,
   };
-
+  const updateLead = (e) => {
+    console.log({ UpdateUser });
+    e.preventDefault();
+    axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser).then(() => useEffect);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    UpdateUser(id, UpdateUser);
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <Typography component="span">
-        <Grid container spacing={2} onSubmit={handleSubmit}>
-          <Grid item xs={6} md={5}>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <TextField
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                type="fname"
-                placeholder="Enter First Name"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={6} md={7}>
-            <FormControl sx={{ m: 1, minWidth: 250 }}>
-              <TextField
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                type="lname"
-                placeholder="Enter Last Name"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={6} md={7}>
-            <FormControl sx={{ m: 1, minWidth: 480 }}>
-              <TextField
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Enter the Email"
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </Typography> */}
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
@@ -81,12 +64,12 @@ const EditUser = ({ theEditLead }) => {
             <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
               <Form.Label>Interested In</Form.Label>
               <Select
-                //value={intrestedIn}
+                value={intrestedIn}
                 label="Interested In"
-                //onChange={(e) => setIntrestedIn(e.target.value)}
+                onChange={(e) => setIntrestedIn(e.target.value)}
               >
                 <MenuItem value="interest">Your Interest</MenuItem>
-                <MenuItem value="facebook">Facebook</MenuItem>
+                <MenuItem value="test">Facebook</MenuItem>
                 <MenuItem value="instagram">Instagram</MenuItem>
                 <MenuItem value="twitter">Twitter</MenuItem>
               </Select>
@@ -103,10 +86,10 @@ const EditUser = ({ theEditLead }) => {
             />
           </Col>
           <Col>
-            <Form.Label>Source</Form.Label>
+            <Form.Label>Source/Platform Name</Form.Label>
             <Form.Control
-              // onChange={(e) => setMobileNo(e.target.value)}
-              //value={mobileNo}
+              onChange={(e) => setPlatformName(e.target.value)}
+              value={platformName}
               placeholder="Select the Source"
             />
           </Col>
@@ -115,6 +98,7 @@ const EditUser = ({ theEditLead }) => {
           <Col>
             <Form.Label>Email</Form.Label>
             <Form.Control
+              readOnly
               onChange={(e) => setEmailId(e.target.value)}
               value={emailId}
               placeholder="Customer Email"
@@ -123,8 +107,8 @@ const EditUser = ({ theEditLead }) => {
           <Col>
             <Form.Label>Assigned To</Form.Label>
             <Form.Control
-              //onChange={(e) => setEmailId(e.target.value)}
-              // value={emailId}
+              onChange={(e) => setAssignedUser(e.target.value)}
+              value={assignedUser}
               placeholder="Select the Staff Member"
             />
           </Col>
@@ -148,8 +132,8 @@ const EditUser = ({ theEditLead }) => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                //onChange={(e) => setStreetName(e.target.value)}
-                // value={streetName}
+                onChange={(e) => setRemarks(e.target.value)}
+                value={remarks}
                 placeholder="Comment"
               />
             </Form.Group>
@@ -167,8 +151,8 @@ const EditUser = ({ theEditLead }) => {
           <Col>
             <Form.Label>Status</Form.Label>
             <Form.Control
-              //onChange={(e) => setCityName(e.target.value)}
-              //value={cityName}
+              onChange={(e) => setStatusName(e.target.value)}
+              value={statusName}
               placeholder="New"
             />
           </Col>
@@ -179,6 +163,14 @@ const EditUser = ({ theEditLead }) => {
             <Form.Control
               onChange={(e) => setStateName(e.target.value)}
               value={stateName}
+              placeholder="Enter Sate Name"
+            />
+          </Col>
+          <Col xs={6}>
+            <Form.Label>Label</Form.Label>
+            <Form.Control
+              onChange={(e) => setLabelName(e.target.value)}
+              value={labelName}
               placeholder="Enter Sate Name"
             />
           </Col>
@@ -198,17 +190,29 @@ const EditUser = ({ theEditLead }) => {
             <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
               <Form.Label>Country</Form.Label>
               <Select
-                // value={countryName}
+                value={countryName}
                 label="Country"
-                //onChange={(e) => setCountryName(e.target.value)}
+                onChange={(e) => setCountryName(e.target.value)}
               >
                 <MenuItem value="s">Select the Country</MenuItem>
-                <MenuItem value="India">INDIA</MenuItem>
+                <MenuItem value="test">INDIA</MenuItem>
                 <MenuItem value="USA">USA</MenuItem>
                 <MenuItem value="Russia">RUSSIA</MenuItem>
                 <MenuItem value="Australia">Australia</MenuItem>
               </Select>
             </FormControl>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <button
+              type="submit"
+              className="btn btn-success"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={updateLead}
+            >
+              Update
+            </button>
           </Col>
         </Row>
       </Form>

@@ -1,4 +1,4 @@
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {

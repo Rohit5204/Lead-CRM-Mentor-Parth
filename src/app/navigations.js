@@ -13,13 +13,22 @@ export const navigations = [
       { name: 'User Master', iconText: '404', path: '/leads/userMaster' },
     ],
   },
+  { label: 'Catalogue', type: 'label' },
+  {
+    name: 'Catalogue List',
+    icon: 'favorite',
+    children: [
+      { name: 'Add Catalogue', path: '/catalogues/addCatalogue', iconText: 'A' },
+      { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue', iconText: 'B' },
+    ],
+  },
   { label: 'QUTATIONS', type: 'label' },
   {
     name: 'Qutation List',
     icon: 'favorite',
     children: [
-      { name: 'Request For Qutation', path: '/material/autocomplete', iconText: 'A' },
-      { name: 'Draft', path: '/material/buttons', iconText: 'B' },
+      { name: 'Request For Qutation', path: '/quotations/addQuotation', iconText: 'A' },
+      { name: 'Draft', path: '/quotations/manageQuotation', iconText: 'B' },
       { name: 'Send', path: '/material/checkbox', iconText: 'C' },
     ],
   },
