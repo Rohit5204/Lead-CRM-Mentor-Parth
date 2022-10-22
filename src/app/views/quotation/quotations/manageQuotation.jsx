@@ -72,8 +72,8 @@ const ManageQuotation = () => {
         <Box className="breadcrumb">
           <Breadcrumb
             routeSegments={[
-              { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue' },
-              { name: 'Catalogue Detail Page' },
+              { name: 'Manage Quotation', path: '/quotations/manageQuotation' },
+              { name: 'Quotation Detail Page' },
             ]}
           />
         </Box>
@@ -96,11 +96,11 @@ const ManageQuotation = () => {
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Catalogue Table</h4>
+          <h4>Quotation Table</h4>
           <StyledTable>
             <TableHead>
               <TableRow>
-                <TableCell align="justify">Catalogue Id</TableCell>
+                <TableCell align="justify">Quotation Id</TableCell>
                 <TableCell align="justify">Catalogue Type</TableCell>
                 {/* <TableCell align="justify">Price</TableCell> */}
                 <TableCell align="justify">Status</TableCell>
@@ -146,7 +146,7 @@ const ManageQuotation = () => {
           centered
         >
           <Modal.Header>
-            <Modal.Title>Update Catalogue</Modal.Title>
+            <Modal.Title>Update Quotation</Modal.Title>
           </Modal.Header>
           <Modal.Body>{/* <EditCatalogue theEditCatalogue={obj1} /> */}</Modal.Body>
           <Modal.Footer>
