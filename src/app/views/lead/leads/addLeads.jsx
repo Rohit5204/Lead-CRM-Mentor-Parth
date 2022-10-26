@@ -219,8 +219,8 @@ const LeadForm = () => {
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    // onChange={(e) => setStreetName(e.target.value)}
-                    // value={streetName}
+                    // onChange={(e) => setRemarks(e.target.value)}
+                    // value={remarks}
                     placeholder="Comment"
                   />
                 </Form.Group>
@@ -234,6 +234,21 @@ const LeadForm = () => {
                   // value={cityName}
                   placeholder="New"
                 />
+              </Col>
+              <Col sm>
+                <br />
+                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                  <Form.Label>Label</Form.Label>
+                  <Select
+                    // value={labelName}
+                    label="Interested In"
+                    //onChange={(e) => setLabelName(e.target.value)}
+                  >
+                    <MenuItem value="cold">Cold</MenuItem>
+                    <MenuItem value="warm">Warm</MenuItem>
+                    <MenuItem value="hot">Hot</MenuItem>
+                  </Select>
+                </FormControl>
               </Col>
             </Row>
           </SimpleCard>

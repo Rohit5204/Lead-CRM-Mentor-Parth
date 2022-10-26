@@ -15,12 +15,12 @@ const EditUser = ({ theEditLead }) => {
   const [zipCode, setZipCode] = useState(theEditLead.zipCode);
   const [countryName, setCountryName] = useState(theEditLead.countryName);
   const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
-  const [platformName, setPlatformName] = useState(theEditLead.intrestedIn);
+  const [platformName, setPlatformName] = useState(theEditLead.platformName);
   //const [assignId, setAssignId] = useState(theEditLead.countryName);
-  const [assignedUser, setAssignedUser] = useState(theEditLead.intrestedIn);
-  const [statusName, setStatusName] = useState(theEditLead.intrestedIn);
-  const [labelName, setLabelName] = useState(theEditLead.intrestedIn);
-  const [remarks, setRemarks] = useState(theEditLead.intrestedIn);
+  const [assignedUser, setAssignedUser] = useState(theEditLead.assignedUser);
+  const [statusName, setStatusName] = useState(theEditLead.statusName);
+  const [labelName, setLabelName] = useState(theEditLead.labelName);
+  const [remarks, setRemarks] = useState(theEditLead.remarks);
 
   const UpdateUser = {
     leadId: leadId,
