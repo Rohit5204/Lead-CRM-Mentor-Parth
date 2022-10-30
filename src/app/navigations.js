@@ -7,8 +7,8 @@ export const navigations = [
     icon: 'security',
     children: [
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
-      { name: 'Manage Leads', iconText: 'SU', path: '/leads/manageLeads' },
-      { name: 'Assign Leads', iconText: 'FP', path: '/material/buttons' },
+      { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
+      { name: 'Assign Leads', iconText: 'FP', path: '/leads/manageLeads' },
       { name: 'System Master', iconText: '404', path: '/leads/systemMaster' },
       { name: 'User Master', iconText: '404', path: '/leads/userMaster' },
     ],
@@ -38,9 +38,9 @@ export const navigations = [
     name: 'Invoive',
     icon: 'security',
     children: [
-      { name: 'Send Qutation List', iconText: 'SI', path: '/session/signup' },
-      { name: 'Completed', iconText: 'SI', path: '/session/signup' },
-      { name: 'Add Invoice', iconText: 'SI', path: '/session/signup' },
+      { name: 'Send Qutation List', iconText: 'SI', path: '/invoices/invoiceForm' },
+      { name: 'Completed', iconText: 'SI', path: '' },
+      { name: 'Add Invoice', iconText: 'SI', path: '' },
     ],
   },
 

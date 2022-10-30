@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Box, Grid } from '@mui/material';
 import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -18,6 +19,10 @@ const Div = styled('div')(({ theme }) => ({
   margin: '410px',
 }));
 const LeadForm = () => {
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/leads/manageLeads');
+  };
   const [name, setName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [emailId, setEmailId] = useState('');
@@ -27,6 +32,8 @@ const LeadForm = () => {
   const [zipCode, setZipCode] = useState('');
   const [countryName, setCountryName] = useState('s');
   const [intrestedIn, setIntrestedIn] = useState('interest');
+  const [labelName, setLabelName] = useState('cold');
+  const [status, setStatus] = useState('active');
   //const [assignId, setAssignId] = useState('');
 
   //empty the form Text
@@ -227,22 +234,26 @@ const LeadForm = () => {
               </Col>
             </Row>
             <Row>
-              <Col>
-                <Form.Label>Status</Form.Label>
-                <Form.Control
-                  // onChange={(e) => setCityName(e.target.value)}
-                  // value={cityName}
-                  placeholder="New"
-                />
+              <Col sm>
+                <br />
+                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                  <Form.Label>Status</Form.Label>
+                  <Select value={status} label="Status" onChange={(e) => setStatus(e.target.value)}>
+                    <MenuItem value="active">Active Lead</MenuItem>
+                    <MenuItem value="Follow Up">Follow Up</MenuItem>
+                    <MenuItem value="Meeting">Meeting</MenuItem>
+                    <MenuItem value="Quotation">Quotation</MenuItem>
+                  </Select>
+                </FormControl>
               </Col>
               <Col sm>
                 <br />
                 <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
                   <Form.Label>Label</Form.Label>
                   <Select
-                    // value={labelName}
-                    label="Interested In"
-                    //onChange={(e) => setLabelName(e.target.value)}
+                    value={labelName}
+                    label="Label"
+                    onChange={(e) => setLabelName(e.target.value)}
                   >
                     <MenuItem value="cold">Cold</MenuItem>
                     <MenuItem value="warm">Warm</MenuItem>
@@ -257,11 +268,13 @@ const LeadForm = () => {
       <Div className="mt-2">
         <Row>
           <Col>
-            <Button variant="success" onClick={handleSubmit}>
-              Add Lead
+            <Button variant="secondary" onClick={changePage}>
+              Cancel
             </Button>
             &nbsp;
-            <Button variant="primary">Cancel</Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              Save
+            </Button>
           </Col>
         </Row>
       </Div>

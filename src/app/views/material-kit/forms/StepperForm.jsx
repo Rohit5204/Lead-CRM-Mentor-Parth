@@ -1,32 +1,200 @@
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stepper from "@mui/material/Stepper";
-import Typography from "@mui/material/Typography";
-import React from "react";
-
+import { Box } from '@mui/material';
+import Button from '@mui/material/Button';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { Row, Col } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 function getSteps() {
-  return ["Select master blaster campaign settings", "Create an ad group", "Create an ad"];
+  return ['Active Leads', 'Followups', 'Meetings', 'Quotations'];
 }
 
 function getStepContent(stepIndex) {
   switch (stepIndex) {
     case 0:
-      return `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non tincidunt velit. Quisque laoreet, lectus id tincidunt fringilla, eros est bibendum felis, sit amet lobortis ante sem non diam. Donec viverra a nisi eu eleifend. Mauris vel leo tempor, commodo felis in, sollicitudin velit. Nullam eu sem id lacus venenatis commodo nec a lacus. Donec in egestas justo. Quisque elementum diam felis. In a ullamcorper leo. In lorem urna, mollis in feugiat sed, aliquet nec diam. Mauris tempus dui at gravida pharetra. Etiam nec lectus metus. In dapibus placerat consequat. Quisque ornare ut lacus ac tempus. Pellentesque sed ornare tellus. Curabitur dictum turpis quam, at feugiat mi elementum a.`;
+      return (
+        <div className="App">
+          <Row>
+            <Col>
+              <label>
+                Lead Sr No: <h5> </h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Lead Name: <h5></h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Lead Date: <h5> </h5>
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>Client Name: </label>
+            </Col>
+            <Col>
+              <label>
+                Mobile Number: <h5> </h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Email Id: <h5> </h5>
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>
+                Lead Source: <h5> </h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Interested In: <h5> </h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Assign To: <h5> </h5>
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>
+                Address: <h5> </h5>
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>
+                Pin Code: <h5></h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                City: <h5></h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                State: <h5></h5>
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>
+                Country: <h5> </h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Status: <h5></h5>
+              </label>
+            </Col>
+            <Col>
+              <label>
+                Label:<h5> </h5>
+              </label>
+            </Col>
+          </Row>
+        </div>
+      );
 
     case 1:
-      return `Integer euismod dapibus sapien, a interdum augue blandit eget. Donec pellentesque, sapien iaculis dignissim sagittis, risus nulla auctor eros, sed suscipit eros mauris id lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer porttitor mauris egestas consequat molestie. Nam egestas iaculis malesuada. Praesent sagittis venenatis finibus. Praesent porttitor ipsum et sapien cursus, eu mattis augue ornare.`;
+      return (
+        <div>
+          <Row>
+            <Col>
+              <label>Ex Name:</label>
+            </Col>
+            <Col>
+              <label>Followup Date:</label>
+            </Col>
+            <Col>
+              <label>Followup Time:</label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>Remarks:</label>
+            </Col>
+            <Col>
+              <label>Next Followup Date:</label>
+            </Col>
+            <Col>
+              <label>Next Followup Time:</label>
+            </Col>
+          </Row>
+        </div>
+      );
 
     case 2:
-      return `In laoreet, dui vel tristique facilisis, velit dui dictum diam, nec feugiat mi mauris eu nunc. Nullam auctor eget ante ac laoreet. Aliquam et ante ligula. Nam imperdiet augue magna, ac tincidunt neque mollis nec. Sed eu nunc sit amet tellus commodo elementum non sit amet sem. Etiam ipsum nibh, rutrum vel ultrices in, vulputate ac dolor. Morbi dictum lectus id orci dapibus, et faucibus nulla viverra. Nulla consectetur ex vitae pretium vehicula. Quisque varius tempor erat et semper. Vivamus consectetur, eros sit amet ornare facilisis, nulla felis laoreet tortor, sit amet egestas risus ipsum sed eros.`;
-
-    default:
-      return `Aenean arcu ligula, porttitor id neque imperdiet, congue convallis erat. Integer libero sapien, convallis a vulputate vel, pretium vulputate metus. Donec leo justo, viverra ut tempor commodo, laoreet eu velit. Donec vel sem quis velit pharetra elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam in commodo mauris. Ut iaculis ipsum velit.`;
+      return (
+        <div>
+          <Row>
+            <Col>
+              <label>Ex Name:</label>
+            </Col>
+            <Col>
+              <label>Date:</label>
+            </Col>
+            <Col>
+              <label>From Time:</label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>To Time:</label>
+            </Col>
+            <Col>
+              <label>Remarks:</label>
+            </Col>
+          </Row>
+        </div>
+      );
+    case 3:
+      return (
+        <div>
+          <Row>
+            <Col>
+              <label>Ex Name:</label>
+            </Col>
+            <Col>
+              <label>Date:</label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>Attachment:</label>
+            </Col>
+            <Col>
+              <label>Amount:</label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>Remarks:</label>
+            </Col>
+          </Row>
+        </div>
+      );
+    // default:
+    //   return;
   }
 }
 
 export default function StepperForm() {
+  const location = useLocation();
+  // console.log(location.state);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
@@ -49,10 +217,10 @@ export default function StepperForm() {
       <Box mt={4}>
         {activeStep === steps.length ? (
           <Box>
-            <Typography>All steps completed</Typography>
+            <Typography>All steps completed ,Go Back</Typography>
 
             <Button sx={{ mt: 2 }} variant="contained" color="secondary" onClick={handleReset}>
-              Reset
+              Start Again
             </Button>
           </Box>
         ) : (
@@ -70,7 +238,7 @@ export default function StepperForm() {
               </Button>
 
               <Button sx={{ ml: 2 }} variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </Box>
           </Box>

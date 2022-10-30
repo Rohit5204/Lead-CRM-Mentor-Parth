@@ -149,12 +149,19 @@ const EditUser = ({ theEditLead }) => {
             />
           </Col>
           <Col>
-            <Form.Label>Status</Form.Label>
-            <Form.Control
-              onChange={(e) => setStatusName(e.target.value)}
-              value={statusName}
-              placeholder="New"
-            />
+            <FormControl sx={{ m: 0, minWidth: 360 }} size="small" className="mt-1">
+              <Form.Label>Status</Form.Label>
+              <Select
+                value={statusName}
+                label="Status"
+                onChange={(e) => setStateName(e.target.value)}
+              >
+                <MenuItem value="active">Active Lead</MenuItem>
+                <MenuItem value="Follow Up">Follow Up</MenuItem>
+                <MenuItem value="Meeting">Meeting</MenuItem>
+                <MenuItem value="Quotation">Quotation</MenuItem>
+              </Select>
+            </FormControl>
           </Col>
         </Row>
         <Row>
@@ -166,15 +173,22 @@ const EditUser = ({ theEditLead }) => {
               placeholder="Enter Sate Name"
             />
           </Col>
-          <Col xs={6}>
-            <Form.Label>Label</Form.Label>
-            <Form.Control
-              onChange={(e) => setLabelName(e.target.value)}
-              value={labelName}
-              placeholder="Enter Sate Name"
-            />
+          <Col>
+            <FormControl sx={{ m: 0, minWidth: 360 }} size="small" className="mt-1">
+              <Form.Label>Label</Form.Label>
+              <Select
+                value={labelName}
+                label="Label"
+                onChange={(e) => setLabelName(e.target.value)}
+              >
+                <MenuItem value="cold">Cold</MenuItem>
+                <MenuItem value="warm">Warm</MenuItem>
+                <MenuItem value="hot">Hot</MenuItem>
+              </Select>
+            </FormControl>
           </Col>
         </Row>
+
         <Row>
           <Col xs={6}>
             <Form.Label>Pin Code</Form.Label>

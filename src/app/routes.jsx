@@ -9,6 +9,7 @@ import MatxLayout from './components/MatxLayout/MatxLayout';
 import leadRoutes from './views/lead/LeadRoutes';
 import catalogueRoutes from './views/catalogue/CatalogueRoute';
 import quotationRoutes from './views/quotation/quotationRoute';
+import invoiceRoutes from './views/invoice/invoiceRoutes';
 const routes = [
   {
     element: (
@@ -23,6 +24,7 @@ const routes = [
       ...leadRoutes,
       ...catalogueRoutes,
       ...quotationRoutes,
+      ...invoiceRoutes,
     ],
   },
   ...sessionRoutes,

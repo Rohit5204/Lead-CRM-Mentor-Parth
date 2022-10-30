@@ -5,6 +5,7 @@ import { lazy } from 'react';
 const LeadForm = Loadable(lazy(() => import('./leads/addLeads')));
 const EditLead = Loadable(lazy(() => import('./leads/editLead')));
 const ManageLead = Loadable(lazy(() => import('./leads/manageLeads')));
+const AssignLead = Loadable(lazy(() => import('./leads/assignLeads')));
 
 const SystemMaster = Loadable(lazy(() => import('./leads/systemMaster')));
 const UserMaster = Loadable(lazy(() => import('./leads/userMaster')));
@@ -16,6 +17,7 @@ const Manage = Loadable(lazy(() => import('./leads/manage')));
 const leadRoutes = [
   { path: '/leads/addLeads', element: <LeadForm /> },
   { path: '/leads/editLead', element: <EditLead /> },
+  { path: '/leads/assignLeads', element: <AssignLead /> },
   { path: '/leads/manageLeads', element: <ManageLead /> },
   { path: '/leads/SystemMaster', element: <SystemMaster /> },
   { path: '/leads/userMaster', element: <UserMaster /> },

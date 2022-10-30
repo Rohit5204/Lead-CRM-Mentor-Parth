@@ -2,9 +2,9 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Data } from 'app/components/Data';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import EditCatalogue from './editCatalogue';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Icon,
@@ -44,7 +44,10 @@ const ManageCatalogue = () => {
     setObj1(catalogue);
     setShow(true);
   };
-
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/catalogues/addCatalogue');
+  };
   //get method
   useEffect(() => {
     axios
@@ -81,15 +84,15 @@ const ManageCatalogue = () => {
           <Row>
             <Col>
               <InputGroup className="mb-3">
+                <button type="submit" className="btn btn-success" onClick={changePage}>
+                  ADD
+                </button>
+                &nbsp;
                 <Form.Control
                   placeholder="Search Box"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
-                &nbsp;
-                <button type="submit" className="btn btn-success">
-                  ADD
-                </button>
               </InputGroup>
             </Col>
           </Row>
@@ -154,19 +157,19 @@ const ManageCatalogue = () => {
           <Modal.Footer>
             <button
               type="submit"
-              className="btn btn-success"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleClose}
-            >
-              Update
-            </button>
-            <button
-              type="submit"
               className="btn btn-error"
               style={{ marginTop: 5 + 'px' }}
               onClick={handleClose}
             >
               Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn btn-success"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={handleClose}
+            >
+              Update
             </button>
           </Modal.Footer>
         </Modal>

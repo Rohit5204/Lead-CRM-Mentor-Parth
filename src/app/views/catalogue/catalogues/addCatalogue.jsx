@@ -4,7 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Box, MenuItem, FormControl, Select } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { NavLink, useNavigate } from 'react-router-dom';
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -17,6 +17,10 @@ const Div = styled('div')(() => ({
   margin: '430px',
 }));
 const AddCatalogue = () => {
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/catalogues/manageCatalogue');
+  };
   const [catType, setCatType] = useState('Service');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
@@ -57,7 +61,7 @@ const AddCatalogue = () => {
       <Box className="breadcrumb">
         <Breadcrumb
           routeSegments={[
-            { name: 'Catalogue', path: '/catalogues/addCatalogue' },
+            { name: 'Catalogue', path: '/catalogues/manageCatalogue' },
             { name: 'Add Catalogue Page' },
           ]}
         />
@@ -106,11 +110,13 @@ const AddCatalogue = () => {
       <Div className="mt-2">
         <Row>
           <Col>
-            <Button variant="success" onClick={handleSubmit}>
-              Add
+            <Button variant="secondary" onClick={changePage}>
+              Cancel
             </Button>
             &nbsp;
-            <Button variant="primary">Cancel</Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              Save
+            </Button>
           </Col>
         </Row>
       </Div>

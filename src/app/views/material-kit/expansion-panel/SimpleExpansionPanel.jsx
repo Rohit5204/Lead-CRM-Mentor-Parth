@@ -1,13 +1,13 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { styled } from "@mui/material";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-
-const AccordionRoot = styled("div")(({ theme }) => ({
-  width: "100%",
-  "& .heading": {
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { styled } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
+const AccordionRoot = styled('div')(({ theme }) => ({
+  width: '100%',
+  '& .heading': {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
@@ -19,44 +19,128 @@ export default function SimpleExpansionPanel() {
       <Accordion>
         <AccordionSummary
           id="panel1a-header"
-          expandIcon={<ExpandMoreIcon />}
+          // expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
         >
-          <Typography className="heading">Expansion Panel 1</Typography>
+          <button type="button" className="btn btn-outline-secondary">
+            click here to filter leads
+          </button>
         </AccordionSummary>
 
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
-          </Typography>
+          <form>
+            <Row>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Serach By Client Name</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter Lead Name"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Serach By Lead Name</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter Lead Name"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Serach By Mobile Number</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Serach By Mobile Number"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Search By City</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Serach By City"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Select State</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Select State"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Search By Country</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Search By Country"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Select Assign To</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Select Assign To"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Select Generated By</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Select Generated By"
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Select Monitor By</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Select Monitor By"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <button type="submit" class="btn btn-primary">
+              Serach
+            </button>
+          </form>
         </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          id="panel2a-header"
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-        >
-          <Typography className="heading">Expansion Panel 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion disabled>
-        <AccordionSummary
-          id="panel3a-header"
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-        >
-          <Typography className="heading">Disabled Expansion Panel</Typography>
-        </AccordionSummary>
       </Accordion>
     </AccordionRoot>
   );
