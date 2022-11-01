@@ -7,6 +7,7 @@ import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 // import EditCatalogue from './editCatalogue';
 import {
   Box,
+  Chip,
   Icon,
   IconButton,
   Table,
@@ -100,39 +101,57 @@ const ManageQuotation = () => {
           <StyledTable>
             <TableHead>
               <TableRow>
-                <TableCell align="justify">Quotation Id</TableCell>
-                <TableCell align="justify">Catalogue Type</TableCell>
-                {/* <TableCell align="justify">Price</TableCell> */}
+                <TableCell align="justify">Quotation No</TableCell>
+                <TableCell align="justify">Date</TableCell>
+                <TableCell align="justify">Customer Name</TableCell>
+                <TableCell align="justify">Product Name</TableCell>
+                <TableCell align="justify">Quatity</TableCell>
                 <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {/* <TableBody>
               {APIData.map((catalogue, index) => {
-                // if (catalogue.status == 1) {
                 return (
                   <TableRow key={index}>
                     <TableCell align="justify">{catalogue.leadId}</TableCell>
                     <TableCell align="justify">{catalogue.name}</TableCell>
                     <TableCell align="justify">{catalogue.emailId}</TableCell>
-                    {/* <TableCell align="justify">{catalogue.catId}</TableCell>
+                    <TableCell align="justify">{catalogue.catId}</TableCell>
                     <TableCell align="justify">{catalogue.catType}</TableCell>
                     <TableCell align="justify">{catalogue.price}</TableCell>
-                    <TableCell align="justify">{catalogue.catStatus}</TableCell> */}
+                    <TableCell align="justify">{catalogue.catStatus}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(catalogue)}>
                         <Icon color="success">edit</Icon>
                       </IconButton>
-                      <IconButton
-                      // onClick={(event) => deleteData(event, catalogue)}
-                      >
+                      <IconButton>
                         <Icon color="warning">delete</Icon>
                       </IconButton>
                     </TableCell>
                   </TableRow>
                 );
-                // }
               })}
+            </TableBody> */}
+            <TableBody>
+              <TableRow>
+                <TableCell align="justify">101</TableCell>
+                <TableCell align="justify">24-10-2022</TableCell>
+                <TableCell align="justify">Nisha Kumari</TableCell>
+                <TableCell align="justify">INDEX OPTION</TableCell>
+                <TableCell align="justify">25</TableCell>
+                <TableCell align="justify">
+                  <Chip label="Draft" />
+                </TableCell>
+                <TableCell align="center">
+                  <IconButton onClick={() => handleShow()}>
+                    <Icon color="success">edit</Icon>
+                  </IconButton>
+                  <IconButton>
+                    <Icon color="warning">delete</Icon>
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </StyledTable>
         </Box>

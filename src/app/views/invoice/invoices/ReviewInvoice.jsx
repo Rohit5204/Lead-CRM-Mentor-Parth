@@ -33,6 +33,7 @@ const Container = styled('div')(({ theme }) => ({
 const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }) => {
   function closeModal() {
     setIsOpen(false);
+    console.log(invoiceInfo);
   }
 
   const addNextInvoiceHandler = () => {
@@ -108,14 +109,24 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
         keyboard={false}
         onHide={closeModal}
         show={show}
-        onHide={setIsOpen}
         animation={false}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header>
-          <Modal.Title>Invoice Preview</Modal.Title>
+          <Modal.Title> Invoice Preview</Modal.Title>
+          <Row>
+            <Col>
+              <button type="button" className="btn btn-success" onClick={SaveAsPDFHandler}>
+                Download
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-primary" onClick={addNextInvoiceHandler}>
+                Add New Invoice
+              </button>
+            </Col>
+          </Row>
         </Modal.Header>
         <Modal.Body>
           <div className=" my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
@@ -125,16 +136,7 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                 <Col>
                   <h5 className="text-center text-lg font-bold text-gray-900">TAX INVOICE</h5>
                 </Col>
-
-                <Col className="ml-5">
-                  <button type="button" className="btn btn-success" onClick={SaveAsPDFHandler}>
-                    Download
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-primary" onClick={addNextInvoiceHandler}>
-                    Next
-                  </button>
-                </Col>
+                <Col></Col>
               </Row>
               <hr />
               <div className="mt-6">
@@ -146,15 +148,15 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
 
                     <span>&nbsp;{invoiceInfo.cashierName}</span>
                     <br />
-                    <span>Haware Fantatsia Buisness Park</span>
+                    <span>Address: {invoiceInfo.companyAddress}</span>
+                    {/* <br /> */}
+                    {/* <span>Vashi,New Mumbai-400012</span> */}
                     <br />
-                    <span>Vashi,New Mumbai-400012</span>
+                    <span className="font-bold">GST NO: {invoiceInfo.companyGstNo}</span>
                     <br />
-                    <span className="font-bold">GST NO: ABC0154266C</span>
+                    <span className="font-bold">State: {invoiceInfo.companyStateName}</span>
                     <br />
-                    <span className="font-bold">State: Maharashtra</span>
-                    <br />
-                    <span className="font-bold">Email: demo@gmail.com</span>
+                    <span className="font-bold">Email: {invoiceInfo.companyEmail}</span>
                   </Col>
                   <Col>
                     <b>
@@ -162,15 +164,14 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                     </b>
                     <span>&nbsp;{invoiceInfo.customerName}</span>
                     <br />
-                    <span>Haware Fantatsia Buisness Park</span>
+
+                    <span>Address: {invoiceInfo.clientAddress}</span>
                     <br />
-                    <span>New Mumbai-400086</span>
+                    <span className="font-bold">GST NO: {invoiceInfo.clientGstNo}</span>
                     <br />
-                    <span className="font-bold">GST NO: ABC0154266C</span>
+                    <span className="font-bold">PAN No: {invoiceInfo.panNo}</span>
                     <br />
-                    <span className="font-bold">State: Maharashtra</span>
-                    <br />
-                    <span className="font-bold">Email: admin@gmail.com</span>
+                    <span className="font-bold">Email: {invoiceInfo.clientEmail}</span>
                   </Col>
                   <Col>
                     <b>
@@ -184,6 +185,9 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                     <span className="font-bold">Refrence No. & Date:</span>
                   </Col>
                 </Row>
+                <br />
+                <br />
+                <br />
                 <Row className="mt-2">
                   <Col></Col>
                   <Col md="auto">
@@ -218,6 +222,7 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                   </StyledTable>
                 </Row>
                 <br></br>
+                <br />
                 <Row>
                   <Col></Col>
                   <Col></Col>
@@ -270,6 +275,9 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>
             Close
+          </Button>
+          <Button variant="primary" onClick={closeModal}>
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

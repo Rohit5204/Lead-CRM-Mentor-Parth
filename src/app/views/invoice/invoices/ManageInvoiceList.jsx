@@ -3,7 +3,7 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
-import EditCatalogue from './editCatalogue';
+// import EditCatalogue from './editCatalogue';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -34,7 +34,7 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const ManageCatalogue = () => {
+const ManageInvoiceList = () => {
   const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
@@ -46,7 +46,7 @@ const ManageCatalogue = () => {
   };
   const navigate = useNavigate();
   const changePage = () => {
-    navigate('/catalogues/addCatalogue');
+    navigate('/invoices/invoiceForm');
   };
   //get method
   useEffect(() => {
@@ -75,8 +75,8 @@ const ManageCatalogue = () => {
         <Box className="breadcrumb">
           <Breadcrumb
             routeSegments={[
-              { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue' },
-              { name: 'Catalogue Detail Page' },
+              { name: 'Manage Invoice List', path: '/invoices/ManageInvoiceList' },
+              { name: 'Invoice Detail Page' },
             ]}
           />
         </Box>
@@ -99,45 +99,42 @@ const ManageCatalogue = () => {
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Catalogue Table</h4>
+          <h4>Invoice List</h4>
           <StyledTable>
             <TableHead>
               <TableRow>
-                <TableCell align="justify">Catalogue Id</TableCell>
-                <TableCell align="justify">Catalogue Type</TableCell>
-                <TableCell align="justify">Name</TableCell>
-                <TableCell align="justify">Price</TableCell>
-                <TableCell align="justify">Status</TableCell>
+                <TableCell align="justify">Invoice No</TableCell>
+                <TableCell align="justify">Invoice Date</TableCell>
+                <TableCell align="justify">Customer Name</TableCell>
+                <TableCell align="justify">Customer Pan No</TableCell>
+                <TableCell align="justify">State Name</TableCell>
+                <TableCell align="justify">Total Amount</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {APIData.map((catalogue, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell align="justify">{catalogue.leadId}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.emailId}</TableCell>
-                    {/* <TableCell align="justify">{catalogue.catId}</TableCell>
-                    <TableCell align="justify">{catalogue.catType}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.price}</TableCell>
-                    <TableCell align="justify">{catalogue.catStatus}</TableCell> */}
-                    <TableCell align="center">
-                      <IconButton onClick={() => handleShow(catalogue)}>
-                        <Icon color="success">edit</Icon>
-                      </IconButton>
-                      <IconButton
-                      // onClick={(event) => deleteData(event, catalogue)}
-                      >
-                        <Icon color="warning">delete</Icon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              <TableRow>
+                <TableCell align="justify">1200</TableCell>
+                <TableCell align="justify">22-10-2022</TableCell>
+                <TableCell align="justify">Yogesh Rithe</TableCell>
+                <TableCell align="justify"> ABCR7826W</TableCell>
+                <TableCell align="justify">Maharashtra</TableCell>
+                <TableCell align="justify">52000</TableCell>
+                <TableCell align="center">
+                  <IconButton onClick={() => handleShow()}>
+                    <Icon color="success">edit</Icon>
+                  </IconButton>
+
+                  <IconButton
+                  // onClick={(event) => deleteData(event, catalogue)}
+                  >
+                    <Icon color="warning">delete</Icon>
+                  </IconButton>
+                  <IconButton onClick={() => handleShow()}>
+                    <Icon color="success">send</Icon>
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </StyledTable>
         </Box>
@@ -153,9 +150,7 @@ const ManageCatalogue = () => {
           <Modal.Header>
             <Modal.Title>Update Catalogue</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <EditCatalogue theEditCatalogue={obj1} />
-          </Modal.Body>
+          <Modal.Body>{/* <EditCatalogue theEditCatalogue={obj1} /> */}</Modal.Body>
           <Modal.Footer>
             <button
               type="submit"
@@ -180,4 +175,4 @@ const ManageCatalogue = () => {
   );
 };
 
-export default ManageCatalogue;
+export default ManageInvoiceList;

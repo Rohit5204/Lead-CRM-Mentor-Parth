@@ -143,7 +143,7 @@ const UserMaster = () => {
       </Box>
 
       <Stack>
-        <h2 className="ml-5">User Master Page</h2>
+        <h5 className="ml-2">User Master Page</h5>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={4}>
             <Grid item xs={4}>
@@ -196,7 +196,7 @@ const UserMaster = () => {
         </Box>
         <br />
       </Stack>
-      <h3>User's Details</h3>
+      <h5>User's Details</h5>
       <Box className="text-center" width="100%" overflow="auto">
         <StyledTable>
           <TableHead>

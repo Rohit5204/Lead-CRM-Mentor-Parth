@@ -1,8 +1,5 @@
 import { SimpleCard } from 'app/components';
-
-import SimpleExpansionPanel from 'app/views/material-kit/expansion-panel/SimpleExpansionPanel';
 import { styled } from '@mui/system';
-import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Data } from 'app/components/Data';
@@ -26,7 +23,6 @@ import {
   Select,
   Grid,
 } from '@mui/material';
-import AssignLead from './assignLeads';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '2.9px',
@@ -46,10 +42,16 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 const ManageLead = () => {
-  const navigate = useNavigate();
-  const changePage = () => {
-    navigate('/leads/assignLeads');
+  const [showForm, setShowForm] = useState(false);
+
+  const showForm1 = () => {
+    setShowForm(!showForm);
   };
+  // const navigate = useNavigate();
+  // const changePage = () => {
+  //   navigate('/leads/viewLeads');
+  // };
+
   const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
@@ -136,16 +138,151 @@ const ManageLead = () => {
     <SimpleCard title="Lead Management">
       <Row>
         <Col>
-          <SimpleExpansionPanel />
+          <form>
+            <Row>
+              <Col>
+                <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+                <br></br>
+                <button type="button" className="btn btn-outline-warning">
+                  Last Day
+                </button>
+                &nbsp;
+                <button type="button" className="btn btn-outline-warning">
+                  Last Week
+                </button>
+                &nbsp;
+                <button type="button" className="btn btn-outline-warning">
+                  Last Month
+                </button>
+                &nbsp;
+              </Col>
+              <Col></Col>
+              <Col>
+                <Form.Label htmlFor="basic-url">Apply Advanced Filter</Form.Label>
+                <br></br>
+                <button type="button" className="btn btn-outline-success" onClick={showForm1}>
+                  Advanced Search
+                </button>
+              </Col>
+            </Row>
+          </form>
+          {showForm && (
+            <form>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Serach By Client Name</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Lead Name"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Serach By Lead Name</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Lead Name"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Serach By Mobile Number</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Serach By Mobile Number"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Search By City</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Serach By City"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select State</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select State"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Search By Country</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Search By Country"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Assign To</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Assign To"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Generated By</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Generated By"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Monitor By</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Monitor By"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <button type="submit" class="btn btn-primary">
+                Serach
+              </button>
+            </form>
+          )}
         </Col>
-        {/* <Col>
-          <button type="submit" className="btn btn-success" onClick={showImport}>
-            Import Lead
-          </button>
-        </Col> */}
       </Row>
-
-      <Container>
+      <Container className="my-2">
         <Box>
           {/* Import Excel File Dialog Start */}
           <Box>
@@ -283,7 +420,7 @@ const ManageLead = () => {
                       <TableCell align="justify">{subscriber.emailId}</TableCell>
                       <TableCell align="justify">{subscriber.mobileNo}</TableCell>
                       <TableCell align="center">
-                        <Link to="/leads/assignLeads" state={subscriber}>
+                        <Link to="/leads/viewLeads" state={subscriber}>
                           <IconButton>
                             <Icon color="red">visibility</Icon>
                           </IconButton>

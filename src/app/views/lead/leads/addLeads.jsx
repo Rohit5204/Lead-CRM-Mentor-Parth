@@ -1,9 +1,9 @@
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Autocomplete, TextField } from '@mui/material';
 import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,18 @@ const LeadForm = () => {
   const [intrestedIn, setIntrestedIn] = useState('interest');
   const [labelName, setLabelName] = useState('cold');
   const [status, setStatus] = useState('active');
-  //const [assignId, setAssignId] = useState('');
+  const [assignTo, setAssignTo] = useState('assgin');
+
+  const [myOptions, setMyOptions] = useState([]);
+  const getDataFromAPI = () => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`).then((res) => {
+      console.log(res.data);
+      for (var i = 0; i < res.data.length; i++) {
+        myOptions.push(res.data[i].firstName);
+      }
+      setMyOptions(myOptions);
+    });
+  };
 
   //empty the form Text
   const blankForm = () => {
@@ -211,12 +222,37 @@ const LeadForm = () => {
             </Row>
             <Row>
               <Col>
-                <Form.Label>Assigned To</Form.Label>
-                <Form.Control
-                  // onChange={(e) => setEmailId(e.target.value)}
-                  // value={emailId}
-                  placeholder="Select the Staff Member"
-                />
+                <FormControl>
+                  <Form.Label>Assigned To</Form.Label>
+                  <Autocomplete
+                    style={{ width: 450 }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    options={myOptions}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        onChange={getDataFromAPI}
+                        variant="outlined"
+                        label="Assigne Employee"
+                      />
+                    )}
+                  />
+                </FormControl>
+                {/* <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                  <Form.Label>Assigned To</Form.Label>
+                  <Select
+                    value={assignTo}
+                    label="Assign To"
+                    onChange={(e) => setAssignTo(e.target.value)}
+                  >
+                    <MenuItem value="assgin">Assign To Employee</MenuItem>
+                    <MenuItem value="rohit">Rohit</MenuItem>
+                    <MenuItem value="vikram">Vikram</MenuItem>
+                    <MenuItem value="yogesh">Yogesh</MenuItem>
+                  </Select>
+                </FormControl> */}
               </Col>
             </Row>
             <Row>

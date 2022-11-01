@@ -154,7 +154,7 @@ const EditUser = ({ theEditLead }) => {
               <Select
                 value={statusName}
                 label="Status"
-                onChange={(e) => setStateName(e.target.value)}
+                onChange={(e) => setStatusName(e.target.value)}
               >
                 <MenuItem value="active">Active Lead</MenuItem>
                 <MenuItem value="Follow Up">Follow Up</MenuItem>

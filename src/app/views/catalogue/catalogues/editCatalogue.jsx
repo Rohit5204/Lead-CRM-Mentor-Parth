@@ -20,12 +20,14 @@ const Div = styled('div')(() => ({
 const EditCatalogue = ({ theEditCatalogue }) => {
   const [catId, setCatId] = useState(theEditCatalogue.catId);
   const [catType, setCatType] = useState(theEditCatalogue.catType);
+  const [name, setName] = useState(theEditCatalogue.name);
   const [price, setPrice] = useState(theEditCatalogue.price);
   const [description, setDescription] = useState(theEditCatalogue.description);
 
   const UpdateCatalogue = {
     catId: catId,
     catType: catType,
+    name: name,
     price: price,
     description: description,
     catStatus: 1,
@@ -38,6 +40,7 @@ const EditCatalogue = ({ theEditCatalogue }) => {
   };
   const blankForm = () => {
     setCatType('');
+    setName('');
     setPrice('');
     setDescription('');
   };
@@ -48,12 +51,12 @@ const EditCatalogue = ({ theEditCatalogue }) => {
   };
   return (
     <Container>
-      <SimpleCard title="Fill Catalogue Details">
+      <SimpleCard title="Update Catalogue Detail's">
         <Form onClick={handleSubmit}>
           <Row>
-            <Col xs={6}>
-              <FormControl sx={{ m: 0, minWidth: 300 }} size="small" className="mt-1">
-                <Form.Label>Catalogue Type</Form.Label>
+            <Col md="4">
+              <FormControl sx={{ m: 0, minWidth: 200 }} size="small" className="mt-1">
+                <Form.Label>Type</Form.Label>
                 <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
                   <MenuItem value="">Select the Type</MenuItem>
                   <MenuItem value="Service">Service</MenuItem>
@@ -61,9 +64,16 @@ const EditCatalogue = ({ theEditCatalogue }) => {
                 </Select>
               </FormControl>
             </Col>
-
             <Col className="mt-1">
-              <Form.Label>Catalogue Price</Form.Label>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="Enter the Name"
+              />
+            </Col>
+            <Col className="mt-1">
+              <Form.Label>Price</Form.Label>
               <Form.Control
                 onChange={(e) => setPrice(e.target.value)}
                 value={price}

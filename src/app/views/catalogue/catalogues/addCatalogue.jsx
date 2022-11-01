@@ -23,6 +23,7 @@ const AddCatalogue = () => {
   };
   const [catType, setCatType] = useState('Service');
   const [price, setPrice] = useState('');
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
   //empty the form Text
@@ -68,11 +69,11 @@ const AddCatalogue = () => {
       </Box>
       <Row>
         <Col>
-          <SimpleCard title="Fill Catalogue Details">
+          <SimpleCard title="Fill Catalogue Detail's">
             <Row>
-              <Col xs={6}>
-                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
-                  <Form.Label>Catalogue Type</Form.Label>
+              <Col md="4">
+                <FormControl sx={{ m: 0, minWidth: 300 }} size="small" className="mt-1">
+                  <Form.Label>Type</Form.Label>
                   <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
                     <MenuItem value="">Select the Type</MenuItem>
                     <MenuItem value="Service">Service</MenuItem>
@@ -80,10 +81,21 @@ const AddCatalogue = () => {
                   </Select>
                 </FormControl>
               </Col>
-
               <Col className="mt-1">
-                <Form.Label>Catalogue Price</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  placeholder="Enter the Name"
+                />
+              </Col>
+              <Col className="mt-1">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  required
+                  type="number"
+                  min={500}
                   onChange={(e) => setPrice(e.target.value)}
                   value={price}
                   placeholder="Enter the Price"
@@ -114,9 +126,12 @@ const AddCatalogue = () => {
               Cancel
             </Button>
             &nbsp;
-            <Button variant="primary" onClick={handleSubmit}>
+            {/* <Button variant="primary" onClick={handleSubmit}>
               Save
-            </Button>
+            </Button> */}
+            <button type="button" className="btn btn-success" onClick={handleSubmit}>
+              Save
+            </button>
           </Col>
         </Row>
       </Div>

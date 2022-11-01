@@ -10,6 +10,7 @@ import leadRoutes from './views/lead/LeadRoutes';
 import catalogueRoutes from './views/catalogue/CatalogueRoute';
 import quotationRoutes from './views/quotation/quotationRoute';
 import invoiceRoutes from './views/invoice/invoiceRoutes';
+import employeeRoutes from './views/employee/employeeRoutes';
 const routes = [
   {
     element: (
@@ -25,6 +26,7 @@ const routes = [
       ...catalogueRoutes,
       ...quotationRoutes,
       ...invoiceRoutes,
+      ...employeeRoutes,
     ],
   },
   ...sessionRoutes,

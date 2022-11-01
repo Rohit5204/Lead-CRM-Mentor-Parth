@@ -3,6 +3,7 @@ import { uid } from 'uid';
 import { styled } from '@mui/system';
 import InvoiceItem from './InvoiceItem';
 import InvoiceModal from './InvoiceModal';
+import ReviewInvoice from './ReviewInvoice';
 import incrementString from '../helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 import {
@@ -15,7 +16,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import ReviewInvoice from './ReviewInvoice';
+
 const date = new Date();
 const today = date.toLocaleDateString('en-GB', {
   month: 'numeric',
@@ -49,9 +50,19 @@ const InvoiceForm = () => {
   // End Dialog
   const [discount, setDiscount] = useState('');
   const [tax, setTax] = useState('');
-  const [invoiceNumber, setInvoiceNumber] = useState(1);
+  const [invoiceNumber, setInvoiceNumber] = useState(1201);
   const [cashierName, setCashierName] = useState('');
+  const [companyEmail, setCompanyEmail] = useState('');
+  const [companyContact, setCompanyContact] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [companyGstNo, setCompanyGstNo] = useState('');
+  const [companyStateName, setCompanyStateName] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [panNo, setPanNo] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [clientContact, setClientContact] = useState('');
+  const [clientAddress, setClientAddress] = useState('');
+  const [clientGstNo, setClientGstNo] = useState('');
   const [items, setItems] = useState([
     {
       id: uid(6),
@@ -150,6 +161,7 @@ const InvoiceForm = () => {
             <Col>
               <Form.Label>Current Date:</Form.Label>
               <Form.Control
+                readOnly
                 //   type="date"
                 //   onChange={(e) => setQuotationDate(e.target.value)}
                 value={today}
@@ -202,13 +214,13 @@ const InvoiceForm = () => {
                 <Form.Label>Company Email:</Form.Label>
                 <Form.Control
                   required
-                  className="flex-1"
+                  // className="flex-1"
                   placeholder="Company Email"
-                  type="text"
-                  name="customerName"
-                  id="customerName"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  // type="text"
+                  // name="companyEmail"
+                  // id="companyEmail"
+                  value={companyEmail}
+                  onChange={(event) => setCompanyEmail(event.target.value)}
                 />
               </Col>
               <Col>
@@ -218,10 +230,10 @@ const InvoiceForm = () => {
                   className="flex-1"
                   placeholder="Company Contact"
                   type="text"
-                  name="customerName"
-                  id="customerName"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="companyContact"
+                  id="companyContact"
+                  value={companyContact}
+                  onChange={(event) => setCompanyContact(event.target.value)}
                 />
               </Col>
             </Row>
@@ -232,9 +244,9 @@ const InvoiceForm = () => {
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    // onChange={(e) => setComapnyAddress(e.target.value)}
-                    // value={comapnyAddress}
-                    placeholder="Comapny Address"
+                    onChange={(event) => setCompanyAddress(event.target.value)}
+                    value={companyAddress}
+                    placeholder="Company Address"
                   />
                 </Form.Group>
               </Col>
@@ -247,10 +259,10 @@ const InvoiceForm = () => {
                   className="flex-1"
                   placeholder="Enter GST Number"
                   type="text"
-                  name="gstNo"
-                  id="gstNo"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="companyGstNo"
+                  id="companyGstNo"
+                  value={companyGstNo}
+                  onChange={(event) => setCompanyGstNo(event.target.value)}
                 />
               </Col>
               <Col>
@@ -258,12 +270,12 @@ const InvoiceForm = () => {
                 <Form.Control
                   required
                   className="flex-1"
-                  placeholder="Company Contact"
+                  placeholder="Sate Name"
                   type="text"
-                  name="stateName"
-                  id="stateName"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="companyStateName"
+                  id="companyStateName"
+                  value={companyStateName}
+                  onChange={(event) => setCompanyStateName(event.target.value)}
                 />
               </Col>
             </Row>
@@ -291,12 +303,12 @@ const InvoiceForm = () => {
                 <Form.Control
                   required
                   className="flex-1"
-                  placeholder="Customer name"
+                  placeholder="Customer Pan No"
                   type="text"
                   name="panNo"
                   id="panNo"
-                  // value={customerName}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  value={panNo}
+                  onChange={(event) => setPanNo(event.target.value)}
                 />
               </Col>
             </Row>
@@ -306,12 +318,12 @@ const InvoiceForm = () => {
                 <Form.Control
                   required
                   className="flex-1"
-                  placeholder="Company Email"
+                  placeholder="Customer Email"
                   type="text"
-                  name="customerName"
-                  id="customerName"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="clientEmail"
+                  id="clientEmail"
+                  value={clientEmail}
+                  onChange={(event) => setClientEmail(event.target.value)}
                 />
               </Col>
               <Col>
@@ -319,12 +331,12 @@ const InvoiceForm = () => {
                 <Form.Control
                   required
                   className="flex-1"
-                  placeholder="Company Contact"
+                  placeholder="Customer Contact"
                   type="text"
-                  name="customerName"
-                  id="customerName"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="clientContact"
+                  id="clientContact"
+                  value={clientContact}
+                  onChange={(event) => setClientContact(event.target.value)}
                 />
               </Col>
             </Row>
@@ -335,9 +347,9 @@ const InvoiceForm = () => {
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    // onChange={(e) => setComapnyAddress(e.target.value)}
-                    // value={comapnyAddress}
-                    placeholder="Comapny Address"
+                    onChange={(event) => setClientAddress(event.target.value)}
+                    value={clientAddress}
+                    placeholder="Customer Address"
                   />
                 </Form.Group>
               </Col>
@@ -350,17 +362,16 @@ const InvoiceForm = () => {
                   className="flex-1"
                   placeholder="Enter GST Number"
                   type="text"
-                  name="gstNo"
-                  id="gstNo"
-                  // value={}
-                  // onChange={(event) => setCustomerName(event.target.value)}
+                  name="clientGstNo"
+                  id="clientGstNo"
+                  value={clientGstNo}
+                  onChange={(event) => setClientGstNo(event.target.value)}
                 />
               </Col>
               <Col>
                 <Form.Label>Tax rate:</Form.Label>
                 <InputGroup className="mb-3">
                   <br />
-                  {/* <InputGroup.Text>$</InputGroup.Text> */}
                   <Form.Control
                     required
                     type="number"
@@ -371,8 +382,6 @@ const InvoiceForm = () => {
                     placeholder="Tax Rate"
                     value={tax}
                     onChange={(event) => setTax(event.target.value)}
-                    // value={}
-                    // onChange={(event) => setCustomerName(event.target.value)}
                   />
                   <InputGroup.Text>%</InputGroup.Text>
                 </InputGroup>
@@ -572,6 +581,16 @@ const InvoiceForm = () => {
           setIsOpen={setIsOpen}
           invoiceInfo={{
             invoiceNumber,
+            companyEmail,
+            companyAddress,
+            companyContact,
+            companyGstNo,
+            companyStateName,
+            clientEmail,
+            clientContact,
+            clientAddress,
+            clientGstNo,
+            panNo,
             cashierName,
             customerName,
             subtotal,
