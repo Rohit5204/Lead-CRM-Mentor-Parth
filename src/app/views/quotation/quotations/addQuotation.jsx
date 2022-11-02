@@ -1,8 +1,9 @@
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { Box, MenuItem, FormControl, Select } from '@mui/material';
+import { Box, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Container = styled('div')(({ theme }) => ({
@@ -18,6 +19,12 @@ const Div = styled('div')(() => ({
 }));
 
 const AddQuotation = () => {
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/quotations/manageQuotation');
+  };
+  const [checked, setChecked] = useState(false);
+
   const [quotationNumber, setQuotationNumber] = useState('');
   const [quotationDate, setQuotationDate] = useState('');
   const [comapnyAddress, setComapnyAddress] = useState('');
@@ -35,6 +42,8 @@ const AddQuotation = () => {
   const [remarks, setRemarks] = useState('');
   const [bankDetails, setBankDetails] = useState('');
   const [instalments, setInstalments] = useState([]);
+
+  const [selected, setSelected] = useState('');
 
   const addQuotation = {
     leadId: 1,
@@ -82,6 +91,10 @@ const AddQuotation = () => {
     postData();
     blankForm();
     alert('Catalogue Successfully Created');
+  };
+
+  const handleChange = (event) => {
+    setSelected(event.target.value);
   };
   return (
     <Container>
@@ -252,20 +265,94 @@ const AddQuotation = () => {
               value={grandTotal}
             />
           </Col>
-          <Col>
+          <Col className="mt-2">
             <Form.Label>Bank Details</Form.Label>
-            <Form.Control
-              placeholder="YES/NO"
-              onChange={(e) => setGrandTotal(e.target.value)}
-              value={grandTotal}
+            {/* <input type="checkbox" /> */}
+            <Form.Check
+              type="switch"
+              onChange={() => setChecked(!checked)}
+              checked={checked}
+              id="custom-switch"
+              label="If you have Payment Detail's,Please Check the Box"
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {checked ? (
+              <Row>
+                <Col>
+                  <Box sx={{ minWidth: 120 }} className="mt-1">
+                    <FormControl fullWidth>
+                      <label>Choose Payment Option</label>
+                      <Select value={selected} label="Age" onChange={handleChange}>
+                        <MenuItem value="">Choose Payment Option</MenuItem>
+                        <MenuItem value="netBanking">Net Banking</MenuItem>
+                        <MenuItem value="bank">Bank Transfer</MenuItem>
+                        <MenuItem value="gPay">G-Pay</MenuItem>
+                        <MenuItem value="amazonPay">Amazon Pay</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  {/* <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
+                    <Form.Label>Choose Payment Option</Form.Label>
+                    <Select
+                      value={selected}
+                      // label="selected"
+                      onChange={(e) => setSelected(!selected)}
+                    >
+                      <MenuItem value="">Choose Payment Option</MenuItem>
+                      <MenuItem value="Net Banking">Net Banking</MenuItem>
+                      <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
+                      <MenuItem value="G-Pay">G-Pay</MenuItem>
+                      <MenuItem value="Amazon Pay">Amazon Pay</MenuItem>
+                    </Select>
+                  </FormControl> */}
+                </Col>
+                <Col>
+                  <Form.Label>Transaction Refrence Number</Form.Label>
+                  <Form.Control
+                    fullWidth
+                    placeholder="Enter the Refrence Number of Transaction"
+                    // onChange={(e) => setGrandTotal(e.target.value)}
+                    // value={grandTotal}
+                  />
+                </Col>
+              </Row>
+            ) : (
+              <div></div>
+            )}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {selected ? (
+              <>
+                <br />
+                <h6>Please Fill Detail's Only For Bank Transfer</h6>
+                <Row>
+                  <Col>
+                    <Form.Label>Bank Name</Form.Label>
+                    <Form.Control placeholder="Enter the Bank Name" />
+                  </Col>
+                  <Col>
+                    <Form.Label>IFSC CODE</Form.Label>
+                    <Form.Control placeholder="Enter the IFSC CODE" />
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <div></div>
+            )}
           </Col>
         </Row>
       </SimpleCard>
       <Div className="mt-2">
         <Row>
           <Col>
-            <Button variant="contained">Cancel</Button>
+            <Button variant="contained" onClick={changePage}>
+              Cancel
+            </Button>
             &nbsp;
             <Button variant="success" onClick={handleSubmit}>
               Add

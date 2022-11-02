@@ -51,51 +51,51 @@ const EditCatalogue = ({ theEditCatalogue }) => {
   };
   return (
     <Container>
-      <SimpleCard title="Update Catalogue Detail's">
-        <Form onClick={handleSubmit}>
-          <Row>
-            <Col md="4">
-              <FormControl sx={{ m: 0, minWidth: 200 }} size="small" className="mt-1">
-                <Form.Label>Type</Form.Label>
-                <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
-                  <MenuItem value="">Select the Type</MenuItem>
-                  <MenuItem value="Service">Service</MenuItem>
-                  <MenuItem value="Product">Product</MenuItem>
-                </Select>
-              </FormControl>
-            </Col>
-            <Col className="mt-1">
-              <Form.Label>Name</Form.Label>
+      {/* <SimpleCard title="Update Catalogue Detail's"> */}
+      <Form onClick={handleSubmit}>
+        <Row>
+          <Col md="4">
+            <FormControl sx={{ m: 0, minWidth: 200 }} size="small" className="mt-1">
+              <Form.Label>Type</Form.Label>
+              <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
+                <MenuItem value="">Select the Type</MenuItem>
+                <MenuItem value="Service">Service</MenuItem>
+                <MenuItem value="Product">Product</MenuItem>
+              </Select>
+            </FormControl>
+          </Col>
+          <Col className="mt-1">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              placeholder="Enter the Name"
+            />
+          </Col>
+          <Col className="mt-1">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              onChange={(e) => setPrice(e.target.value)}
+              value={price}
+              placeholder="Enter the Price"
+            />
+          </Col>
+        </Row>
+        <Row className="mt-1">
+          <Col>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Description</Form.Label>
               <Form.Control
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                placeholder="Enter the Name"
+                as="textarea"
+                rows={3}
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
+                placeholder="Write Description"
               />
-            </Col>
-            <Col className="mt-1">
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                onChange={(e) => setPrice(e.target.value)}
-                value={price}
-                placeholder="Enter the Price"
-              />
-            </Col>
-          </Row>
-          <Row className="mt-1">
-            <Col>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
-                  placeholder="Write Description"
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          {/* <Row className="mt-1">
+            </Form.Group>
+          </Col>
+        </Row>
+        {/* <Row className="mt-1">
           <Col>
             <Button variant="success" onClick={handleSubmit}>
               Add Lead
@@ -104,8 +104,8 @@ const EditCatalogue = ({ theEditCatalogue }) => {
             <Button variant="primary">Cancel</Button>
           </Col>
         </Row> */}
-        </Form>
-      </SimpleCard>
+      </Form>
+      {/* </SimpleCard> */}
     </Container>
   );
 };

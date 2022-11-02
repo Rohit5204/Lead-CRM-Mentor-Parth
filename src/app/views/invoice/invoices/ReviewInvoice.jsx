@@ -122,155 +122,160 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                 Download
               </button>
               &nbsp;
-              <button type="button" className="btn btn-primary" onClick={addNextInvoiceHandler}>
-                Add New Invoice
+              {/* <button type="button" className="btn btn-primary" onClick={addNextInvoiceHandler}> */}
+              <button type="button" className="btn btn-primary" onClick={closeModal}>
+                Edit
               </button>
             </Col>
           </Row>
         </Modal.Header>
         <Modal.Body>
-          <div className=" my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
-            <div className="p-4" id="print">
-              <Row>
-                <Col></Col>
-                <Col>
-                  <h5 className="text-center text-lg font-bold text-gray-900">TAX INVOICE</h5>
-                </Col>
-                <Col></Col>
-              </Row>
-              <hr />
-              <div className="mt-6">
-                <Row>
-                  <Col>
-                    <b>
-                      <span className="font-bold">From:</span>
-                    </b>
-
-                    <span>&nbsp;{invoiceInfo.cashierName}</span>
-                    <br />
-                    <span>Address: {invoiceInfo.companyAddress}</span>
-                    {/* <br /> */}
-                    {/* <span>Vashi,New Mumbai-400012</span> */}
-                    <br />
-                    <span className="font-bold">GST NO: {invoiceInfo.companyGstNo}</span>
-                    <br />
-                    <span className="font-bold">State: {invoiceInfo.companyStateName}</span>
-                    <br />
-                    <span className="font-bold">Email: {invoiceInfo.companyEmail}</span>
-                  </Col>
-                  <Col>
-                    <b>
-                      <span className="font-bold">To:</span>
-                    </b>
-                    <span>&nbsp;{invoiceInfo.customerName}</span>
-                    <br />
-
-                    <span>Address: {invoiceInfo.clientAddress}</span>
-                    <br />
-                    <span className="font-bold">GST NO: {invoiceInfo.clientGstNo}</span>
-                    <br />
-                    <span className="font-bold">PAN No: {invoiceInfo.panNo}</span>
-                    <br />
-                    <span className="font-bold">Email: {invoiceInfo.clientEmail}</span>
-                  </Col>
-                  <Col>
-                    <b>
-                      <span className="font-bold">Invoice Number:</span>
-                    </b>
-                    <span>&nbsp;{invoiceInfo.invoiceNumber}</span>
-                    <br />
-                    <span className="font-bold">Date: 30-10-2022</span>
-                    <br />
-
-                    <span className="font-bold">Refrence No. & Date:</span>
-                  </Col>
-                </Row>
-                <br />
-                <br />
-                <br />
-                <Row className="mt-2">
-                  <Col></Col>
-                  <Col md="auto">
-                    <h4 style={{ color: 'green' }}>Product Invoice List</h4>
-                  </Col>
-                  <Col></Col>
-                </Row>
-                <Row>
-                  <StyledTable>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">Product Name</TableCell>
-                        <TableCell align="center">Quatity</TableCell>
-                        <TableCell align="center">Unit Price</TableCell>
-                        <TableCell align="center">Total Price</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {items.map((item) => (
-                        <tr key={item.id}>
-                          <td className="w-full">{item.name}</td>
-                          <td className="min-w-[50px] text-center">{item.qty}</td>
-                          <td className="min-w-[80px] text-center">
-                            ₹{Number(item.price).toFixed(2)}
-                          </td>
-                          <td className="min-w-[90px] text-center">
-                            ₹{Number(item.price * item.qty).toFixed(2)}
-                          </td>
-                        </tr>
-                      ))}
-                    </TableBody>
-                  </StyledTable>
-                </Row>
-                <br></br>
-                <br />
+          <StyledTable style={{ borderWidth: '1px', borderColor: '#aaaaaa', borderStyle: 'solid' }}>
+            <div className=" my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
+              <div className="p-4" id="print">
                 <Row>
                   <Col></Col>
-                  <Col></Col>
                   <Col>
-                    <b>
-                      <Form.Label>Subtotal:</Form.Label>
-                    </b>
-
-                    <Form.Label style={{ color: 'green' }} className="ml-5">
-                      ₹ {invoiceInfo.subtotal.toFixed(2)}
-                    </Form.Label>
+                    <h5 className="text-center text-lg font-bold text-gray-900">INVOICE</h5>
                   </Col>
+                  <Col></Col>
                 </Row>
+                <hr />
+                <div className="mt-6">
+                  <Row>
+                    <Col>
+                      <b>
+                        <span className="font-bold">From:</span>
+                      </b>
 
-                <Row>
-                  <Col></Col>
-                  <Col></Col>
-                  <Col>
-                    <b>
-                      <Form.Label>Tax Rate:</Form.Label>
-                    </b>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Form.Label style={{ color: 'green' }} className="ml-4">
-                      ₹ {invoiceInfo.taxRate.toFixed(2)}
-                    </Form.Label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col></Col>
-                  <Col></Col>
+                      <span>&nbsp;{invoiceInfo.cashierName}</span>
+                      <br />
+                      <span>Address: {invoiceInfo.companyAddress}</span>
+                      {/* <br /> */}
+                      {/* <span>Vashi,New Mumbai-400012</span> */}
+                      <br />
+                      <span className="font-bold">GST NO: {invoiceInfo.companyGstNo}</span>
+                      <br />
+                      <span className="font-bold">State: {invoiceInfo.companyStateName}</span>
+                      <br />
+                      <span className="font-bold">Email: {invoiceInfo.companyEmail}</span>
+                    </Col>
+                    <Col>
+                      <b>
+                        <span className="font-bold">To:</span>
+                      </b>
+                      <span>&nbsp;{invoiceInfo.customerName}</span>
+                      <br />
 
-                  <Col>
-                    <hr />
-                    <b>
-                      <Form.Label>Grand Total:</Form.Label>
-                    </b>
+                      <span>Address: {invoiceInfo.clientAddress}</span>
+                      <br />
+                      <span className="font-bold">GST NO: {invoiceInfo.clientGstNo}</span>
+                      <br />
+                      <span className="font-bold">PAN No: {invoiceInfo.panNo}</span>
+                      <br />
+                      <span className="font-bold">Email: {invoiceInfo.clientEmail}</span>
+                    </Col>
+                    <Col>
+                      <b>
+                        <span className="font-bold">Invoice Number:</span>
+                      </b>
+                      <span>&nbsp;{invoiceInfo.invoiceNumber}</span>
+                      <br />
+                      <span className="font-bold">Date: 30-10-2022</span>
+                      <br />
 
-                    <Form.Label style={{ color: 'green' }} className="ml-5">
-                      ₹
-                      {invoiceInfo.total % 1 === 0
-                        ? invoiceInfo.total
-                        : invoiceInfo.total.toFixed(2)}
-                    </Form.Label>
-                  </Col>
-                </Row>
+                      <span className="font-bold">Refrence No. & Date:</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <br />
+                  <br />
+                  <Row className="mt-2">
+                    <Col></Col>
+                    <Col md="auto">
+                      <h4 style={{ color: 'green' }}>Product Invoice List</h4>
+                    </Col>
+                    <Col></Col>
+                  </Row>
+                  <Row>
+                    <StyledTable
+                      style={{ borderWidth: '1px', borderColor: '#aaaaaa', borderStyle: 'solid' }}
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Product Name</TableCell>
+                          <TableCell align="center">Quatity</TableCell>
+                          <TableCell align="center">Unit Price</TableCell>
+                          <TableCell align="center">Total Price</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {items.map((item) => (
+                          <tr key={item.id}>
+                            <td className="w-full">{item.name}</td>
+                            <td className="min-w-[50px] text-center">{item.qty}</td>
+                            <td className="min-w-[80px] text-center">
+                              ₹{Number(item.price).toFixed(2)}
+                            </td>
+                            <td className="min-w-[90px] text-center">
+                              ₹{Number(item.price * item.qty).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                      </TableBody>
+                    </StyledTable>
+                  </Row>
+                  <br></br>
+                  <br />
+                  <Row>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col>
+                      <b>
+                        <Form.Label>Subtotal:</Form.Label>
+                      </b>
+
+                      <Form.Label style={{ color: 'green' }} className="ml-5">
+                        ₹ {invoiceInfo.subtotal.toFixed(2)}
+                      </Form.Label>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col>
+                      <b>
+                        <Form.Label>Tax Rate:</Form.Label>
+                      </b>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <Form.Label style={{ color: 'green' }} className="ml-4">
+                        ₹ {invoiceInfo.taxRate.toFixed(2)}
+                      </Form.Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col></Col>
+                    <Col></Col>
+
+                    <Col>
+                      <hr />
+                      <b>
+                        <Form.Label>Grand Total:</Form.Label>
+                      </b>
+
+                      <Form.Label style={{ color: 'green' }} className="ml-5">
+                        ₹
+                        {invoiceInfo.total % 1 === 0
+                          ? invoiceInfo.total
+                          : invoiceInfo.total.toFixed(2)}
+                      </Form.Label>
+                    </Col>
+                  </Row>
+                </div>
               </div>
             </div>
-          </div>
+          </StyledTable>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>

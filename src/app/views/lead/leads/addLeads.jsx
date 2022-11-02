@@ -15,9 +15,11 @@ const Container = styled('div')(({ theme }) => ({
     [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
   },
 }));
+
 const Div = styled('div')(({ theme }) => ({
   margin: '410px',
 }));
+
 const LeadForm = () => {
   const navigate = useNavigate();
   const changePage = () => {

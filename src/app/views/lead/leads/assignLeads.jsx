@@ -113,6 +113,23 @@ const AssignLead = () => {
         <Box>
           <Row>
             <Col>
+              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+              <br></br>
+              <button type="button" className="btn btn-outline-success">
+                Last Day
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Week
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Month
+              </button>
+              &nbsp;
+            </Col>
+            <Col md="8">
+              <Form.Label htmlFor="basic-url">Search Box</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control
                   placeholder="Search Box"

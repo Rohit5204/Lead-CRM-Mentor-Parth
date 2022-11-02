@@ -3,6 +3,7 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Data } from 'app/components/Data';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 // import EditCatalogue from './editCatalogue';
 import {
@@ -36,6 +37,15 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const ManageQuotation = () => {
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/quotations/addQuotation');
+  };
+  const [showForm, setShowForm] = useState(false);
+
+  const showForm1 = () => {
+    setShowForm(!showForm);
+  };
   const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
@@ -79,21 +89,180 @@ const ManageQuotation = () => {
           />
         </Box>
         <Box>
+          {/* <Row>
+            <Col>
+              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+              <br></br>
+              <button type="button" className="btn btn-outline-success">
+                Last Day
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Week
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Month
+              </button>
+              &nbsp;
+            </Col>
+          </Row> */}
+          <br />
           <Row>
             <Col>
+              <Form.Label htmlFor="basic-url">Serach Box</Form.Label>
               <InputGroup className="mb-3">
+                {/* <button type="button" className="btn btn-success" onClick={changePage}>
+                  ADD
+                </button>
+                &nbsp; */}
                 <Form.Control
                   placeholder="Search Box"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
-                &nbsp;
-                <button type="submit" className="btn btn-success">
-                  ADD
-                </button>
               </InputGroup>
             </Col>
+            <Col md="4">
+              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+              <br></br>
+              <button type="button" className="btn btn-outline-success">
+                Last Day
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Week
+              </button>
+              &nbsp;
+              <button type="button" className="btn btn-outline-success">
+                Last Month
+              </button>
+              &nbsp;
+            </Col>
+
+            <Col md={2}>
+              <Form.Label htmlFor="basic-url"> Advanced Search</Form.Label>
+              <br />
+              <button type="button" className="btn btn-outline-success" onClick={showForm1}>
+                Apply Filter
+              </button>
+            </Col>
           </Row>
+          <br />
+          {showForm && (
+            <form>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Serach By Customer Name</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Customer Name"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Serach By Product Name</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Product Name"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Serach By Quantity</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Serach By Quantity"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Search By Contact Number</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Serach By Contact Number"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Search By Amount</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Search By Amount"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Search By Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Search By Date"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Assign To</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Assign To"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Generated By</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Generated By"
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Monitor By</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Select Monitor By"
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <button type="submit" class="btn btn-primary">
+                Serach
+              </button>
+            </form>
+          )}
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
@@ -105,7 +274,7 @@ const ManageQuotation = () => {
                 <TableCell align="justify">Date</TableCell>
                 <TableCell align="justify">Customer Name</TableCell>
                 <TableCell align="justify">Product Name</TableCell>
-                <TableCell align="justify">Quatity</TableCell>
+                <TableCell align="justify">Quantity</TableCell>
                 <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
