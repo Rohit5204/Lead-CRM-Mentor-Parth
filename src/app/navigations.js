@@ -1,5 +1,6 @@
 export const navigations = [
   { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
+  { name: 'Employee Dashboard', path: '/dashboard/employeeDashboard', icon: 'dashboard' },
   // { label: 'PAGES', type: 'label' },
   { label: 'LEADS', type: 'label' },
   {

@@ -1,7 +1,7 @@
 import React from 'react';
-import InvoiceField from './InvoiceField';
+import InvoiceFieldEMI from './EMIFields';
 import { Icon, IconButton } from '@mui/material';
-const InvoiceEMI = ({ id, date, amount, onDeleteItem, onEdtiItem }) => {
+const InvoiceEMI = ({ no, id, date, amount, onDeleteItem, onEdtiItem }) => {
   const deleteItemHandler = () => {
     onDeleteItem(id);
   };
@@ -9,36 +9,43 @@ const InvoiceEMI = ({ id, date, amount, onDeleteItem, onEdtiItem }) => {
   return (
     <tr>
       <td className="w-full">
-        <input
-          type="date"
-          value={date}
-          name={date}
-          id={id}
-          onChange={(event) => onEdtiItem(event)}
+        {/* <input type="text" value={no} name={no} id={id} onChange={(event) => onEdtiItem(event)} /> */}
+        <InvoiceFieldEMI
+          onEditItem={(event) => onEdtiItem(event)}
+          cellData={{
+            placeholder: 'Installment No.',
+            type: 'text',
+            name: 'no',
+            id: id,
+            value: no,
+          }}
         />
-        {/* <InvoiceField
+      </td>
+      <td className="w-full">
+        {/* <input type="date" value={date} name={date} onChange={(event) => onEdtiItem(event)} /> */}
+        <InvoiceFieldEMI
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
             placeholder: 'Item name',
-            type: 'text',
-            name: 'name',
+            type: 'date',
+            name: 'date',
             id: id,
-            value: name,
+            value: date,
           }}
-        /> */}
+        />
       </td>
       <td className="w-full">
-        <input type="number" value={amount} name={amount} onChange={(event) => onEdtiItem(event)} />
-        {/* <InvoiceField
+        {/* <input type="number" value={amount} name={amount} onChange={(event) => onEdtiItem(event)} /> */}
+        <InvoiceFieldEMI
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
-            type: 'number',
-            min: '1',
-            name: 'qty',
+            placeholder: 'Installment Amount',
+            type: 'text',
+            name: 'amount',
             id: id,
-            value: qty,
+            value: amount,
           }}
-        /> */}
+        />
       </td>
 
       <td className="flex items-center justify-center">

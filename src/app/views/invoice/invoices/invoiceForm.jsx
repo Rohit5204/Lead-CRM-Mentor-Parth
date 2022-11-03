@@ -19,12 +19,16 @@ import {
   TableRow,
 } from '@mui/material';
 
-const date = new Date();
-const today = date.toLocaleDateString('en-GB', {
-  month: 'numeric',
-  day: 'numeric',
-  year: 'numeric',
-});
+// const date = new Date();
+// const today = date.toLocaleDateString('en-GB', {
+//   month: 'numeric',
+//   day: 'numeric',
+//   year: 'numeric',
+// });
+const today = new Date();
+const numberOfDaysToAdd = 0;
+const date = today.setDate(today.getDate() + numberOfDaysToAdd);
+const defaultValue = new Date(date).toISOString().split('T')[0]; // yyyy-mm-dd
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -36,25 +40,28 @@ const Container = styled('div')(({ theme }) => ({
 const StyledTable = styled(Table)(() => ({
   whiteSpace: 'pre',
   '& thead': {
-    '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
+    '& tr': { '& th': { paddingLeft: 20, paddingRight: 0 } },
   },
   '& tbody': {
-    '& tr': { '& td': { paddingLeft: 0 } },
+    '& tr': { '& td': { paddingLeft: 30 } },
   },
 }));
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [discount, setDiscount] = useState('');
-  const [tax, setTax] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [tax, setTax] = useState(18);
+  const [invoiceDate, setInvoiceDate] = useState(defaultValue);
   const [invoiceNumber, setInvoiceNumber] = useState(1201);
   const [cashierName, setCashierName] = useState('');
-  const [companyEmail, setCompanyEmail] = useState('');
-  const [companyContact, setCompanyContact] = useState('');
-  const [companyAddress, setCompanyAddress] = useState('');
-  const [companyGstNo, setCompanyGstNo] = useState('');
-  const [companyStateName, setCompanyStateName] = useState('');
+  const [companyEmail, setCompanyEmail] = useState('info@mentorparth.com');
+  const [companyContact, setCompanyContact] = useState('+91-7715815877');
+  const [companyAddress, setCompanyAddress] = useState(
+    'Haware Fantasia Business Park, Vashi, Navi-Mumbai'
+  );
+  const [companyGstNo, setCompanyGstNo] = useState('ABCDEF01234');
+  const [companyStateName, setCompanyStateName] = useState('Maharashtra');
   const [customerName, setCustomerName] = useState('');
   const [panNo, setPanNo] = useState('');
   const [clientEmail, setClientEmail] = useState('');
@@ -180,7 +187,7 @@ const InvoiceForm = () => {
       <Card style={{ width: '65rem', background: '#C3CFC9' }}>
         <Row>
           <Col md="9">
-            <SimpleCard title="Invoice Preview">
+            <SimpleCard title="Create New Invoice">
               <Form>
                 <Row className="mt-2">
                   <Col></Col>
@@ -198,12 +205,18 @@ const InvoiceForm = () => {
                     />
                   </Col>
                   <Col>
-                    <Form.Label>Current Date:</Form.Label>
-                    <Form.Control
-                      readOnly
-                      // type="date"
+                    <Form.Label>Date:</Form.Label>
+                    {/* <Form.Control
+                      type="date"
                       // onChange={(e) => setQuotationDate(e.target.value)}
                       value={today}
+                    /> */}
+                    <Form.Control
+                      id="dateRequired"
+                      type="date"
+                      name="dateRequired"
+                      value={invoiceDate}
+                      onChange={(event) => setInvoiceDate(event.target.value)}
                     />
                   </Col>
 
@@ -409,7 +422,7 @@ const InvoiceForm = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell align="center">Product Name</TableCell>
-                          <TableCell align="center">Quatity</TableCell>
+                          <TableCell align="center">Quantity</TableCell>
                           <TableCell align="center">Unit Price</TableCell>
                           <TableCell align="center">Action</TableCell>
                         </TableRow>
@@ -540,25 +553,17 @@ const InvoiceForm = () => {
               </Row>
               <Row>
                 <Col>
-                  <Form.Label>Number Of Installemnt:</Form.Label>
+                  <Form.Label>Number of Installment:</Form.Label>
                   <InputGroup className="mb-3">
                     <Form.Control
-                      required
-                      type="number"
-                      name="tax"
-                      id="tax"
-                      min="3"
-                      max="9"
-                      step="3"
-                      placeholder="Select Period"
-                      //value={discount}
+                      value={Object.keys(installments).length}
                       //onChange={(event) => setDiscount(event.target.value)}
                     />
                     {/* <InputGroup.Text>%</InputGroup.Text> */}
                   </InputGroup>
                 </Col>
               </Row>
-              <Row>
+              <Row className="ml-1">
                 <button type="button" onClick={() => handleShow()} className="btn btn-success">
                   Add Installments
                 </button>
@@ -577,7 +582,7 @@ const InvoiceForm = () => {
                 </Modal.Header>
                 <Modal.Body>
                   <Row>
-                    <Col className="col-sm-1">
+                    <Col>
                       <button type="button" onClick={addItemHandler1} className="btn btn-success">
                         Add New Installments
                       </button>
@@ -588,18 +593,20 @@ const InvoiceForm = () => {
                       <StyledTable>
                         <TableHead>
                           <TableRow>
-                            <TableCell align="justify">Date</TableCell>
-                            <TableCell align="justify">Amount</TableCell>
+                            <TableCell align="center">Installment No</TableCell>
+                            <TableCell align="center">Date</TableCell>
+                            <TableCell align="center">Amount</TableCell>
 
-                            <TableCell align="justify">Action</TableCell>
+                            <TableCell align="center">Action</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {installments.map((item) => (
                             <InvoiceEMI
-                              align="justify"
+                              // align="center"
                               key={item.id}
                               id={item.id}
+                              no={item.no}
                               date={item.date}
                               amount={item.amount}
                               onDeleteItem={deleteItemHandler1}
@@ -648,6 +655,7 @@ const InvoiceForm = () => {
         show={isOpen}
         setIsOpen={setIsOpen}
         invoiceInfo={{
+          invoiceDate,
           invoiceNumber,
           companyEmail,
           companyAddress,
