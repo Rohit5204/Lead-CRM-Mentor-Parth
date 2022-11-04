@@ -68,13 +68,8 @@ const InvoiceForm = () => {
   const [clientContact, setClientContact] = useState('');
   const [clientAddress, setClientAddress] = useState('');
   const [clientGstNo, setClientGstNo] = useState('');
-  const [installments, setInstallments] = useState([
-    {
-      id: uid(6),
-      date: '',
-      amount: '',
-    },
-  ]);
+  const [initalPayment, setInitalPayment] = useState(0);
+  const [installments, setInstallments] = useState([]);
   const [items, setItems] = useState([
     {
       id: uid(6),
@@ -181,7 +176,8 @@ const InvoiceForm = () => {
   const taxRate = (tax * subtotal) / 100;
   const discountRate = (discount * subtotal) / 100;
   const total = subtotal - discountRate + taxRate;
-
+  const pending = total - initalPayment;
+  const emiAmount = pending / Object.keys(installments).length;
   return (
     <Container>
       <Card style={{ width: '65rem', background: '#C3CFC9' }}>
@@ -551,18 +547,7 @@ const InvoiceForm = () => {
                   </InputGroup>
                 </Col>
               </Row>
-              <Row>
-                <Col>
-                  <Form.Label>Number of Installment:</Form.Label>
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      value={Object.keys(installments).length}
-                      //onChange={(event) => setDiscount(event.target.value)}
-                    />
-                    {/* <InputGroup.Text>%</InputGroup.Text> */}
-                  </InputGroup>
-                </Col>
-              </Row>
+
               <Row className="ml-1">
                 <button type="button" onClick={() => handleShow()} className="btn btn-success">
                   Add Installments
@@ -583,7 +568,44 @@ const InvoiceForm = () => {
                 <Modal.Body>
                   <Row>
                     <Col>
-                      <button type="button" onClick={addItemHandler1} className="btn btn-success">
+                      <Form.Label style={{ color: 'red' }}>
+                        Note :- Pending Amount Will Be Covernted in the EMI
+                      </Form.Label>
+                      <br />
+                      <Form.Label>Number of Installment:</Form.Label>
+                      <InputGroup className="mb-3">
+                        <Form.Control
+                          readOnly
+                          value={Object.keys(installments).length}
+                          //onChange={(event) => setDiscount(event.target.value)}
+                        />
+                        {/* <InputGroup.Text>%</InputGroup.Text> */}
+                      </InputGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Inital Payment</Form.Label>
+                        <Form.Control
+                          onChange={(event) => setInitalPayment(event.target.value)}
+                          value={initalPayment}
+                          placeholder="Inital Payment"
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Pending Amount</Form.Label>
+                        <Form.Control readOnly value={pending} />
+                      </Form.Group>
+                    </Col>
+                    <Col md="3" className="mt-4">
+                      <button
+                        type="button"
+                        onClick={addItemHandler1}
+                        className="btn btn-success mt-1"
+                      >
                         Add New Installments
                       </button>
                     </Col>
@@ -660,6 +682,10 @@ const InvoiceForm = () => {
           companyEmail,
           companyAddress,
           companyContact,
+          installments,
+          initalPayment,
+          pending,
+          emiAmount,
           companyGstNo,
           companyStateName,
           clientEmail,

@@ -33,7 +33,7 @@ export const navigations = [
       { name: 'Send', path: '/material/checkbox', iconText: 'C' },
     ],
   },
-  { name: 'Add Qutation', path: '/lead/addLeads', icon: 'dashboard' },
+  { name: 'Add Qutation', path: '/quotations/addQuotation', icon: 'dashboard' },
   { label: 'INVOICE', type: 'label' },
   {
     name: 'Invoive',
