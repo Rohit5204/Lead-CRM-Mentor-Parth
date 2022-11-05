@@ -69,7 +69,7 @@ const ManageLead = () => {
   //get method
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
+      .post(`https://35.89.6.16:4002/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
