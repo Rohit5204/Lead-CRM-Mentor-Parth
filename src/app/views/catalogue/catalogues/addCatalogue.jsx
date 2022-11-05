@@ -39,16 +39,16 @@ const AddCatalogue = () => {
       price: price,
       description: description,
     });
-    axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, [
+    axios.post('http://35.89.6.16:4002/api/upsertCatalogue',
       {
-        catId: null,
+        catId: 0,
         catType: catType,
         price: price,
         description: description,
         catStatus: 1,
         actionBy: 1,
-      },
-    ]);
+      }
+    );
   };
 
   const handleSubmit = (e) => {

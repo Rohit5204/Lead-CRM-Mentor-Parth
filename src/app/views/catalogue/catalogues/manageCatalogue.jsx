@@ -51,24 +51,13 @@ const ManageCatalogue = () => {
   //get method
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
-        leadId: 0,
-        userId: 0,
-        statusId: 0,
+      .post(`http://35.89.6.16:4002/api/getCatalogue`, {
+        catId: 0,
       })
       .then((response) => {
         setAPIData(response.data.data);
       });
   }, [APIData]);
-  //   useEffect(() => {
-  //     axios
-  //       .post(`http://35.89.6.16:4002/api/upsertCatalogue`, {
-  //         catId: 0,
-  //       })
-  //       .then((response) => {
-  //         setAPIData(response.data.data);
-  //       });
-  //   }, [APIData]);
   return (
     <Container>
       <Box>
@@ -115,16 +104,11 @@ const ManageCatalogue = () => {
               {APIData.map((catalogue, index) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell align="justify">{catalogue.leadId}</TableCell>
+                    <TableCell align="justify">{catalogue.id}</TableCell>
+                    <TableCell align="justify">{catalogue.gsType}</TableCell>
                     <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.emailId}</TableCell>
-                    {/* <TableCell align="justify">{catalogue.catId}</TableCell>
-                    <TableCell align="justify">{catalogue.catType}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.price}</TableCell>
-                    <TableCell align="justify">{catalogue.catStatus}</TableCell> */}
+                    <TableCell align="justify">{catalogue.gsPrice}</TableCell>
+                    <TableCell align="justify">{catalogue.Status}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(catalogue)}>
                         <Icon color="success">edit</Icon>

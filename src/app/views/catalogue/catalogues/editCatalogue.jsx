@@ -18,16 +18,17 @@ const Div = styled('div')(() => ({
   margin: '410px',
 }));
 const EditCatalogue = ({ theEditCatalogue }) => {
+  console.log(theEditCatalogue)
   const [catId, setCatId] = useState(theEditCatalogue.catId);
   const [catType, setCatType] = useState(theEditCatalogue.catType);
-  const [name, setName] = useState(theEditCatalogue.name);
+  // const [name, setName] = useState(theEditCatalogue.name);
   const [price, setPrice] = useState(theEditCatalogue.price);
   const [description, setDescription] = useState(theEditCatalogue.description);
 
   const UpdateCatalogue = {
     catId: catId,
     catType: catType,
-    name: name,
+    // name: name,
     price: price,
     description: description,
     catStatus: 1,
@@ -40,7 +41,7 @@ const EditCatalogue = ({ theEditCatalogue }) => {
   };
   const blankForm = () => {
     setCatType('');
-    setName('');
+    // setName('');
     setPrice('');
     setDescription('');
   };
@@ -67,8 +68,8 @@ const EditCatalogue = ({ theEditCatalogue }) => {
           <Col className="mt-1">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              // onChange={(e) => setName(e.target.value)}
+              // value={name}
               placeholder="Enter the Name"
             />
           </Col>

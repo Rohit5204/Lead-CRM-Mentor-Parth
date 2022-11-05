@@ -59,10 +59,9 @@ const ManageQuotation = () => {
   //get method
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
-        leadId: 0,
-        userId: 0,
-        statusId: 0,
+      .post(`http://35.89.6.16:4002/api/getQuotationData`, {
+        quotationId: 0,
+        empId: 0,
       })
       .then((response) => {
         setAPIData(response.data.data);
@@ -88,6 +87,7 @@ const ManageQuotation = () => {
             ]}
           />
         </Box>
+        {/* Search option */}
         <Box>
           {/* <Row>
             <Col>
@@ -274,22 +274,22 @@ const ManageQuotation = () => {
                 <TableCell align="justify">Date</TableCell>
                 <TableCell align="justify">Customer Name</TableCell>
                 <TableCell align="justify">Product Name</TableCell>
-                <TableCell align="justify">Quantity</TableCell>
+                <TableCell align="justify">Amount</TableCell>
                 <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
-            {/* <TableBody>
+            <TableBody>
               {APIData.map((catalogue, index) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell align="justify">{catalogue.leadId}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
-                    <TableCell align="justify">{catalogue.emailId}</TableCell>
-                    <TableCell align="justify">{catalogue.catId}</TableCell>
-                    <TableCell align="justify">{catalogue.catType}</TableCell>
-                    <TableCell align="justify">{catalogue.price}</TableCell>
-                    <TableCell align="justify">{catalogue.catStatus}</TableCell>
+                    <TableCell align="justify">{catalogue.quotationNumber}</TableCell>
+                    <TableCell align="justify">{catalogue.createdDate}</TableCell>
+                    <TableCell align="justify">{catalogue.billTo}</TableCell>
+                    <TableCell align="justify">{catalogue.gsCatalogueId}</TableCell>
+                    <TableCell align="justify">{catalogue.amount}</TableCell>
+
+                    <TableCell align="justify">{catalogue.status}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(catalogue)}>
                         <Icon color="success">edit</Icon>
@@ -301,8 +301,8 @@ const ManageQuotation = () => {
                   </TableRow>
                 );
               })}
-            </TableBody> */}
-            <TableBody>
+            </TableBody>
+            {/* <TableBody>
               <TableRow>
                 <TableCell align="justify">101</TableCell>
                 <TableCell align="justify">24-10-2022</TableCell>
@@ -321,7 +321,7 @@ const ManageQuotation = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-            </TableBody>
+            </TableBody> */}
           </StyledTable>
         </Box>
         <Modal
