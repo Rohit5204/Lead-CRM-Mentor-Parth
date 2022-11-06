@@ -69,7 +69,7 @@ const ManageLead = () => {
   //get method
   useEffect(() => {
     axios
-      .post(`https://35.89.6.16:4002/api/getFilteredLeadData`, {
+      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
@@ -431,11 +431,11 @@ const ManageLead = () => {
                         >
                           <Icon color="success">edit</Icon>
                         </IconButton>
-                        <IconButton
+                        {/* <IconButton
                         // onClick={(event) => deleteData(event, subscriber)}
                         >
                           <Icon color="warning">delete</Icon>
-                        </IconButton>
+                        </IconButton> */}
                       </TableCell>
                     </TableRow>
                   );

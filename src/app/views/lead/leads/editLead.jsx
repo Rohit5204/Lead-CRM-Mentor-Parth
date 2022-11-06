@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const EditUser = ({ theEditLead }) => {
+  console.log(theEditLead)
   const [leadId, setLeadId] = useState(theEditLead.leadId);
   const [name, setName] = useState(theEditLead.name);
   const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
@@ -16,10 +17,10 @@ const EditUser = ({ theEditLead }) => {
   const [countryName, setCountryName] = useState(theEditLead.countryName);
   const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
   const [platformName, setPlatformName] = useState(theEditLead.platformName);
-  //const [assignId, setAssignId] = useState(theEditLead.countryName);
-  const [assignedUser, setAssignedUser] = useState(theEditLead.assignedUser);
-  const [statusName, setStatusName] = useState(theEditLead.statusName);
-  const [labelName, setLabelName] = useState(theEditLead.labelName);
+  // const [assignId, setAssignId] = useState(theEditLead.countryName);
+  // const [assignedUser, setAssignedUser] = useState(theEditLead.assignedUser);
+  // const [statusName, setStatusName] = useState(theEditLead.statusName);
+  // const [labelName, setLabelName] = useState(theEditLead.labelName);
   const [remarks, setRemarks] = useState(theEditLead.remarks);
 
   const UpdateUser = {
@@ -107,8 +108,8 @@ const EditUser = ({ theEditLead }) => {
           <Col>
             <Form.Label>Assigned To</Form.Label>
             <Form.Control
-              onChange={(e) => setAssignedUser(e.target.value)}
-              value={assignedUser}
+              // onChange={(e) => setAssignedUser(e.target.value)}
+              // value={assignedUser}
               placeholder="Select the Staff Member"
             />
           </Col>
@@ -152,9 +153,9 @@ const EditUser = ({ theEditLead }) => {
             <FormControl sx={{ m: 0, minWidth: 360 }} size="small" className="mt-1">
               <Form.Label>Status</Form.Label>
               <Select
-                value={statusName}
+                //value={statusName}
                 label="Status"
-                onChange={(e) => setStatusName(e.target.value)}
+              //onChange={(e) => setStatusName(e.target.value)}
               >
                 <MenuItem value="active">Active Lead</MenuItem>
                 <MenuItem value="Follow Up">Follow Up</MenuItem>
@@ -177,9 +178,9 @@ const EditUser = ({ theEditLead }) => {
             <FormControl sx={{ m: 0, minWidth: 360 }} size="small" className="mt-1">
               <Form.Label>Label</Form.Label>
               <Select
-                value={labelName}
+                // value={labelName}
                 label="Label"
-                onChange={(e) => setLabelName(e.target.value)}
+              //  onChange={(e) => setLabelName(e.target.value)}
               >
                 <MenuItem value="cold">Cold</MenuItem>
                 <MenuItem value="warm">Warm</MenuItem>

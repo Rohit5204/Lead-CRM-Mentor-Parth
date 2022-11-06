@@ -13,6 +13,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  Chip,
   TableRow,
 } from '@mui/material';
 
@@ -106,18 +107,24 @@ const ManageCatalogue = () => {
                   <TableRow key={index}>
                     <TableCell align="justify">{catalogue.id}</TableCell>
                     <TableCell align="justify">{catalogue.gsType}</TableCell>
-                    <TableCell align="justify">{catalogue.name}</TableCell>
+                    <TableCell align="justify">{catalogue.gsName}</TableCell>
                     <TableCell align="justify">{catalogue.gsPrice}</TableCell>
-                    <TableCell align="justify">{catalogue.Status}</TableCell>
+                    <TableCell align="justify">
+                      <Chip label="Active" color="success" />
+                    </TableCell>
                     <TableCell align="center">
+                      {/* <IconButton
+                        // onClick={(event) => updateData(event, subscriber)}
+                        onClick={() => handleShow(subscriber)}
+                      >
+                        <Icon color="success">edit</Icon>
+                      </IconButton> */}
                       <IconButton onClick={() => handleShow(catalogue)}>
                         <Icon color="success">edit</Icon>
                       </IconButton>
-                      <IconButton
-                      // onClick={(event) => deleteData(event, catalogue)}
-                      >
+                      {/* <IconButton>
                         <Icon color="warning">delete</Icon>
-                      </IconButton>
+                      </IconButton> */}
                     </TableCell>
                   </TableRow>
                 );
