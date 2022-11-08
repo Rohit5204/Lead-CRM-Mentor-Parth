@@ -9,13 +9,14 @@ const StatCards2 = () => {
 
   const [APIData, setAPIData] = useState([]);
   useEffect(() => {
+    const items = localStorage.getItem('accessToken');
     axios
       .post(`http://35.89.6.16:4002/api/getDashboardData`, {
         opType: "DEFAULT",
         fromDate: "",
         toDate: "",
         empId: 0
-      })
+      }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });

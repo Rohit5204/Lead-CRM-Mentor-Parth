@@ -134,7 +134,8 @@ const Layout1Topbar = () => {
                     {/* <strong>{user.name}</strong> */}
                   </Span>
                 </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
+                {/* Comment on 08/11/2022 Rohit */}
+                {/* <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} /> */}
               </UserMenu>
             }
           >

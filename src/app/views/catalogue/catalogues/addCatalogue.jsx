@@ -14,9 +14,10 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 const Div = styled('div')(() => ({
-  margin: '430px',
+  margin: '0px 0px 0px 441px',
 }));
 const AddCatalogue = () => {
+
   const navigate = useNavigate();
   const changePage = () => {
     navigate('/catalogues/manageCatalogue');

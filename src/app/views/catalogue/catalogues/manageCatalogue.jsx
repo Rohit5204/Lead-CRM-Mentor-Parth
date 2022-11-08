@@ -156,14 +156,14 @@ const ManageCatalogue = () => {
             >
               Cancel
             </button>
-            <button
+            {/* <button
               type="submit"
               className="btn btn-success"
               style={{ marginTop: 5 + 'px' }}
               onClick={handleClose}
             >
               Update
-            </button>
+            </button> */}
           </Modal.Footer>
         </Modal>
       </Box>

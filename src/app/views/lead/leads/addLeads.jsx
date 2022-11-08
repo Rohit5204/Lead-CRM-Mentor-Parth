@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 }));
 
 const Div = styled('div')(({ theme }) => ({
-  margin: '410px',
+  margin: '0px 0px 0px 441px',
 }));
 
 const LeadForm = () => {
@@ -26,46 +26,61 @@ const LeadForm = () => {
   const changePage = () => {
     navigate('/leads/manageLeads');
   };
-  const [name, setName] = useState('');
-  const [mobileNo, setMobileNo] = useState('');
-  const [emailId, setEmailId] = useState('');
-  const [streetName, setStreetName] = useState('');
-  const [stateName, setStateName] = useState('');
-  const [cityName, setCityName] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [countryName, setCountryName] = useState('s');
+  const [name, setName] = useState('Fianl');
+  const [mobileNo, setMobileNo] = useState('789654412235');
+  const [emailId, setEmailId] = useState('demo@g.com');
+  const [streetName, setStreetName] = useState('vashi');
+  const [stateName, setStateName] = useState('mh');
+  const [cityName, setCityName] = useState('nk');
+  const [zipCode, setZipCode] = useState('422101');
+  const [countryName, setCountryName] = useState('India');
+
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
   const [labelName, setLabelName] = useState([]);
   const [status, setStatusName] = useState([]);
   const [assignTo, setAssignTo] = useState([]);
 
-  // const [myOptions, setMyOptions] = useState([]);
+  const [myOptions1, setMyOptions1] = useState("");
+  const [myOptions2, setMyOptions2] = useState("");
+  const [myOptions3, setMyOptions3] = useState("");
+  const [myOptions4, setMyOptions4] = useState("");
+  const [myOptions5, setMyOptions5] = useState("");
+
+  const [id1, setId1] = useState([]);
+  const [id2, setId2] = useState([]);
+  const [id3, setId3] = useState([]);
+  // const [sourceId, setSourceId] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`).then((res) => {
+    const items = localStorage.getItem('accessToken');
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
+        setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0, }).then((res) => {
+    axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0, }, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`).then((res) => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
+        // setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=labelmaster`).then((res) => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
+        setId2(current => [...current, res.data.data[i].id])
       }
     });
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=statusmaster`).then((res) => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
+        setId3(current => [...current, res.data.data[i].id])
       }
     });
   }, []);
@@ -84,8 +99,14 @@ const LeadForm = () => {
   };
   //Add data in the table
   const postData = () => {
-
-    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [
+    var assignedid;
+    for (var i = 0; i < id1.length; i++) {
+      if (myOptions3 == id1[i]) {
+        assignedid = id1[i - 1]
+      }
+    }
+    console.log(id1)
+    console.log(
       {
         name: name,
         mobileNo: mobileNo,
@@ -95,20 +116,59 @@ const LeadForm = () => {
         stateName: stateName,
         zipCode: zipCode,
         countryName: countryName,
-        intrestedIn: intrestedIn,
-        sourceId: 1,
-        assignId: null,
-        label: 1,
+
+        intrestedIn: myOptions1,
+
+        platformName: myOptions2,
+        sourceId: myOptions3,
+
+        assignId: assignedid,
+        status: myOptions4,
+        label: myOptions5,
+        remarks: "",
         createdBy: 1,
       },
-    ]);
+    )
+    // const items = localStorage.getItem('accessToken');
+    // axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [
+    //   {
+    //     name: name,
+    //     mobileNo: mobileNo,
+    //     emailId: emailId,
+    //     streetName: streetName,
+    //     cityName: cityName,
+    //     stateName: stateName,
+    //     zipCode: zipCode,
+    //     countryName: countryName,
+
+    //     intrestedIn: myOptions1,
+    //     platformName: myOptions2,
+
+    //     sourceId: myOptions3.id,  
+    //     assignId: myOptions4.id,
+    //     status: status.id,
+    //     label: labelName.id,
+
+    //     remarks: "", 
+    //     createdBy: 1,
+
+    //     // intrestedIn: "test",
+    //     // platformName: "Facebook",
+    //     // sourceId: 2,
+    //     // assignId: 3,
+    //     // status: 2,
+    //     // label: 3,
+
+
+    //   },
+    // ], { headers: { "x-access-token": items } });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
     blankForm();
-    alert('Lead Successfully Added');
+    // alert('Lead Successfully Added');
   };
   return (
     <Container>
@@ -118,16 +178,17 @@ const LeadForm = () => {
         />
       </Box>
       <Row>
-        <Col xs={6}>
+        <Col xs={12} md={6}>
           <SimpleCard title="Fill Lead Details">
             <Row>
               <Col>
                 <Form.Label>Lead Name</Form.Label>
-                <Form.Control
+                <Form.Control height={2}
                   onChange={(e) => setName(e.target.value)}
                   value={name}
                   placeholder="Enter the Lead Name"
                 />
+
               </Col>
             </Row>
             <Row className="mt-1">
@@ -214,7 +275,8 @@ const LeadForm = () => {
             </Row>
           </SimpleCard>
         </Col>
-        <Col xs={6}>
+        <br />
+        <Col xs={12} md={6}>
           <SimpleCard>
             <Row>
               <Col sm>
@@ -226,27 +288,23 @@ const LeadForm = () => {
                     freeSolo
                     autoComplete
                     autoHighlight
+                    value={myOptions1}
                     options={intrestedIn}
+                    onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={intrestedIn}
                         variant="outlined"
                         label="Select the Interested Catalogue"
+                        size="small"
                       />
                     )}
                   />
                 </FormControl>
-                {/* <Form.Label>Interested In</Form.Label>
-                <Form.Control
-                  // onChange={(e) => setMobileNo(e.target.value)}
-                  // value={mobileNo} 
-                  placeholder="Select the Source"
-                /> */}
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col className="mt-1">
                 <Form.Label>Source(Platform Name)</Form.Label>
                 <FormControl>
                   <Autocomplete
@@ -258,9 +316,10 @@ const LeadForm = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={platformName}
+                        onChange={(e) => setMyOptions2(e.target.value)}
                         variant="outlined"
                         label="Select the Platform Name"
+                        size="small"
                       />
                     )}
                   />
@@ -268,7 +327,7 @@ const LeadForm = () => {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col className="mt-1">
                 <FormControl>
                   <Form.Label>Assigned To</Form.Label>
                   <Autocomplete
@@ -277,12 +336,15 @@ const LeadForm = () => {
                     autoComplete
                     autoHighlight
                     options={assignTo}
+                    value={myOptions3}
+                    onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={assignTo}
+
                         variant="outlined"
                         label="Select the Employee to Assign"
+                        size="small"
                       />
                     )}
                   />
@@ -317,11 +379,8 @@ const LeadForm = () => {
               </Col>
             </Row>
             <Row>
-              <Col sm>
-                <br />
-
+              <Col>
                 <Form.Label>Status</Form.Label>
-
                 <FormControl>
                   <Autocomplete
                     style={{ width: 450 }}
@@ -332,16 +391,16 @@ const LeadForm = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={status}
+                        onChange={(e) => setMyOptions4(e.target.value)}
                         variant="outlined"
                         label="Select the Status"
+                        size="small"
                       />
                     )}
                   />
                 </FormControl>
               </Col>
-              <Col sm>
-                <br />
+              <Col className="mt-1">
                 <Form.Label>Label</Form.Label>
                 <FormControl>
                   <Autocomplete
@@ -353,9 +412,10 @@ const LeadForm = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={labelName}
+                        onChange={(e) => setMyOptions5(e.target.value)}
                         variant="outlined"
                         label="Select the Label"
+                        size="small"
                       />
                     )}
                   />

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const EditUser = ({ theEditLead }) => {
-  console.log(theEditLead)
   const [leadId, setLeadId] = useState(theEditLead.leadId);
   const [name, setName] = useState(theEditLead.name);
   const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
@@ -44,7 +43,8 @@ const EditUser = ({ theEditLead }) => {
   const updateLead = (e) => {
     console.log({ UpdateUser });
     e.preventDefault();
-    axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser).then(() => useEffect);
+    axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlZpa3JhbTMuamFkaGF2IiwiaWF0IjoxNjY3ODkwMDgyLCJleHAiOjE2Njc4OTM2ODJ9.ItnarsrJgg68U-6tLtxAJGpxz8oqXDfM8qSY0EW9MDA` } })
+      .then(() => useEffect);
   };
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -34,8 +34,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: 'jason@ui-lib.com',
-  password: 'dummyPass',
+  userName: 'Vikram3.jadhav',
+  password: 'Vikram@1234',
   remember: true,
 };
 
@@ -44,7 +44,9 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, 'Password must be 6 character length')
     .required('Password is required!'),
-  email: Yup.string().email('Invalid Email address').required('Email is required!'),
+  userName: Yup.string()
+    .min(3, 'User Name must be 3 character length')
+    .required('User Name is required!'),
 });
 
 const JwtLogin = () => {
@@ -57,13 +59,15 @@ const JwtLogin = () => {
   const handleFormSubmit = async (values) => {
     setLoading(true);
     try {
-      await login(values.email, values.password);
+      await login(values.userName, values.password);
       navigate('/');
     } catch (e) {
       setLoading(false);
     }
   };
+  // const handleChange = () => {
 
+  // }
   return (
     <JWTRoot>
       <Card className="card">
@@ -86,15 +90,15 @@ const JwtLogin = () => {
                     <TextField
                       fullWidth
                       size="small"
-                      type="email"
-                      name="email"
-                      label="Email"
+                      type="text"
+                      name="userName"
+                      label="UserName"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.email}
+                      value={values.userName}
                       onChange={handleChange}
-                      helperText={touched.email && errors.email}
-                      error={Boolean(errors.email && touched.email)}
+                      helperText={touched.userName && errors.userName}
+                      error={Boolean(errors.userName && touched.userName)}
                       sx={{ mb: 3 }}
                     />
 
@@ -165,3 +169,4 @@ const JwtLogin = () => {
 };
 
 export default JwtLogin;
+

@@ -1,21 +1,9 @@
 import { styled } from '@mui/system';
 import { SimpleCard } from 'app/components';
 import { Row, Col, Button, Form, Tab, Tabs } from 'react-bootstrap';
-import StepperForm from 'app/views/material-kit/forms/StepperForm';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
 
-const Container = styled('div')(({ theme }) => ({
-  margin: '2.9px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
-  '& .breadcrumb': {
-    marginBottom: '3px',
-    [theme.breakpoints.down('sm')]: { marginBottom: '1px' },
-  },
-}));
-const Div = styled('div')(({ theme }) => ({
-  margin: '0px 0px 0px 441px',
-}));
+
 const ViewLead = () => {
   const location = useLocation();
   console.log(location.state);
@@ -29,9 +17,6 @@ const ViewLead = () => {
   };
   return (
     <Container>
-      {/* <SimpleCard title="Lead Management">
-        <StepperForm />
-      </SimpleCard> */}
       <SimpleCard title="Lead Management">
         <Tabs defaultActiveKey="leads" id="uncontrolled-tab-example" className="mb-3" justify>
           <Tab eventKey="leads" title="Active Leads" className="ml-8">
@@ -66,8 +51,8 @@ const ViewLead = () => {
                 <Form.Label> Client Name</Form.Label>
                 <Form.Control
                   placeholder="Enter Customer Name"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.createdDate}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.createdDate}
                 />
               </Col>
               <Col>
@@ -183,8 +168,8 @@ const ViewLead = () => {
                 <Form.Label>Ex Name</Form.Label>
                 <Form.Control
                   placeholder="Enter the Ex Name"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -192,8 +177,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="date"
                   placeholder="Enter Followup Date"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -201,8 +186,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="time"
                   placeholder="Enter Followup Time"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
             </Row>
@@ -211,8 +196,8 @@ const ViewLead = () => {
                 <Form.Label>Remarks</Form.Label>
                 <Form.Control
                   placeholder="Enter any Remarks"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -220,8 +205,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="date"
                   placeholder="Enter Next Followup Date"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -229,8 +214,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="time"
                   placeholder="Enter Next Followup Time"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
             </Row>
@@ -241,8 +226,8 @@ const ViewLead = () => {
                 <Form.Label>Ex Name</Form.Label>
                 <Form.Control
                   placeholder="Enter the Ex Name"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -250,8 +235,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="date"
                   placeholder="Enter Followup Date"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
               <Col>
@@ -259,8 +244,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="time"
                   placeholder="Enter Followup Time"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
             </Row>
@@ -270,8 +255,8 @@ const ViewLead = () => {
                 <Form.Control
                   type="time"
                   placeholder="Enter Followup Time"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
 
@@ -279,8 +264,8 @@ const ViewLead = () => {
                 <Form.Label>Remarks</Form.Label>
                 <Form.Control
                   placeholder="Enter any Remarks"
-                  //onChange={(e) => setRemarks(e.target.value)}
-                  // value={location.state.labelName}
+                //onChange={(e) => setRemarks(e.target.value)}
+                // value={location.state.labelName}
                 />
               </Col>
             </Row>
@@ -308,5 +293,16 @@ const ViewLead = () => {
     </Container>
   );
 };
-
+// Custom Style Section
+const Container = styled('div')(({ theme }) => ({
+  margin: '2.9px',
+  [theme.breakpoints.down('sm')]: { margin: '16px' },
+  '& .breadcrumb': {
+    marginBottom: '3px',
+    [theme.breakpoints.down('sm')]: { marginBottom: '1px' },
+  },
+}));
+const Div = styled('div')(({ theme }) => ({
+  margin: '0px 0px 0px 441px',
+}));
 export default ViewLead;

@@ -9,7 +9,7 @@ import LeadCards from './cardLeads';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import { MenuItem, FormControl, Select } from '@mui/material';
+import { MenuItem, FormControl, Select, Autocomplete, TextField } from '@mui/material';
 import {
   Box,
   Chip,
@@ -75,6 +75,7 @@ const AssignLead = () => {
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
   const [assign, setAssign] = useState(false);
+  const [assignTo, setAssignTo] = useState([]);
   //Dialog Form
   const handleCloseAssign = () => setAssign(false);
   const handleShowAssign = (catalogue) => {
@@ -104,6 +105,14 @@ const AssignLead = () => {
         setAPIData(response.data.data);
       });
   }, [APIData]);
+
+  useEffect(() => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`).then((res) => {
+      for (var i = 0; i < res.data.data.length; i++) {
+        setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
+      }
+    });
+  }, [])
 
   return (
     <Container>
@@ -292,28 +301,27 @@ const AssignLead = () => {
           <Row>
             <Col>
               <Form.Label>Current Assign Employee</Form.Label>
-              <Form.Control
-                readOnly
-                //   onChange={(e) => setName(e.target.value)}
-                value="Facebook"
-                placeholder="Enter the Lead Name"
-              />
+              <br />
+              <TextField style={{ width: 370 }} id="outlined-basic" label="Assigned" placeholder="Current Employee" variant="outlined" />
             </Col>
             <Col>
-              <FormControl sx={{ m: 0, minWidth: 350 }} size="small" className="mt-1">
+              <FormControl>
                 <Form.Label>Re-Assign Employee</Form.Label>
-                <Select
-                  // value={}
-                  id="Assign"
-                  label="Assign"
-                // onChange={(e) => setCountryName(e.target.value)}
-                >
-                  <MenuItem value="s">Select the Employee</MenuItem>
-                  <MenuItem value="India">INDIA</MenuItem>
-                  <MenuItem value="USA">USA</MenuItem>
-                  <MenuItem value="Russia">RUSSIA</MenuItem>
-                  <MenuItem value="Australia">RUSSIA</MenuItem>
-                </Select>
+                <Autocomplete
+                  style={{ width: 350 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      onChange={assignTo}
+                      variant="outlined"
+                      label="Re-Assign Lead to Another Employee"
+                    />
+                  )}
+                />
               </FormControl>
             </Col>
           </Row>
@@ -372,20 +380,23 @@ const AssignLead = () => {
           </Row>
           <Row>
             <Col>
-              <FormControl sx={{ m: 0, minWidth: 750 }} size="small" className="mt-1">
-                <Form.Label>Assign Employee</Form.Label>
-                <Select
-                  // value={}
-                  id="Assign"
-                  label="Assign"
-                // onChange={(e) => setCountryName(e.target.value)}
-                >
-                  <MenuItem value="s">Select the Employee</MenuItem>
-                  <MenuItem value="India">INDIA</MenuItem>
-                  <MenuItem value="USA">USA</MenuItem>
-                  <MenuItem value="Russia">RUSSIA</MenuItem>
-                  <MenuItem value="Australia">RUSSIA</MenuItem>
-                </Select>
+              <FormControl>
+                <Form.Label>Assigned Employee</Form.Label>
+                <Autocomplete
+                  style={{ width: 750 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      onChange={assignTo}
+                      variant="outlined"
+                      label="Select the Employee to Assign"
+                    />
+                  )}
+                />
               </FormControl>
             </Col>
           </Row>

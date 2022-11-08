@@ -11,7 +11,7 @@ export const navigations = [
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
       { name: 'System Master', iconText: '404', path: '/leads/systemMaster' },
-      { name: 'User Master', iconText: '404', path: '/leads/userMaster' },
+      { name: 'User Master', iconText: '404', path: '/employees/manageEmployee' },
     ],
   },
   { label: 'Catalogue', type: 'label' },

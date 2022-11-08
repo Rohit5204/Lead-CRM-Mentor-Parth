@@ -577,7 +577,7 @@ const InvoiceForm = () => {
                         <Form.Control
                           readOnly
                           value={Object.keys(installments).length}
-                          //onChange={(event) => setDiscount(event.target.value)}
+                        //onChange={(event) => setDiscount(event.target.value)}
                         />
                         {/* <InputGroup.Text>%</InputGroup.Text> */}
                       </InputGroup>

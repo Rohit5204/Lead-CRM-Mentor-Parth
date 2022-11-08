@@ -18,19 +18,19 @@ const Div = styled('div')(() => ({
   margin: '410px',
 }));
 const EditCatalogue = ({ theEditCatalogue }) => {
-  console.log(theEditCatalogue)
-  const [catId, setCatId] = useState(theEditCatalogue.id);
-  const [catType, setCatType] = useState(theEditCatalogue.gsType);
-  const [name, setName] = useState(theEditCatalogue.gsName);
-  const [price, setPrice] = useState(theEditCatalogue.gsPrice);
-  const [description, setDescription] = useState(theEditCatalogue.gsDescription);
+  // console.log(theEditCatalogue)
+  const [id, setId] = useState(theEditCatalogue.id);
+  const [gsType, setGsType] = useState(theEditCatalogue.gsType);
+  const [gsName, setGsName] = useState(theEditCatalogue.gsName);
+  const [gsPrice, setGsPrice] = useState(theEditCatalogue.gsPrice);
+  const [gsDescription, setGsDescription] = useState(theEditCatalogue.gsDescription);
 
   const UpdateCatalogue = {
-    catId: catId,
-    catType: catType,
-    name: name,
-    price: price,
-    description: description,
+    catId: id,
+    catType: gsType,
+    gsName: gsName,
+    price: gsPrice,
+    description: gsDescription,
     catStatus: 1,
     actionBy: 1,
   };
@@ -39,26 +39,25 @@ const EditCatalogue = ({ theEditCatalogue }) => {
     e.preventDefault();
     axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, UpdateCatalogue).then(() => useEffect);
   };
-  const blankForm = () => {
-    setCatType('');
-    setName('');
-    setPrice('');
-    setDescription('');
-  };
+  // const blankForm = () => {
+  //   setCatType('');
+  //   setName('');
+  //   setPrice('');
+  //   setDescription('');
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateCatalogue();
-    blankForm();
+    // blankForm();
   };
   return (
     <Container>
       {/* <SimpleCard title="Update Catalogue Detail's"> */}
-      <Form onClick={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Row>
           <Col md="4">
             <FormControl sx={{ m: 0, minWidth: 200 }} size="small" className="mt-1">
               <Form.Label>Type</Form.Label>
-              <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
+              <Select readOnly value={gsType} label="Type" onChange={(e) => setGsType(e.target.value)}>
                 <MenuItem value="">Select the Type</MenuItem>
                 <MenuItem value="Service">Service</MenuItem>
                 <MenuItem value="Product">Product</MenuItem>
@@ -68,16 +67,16 @@ const EditCatalogue = ({ theEditCatalogue }) => {
           <Col className="mt-1">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              onChange={(e) => setGsName(e.target.value || '')}
+              value={gsName == null ? '' : gsName}
               placeholder="Enter the Name"
             />
           </Col>
           <Col className="mt-1">
             <Form.Label>Price</Form.Label>
             <Form.Control
-              onChange={(e) => setPrice(e.target.value)}
-              value={price}
+              onChange={(e) => setGsPrice(e.target.value)}
+              value={gsPrice}
               placeholder="Enter the Price"
             />
           </Col>
@@ -89,22 +88,25 @@ const EditCatalogue = ({ theEditCatalogue }) => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
+                onChange={(e) => setGsDescription(e.target.value)}
+                value={gsDescription}
                 placeholder="Write Description"
               />
             </Form.Group>
           </Col>
         </Row>
-        {/* <Row className="mt-1">
+        <Row>
           <Col>
-            <Button variant="success" onClick={handleSubmit}>
-              Add Lead
-            </Button>
-            &nbsp;
-            <Button variant="primary">Cancel</Button>
+            <button
+              type="submit"
+              className="btn btn-success"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={updateCatalogue}
+            >
+              Update
+            </button>
           </Col>
-        </Row> */}
+        </Row>
       </Form>
       {/* </SimpleCard> */}
     </Container>

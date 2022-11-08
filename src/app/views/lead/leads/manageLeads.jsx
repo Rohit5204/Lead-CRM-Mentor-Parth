@@ -5,10 +5,8 @@ import axios from 'axios';
 import { Data } from 'app/components/Data';
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import * as XLSX from 'xlsx';
-import { NavLink, useNavigate } from 'react-router-dom';
 import EditLead from './editLead';
 import { Link } from 'react-router-dom';
-
 import {
   Box,
   Icon,
@@ -18,39 +16,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  MenuItem,
-  FormControl,
-  Select,
-  Grid,
 } from '@mui/material';
 
-const Container = styled('div')(({ theme }) => ({
-  margin: '2.9px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
-  '& .breadcrumb': {
-    marginBottom: '30px',
-    [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
-  },
-}));
-const StyledTable = styled(Table)(() => ({
-  whiteSpace: 'pre',
-  '& thead': {
-    '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
-  },
-  '& tbody': {
-    '& tr': { '& td': { paddingLeft: 0 } },
-  },
-}));
 const ManageLead = () => {
   const [showForm, setShowForm] = useState(false);
 
   const showForm1 = () => {
     setShowForm(!showForm);
   };
-  // const navigate = useNavigate();
-  // const changePage = () => {
-  //   navigate('/leads/viewLeads');
-  // };
 
   const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
@@ -68,12 +41,12 @@ const ManageLead = () => {
   const showImport = () => setShow1(true);
   //get method
   useEffect(() => {
-    axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
-        leadId: 0,
-        userId: 0,
-        statusId: 0,
-      })
+    const items = localStorage.getItem('accessToken');
+    axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
+      leadId: 0,
+      userId: 0,
+      statusId: 0,
+    }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -475,5 +448,22 @@ const ManageLead = () => {
     </SimpleCard>
   );
 };
-
+// Custom Style Section
+const Container = styled('div')(({ theme }) => ({
+  margin: '2.9px',
+  [theme.breakpoints.down('sm')]: { margin: '16px' },
+  '& .breadcrumb': {
+    marginBottom: '30px',
+    [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
+  },
+}));
+const StyledTable = styled(Table)(() => ({
+  whiteSpace: 'pre',
+  '& thead': {
+    '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
+  },
+  '& tbody': {
+    '& tr': { '& td': { paddingLeft: 0 } },
+  },
+}));
 export default ManageLead;

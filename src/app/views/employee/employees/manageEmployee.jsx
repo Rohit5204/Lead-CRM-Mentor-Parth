@@ -3,8 +3,7 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
-// import EditCatalogue from './editCatalogue';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Box,
   Icon,
@@ -93,6 +92,8 @@ const ManageEmployee = () => {
                 <TableCell align="justify">User Id</TableCell>
                 <TableCell align="justify">Name</TableCell>
                 <TableCell align="justify">Email</TableCell>
+                <TableCell align="justify">Mobile Number</TableCell>
+                <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
@@ -104,12 +105,14 @@ const ManageEmployee = () => {
                     {subscriber.firstName} {subscriber.lastName}
                   </TableCell>
                   <TableCell align="justify">{subscriber.email}</TableCell>
+                  <TableCell align="justify">{subscriber.mobileNo}</TableCell>
+                  <TableCell align="justify">{subscriber.status}</TableCell>
                   <TableCell align="center">
-                    <IconButton
-                    // onClick={(event) => updateData(event, subscriber)}
-                    >
-                      <Icon color="success">edit</Icon>
-                    </IconButton>
+                    <Link to="/employees/editEmployee" state={subscriber}>
+                      <IconButton>
+                        <Icon color="success">edit</Icon>
+                      </IconButton>
+                    </Link>
                     <IconButton
                     //  onClick={(event) => deleteData(event, subscriber)}
                     >
@@ -121,7 +124,7 @@ const ManageEmployee = () => {
             </TableBody>
           </StyledTable>
         </Box>
-        <Modal
+        {/* <Modal
           show={show}
           onHide={handleClose}
           backdrop="static"
@@ -133,7 +136,9 @@ const ManageEmployee = () => {
           <Modal.Header>
             <Modal.Title>Update Catalogue</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{/* <EditCatalogue theEditCatalogue={obj1} /> */}</Modal.Body>
+          <Modal.Body>
+            
+          </Modal.Body>
           <Modal.Footer>
             <button
               type="submit"
@@ -152,7 +157,7 @@ const ManageEmployee = () => {
               Update
             </button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </Box>
     </Container>
   );
