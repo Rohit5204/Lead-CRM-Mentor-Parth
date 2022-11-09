@@ -50,7 +50,7 @@ const LeadForm = () => {
   const [id1, setId1] = useState([]);
   const [id2, setId2] = useState([]);
   const [id3, setId3] = useState([]);
-  // const [sourceId, setSourceId] = useState([]);
+  const [sourceId, setSourceId] = useState([]);
 
   useEffect(() => {
     const items = localStorage.getItem('accessToken');
@@ -68,19 +68,19 @@ const LeadForm = () => {
     axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
-        // setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
+        setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
     axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
-        setId2(current => [...current, res.data.data[i].id])
+        setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
     axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
-        setId3(current => [...current, res.data.data[i].id])
+        setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
   }, []);
@@ -95,73 +95,56 @@ const LeadForm = () => {
     setCityName('');
     setZipCode('');
     setCountryName('');
-    setIntrestedIn('');
+    setMyOptions1('');
+    setMyOptions2('');
+    setMyOptions3('');
+    setMyOptions4('')
+    setMyOptions5('')
   };
   //Add data in the table
   const postData = () => {
-    var assignedid;
+    var assignedid, platformid, labelid, statusid;
     for (var i = 0; i < id1.length; i++) {
       if (myOptions3 == id1[i]) {
         assignedid = id1[i - 1]
       }
     }
-    console.log(id1)
-    console.log(
-      {
-        name: name,
-        mobileNo: mobileNo,
-        emailId: emailId,
-        streetName: streetName,
-        cityName: cityName,
-        stateName: stateName,
-        zipCode: zipCode,
-        countryName: countryName,
-
-        intrestedIn: myOptions1,
-
-        platformName: myOptions2,
-        sourceId: myOptions3,
-
-        assignId: assignedid,
-        status: myOptions4,
-        label: myOptions5,
-        remarks: "",
-        createdBy: 1,
-      },
-    )
-    // const items = localStorage.getItem('accessToken');
-    // axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [
-    //   {
-    //     name: name,
-    //     mobileNo: mobileNo,
-    //     emailId: emailId,
-    //     streetName: streetName,
-    //     cityName: cityName,
-    //     stateName: stateName,
-    //     zipCode: zipCode,
-    //     countryName: countryName,
-
-    //     intrestedIn: myOptions1,
-    //     platformName: myOptions2,
-
-    //     sourceId: myOptions3.id,  
-    //     assignId: myOptions4.id,
-    //     status: status.id,
-    //     label: labelName.id,
-
-    //     remarks: "", 
-    //     createdBy: 1,
-
-    //     // intrestedIn: "test",
-    //     // platformName: "Facebook",
-    //     // sourceId: 2,
-    //     // assignId: 3,
-    //     // status: 2,
-    //     // label: 3,
-
-
-    //   },
-    // ], { headers: { "x-access-token": items } });
+    for (var i = 0; i < sourceId.length; i++) {
+      if (myOptions2 == sourceId[i]) {
+        platformid = sourceId[i - 1]
+      }
+    }
+    for (var i = 0; i < id2.length; i++) {
+      if (myOptions5 == id2[i]) {
+        labelid = id2[i - 1]
+      }
+    }
+    for (var i = 0; i < id3.length; i++) {
+      if (myOptions4 == id3[i]) {
+        statusid = id3[i - 1]
+      }
+    }
+    const AddLead = {
+      name: name,
+      mobileNo: mobileNo,
+      emailId: emailId,
+      streetName: streetName,
+      cityName: cityName,
+      stateName: stateName,
+      zipCode: zipCode,
+      countryName: countryName,
+      intrestedIn: myOptions1,
+      platformName: myOptions2,
+      sourceId: platformid,
+      assignId: assignedid,
+      status: statusid,
+      label: labelid,
+      remarks: "",
+      createdBy: 1,
+    }
+    console.log({ AddLead })
+    const items = localStorage.getItem('accessToken');
+    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [{ AddLead }], { headers: { "x-access-token": items } });
   };
 
   const handleSubmit = (e) => {
@@ -312,11 +295,12 @@ const LeadForm = () => {
                     freeSolo
                     autoComplete
                     autoHighlight
+                    value={myOptions2}
                     options={platformName}
+                    onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={(e) => setMyOptions2(e.target.value)}
                         variant="outlined"
                         label="Select the Platform Name"
                         size="small"
@@ -349,19 +333,7 @@ const LeadForm = () => {
                     )}
                   />
                 </FormControl>
-                {/* <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
-                  <Form.Label>Assigned To</Form.Label>
-                  <Select
-                    value={assignTo}
-                    label="Assign To"
-                    onChange={(e) => setAssignTo(e.target.value)}
-                  >
-                    <MenuItem value="assgin">Assign To Employee</MenuItem>
-                    <MenuItem value="rohit">Rohit</MenuItem>
-                    <MenuItem value="vikram">Vikram</MenuItem>
-                    <MenuItem value="yogesh">Yogesh</MenuItem>
-                  </Select>
-                </FormControl> */}
+
               </Col>
             </Row>
             <Row>
@@ -387,11 +359,12 @@ const LeadForm = () => {
                     freeSolo
                     autoComplete
                     autoHighlight
+                    value={myOptions4}
                     options={status}
+                    onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={(e) => setMyOptions4(e.target.value)}
                         variant="outlined"
                         label="Select the Status"
                         size="small"
@@ -409,10 +382,11 @@ const LeadForm = () => {
                     autoComplete
                     autoHighlight
                     options={labelName}
+                    value={myOptions5}
+                    onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        onChange={(e) => setMyOptions5(e.target.value)}
                         variant="outlined"
                         label="Select the Label"
                         size="small"

@@ -35,9 +35,10 @@ const EditCatalogue = ({ theEditCatalogue }) => {
     actionBy: 1,
   };
   const updateCatalogue = (e) => {
+    const items = localStorage.getItem('accessToken');
     console.log({ UpdateCatalogue });
     e.preventDefault();
-    axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, UpdateCatalogue).then(() => useEffect);
+    axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, UpdateCatalogue, { headers: { "x-access-token": items } }).then(() => useEffect);
   };
   // const blankForm = () => {
   //   setCatType('');

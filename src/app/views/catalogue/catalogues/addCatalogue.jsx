@@ -35,6 +35,7 @@ const AddCatalogue = () => {
   };
   //Add data in the table
   const postData = () => {
+    const items = localStorage.getItem('accessToken');
     console.log({
       catType: catType,
       price: price,
@@ -45,10 +46,11 @@ const AddCatalogue = () => {
         catId: 0,
         catType: catType,
         price: price,
+        gsName: name,
         description: description,
         catStatus: 1,
         actionBy: 1,
-      }
+      }, { headers: { "x-access-token": items } }
     );
   };
 

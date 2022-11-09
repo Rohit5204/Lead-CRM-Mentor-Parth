@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
@@ -9,10 +9,11 @@ import LeadCards from './cardLeads';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import { MenuItem, FormControl, Select, Autocomplete, TextField } from '@mui/material';
+import AssignEmployee from './LeadAssign/EmployeeAssign';
+import UnAssignEmployee from './LeadAssign/UnAssignEmployee';
+import { FormControl, Autocomplete, TextField } from '@mui/material';
 import {
   Box,
-  Chip,
   Icon,
   IconButton,
   Table,
@@ -72,19 +73,20 @@ function a11yProps(index) {
 }
 const AssignLead = () => {
   const [obj1, setObj1] = useState(null);
+  // const [obj2, setObj2] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
   const [assign, setAssign] = useState(false);
   const [assignTo, setAssignTo] = useState([]);
   //Dialog Form
   const handleCloseAssign = () => setAssign(false);
-  const handleShowAssign = (catalogue) => {
-    setObj1(catalogue);
+  const handleShowAssign = (subscriber) => {
+    setObj1(subscriber);
     setAssign(true);
   };
   const handleClose = () => setShow(false);
-  const handleShow = (catalogue) => {
-    setObj1(catalogue);
+  const handleShow = (subscriber) => {
+    setObj1(subscriber);
     setShow(true);
   };
   const [value, setValue] = useState(0);
@@ -94,20 +96,21 @@ const AssignLead = () => {
   };
 
   //get method
+  const items = localStorage.getItem('accessToken');
   useEffect(() => {
     axios
       .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
-      })
+      }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
   }, [APIData]);
 
   useEffect(() => {
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`).then((res) => {
+    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
       }
@@ -183,28 +186,28 @@ const AssignLead = () => {
               <TableCell align="justify">Lead Name</TableCell>
               <TableCell align="justify">Customer Name</TableCell>
               <TableCell align="justify">Assign Employee</TableCell>
-              <TableCell align="justify">Assign Date</TableCell>
+              <TableCell align="justify">Mobile No</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {APIData.map((subscriber, index) => {
-              // if (subscriber.status == 1) {
-              return (
-                <TableRow key={index}>
-                  <TableCell align="justify">{subscriber.leadId}</TableCell>
-                  <TableCell align="justify">{subscriber.name}</TableCell>
-                  <TableCell align="justify">{subscriber.name}</TableCell>
-                  <TableCell align="justify">{subscriber.emailId}</TableCell>
-                  <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => handleShowAssign(subscriber)}>
-                      <Icon color="success">edit</Icon>
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-              // }
+              if (subscriber.assignedUser) {
+                return (
+                  <TableRow key={index}>
+                    <TableCell align="justify">{subscriber.leadId}</TableCell>
+                    <TableCell align="justify">{subscriber.name}</TableCell>
+                    <TableCell align="justify"></TableCell>
+                    <TableCell align="justify">{subscriber.assignedUser}</TableCell>
+                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleShowAssign(subscriber)}>
+                        <Icon color="success">edit</Icon>
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             })}
           </TableBody>
         </StyledTable>
@@ -232,7 +235,7 @@ const AssignLead = () => {
         <StyledTable>
           <TableHead>
             <TableRow>
-              <TableCell align="justify">Select</TableCell>
+              {/* <TableCell align="justify">Select</TableCell> */}
               <TableCell align="justify">Lead Id</TableCell>
               <TableCell align="justify">Lead Name</TableCell>
               <TableCell align="justify">Customer Name</TableCell>
@@ -242,24 +245,24 @@ const AssignLead = () => {
           </TableHead>
           <TableBody>
             {APIData.map((subscriber, index) => {
-              // if (subscriber.status == 1) {
-              return (
-                <TableRow key={index}>
-                  <TableCell align="justify">
+              if (subscriber.assignedUser == null) {
+                return (
+                  <TableRow key={index}>
+                    {/* <TableCell align="justify">
                     <Form.Check type="switch" id="custom-switch" label="" />
-                  </TableCell>
-                  <TableCell align="justify">{subscriber.leadId}</TableCell>
-                  <TableCell align="justify">{subscriber.name}</TableCell>
-                  <TableCell align="justify">{subscriber.emailId}</TableCell>
-                  <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                  <TableCell align="center">
-                    <IconButton onClick={() => handleShow(subscriber)}>
-                      <Icon color="success">edit</Icon>
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-              // }
+                  </TableCell> */}
+                    <TableCell align="justify">{subscriber.leadId}</TableCell>
+                    <TableCell align="justify">{subscriber.name}</TableCell>
+                    <TableCell align="justify">{subscriber.emailId}</TableCell>
+                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleShow(subscriber)}>
+                        <Icon color="success">edit</Icon>
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             })}
           </TableBody>
         </StyledTable>
@@ -278,63 +281,17 @@ const AssignLead = () => {
           <Modal.Title>Assigned Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col>
-              <Form.Label>Lead ID</Form.Label>
-              <Form.Control
-                readOnly
-                //   onChange={(e) => setName(e.target.value)}
-                value={101}
-                placeholder="Enter the Lead Name"
-              />
-            </Col>
-            <Col>
-              <Form.Label>Lead Name</Form.Label>
-              <Form.Control
-                readOnly
-                //   onChange={(e) => setName(e.target.value)}
-                value="Facebook"
-                placeholder="Enter the Lead Name"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Label>Current Assign Employee</Form.Label>
-              <br />
-              <TextField style={{ width: 370 }} id="outlined-basic" label="Assigned" placeholder="Current Employee" variant="outlined" />
-            </Col>
-            <Col>
-              <FormControl>
-                <Form.Label>Re-Assign Employee</Form.Label>
-                <Autocomplete
-                  style={{ width: 350 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={assignTo}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      onChange={assignTo}
-                      variant="outlined"
-                      label="Re-Assign Lead to Another Employee"
-                    />
-                  )}
-                />
-              </FormControl>
-            </Col>
-          </Row>
+          <AssignEmployee theAssignedData={obj1}></AssignEmployee>
         </Modal.Body>
         <Modal.Footer>
-          <button
+          {/* <button
             type="submit"
             className="btn btn-success"
             style={{ marginTop: 5 + 'px' }}
             onClick={handleCloseAssign}
           >
             Re-Assign
-          </button>
+          </button> */}
           <button
             type="submit"
             className="btn btn-error"
@@ -358,58 +315,9 @@ const AssignLead = () => {
           <Modal.Title>Unassigned Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col>
-              <Form.Label>Lead ID</Form.Label>
-              <Form.Control
-                readOnly
-                //   onChange={(e) => setName(e.target.value)}
-                value={101}
-                placeholder="Enter the Lead Name"
-              />
-            </Col>
-            <Col>
-              <Form.Label>Lead Name</Form.Label>
-              <Form.Control
-                readOnly
-                //   onChange={(e) => setName(e.target.value)}
-                value="Facebook"
-                placeholder="Enter the Lead Name"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <FormControl>
-                <Form.Label>Assigned Employee</Form.Label>
-                <Autocomplete
-                  style={{ width: 750 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={assignTo}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      onChange={assignTo}
-                      variant="outlined"
-                      label="Select the Employee to Assign"
-                    />
-                  )}
-                />
-              </FormControl>
-            </Col>
-          </Row>
+          <UnAssignEmployee theUnAssignData={obj1}></UnAssignEmployee>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            type="submit"
-            className="btn btn-success"
-            style={{ marginTop: 5 + 'px' }}
-            onClick={handleClose}
-          >
-            Assign
-          </button>
           <button
             type="submit"
             className="btn btn-error"
@@ -420,7 +328,6 @@ const AssignLead = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      {/* </Box> */}
     </Container>
   );
 };

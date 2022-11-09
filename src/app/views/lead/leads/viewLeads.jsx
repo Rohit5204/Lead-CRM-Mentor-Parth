@@ -24,6 +24,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Lead Sr No</Form.Label>
                 <Form.Control
+                  disabled
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.leadId}
                   placeholder="Lead Number"
@@ -32,6 +33,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label> Lead Name</Form.Label>
                 <Form.Control
+                  disabled
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.name}
                   placeholder="Enter Lead Name"
@@ -41,6 +43,7 @@ const ViewLead = () => {
                 <Form.Label> Date</Form.Label>
                 <Form.Control
                   type="date"
+                  disabled
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.createdDate}
                 />
@@ -58,6 +61,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Mobile Number</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter Customer Mobile No."
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.mobileNo}
@@ -66,6 +70,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Email Id</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter Email Id"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.emailId}
@@ -76,6 +81,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Lead Source</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter Lead Source"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.platformName}
@@ -84,6 +90,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Interested In</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Interested In"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.intrestedIn}
@@ -92,6 +99,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Assign To</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Assign Employee"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.assignedUser}
@@ -146,6 +154,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Status</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Mention the Status"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.statusName}
@@ -154,6 +163,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Label</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Mention the Label"
                   //onChange={(e) => setRemarks(e.target.value)}
                   value={location.state.labelName}

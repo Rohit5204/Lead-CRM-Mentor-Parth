@@ -13,55 +13,42 @@ const EditEmployee = () => {
     const changePage = () => {
         navigate('/employees/manageEmployee');
     };
-    // const [firstName, setfirstName] = useState(location.state.firstName);
-    // const [lastName, setlastName] = useState(location.state.lastName);
-    // const [email, setemail] = useState(location.state.email);
-    // const [password, setpassword] = useState(location.state.password);
-    // const [mobileNo, setmobileNo] = useState(location.state.mobileNo);
-    // const [alternateMobileNo, setalternateMobileNo] = useState(location.state.alternateMobileNo);
-    // const [lastActive, setlastActive] = useState('');
-    // const [userName, setuserName] = useState(location.state.userName);
-    // const [userRoleId, setuserRoleId] = useState(location.state.userRoleId);
-    const [firstName, setfirstName] = useState('');
-    const [lastName, setlastName] = useState('');
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
-    const [mobileNo, setmobileNo] = useState('');
-    const [alternateMobileNo, setalternateMobileNo] = useState('');
+    const [id, setId] = useState(location.state.userId);
+    const [firstName, setfirstName] = useState(location.state.firstName);
+    const [lastName, setlastName] = useState(location.state.lastName);
+    const [email, setemail] = useState(location.state.email);
+    const [password, setpassword] = useState(location.state.password);
+    const [mobileNo, setmobileNo] = useState(location.state.mobileNo);
+    const [alternateMobileNo, setalternateMobileNo] = useState(location.state.alternateMobileNo);
     const [lastActive, setlastActive] = useState('');
-    const [userName, setuserName] = useState('');
-    const [userRoleId, setuserRoleId] = useState('');
-    //empty the form Text
-    // const blankForm = () => {
-    //     setCatType('');
-    //     setPrice('');
-    //     setDescription('');
-    // };
-    const AddUser = {
-        id: 0,
+    const [userName, setuserName] = useState(location.state.userName);
+    const [userRoleId, setuserRoleId] = useState(location.state.roleId);
+
+    const UpdateUser = {
+        id: id,
         firstName: firstName,
         lastName: lastName,
         email: email,
-        createdBy: 1,
-        lastActive: lastActive,
-        userRoleId: 0,
-        addedBy: 0,
         password: password,
         mobileNo: mobileNo,
         alternateMobileNo: alternateMobileNo,
         userName: userName,
+        updatedBy: 1,
+        lastActive: "2022-11-09",
+        userRoleId: 0,
+        addedBy: 0,
         recodStatus: 1
     }
-    //Add data in the table
-    const postData = () => {
-        axios.post('http://35.89.6.16:4002/api/userMasterUpsert', { AddUser });
+    const items = localStorage.getItem('accessToken');
+    //Update data in the table
+    const UpdateData = () => {
+        console.log({ UpdateUser })
+        axios.post('http://35.89.6.16:4002/api/userMasterUpsert', UpdateUser, { headers: { "x-access-token": items } });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        postData();
-        // blankForm();
-        // alert('Catalogue Successfully Created');
+        UpdateData();
     };
     return (
         <Container>
@@ -104,6 +91,7 @@ const EditEmployee = () => {
                                         <Icon>phone</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
+
                                         required
                                         onChange={(e) => setmobileNo(e.target.value)}
                                         value={mobileNo}
@@ -143,6 +131,7 @@ const EditEmployee = () => {
                                 <Form.Label>Role </Form.Label>
                                 <Form.Control
                                     required
+                                    disabled
                                     onChange={(e) => setuserRoleId(e.target.value)}
                                     value={userRoleId}
                                     placeholder="Enter the Role Level"
@@ -158,6 +147,7 @@ const EditEmployee = () => {
                                         <Icon>person</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
+
                                         required
                                         onChange={(e) => setuserName(e.target.value)}
                                         value={userName}
@@ -166,13 +156,14 @@ const EditEmployee = () => {
                                 </InputGroup>
                             </Col>
                             <Col>
-                                <Form.Label>Password </Form.Label>
+                                <Form.Label>New Password </Form.Label>
                                 <InputGroup className="mb-3">
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>password</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
                                         required
+                                        type='password'
                                         onChange={(e) => setpassword(e.target.value)}
                                         value={password}
                                         placeholder="Enter the Password"
@@ -190,7 +181,7 @@ const EditEmployee = () => {
                         </Button>
                         &nbsp;
                         <button type="button" className="btn btn-success" onClick={handleSubmit}>
-                            Save
+                            Update
                         </button>
                     </Col>
                 </Row>

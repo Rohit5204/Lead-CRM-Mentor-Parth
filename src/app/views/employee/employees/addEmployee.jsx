@@ -35,7 +35,7 @@ const AddEmployee = () => {
         lastName: lastName,
         email: email,
         createdBy: 1,
-        lastActive: lastActive,
+        lastActive: '2022-11-09',
         userRoleId: 0,
         addedBy: 0,
         password: password,
@@ -44,16 +44,17 @@ const AddEmployee = () => {
         userName: userName,
         recodStatus: 1
     }
+    const items = localStorage.getItem('accessToken');
     //Add data in the table
-    const postData = () => {
-        axios.post('http://35.89.6.16:4002/api/userMasterUpsert', { AddUser });
+    const postData = async () => {
+        console.log({ AddUser })
+        await axios.post('http://35.89.6.16:4002/api/userMasterUpsert', AddUser,
+            { headers: { "x-access-token": items } });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
-        // blankForm();
-        // alert('Catalogue Successfully Created');
     };
     return (
         <Container>

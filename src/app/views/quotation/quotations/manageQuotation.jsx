@@ -55,27 +55,15 @@ const ManageQuotation = () => {
     setObj1(catalogue);
     setShow(true);
   };
-
+  const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getQuotationData`, {
-        quotationId: 0,
-        empId: 0,
-      })
+      .post(`http://35.89.6.16:4002/api/getQuotationData`, { quotationId: 0, empId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
   }, [APIData]);
-  //   useEffect(() => {
-  //     axios
-  //       .post(`http://35.89.6.16:4002/api/upsertCatalogue`, {
-  //         catId: 0,
-  //       })
-  //       .then((response) => {
-  //         setAPIData(response.data.data);
-  //       });
-  //   }, [APIData]);
   return (
     <Container>
       <Box>
@@ -126,15 +114,15 @@ const ManageQuotation = () => {
             <Col md="4">
               <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
               <br></br>
-              <button type="button" className="btn btn-outline-success">
+              <button type="button" className="btn btn-outline-primary ">
                 Last Day
               </button>
               &nbsp;
-              <button type="button" className="btn btn-outline-success">
+              <button type="button" className="btn btn-outline-primary">
                 Last Week
               </button>
               &nbsp;
-              <button type="button" className="btn btn-outline-success">
+              <button type="button" className="btn btn-outline-primary">
                 Last Month
               </button>
               &nbsp;
@@ -143,7 +131,7 @@ const ManageQuotation = () => {
             <Col md={2}>
               <Form.Label htmlFor="basic-url"> Advanced Search</Form.Label>
               <br />
-              <button type="button" className="btn btn-outline-success" onClick={showForm1}>
+              <button type="button" className="btn btn-outline-primary" onClick={showForm1}>
                 Apply Filter
               </button>
             </Col>
@@ -292,36 +280,16 @@ const ManageQuotation = () => {
                     <TableCell align="justify">{catalogue.status}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(catalogue)}>
-                        <Icon color="success">edit</Icon>
+                        <Icon color="success">visibility</Icon>
                       </IconButton>
-                      <IconButton>
+                      {/* <IconButton>
                         <Icon color="warning">delete</Icon>
-                      </IconButton>
+                      </IconButton> */}
                     </TableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
-            {/* <TableBody>
-              <TableRow>
-                <TableCell align="justify">101</TableCell>
-                <TableCell align="justify">24-10-2022</TableCell>
-                <TableCell align="justify">Nisha Kumari</TableCell>
-                <TableCell align="justify">INDEX OPTION</TableCell>
-                <TableCell align="justify">25</TableCell>
-                <TableCell align="justify">
-                  <Chip label="Draft" />
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleShow()}>
-                    <Icon color="success">edit</Icon>
-                  </IconButton>
-                  <IconButton>
-                    <Icon color="warning">delete</Icon>
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableBody> */}
           </StyledTable>
         </Box>
         <Modal
@@ -334,18 +302,18 @@ const ManageQuotation = () => {
           centered
         >
           <Modal.Header>
-            <Modal.Title>Update Quotation</Modal.Title>
+            <Modal.Title>Preview Quotation</Modal.Title>
           </Modal.Header>
           <Modal.Body>{/* <EditCatalogue theEditCatalogue={obj1} /> */}</Modal.Body>
           <Modal.Footer>
-            <button
+            {/* <button
               type="submit"
               className="btn btn-success"
               style={{ marginTop: 5 + 'px' }}
               onClick={handleClose}
             >
               Update
-            </button>
+            </button> */}
             <button
               type="submit"
               className="btn btn-error"

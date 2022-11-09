@@ -48,27 +48,18 @@ const ManageInvoiceList = () => {
   const changePage = () => {
     navigate('/invoices/invoiceForm');
   };
+  const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
-        leadId: 0,
-        userId: 0,
-        statusId: 0,
-      })
+      .post(`http://35.89.6.16:4002/api/getInvoiceData`, {
+        invoiceid: 0,
+        empId: 0
+      }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
   }, [APIData]);
-  //   useEffect(() => {
-  //     axios
-  //       .post(`http://35.89.6.16:4002/api/upsertCatalogue`, {
-  //         catId: 0,
-  //       })
-  //       .then((response) => {
-  //         setAPIData(response.data.data);
-  //       });
-  //   }, [APIData]);
   return (
     <Container>
       <Box>
@@ -117,12 +108,12 @@ const ManageInvoiceList = () => {
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {/* <TableBody>
               <TableRow>
                 <TableCell align="center">
                   <Form.Check type="switch" id="custom-switch" label="" />
                 </TableCell>
-                <TableCell align="justify">1200</TableCell>
+                <TableCell align="justify"></TableCell>
                 <TableCell align="justify">22-10-2022</TableCell>
                 <TableCell align="justify">Yogesh Rithe</TableCell>
                 <TableCell align="justify"> ABCR7826W</TableCell>
@@ -143,7 +134,7 @@ const ManageInvoiceList = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-            </TableBody>
+            </TableBody> */}
           </StyledTable>
         </Box>
         <Modal
@@ -153,8 +144,8 @@ const ManageInvoiceList = () => {
           keyboard={false}
           aria-labelledby="example-modal-sizes-title-lg"
           size="lg"
-          // aria-labelledby="contained-modal-title-vcenter"
-          // centered
+        // aria-labelledby="contained-modal-title-vcenter"
+        // centered
         >
           {/* <Modal.Header>
             <Modal.Title>Update Catalogue</Modal.Title>
@@ -195,9 +186,9 @@ const ManageInvoiceList = () => {
                           <Form.Label>Current Date:</Form.Label>
                           <Form.Control
                             readOnly
-                            //   type="date"
-                            //   onChange={(e) => setQuotationDate(e.target.value)}
-                            //value={today}
+                          //   type="date"
+                          //   onChange={(e) => setQuotationDate(e.target.value)}
+                          //value={today}
                           />
                         </Col>
 
@@ -210,8 +201,8 @@ const ManageInvoiceList = () => {
                             type="text"
                             name="cashierName"
                             id="cashierName"
-                            //value={cashierName}
-                            //onChange={(event) => setCashierName(event.target.value)}
+                          //value={cashierName}
+                          //onChange={(event) => setCashierName(event.target.value)}
                           />
                         </Col>
                       </Row>
@@ -226,11 +217,11 @@ const ManageInvoiceList = () => {
                               required
                               // className="flex-1"
                               placeholder="Company Email"
-                              // type="text"
-                              // name="companyEmail"
-                              // id="companyEmail"
-                              //value={companyEmail}
-                              //onChange={(event) => setCompanyEmail(event.target.value)}
+                            // type="text"
+                            // name="companyEmail"
+                            // id="companyEmail"
+                            //value={companyEmail}
+                            //onChange={(event) => setCompanyEmail(event.target.value)}
                             />
                           </Col>
                           <Col>
@@ -242,8 +233,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="companyContact"
                               id="companyContact"
-                              //value={companyContact}
-                              //onChange={(event) => setCompanyContact(event.target.value)}
+                            //value={companyContact}
+                            //onChange={(event) => setCompanyContact(event.target.value)}
                             />
                           </Col>
                         </Row>
@@ -271,8 +262,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="companyGstNo"
                               id="companyGstNo"
-                              //value={companyGstNo}
-                              //onChange={(event) => setCompanyGstNo(event.target.value)}
+                            //value={companyGstNo}
+                            //onChange={(event) => setCompanyGstNo(event.target.value)}
                             />
                           </Col>
                           <Col>
@@ -284,8 +275,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="companyStateName"
                               id="companyStateName"
-                              //value={companyStateName}
-                              //onChange={(event) => setCompanyStateName(event.target.value)}
+                            //value={companyStateName}
+                            //onChange={(event) => setCompanyStateName(event.target.value)}
                             />
                           </Col>
                         </Row>
@@ -304,8 +295,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="customerName"
                               id="customerName"
-                              //value={customerName}
-                              //onChange={(event) => setCustomerName(event.target.value)}
+                            //value={customerName}
+                            //onChange={(event) => setCustomerName(event.target.value)}
                             />
                           </Col>
                           <Col>
@@ -317,8 +308,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="panNo"
                               id="panNo"
-                              //value={panNo}
-                              //onChange={(event) => setPanNo(event.target.value)}
+                            //value={panNo}
+                            //onChange={(event) => setPanNo(event.target.value)}
                             />
                           </Col>
                         </Row>
@@ -332,8 +323,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="clientEmail"
                               id="clientEmail"
-                              //value={clientEmail}
-                              //onChange={(event) => setClientEmail(event.target.value)}
+                            //value={clientEmail}
+                            //onChange={(event) => setClientEmail(event.target.value)}
                             />
                           </Col>
                           <Col>
@@ -345,8 +336,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="clientContact"
                               id="clientContact"
-                              //value={clientContact}
-                              //onChange={(event) => setClientContact(event.target.value)}
+                            //value={clientContact}
+                            //onChange={(event) => setClientContact(event.target.value)}
                             />
                           </Col>
                         </Row>
@@ -374,8 +365,8 @@ const ManageInvoiceList = () => {
                               type="text"
                               name="clientGstNo"
                               id="clientGstNo"
-                              // value={clientGstNo}
-                              //onChange={(event) => setClientGstNo(event.target.value)}
+                            // value={clientGstNo}
+                            //onChange={(event) => setClientGstNo(event.target.value)}
                             />
                           </Col>
                           <Col>
@@ -390,8 +381,8 @@ const ManageInvoiceList = () => {
                                 min="5"
                                 step="1"
                                 placeholder="Tax Rate"
-                                //value={tax}
-                                //onChange={(event) => setTax(event.target.value)}
+                              //value={tax}
+                              //onChange={(event) => setTax(event.target.value)}
                               />
                               <InputGroup.Text>%</InputGroup.Text>
                             </InputGroup>
@@ -505,8 +496,8 @@ const ManageInvoiceList = () => {
                         min="5"
                         step="1"
                         placeholder="Tax Rate"
-                        // value={tax}
-                        // onChange={(event) => setTax(event.target.value)}
+                      // value={tax}
+                      // onChange={(event) => setTax(event.target.value)}
                       />
                       <InputGroup.Text>%</InputGroup.Text>
                     </InputGroup>
