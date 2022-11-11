@@ -3,7 +3,7 @@ import { Breadcrumb, SimpleCard } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 import { Box, Grid, Autocomplete, TextField } from '@mui/material';
 import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -176,41 +176,56 @@ const LeadForm = () => {
             </Row>
             <Row className="mt-1">
               <Col>
+
                 <Form.Label>Mobile Number</Form.Label>
-                <Form.Control
-                  onChange={(e) => setMobileNo(e.target.value)}
-                  value={mobileNo}
-                  placeholder="Customer Mobile Number"
-                />
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>phone</Icon>
+                  </InputGroup.Text>
+                  <Form.Control
+                    onChange={(e) => setMobileNo(e.target.value)}
+                    value={mobileNo}
+                    placeholder="Customer Mobile Number"
+                  /></InputGroup>
               </Col>
             </Row>
             <Row className="mt-1">
               <Col>
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  onChange={(e) => setEmailId(e.target.value)}
-                  value={emailId}
-                  placeholder="Customer Email"
-                />
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>email</Icon>
+                  </InputGroup.Text>
+                  <Form.Control
+                    onChange={(e) => setEmailId(e.target.value)}
+                    value={emailId}
+                    placeholder="Customer Email"
+                  /></InputGroup>
               </Col>
             </Row>
             <Row className="mt-1">
               <Col>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                   <Form.Label>Street Name</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    onChange={(e) => setStreetName(e.target.value)}
-                    value={streetName}
-                    placeholder="Street"
-                  />
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>house</Icon>
+                    </InputGroup.Text>
+                    <Form.Control
+                      as="textarea"
+                      rows={1}
+                      onChange={(e) => setStreetName(e.target.value)}
+                      value={streetName}
+                      placeholder="Street"
+                    /></InputGroup>
                 </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
+
                 <Form.Label>City Name</Form.Label>
+
                 <Form.Control
                   onChange={(e) => setCityName(e.target.value)}
                   value={cityName}

@@ -147,7 +147,7 @@ const Layout1Topbar = () => {
             </StyledItem>
 
             <StyledItem>
-              <Link to="/page-layouts/user-profile">
+              <Link to="/digitalCards/adddigitalCard">
                 <Icon> person </Icon>
                 <Span> Profile </Span>
               </Link>

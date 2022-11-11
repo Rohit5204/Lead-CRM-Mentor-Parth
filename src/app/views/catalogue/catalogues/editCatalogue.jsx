@@ -40,15 +40,8 @@ const EditCatalogue = ({ theEditCatalogue }) => {
     e.preventDefault();
     axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, UpdateCatalogue, { headers: { "x-access-token": items } }).then(() => useEffect);
   };
-  // const blankForm = () => {
-  //   setCatType('');
-  //   setName('');
-  //   setPrice('');
-  //   setDescription('');
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // blankForm();
   };
   return (
     <Container>

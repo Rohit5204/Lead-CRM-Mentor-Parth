@@ -2,13 +2,11 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Data } from 'app/components/Data';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
-// import EditCatalogue from './editCatalogue';
+import ViewQuotation from './viewQuotation';
 import {
   Box,
-  Chip,
   Icon,
   IconButton,
   Table,
@@ -51,15 +49,15 @@ const ManageQuotation = () => {
   const [show, setShow] = useState(false);
   //Dialog Form
   const handleClose = () => setShow(false);
-  const handleShow = (catalogue) => {
-    setObj1(catalogue);
+
+  const handleShow = (quotation) => {
+    setObj1(quotation);
     setShow(true);
   };
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios
-      .post(`http://35.89.6.16:4002/api/getQuotationData`, { quotationId: 0, empId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`http://35.89.6.16:4002/api/getQuotationData`, { quotationId: 0, empId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -100,18 +98,25 @@ const ManageQuotation = () => {
             <Col>
               <Form.Label htmlFor="basic-url">Serach Box</Form.Label>
               <InputGroup className="mb-3">
-                {/* <button type="button" className="btn btn-success" onClick={changePage}>
+                <button type="button" className="btn btn-success" onClick={changePage}>
                   ADD
                 </button>
-                &nbsp; */}
+                &nbsp;
                 <Form.Control
                   placeholder="Search Box"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
+                {/* &nbsp;
+                <button type="submit" className="btn btn-success" onClick={changePage}>
+                  ADD
+                </button> */}
               </InputGroup>
             </Col>
-            <Col md="4">
+
+          </Row>
+          <Row>
+            <Col md="10">
               <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
               <br></br>
               <button type="button" className="btn btn-outline-primary ">
@@ -128,7 +133,7 @@ const ManageQuotation = () => {
               &nbsp;
             </Col>
 
-            <Col md={2}>
+            <Col md="2">
               <Form.Label htmlFor="basic-url"> Advanced Search</Form.Label>
               <br />
               <button type="button" className="btn btn-outline-primary" onClick={showForm1}>
@@ -255,31 +260,32 @@ const ManageQuotation = () => {
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
           <h4>Quotation Table</h4>
-          <StyledTable>
-            <TableHead>
+          <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+            <TableHead style={{ 'border - left': '1px solid red', 'border-right': '1px solid red' }} className='text-center'>
+
               <TableRow>
-                <TableCell align="justify">Quotation No</TableCell>
-                <TableCell align="justify">Date</TableCell>
-                <TableCell align="justify">Customer Name</TableCell>
-                <TableCell align="justify">Product Name</TableCell>
-                <TableCell align="justify">Amount</TableCell>
-                <TableCell align="justify">Status</TableCell>
+                <TableCell align="center">Quotation No</TableCell>
+                {/* <TableCell align="justify">Date</TableCell> */}
+                <TableCell align="center">Customer Name</TableCell>
+                <TableCell align="center">Mobile No</TableCell>
+                <TableCell align="center">Total Amount</TableCell>
+
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {APIData.map((catalogue, index) => {
+              {APIData.map((quotation, index) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell align="justify">{catalogue.quotationNumber}</TableCell>
-                    <TableCell align="justify">{catalogue.createdDate}</TableCell>
-                    <TableCell align="justify">{catalogue.billTo}</TableCell>
-                    <TableCell align="justify">{catalogue.gsCatalogueId}</TableCell>
-                    <TableCell align="justify">{catalogue.amount}</TableCell>
+                    <TableCell align="center">{quotation.quotationNumber}</TableCell>
+                    {/* <TableCell align="justify">{quotation.createdDate}</TableCell> */}
+                    <TableCell align="center">{quotation.billTo}</TableCell>
+                    <TableCell align="center">{quotation.clientContact}</TableCell>
+                    <TableCell align="center">{quotation.grandTotal}</TableCell>
 
-                    <TableCell align="justify">{catalogue.status}</TableCell>
+
                     <TableCell align="center">
-                      <IconButton onClick={() => handleShow(catalogue)}>
+                      <IconButton onClick={() => handleShow(quotation)}>
                         <Icon color="success">visibility</Icon>
                       </IconButton>
                       {/* <IconButton>
@@ -304,7 +310,9 @@ const ManageQuotation = () => {
           <Modal.Header>
             <Modal.Title>Preview Quotation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{/* <EditCatalogue theEditCatalogue={obj1} /> */}</Modal.Body>
+          <Modal.Body>
+            <ViewQuotation theViewQuotation={obj1}></ViewQuotation>
+          </Modal.Body>
           <Modal.Footer>
             {/* <button
               type="submit"

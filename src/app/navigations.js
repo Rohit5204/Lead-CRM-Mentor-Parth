@@ -10,7 +10,7 @@ export const navigations = [
       { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
-      { name: 'System Master', iconText: '404', path: '/leads/systemMaster' },
+      { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
       { name: 'User Master', iconText: '404', path: '/employees/manageEmployee' },
     ],
   },
@@ -49,39 +49,39 @@ export const navigations = [
     name: 'Digital Card',
     icon: 'security',
     children: [
-      { name: 'Manage Card', iconText: 'SI', path: '/session/signup' },
-      { name: 'Add Card', iconText: 'SI', path: '/session/signup' },
+      { name: 'Manage Card', iconText: 'SI', path: '/digitalCards/managedigitalCard' },
+      { name: 'Add Card', iconText: 'SI', path: '' },
     ],
   },
-  { label: 'MY DEALS', type: 'label' },
-  {
-    name: 'Deals',
-    icon: 'security',
-    children: [
-      { name: 'Completed (Invoive)', iconText: 'SI', path: '/session/signup' },
-      { name: 'Recovery', iconText: 'SI', path: '/session/signup' },
-      { name: 'Renewal', iconText: 'SI', path: '/session/signup' },
-    ],
-  },
-  { label: 'EMAIL', type: 'label' },
-  {
-    name: 'Email',
-    icon: 'security',
-    children: [
-      { name: 'Send Mail', iconText: 'SI', path: '/session/signup' },
-      { name: 'Email Catalog', iconText: 'SI', path: '/session/signup' },
-    ],
-  },
-  { label: 'REPORTS', type: 'label' },
-  {
-    name: 'Report',
-    icon: 'security',
-    children: [
-      { name: 'Employee Wise', iconText: 'SI', path: '/session/signup' },
-      { name: 'Duration Wise', iconText: 'SI', path: '/session/signup' },
-      { name: 'Product Service Wise', iconText: 'SI', path: '/session/signup' },
-    ],
-  },
+  // { label: 'MY DEALS', type: 'label' },
+  // {
+  //   name: 'Deals',
+  //   icon: 'security',
+  //   children: [
+  //     { name: 'Completed (Invoive)', iconText: 'SI', path: '/session/signup' },
+  //     { name: 'Recovery', iconText: 'SI', path: '/session/signup' },
+  //     { name: 'Renewal', iconText: 'SI', path: '/session/signup' },
+  //   ],
+  // },
+  // { label: 'EMAIL', type: 'label' },
+  // {
+  //   name: 'Email',
+  //   icon: 'security',
+  //   children: [
+  //     { name: 'Send Mail', iconText: 'SI', path: '/session/signup' },
+  //     { name: 'Email Catalog', iconText: 'SI', path: '/session/signup' },
+  //   ],
+  // },
+  // { label: 'REPORTS', type: 'label' },
+  // {
+  //   name: 'Report',
+  //   icon: 'security',
+  //   children: [
+  //     { name: 'Employee Wise', iconText: 'SI', path: '/session/signup' },
+  //     { name: 'Duration Wise', iconText: 'SI', path: '/session/signup' },
+  //     { name: 'Product Service Wise', iconText: 'SI', path: '/session/signup' },
+  //   ],
+  // },
 
   // {
   //   name: 'Session/Auth',

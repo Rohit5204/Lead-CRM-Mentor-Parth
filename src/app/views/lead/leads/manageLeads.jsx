@@ -116,15 +116,15 @@ const ManageLead = () => {
               <Col>
                 <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
                 <br></br>
-                <button type="button" className="btn btn-outline-warning">
+                <button type="button" className="btn btn-outline-primary">
                   Last Day
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-outline-warning">
+                <button type="button" className="btn btn-outline-primary">
                   Last Week
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-outline-warning">
+                <button type="button" className="btn btn-outline-primary">
                   Last Month
                 </button>
                 &nbsp;
@@ -133,7 +133,7 @@ const ManageLead = () => {
               <Col>
                 <Form.Label htmlFor="basic-url">Apply Advanced Filter</Form.Label>
                 <br></br>
-                <button type="button" className="btn btn-outline-success" onClick={showForm1}>
+                <button type="button" className="btn btn-outline-primary" onClick={showForm1}>
                   Advanced Search
                 </button>
               </Col>

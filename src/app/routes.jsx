@@ -11,6 +11,8 @@ import catalogueRoutes from './views/catalogue/CatalogueRoute';
 import quotationRoutes from './views/quotation/quotationRoute';
 import invoiceRoutes from './views/invoice/invoiceRoutes';
 import employeeRoutes from './views/employee/employeeRoutes';
+import digitalCardRoutes from './views/digitalCard/digitalCardRoutes';
+import systemMasterRoutes from './views/systemMaster/systemMaster';
 const routes = [
   {
     element: (
@@ -27,6 +29,8 @@ const routes = [
       ...quotationRoutes,
       ...invoiceRoutes,
       ...employeeRoutes,
+      ...digitalCardRoutes,
+      ...systemMasterRoutes
     ],
   },
   ...sessionRoutes,

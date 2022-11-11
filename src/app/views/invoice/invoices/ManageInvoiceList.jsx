@@ -75,15 +75,14 @@ const ManageInvoiceList = () => {
           <Row>
             <Col>
               <InputGroup className="mb-3">
+                <button type="submit" className="btn btn-success" onClick={changePage}>
+                  ADD
+                </button>&nbsp;
                 <Form.Control
                   placeholder="Search Box"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
-                &nbsp;
-                <button type="submit" className="btn btn-success" onClick={changePage}>
-                  ADD
-                </button>
               </InputGroup>
             </Col>
           </Row>

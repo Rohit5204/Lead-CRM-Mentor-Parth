@@ -381,14 +381,14 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
             <h6 className="text-center mt-3">This is a Computer Generated Invoice</h6>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>
             Close
           </Button>
           <Button variant="primary" onClick={closeModal}>
             Save
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </div>
   );

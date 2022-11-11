@@ -1,19 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ItemField from './itemFields';
-import { Icon, IconButton, FormControl, Autocomplete, TextField, } from '@mui/material';
-import { Form } from 'react-bootstrap';
-import axios from 'axios';
+import { Icon, IconButton } from '@mui/material';
 
 const QuotationItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
-    const [catalogueData, setCatalogueData] = useState([]);
-    useEffect(() => {
-        axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0 }).then((res) => {
-            for (var i = 0; i < res.data.data.length; i++) {
-                setCatalogueData(current => [...current, res.data.data[i].gsName]);
-            }
-        });
-    }, []);
-
     const deleteItemHandler = () => {
         onDeleteItem(id);
     };

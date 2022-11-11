@@ -132,7 +132,7 @@ const EditUser = ({ theEditLead }) => {
           <Col>
             <Form.Label>Lead Name</Form.Label>
             <Form.Control
-              disabled
+
               onChange={(e) => setName(e.target.value)}
               value={name}
               placeholder="Enter the Lead Name"

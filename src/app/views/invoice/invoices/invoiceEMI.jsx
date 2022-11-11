@@ -1,11 +1,10 @@
 import React from 'react';
 import InvoiceFieldEMI from './EMIFields';
 import { Icon, IconButton } from '@mui/material';
-const InvoiceEMI = ({ no, id, date, amount, onDeleteItem, onEdtiItem }) => {
+const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, onDeleteItem, onEdtiItem }) => {
   const deleteItemHandler = () => {
     onDeleteItem(id);
   };
-
   return (
     <tr>
       <td className="w-full">
@@ -15,9 +14,9 @@ const InvoiceEMI = ({ no, id, date, amount, onDeleteItem, onEdtiItem }) => {
           cellData={{
             placeholder: 'Installment No.',
             type: 'text',
-            name: 'no',
+            name: 'instalmentNumber',
             id: id,
-            value: no,
+            value: instalmentNumber,
           }}
         />
       </td>
@@ -26,11 +25,10 @@ const InvoiceEMI = ({ no, id, date, amount, onDeleteItem, onEdtiItem }) => {
         <InvoiceFieldEMI
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
-            placeholder: 'Item name',
             type: 'date',
-            name: 'date',
+            name: 'instalmentDate',
             id: id,
-            value: date,
+            value: instalmentDate,
           }}
         />
       </td>
@@ -41,9 +39,9 @@ const InvoiceEMI = ({ no, id, date, amount, onDeleteItem, onEdtiItem }) => {
           cellData={{
             placeholder: 'Installment Amount',
             type: 'text',
-            name: 'amount',
+            name: 'instalmentAmount',
             id: id,
-            value: amount,
+            value: instalmentAmount,
           }}
         />
       </td>

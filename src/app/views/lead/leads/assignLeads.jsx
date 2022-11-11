@@ -133,15 +133,15 @@ const AssignLead = () => {
           <Col>
             <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
             <br></br>
-            <button type="button" className="btn btn-outline-success">
+            <button type="button" className="btn btn-outline-primary">
               Last Day
             </button>
             &nbsp;
-            <button type="button" className="btn btn-outline-success">
+            <button type="button" className="btn btn-outline-primary">
               Last Week
             </button>
             &nbsp;
-            <button type="button" className="btn btn-outline-success">
+            <button type="button" className="btn btn-outline-primary">
               Last Month
             </button>
             &nbsp;

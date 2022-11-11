@@ -7,6 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import {
   Box,
   Icon,
+  Chip,
   IconButton,
   Table,
   TableBody,
@@ -107,7 +108,13 @@ const ManageEmployee = () => {
                   </TableCell>
                   <TableCell align="justify">{subscriber.email}</TableCell>
                   <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                  <TableCell align="justify">{subscriber.status}</TableCell>
+                  <TableCell align="justify">
+                    {subscriber.recodStatus == 1 ? (
+                      <Chip color="success" label="Active" />
+                    ) : (
+                      <Chip color="warning" label="Inactive" />
+                    )}
+                  </TableCell>
                   <TableCell align="center">
                     <Link to="/employees/editEmployee" state={subscriber}>
                       <IconButton>
