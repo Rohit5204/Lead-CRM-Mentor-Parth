@@ -110,7 +110,7 @@ const AddQuotation = () => {
     setInstallments((prevItem) => [
       ...prevItem,
       {
-        id: id,
+        // id: id,
         instalmentNumber: '',
         instalmentDate: '',
         instalmentAmount: '',
@@ -148,7 +148,7 @@ const AddQuotation = () => {
 
     const newItems = items.map((items) => {
       for (const key in items) {
-        if (key === editedItem.name && items.id === editedItem.id) {
+        if (key === editedItem.name && items.instalmentNumber === editedItem.id) {
           items[key] = editedItem.value;
         }
       }
@@ -281,12 +281,7 @@ const AddQuotation = () => {
       bankDetails: "test",
       isDraft: 1,
       createdBy: 1,
-      instalments: [{
-        instalmentNumber: 1,
-        instalmentAmount: 2000,
-        instalmentDate: "2022-10-21",
-        createdBy: 1
-      }]
+      instalments: installments
     }
     console.log({ AddQuotation });
     axios.post('http://35.89.6.16:4002/api/saveQuotation', AddQuotation,
@@ -834,8 +829,8 @@ const AddQuotation = () => {
                         <TableBody>
                           {installments.map((item) => (
                             <InvoiceEMI
-                              key={item.id}
-                              id={item.id}
+                              key={item.instalmentNumber}
+                              // id={item.id}
                               instalmentNumber={item.instalmentNumber}
                               instalmentDate={item.instalmentDate}
                               instalmentAmount={item.instalmentAmount}

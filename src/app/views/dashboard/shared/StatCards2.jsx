@@ -6,17 +6,16 @@ const StatCards2 = () => {
   const { palette } = useTheme();
   const textError = palette.error.main;
   const bgError = lighten(palette.error.main, 0.85);
-
+  const [onType, setOnType] = useState('DEFAULT');
   const [APIData, setAPIData] = useState([]);
   useEffect(() => {
     const items = localStorage.getItem('accessToken');
-    axios
-      .post(`http://35.89.6.16:4002/api/getDashboardData`, {
-        opType: "DEFAULT",
-        fromDate: "",
-        toDate: "",
-        empId: 0
-      }, { headers: { "x-access-token": items } })
+    axios.post(`http://35.89.6.16:4002/api/getDashboardData`, {
+      opType: onType,
+      fromDate: "",
+      toDate: "",
+      empId: 0
+    }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });

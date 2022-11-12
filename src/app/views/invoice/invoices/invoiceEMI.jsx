@@ -3,7 +3,7 @@ import InvoiceFieldEMI from './EMIFields';
 import { Icon, IconButton } from '@mui/material';
 const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, onDeleteItem, onEdtiItem }) => {
   const deleteItemHandler = () => {
-    onDeleteItem(id);
+    onDeleteItem(instalmentNumber);
   };
   return (
     <tr>
@@ -15,7 +15,7 @@ const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, on
             placeholder: 'Installment No.',
             type: 'text',
             name: 'instalmentNumber',
-            id: id,
+            id: instalmentNumber,
             value: instalmentNumber,
           }}
         />
@@ -27,7 +27,7 @@ const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, on
           cellData={{
             type: 'date',
             name: 'instalmentDate',
-            id: id,
+            id: instalmentNumber,
             value: instalmentDate,
           }}
         />
@@ -40,7 +40,7 @@ const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, on
             placeholder: 'Installment Amount',
             type: 'text',
             name: 'instalmentAmount',
-            id: id,
+            id: instalmentNumber,
             value: instalmentAmount,
           }}
         />

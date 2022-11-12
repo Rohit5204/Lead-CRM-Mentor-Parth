@@ -14,7 +14,7 @@ import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import LineGraph from './shared/LineGraph';
-
+import React, { useState, useEffect } from 'react';
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -41,6 +41,7 @@ const H4 = styled('h4')(({ theme }) => ({
 }));
 
 const Analytics = () => {
+  const [obj1, setObj1] = useState(null);
   const { palette } = useTheme();
   const theme = useTheme();
   return (
