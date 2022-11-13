@@ -17,6 +17,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
     const discountRate = (discount * subtotal) / 100;
     const total = (subtotal - discountRate + taxRate)
     const quotationDate = format(new Date(theViewQuotation.quotationDate), 'mm/dd/yyyy')
+
     return (
         <Box sx={{ flexGrow: 1 }} style={{ 'borderRadius': '5px' }}>
             <Form className='mt-2 ml-2 mr-2'>

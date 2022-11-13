@@ -2,11 +2,12 @@ import { styled } from '@mui/system';
 import { SimpleCard } from 'app/components';
 import { Row, Col, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import ManageFollowups from './followups/addfollowups';
+import ManageMettings from './meetings/addMeeting';
 
 const ViewLead = () => {
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
 
   const navigate = useNavigate();
   const changePage = () => {
@@ -26,7 +27,8 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.leadId}
+                  defaultValue={location.state.leadId}
+                  // value={location.state.leadId}
                   placeholder="Lead Number"
                 />
               </Col>
@@ -35,7 +37,7 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.name}
+                  defaultValue={location.state.name}
                   placeholder="Enter Lead Name"
                 />
               </Col>
@@ -45,7 +47,7 @@ const ViewLead = () => {
                   type="date"
                   disabled
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.createdDate}
+                  defaultValue={location.state.createdDate}
                 />
               </Col>
             </Row>
@@ -64,7 +66,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Enter Customer Mobile No."
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.mobileNo}
+                  defaultValue={location.state.mobileNo}
                 />
               </Col>
               <Col>
@@ -73,7 +75,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Enter Email Id"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.emailId}
+                  defaultValue={location.state.emailId}
                 />
               </Col>
             </Row>
@@ -84,7 +86,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Enter Lead Source"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.platformName}
+                  defaultValue={location.state.platformName}
                 />
               </Col>
               <Col>
@@ -93,7 +95,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Interested In"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.intrestedIn}
+                  defaultValue={location.state.intrestedIn}
                 />
               </Col>
               <Col>
@@ -102,7 +104,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Assign Employee"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.assignedUser}
+                  defaultValue={location.state.assignedUser}
                 />
               </Col>
             </Row>
@@ -112,7 +114,7 @@ const ViewLead = () => {
                 <Form.Control
                   placeholder="Enter the Address"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.streetName}
+                  defaultValue={location.state.streetName}
                 />
               </Col>
             </Row>
@@ -122,7 +124,7 @@ const ViewLead = () => {
                 <Form.Control
                   placeholder="Enter the Pin Code"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.zipCode}
+                  defaultValue={location.state.zipCode}
                 />
               </Col>
               <Col>
@@ -130,7 +132,7 @@ const ViewLead = () => {
                 <Form.Control
                   placeholder="Enter the City"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.cityName}
+                  defaultValue={location.state.cityName}
                 />
               </Col>
               <Col>
@@ -138,7 +140,7 @@ const ViewLead = () => {
                 <Form.Control
                   placeholder="Mention the State"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.stateName}
+                  defaultValue={location.state.stateName}
                 />
               </Col>
             </Row>
@@ -148,7 +150,7 @@ const ViewLead = () => {
                 <Form.Control
                   placeholder="Mention the Country"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.countryName}
+                  defaultValue={location.state.countryName}
                 />
               </Col>
               <Col>
@@ -157,7 +159,7 @@ const ViewLead = () => {
                   disabled
                   placeholder="Mention the Status"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.statusName}
+                  defaultValue={location.state.statusName}
                 />
               </Col>
               <Col>
@@ -166,119 +168,26 @@ const ViewLead = () => {
                   disabled
                   placeholder="Mention the Label"
                   //onChange={(e) => setRemarks(e.target.value)}
-                  value={location.state.labelName}
+                  defaultValue={location.state.labelName}
                 />
               </Col>
             </Row>
+            <Div className="mt-2">
+              <Row>
+                <Col>
+                  <Button variant="primary" onClick={changePage}>
+                    Back
+                  </Button>
+                </Col>
+              </Row>
+            </Div>
           </Tab>
 
-          <Tab eventKey="followups" title="Followups">
-            <Row>
-              <Col>
-                <Form.Label>Ex Name</Form.Label>
-                <Form.Control
-                  placeholder="Enter the Ex Name"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Followup Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  placeholder="Enter Followup Date"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Followup Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  placeholder="Enter Followup Time"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Label>Remarks</Form.Label>
-                <Form.Control
-                  placeholder="Enter any Remarks"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Next Followup Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  placeholder="Enter Next Followup Date"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Next Followup Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  placeholder="Enter Next Followup Time"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-            </Row>
+          <Tab eventKey="followups" title="FollowUp">
+            <ManageFollowups></ManageFollowups>
           </Tab>
           <Tab eventKey="meetings" title="Meetings">
-            <Row>
-              <Col>
-                <Form.Label>Ex Name</Form.Label>
-                <Form.Control
-                  placeholder="Enter the Ex Name"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  placeholder="Enter Followup Date"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-              <Col>
-                <Form.Label>From Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  placeholder="Enter Followup Time"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col md="4">
-                <Form.Label>To Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  placeholder="Enter Followup Time"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-
-              <Col>
-                <Form.Label>Remarks</Form.Label>
-                <Form.Control
-                  placeholder="Enter any Remarks"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.labelName}
-                />
-              </Col>
-            </Row>
+            <ManageMettings></ManageMettings>
           </Tab>
           <Tab eventKey="quotations" title="Quotations">
             <Row>
@@ -288,18 +197,18 @@ const ViewLead = () => {
                 </button>
               </Col>
             </Row>
+            {/* <Div className="mt-2">
+              <Row>
+                <Col>
+                  <Button variant="primary" onClick={changePage}>
+                    Back
+                  </Button>
+                </Col>
+              </Row>
+            </Div> */}
           </Tab>
         </Tabs>
       </SimpleCard>
-      <Div className="mt-2">
-        <Row>
-          <Col>
-            <Button variant="primary" onClick={changePage}>
-              Back
-            </Button>
-          </Col>
-        </Row>
-      </Div>
     </Container>
   );
 };
