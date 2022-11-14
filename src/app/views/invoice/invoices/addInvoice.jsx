@@ -8,6 +8,7 @@ import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import ReviewInvoice from 'app/views/invoice/invoices/ReviewInvoice';
 import incrementString from 'app/views/invoice/helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
     Box,
@@ -294,10 +295,14 @@ const AddInvoice = () => {
             { headers: { "x-access-token": token } }
         );
     };
+    const navigate = useNavigate();
+    const changePage = () => {
+        navigate('/invoices/ManageInvoiceList');
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
-        // blankForm();
+        changePage()
         // alert('Lead Successfully Added');
     };
     return (
@@ -717,7 +722,7 @@ const AddInvoice = () => {
                 Review
               </Button>&nbsp; */}
                             <button type="button" onClick={handleSubmit} className="btn btn-success">
-                                ADD Quotation
+                                ADD INVOICE
                             </button>
                             <hr />
                             <Row>

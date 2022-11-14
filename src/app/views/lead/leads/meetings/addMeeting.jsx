@@ -11,11 +11,8 @@ const Div = styled('div')(({ theme }) => ({
 
 const ManageMettings = () => {
     const location = useLocation();
-    // const [APIData, setAPIData] = useState([]);
-    // const [followUpLeads, setFollowUpLeads] = useState(APIData.followupData);
-    // console.log("Lead Follow UP=" + followUpLeads)
     const token = localStorage.getItem('accessToken');
-
+    const [APIData123, setAPIData123] = useState([]);
     const [leadId, setLeadId] = useState(location.state.leadId);
     const [meetingDate, setMeetingDate] = useState("");
     const [fromTime, setFromTime] = useState("");
@@ -30,18 +27,28 @@ const ManageMettings = () => {
         toTime: toTime,
         remark: remark,
     };
-    const [APIData, setAPIData] = useState([]);
+
+
     useEffect(() => {
-        axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, { leadId: leadId, userId: 0, statusId: 0 },
-            { headers: { "x-access-token": token } })
-            .then((response) => {
+        getData()
+        // setAPIData123(["hii", "hellos", "ROHIT"])
+        // console.log("APIDATA=" + APIData123)
+    }, [APIData123]);
+
+    const getData = () => {
+        // let abc = null
+        axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`,
+            { leadId: leadId, userId: 0, statusId: 0 },
+            { headers: { "x-access-token": token } }).then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
-                    setAPIData(response.data.data[i].meetingData);
-                    console.log(response.data.data[i].meetingData)
-                    console.log(APIData)
+                    console.log("Meeting Data =")
+                    setAPIData123(response.data.data[i].meetingData)
+                    // console.log(abc)
+                    // setAPIData123(["hii", "hellos"]);
+                    console.log(APIData123)
                 }
             });
-    }, []);
+    }
     const postData = () => {
         // console.log({ MeetingData })
         axios.post(`http://35.89.6.16:4002/api/saveLeadMeetings`, MeetingData,
@@ -113,6 +120,7 @@ const ManageMettings = () => {
                     </div>
                 </Row>
             </Div>
+            {/* {JSON.stringify(APIData123)} */}
             <Row className="mt-2">
                 <SimpleCard>
                     <h5 className='text-center'>Meeting Detail's</h5>
@@ -126,16 +134,19 @@ const ManageMettings = () => {
                                 <th>Remarks</th>
                             </tr>
                         </thead>
-                        {APIData.map((follow, index) => {
-                            <tbody className='text-center'>
-                                <tr key={index}>
-                                    <td>{follow.id}</td>
-                                    <td>{follow.meetingDate}</td>
-                                    <td>{follow.fromTime}</td>
-                                    <td>{follow.toTime}</td>
-                                    <td>{follow.remark}</td>
-                                </tr>
-                            </tbody>
+
+                        {APIData123.map((follow, index) => {
+                            return (
+                                <tbody className='text-center'>
+                                    <tr key={index}>
+                                        <td>{follow.id}</td>
+                                        <td>{new Date(follow.meetingDate).toLocaleDateString()}</td>
+                                        <td>{follow.fromTime}</td>
+                                        <td>{follow.toTime}</td>
+                                        <td>{follow.remark}</td>
+                                    </tr>
+                                </tbody>
+                            )
                         })}
                     </table>
                 </SimpleCard>

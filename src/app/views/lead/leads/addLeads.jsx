@@ -26,12 +26,12 @@ const LeadForm = () => {
   const changePage = () => {
     navigate('/leads/manageLeads');
   };
-  const [name, setName] = useState('Fianl');
-  const [mobileNo, setMobileNo] = useState('789654412235');
-  const [emailId, setEmailId] = useState('demo@g.com');
-  const [streetName, setStreetName] = useState('vashi');
-  const [stateName, setStateName] = useState('mh');
-  const [cityName, setCityName] = useState('nk');
+  const [name, setName] = useState('JAVASCRIPT');
+  const [mobileNo, setMobileNo] = useState('9547123652');
+  const [emailId, setEmailId] = useState('java@g.com');
+  const [streetName, setStreetName] = useState('Turbe');
+  const [stateName, setStateName] = useState('Maharshtra');
+  const [cityName, setCityName] = useState('Mumbai');
   const [zipCode, setZipCode] = useState('422101');
   const [countryName, setCountryName] = useState('India');
 
@@ -125,7 +125,7 @@ const LeadForm = () => {
       }
     }
     const AddLead = {
-      name: name,
+      name: "Enquiry For" + " " + name,
       mobileNo: mobileNo,
       emailId: emailId,
       streetName: streetName,
@@ -144,13 +144,14 @@ const LeadForm = () => {
     }
     console.log({ AddLead })
     const items = localStorage.getItem('accessToken');
-    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [{ AddLead }], { headers: { "x-access-token": items } });
+    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, [AddLead], { headers: { "x-access-token": items } });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
     blankForm();
+    changePage();
     // alert('Lead Successfully Added');
   };
   return (
@@ -165,20 +166,23 @@ const LeadForm = () => {
           <SimpleCard title="Fill Lead Details">
             <Row>
               <Col>
-                <Form.Label>Lead Name</Form.Label>
-                <Form.Control height={2}
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
-                  placeholder="Enter the Lead Name"
-                />
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>work</Icon>
+                  </InputGroup.Text>
+                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                    placeholder="Enter the Lead Name"
+                  /></InputGroup>
 
               </Col>
             </Row>
-            <Row className="mt-1">
+            <Row>
               <Col>
-
-                <Form.Label>Mobile Number</Form.Label>
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Mobile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>phone</Icon>
                   </InputGroup.Text>
@@ -189,10 +193,10 @@ const LeadForm = () => {
                   /></InputGroup>
               </Col>
             </Row>
-            <Row className="mt-1">
+            <Row>
               <Col>
-                <Form.Label>Email</Form.Label>
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>email</Icon>
                   </InputGroup.Text>
@@ -205,9 +209,10 @@ const LeadForm = () => {
             </Row>
             <Row className="mt-1">
               <Col>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Street Name</Form.Label>
-                  <InputGroup className="mb-3">
+                <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
+
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
                     <InputGroup.Text id="basic-addon1">
                       <Icon>house</Icon>
                     </InputGroup.Text>
@@ -224,50 +229,67 @@ const LeadForm = () => {
             <Row>
               <Col>
 
-                <Form.Label>City Name</Form.Label>
-
-                <Form.Control
-                  onChange={(e) => setCityName(e.target.value)}
-                  value={cityName}
-                  placeholder="Enter The City"
-                />
+                {/* <Form.Label>City Name</Form.Label> */}
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>village</Icon>
+                  </InputGroup.Text>
+                  <Form.Control
+                    onChange={(e) => setCityName(e.target.value)}
+                    value={cityName}
+                    placeholder="Enter The City"
+                  /></InputGroup>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Label>State Name</Form.Label>
-                <Form.Control
-                  onChange={(e) => setStateName(e.target.value)}
-                  value={stateName}
-                  placeholder="Enter Sate Name"
-                />
+                {/* <Form.Label>State Name</Form.Label> */}
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>village</Icon>
+                  </InputGroup.Text>
+                  <Form.Control
+                    onChange={(e) => setStateName(e.target.value)}
+                    value={stateName}
+                    placeholder="Enter Sate Name"
+                  /></InputGroup>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Label>Pin Code</Form.Label>
-                <Form.Control
-                  onChange={(e) => setZipCode(e.target.value)}
-                  value={zipCode}
-                  placeholder="Enter Zip Code"
-                />
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Zip Code&nbsp;   :&nbsp;</h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>subway</Icon>
+                  </InputGroup.Text>
+                  {/* <Form.Label>Pin Code</Form.Label> */}
+                  <Form.Control
+                    onChange={(e) => setZipCode(e.target.value)}
+                    value={zipCode}
+                    placeholder="Enter Zip Code"
+                  /></InputGroup>
               </Col>
             </Row>
             <Row>
               <Col xs={6}>
-                <FormControl sx={{ m: 0, minWidth: 450 }} size="small" className="mt-1">
-                  <Form.Label>Country</Form.Label>
-                  <Select
-                    value={countryName}
-                    label="Country"
-                    onChange={(e) => setCountryName(e.target.value)}
-                  >
-                    <MenuItem value="s">Select the Country</MenuItem>
-                    <MenuItem value="India">INDIA</MenuItem>
-                    <MenuItem value="USA">USA</MenuItem>
-                    <MenuItem value="Russia">RUSSIA</MenuItem>
-                    <MenuItem value="Australia">RUSSIA</MenuItem>
-                  </Select>
+
+                <FormControl sx={{ m: 0, minWidth: 750 }} size="small" className="mt-1">
+                  {/* <Form.Label>Country</Form.Label> */}
+                  <InputGroup className="mb-2" width="750px">
+                    <h6 className="mt-1">Country&nbsp;&nbsp;  :&nbsp;</h6>
+                    <Select
+                      value={countryName}
+                      label="Country"
+                      onChange={(e) => setCountryName(e.target.value)}
+                    >
+                      <MenuItem value="s">Select the Country</MenuItem>
+                      <MenuItem value="India">INDIA</MenuItem>
+                      <MenuItem value="USA">USA</MenuItem>
+                      <MenuItem value="Russia">RUSSIA</MenuItem>
+                      <MenuItem value="Australia">RUSSIA</MenuItem>
+                    </Select></InputGroup>
                 </FormControl>
               </Col>
             </Row>
@@ -277,9 +299,11 @@ const LeadForm = () => {
         <Col xs={12} md={6}>
           <SimpleCard>
             <Row>
-              <Col sm>
-                <br />
-                <Form.Label>Interested In</Form.Label>
+              <Col>
+                {/* <Form.Label>Interested In</Form.Label> */}
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Interested In&nbsp;&nbsp;  :&nbsp;</h6>
+                </InputGroup>
                 <FormControl>
                   <Autocomplete
                     style={{ width: 450 }}
@@ -290,6 +314,7 @@ const LeadForm = () => {
                     options={intrestedIn}
                     onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
+
                       <TextField
                         {...params}
                         variant="outlined"

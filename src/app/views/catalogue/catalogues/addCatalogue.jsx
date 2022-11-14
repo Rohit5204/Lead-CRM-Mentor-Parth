@@ -4,7 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Box, MenuItem, FormControl, Select } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -58,7 +58,8 @@ const AddCatalogue = () => {
     e.preventDefault();
     postData();
     blankForm();
-    alert('Catalogue Successfully Created');
+    changePage();
+    // alert('Catalogue Successfully Created');
   };
   return (
     <Container>

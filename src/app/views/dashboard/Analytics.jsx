@@ -1,4 +1,4 @@
-import { Card, Grid, styled, useTheme } from '@mui/material';
+import { Card, Grid, styled, useTheme, Icon, IconButton } from '@mui/material';
 import { Fragment } from 'react';
 import Campaigns from './shared/Campaigns';
 import DoughnutChart from './shared/Doughnut';
@@ -14,7 +14,9 @@ import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import LineGraph from './shared/LineGraph';
+import SampleLine from './shared/MixedGraph';
 import React, { useState, useEffect } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -41,9 +43,21 @@ const H4 = styled('h4')(({ theme }) => ({
 }));
 
 const Analytics = () => {
-  const [obj1, setObj1] = useState(null);
+
+  // const passObjectData1 = (startDate, endDate, onType) => {
+
+  // }
   const { palette } = useTheme();
   const theme = useTheme();
+  const [startDate, setstartDate] = useState('')
+  const [endDate, setendDate] = useState('')
+  const [onType, setOnType] = useState('DEFAULT')
+  const dashboard = {
+    opType: onType,
+    fromDate: startDate,
+    toDate: endDate,
+    empId: 0
+  }
   return (
     <Fragment>
       <ContentBox className="analytics">
@@ -53,15 +67,21 @@ const Analytics = () => {
               <Col>
                 <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
                 <br></br>
-                <button type="button" className="btn btn-outline-success">
+                <button type="button" className="btn btn-outline-success"
+                  value={onType}
+                  onClick={() => setOnType('LASTDAY')}>
                   Last Day
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-outline-success">
+                <button type="button" className="btn btn-outline-success"
+                  value={onType}
+                  onClick={() => setOnType('LASTWEEK')}>
                   Last Week
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-outline-success">
+                <button type="button" className="btn btn-outline-success"
+                  value={onType}
+                  onClick={() => setOnType('LASTMONTH')}>
                   Last Month
                 </button>
                 &nbsp;
@@ -69,9 +89,18 @@ const Analytics = () => {
               <Col>
                 <Form.Label htmlFor="basic-url">{''}</Form.Label>
                 <InputGroup className="mb-3">
-                  <InputGroup.Text id="basic-addon3">Select Date Range</InputGroup.Text>
-                  <Form.Control id="basic-url" aria-describedby="basic-addon3" type="date" />
-                  <Form.Control id="basic-url" aria-describedby="basic-addon3" type="date" />
+                  <InputGroup.Text id="basic-addon3">
+                    Date Range
+                  </InputGroup.Text>
+                  <Form.Control
+                    value={startDate}
+                    onChange={(e) => setstartDate(e.target.value)}
+                    type="date" />
+                  <Form.Control
+                    value={endDate}
+                    onChange={(e) => setendDate(e.target.value)}
+                    type="date" />
+
                 </InputGroup>
               </Col>
             </Row>
@@ -82,7 +111,7 @@ const Analytics = () => {
               <StatCards />
             </Tab>
             <Tab eventKey="profile" title="Platform Wise">
-              <StatCards2 />
+              <StatCards2 showData={dashboard} />
             </Tab>
           </Tabs>
         </SimpleCard>
@@ -90,9 +119,10 @@ const Analytics = () => {
         <Grid container spacing={3}>
           <Grid item lg={8} md={8} sm={12} xs={12}>
             <Title>Monthly Leads</Title>
+            {/* <SampleLine></SampleLine> */}
             <LineGraph
               height="350px"
-              color={[theme.palette.primary.main, theme.palette.primary.light]}
+              color={[palette.error.dark, palette.warning.main, palette.success.main]}
             />
             <br></br>
             {/* <RowCards /> */}
@@ -105,7 +135,7 @@ const Analytics = () => {
 
               <DoughnutChart
                 height="300px"
-                color={[palette.primary.dark, palette.primary.main, palette.primary.light]}
+                color={[palette.error.main, palette.warning.light, palette.success.light, palette.primary.dark]}
               />
             </Card>
           </Grid>

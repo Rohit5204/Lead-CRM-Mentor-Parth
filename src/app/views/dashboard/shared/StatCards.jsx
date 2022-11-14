@@ -31,12 +31,12 @@ const Heading = styled('h6')(({ theme }) => ({
 const StatCards = () => {
   const cardList = [
     { name: 'Total Pipelines', total: 62, amount: 'Rs. 2,50,000', icon: 'group' },
-    { name: 'Hot Lead', total: 0, amount: 'Rs. 0', icon: 'attach_money' },
-    { name: 'Warm Lead', total: 7, amount: 'Rs. 2,60,000', icon: 'store' },
-    { name: 'Cold Lead', total: 55, amount: 'Rs. 0', icon: 'shopping_cart' },
+    { name: 'Hot Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
+    { name: 'Warm Lead', total: 7, amount: 'Rs. 2,60,000', icon: 'work' },
+    { name: 'Cold Lead', total: 55, amount: 'Rs. 0', icon: 'work' },
     { name: 'Total Lead', total: 70, amount: 'Rs. 4,85,015', icon: 'group' },
     { name: 'Order Recieved', total: 4, amount: 'Rs. 1,15,000', icon: 'attach_money' },
-    { name: 'Order Loss', total: 4, amount: 'Rs. 1,20,015', icon: 'store' },
+    { name: 'Order Loss', total: 4, amount: 'Rs. 1,20,015', icon: 'fall' },
   ];
 
   return (

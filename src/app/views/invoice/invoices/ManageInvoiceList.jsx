@@ -277,7 +277,7 @@ const ManageInvoiceList = () => {
                 return (
                   <TableRow key={index}>
                     <TableCell align="center">{invoice.invoiceNumber}</TableCell>
-                    <TableCell align="center">{invoice.createdDate}</TableCell>
+                    <TableCell align="center">{new Date(invoice.createdDate).toLocaleDateString()}</TableCell>
                     <TableCell align="center">{invoice.billTo}</TableCell>
                     <TableCell align="center">{invoice.clientContact}</TableCell>
                     <TableCell align="center">{invoice.grandTotal}</TableCell>

@@ -8,6 +8,7 @@ import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import ReviewInvoice from 'app/views/invoice/invoices/ReviewInvoice';
 import incrementString from 'app/views/invoice/helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Box,
@@ -288,9 +289,14 @@ const AddQuotation = () => {
       { headers: { "x-access-token": token } }
     );
   };
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/quotations/manageQuotation');
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
+    changePage();
     // blankForm();
     // alert('Lead Successfully Added');
   };

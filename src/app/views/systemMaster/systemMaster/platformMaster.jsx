@@ -4,13 +4,19 @@ import { styled } from '@mui/system';
 import axios from 'axios';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import EditPlatform from './editPlatform';
 import {
     Box,
     Icon,
+    Tabs,
+    Tab,
+    MenuItem,
+    FormControl,
+    Select,
+    Card,
+    Fab,
+    Grid,
     IconButton,
     Table,
     TableBody,
@@ -30,6 +36,7 @@ const StyledTable = styled(Table)(() => ({
     },
 }));
 function TabPanel(props) {
+
     const { children, value, index, ...other } = props;
 
     return (
@@ -70,12 +77,24 @@ const Div = styled('div')(({ theme }) => ({
 const PlatformMaster = () => {
     const [masterName, setMasterName] = useState('Platform');
     const [inputText, setInputText] = useState('');
+    const [platformIcon, setplatformIcon] = useState('');
+    const [platformColor, setplatformColor] = useState('');
     const [APIData, setAPIData] = useState([]);
     const [obj1, setObj1] = useState(null);
     const [show, setShow] = useState(false);
     const [value, setValue] = useState(0);
     const items = localStorage.getItem('accessToken');
 
+    const PlatformPayload = {
+        id: 0,
+        masterName: masterName,
+        platformIcon: platformIcon,
+        platformColor: platformColor,
+        inputText: inputText,
+        recodStatus: 1,
+        addedBy: 1,
+        updatedBy: 1,
+    }
     useEffect(() => {
         axios
             .get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`,
@@ -91,14 +110,8 @@ const PlatformMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://35.89.6.16:4002/api/mastersUpsert`, {
-                id: 0,
-                masterName: masterName,
-                inputText: inputText,
-                recodStatus: 1,
-                addedBy: 1,
-                updatedBy: 1,
-            }, { headers: { "x-access-token": items } })
+            .post(`http://35.89.6.16:4002/api/mastersUpsert`, PlatformPayload,
+                { headers: { "x-access-token": items } })
             .then(() => useEffect);
     };
 
@@ -132,22 +145,13 @@ const PlatformMaster = () => {
     };
 
     return (
-        <div>
+        <>
             <Row>
-                <Col>
-                    <SimpleCard title="Add Platform ">
-                        <Row>
-                            <Col md="6">
+                <Col lg="8">
+                    <SimpleCard>
+                        <Row >
+                            <Col>
                                 <Form.Label>Platform Name</Form.Label>
-                                <Form.Control
-                                    disabled
-                                    value={masterName}
-                                    onChange={(e) => setMasterName(e.target.value)}
-                                    placeholder="Enter the Platform Name"
-                                />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Input Text</Form.Label>
                                 <Form.Control
                                     required
                                     onChange={(e) => setInputText(e.target.value)}
@@ -156,24 +160,104 @@ const PlatformMaster = () => {
                                 />
                             </Col>
                         </Row>
-                        <Div className="mt-4">
-                            <Row>
-                                <Col>
-                                    <Button variant="secondary" >
-                                        Cancel
-                                    </Button>
-                                    &nbsp;
-                                    <Button variant="success"
-                                        onClick={handleSubmit}>
-                                        Save
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Div>
+                        <Row className='mt-2'>
+                            <Col>
+                                <Form.Label>Platform Icon</Form.Label>
+
+                                <Form.Control
+                                    required
+                                    onChange={(e) => setplatformIcon(e.target.value)}
+                                    value={platformIcon}
+                                    placeholder="Enter the Input Text"
+                                />
+                                {/* <FormControl fullWidth>
+                                    <Select
+                                     defaultValue={ options [0] }
+                                        options={options}
+                                        onChange={(e) => setplatformIcon(e.target.value)}
+                                        // value={platformIcon}
+                                        label="Age"
+                                    >
+                                    </Select>
+                                </FormControl> */}
+                            </Col>
+                        </Row>
+                        {/* InstagramIcon */}
+                        <Row>
+                            <Col>
+                                <Form.Label>Platform Color</Form.Label>
+                                <FormControl fullWidth>
+                                    {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
+                                    <Select
+                                        // labelId="demo-simple-select-label"
+                                        // id="demo-simple-select"
+                                        onChange={(e) => setplatformColor(e.target.value)}
+                                        value={platformColor}
+                                        label="Age"
+                                    >
+                                        <MenuItem value='red'>Red</MenuItem>
+                                        <MenuItem value='cyan'>Cyan</MenuItem>
+                                        <MenuItem value='green'>Green</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                {/* <Form.Label>Color</Form.Label>
+                                <Form.Control
+                                    required
+                                    onChange={(e) => setplatformColor(e.target.value)}
+                                    value={platformColor}
+                                    placeholder="Enter the Input Text"
+                                /> */}
+                            </Col>
+
+                        </Row>
+                    </SimpleCard>
+
+                </Col>
+                <Col lg="4">
+                    <Card className="mb-4" height="120px" >
+                        <Grid item xs={2} md={2} >
+                            <StyledCard elevation={1} style={{ backgroundColor: platformColor }}>
+                                <ContentBox>
+                                    <FabIcon><Icon className="icon">{platformIcon}</Icon></FabIcon>
+
+                                    <Box ml="12px">
+                                        <H3 textcolor={'#fffff'}>{inputText}</H3>
+
+                                        {/* <H1 >Count {inputText}</H1> */}
+                                    </Box>
+                                </ContentBox>
+                            </StyledCard>
+                        </Grid>
+                    </Card>
+                </Col>
+                <Div className="mt-4">
+                    <Row>
+                        <Col>
+                            <Button variant="secondary" >
+                                Cancel
+                            </Button>
+                            &nbsp;
+                            <Button variant="success"
+                                onClick={handleSubmit}>
+                                Save
+                            </Button>
+                        </Col>
+                    </Row>
+                </Div>
+            </Row>
+            {/* <Row>
+                <Col>
+                    <SimpleCard title="Add Platform ">
+
+                        <Row>
+
+
+                        </Row>
+                       
                     </SimpleCard>
                 </Col>
             </Row>
-            <br />
+            <br /> */}
             <Row>
                 <Col>
                     <SimpleCard title="List Of Platform Master ">
@@ -282,8 +366,41 @@ const PlatformMaster = () => {
                     </SimpleCard>
                 </Col>
             </Row>
-        </div>
+        </>
     );
 };
+const StyledCard = styled(Card)(({ theme }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '24px !important',
+    // background: '#19CABA',
+    [theme.breakpoints.down('sm')]: { padding: '16px !important' },
+}));
+const ContentBox = styled('div')(() => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+}));
+
+const FabIcon = styled(Fab)(() => ({
+    width: '44px !important',
+    height: '44px !important',
+    boxShadow: 'none !important',
+}));
+
+const H3 = styled('h3')(({ textcolor }) => ({
+    margin: 0,
+    color: textcolor,
+    fontWeight: '500',
+    marginLeft: '0px',
+}));
+
+const H1 = styled('h5')(({ textcolor }) => ({
+    margin: 0,
+    // flexGrow: 1,
+    color: textcolor,
+}));
 
 export default PlatformMaster;

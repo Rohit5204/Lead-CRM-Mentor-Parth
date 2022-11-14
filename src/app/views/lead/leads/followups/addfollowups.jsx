@@ -14,7 +14,7 @@ const ManageFollowups = () => {
     const token = localStorage.getItem('accessToken');
     // const [followUpLeads, setFollowUpLeads] = useState(APIData);
     // console.log("Lead Follow UP=" + followUpLeads)
-    const [APIData, setAPIData] = useState([]);
+    const [APIData456, setAPIData456] = useState([]);
     const [leadId, setLeadId] = useState(location.state.leadId);
     const [followUpDate, setFollowUpDate] = useState("");
     const [followUpTme, setFollowUpTime] = useState("");
@@ -33,17 +33,20 @@ const ManageFollowups = () => {
         createdBy: 1
     };
     useEffect(() => {
+        getData1()
+    }, [APIData456]);
+    const getData1 = () => {
         axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, { leadId: leadId, userId: 0, statusId: 0, },
             { headers: { "x-access-token": token } })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
-                    setAPIData(current => [...current, response.data.data[i].followupData]);
+                    setAPIData456(response.data.data[i].followupData);
                     // response.data.data[i].followupData);
                     // console.log(response.data.data[i].followupData)
                     // console.log(APIData)
                 }
             });
-    }, []);
+    }
     const postData = () => {
         // console.log({ followUpData })
         axios.post(`http://35.89.6.16:4002/api/saveLeadFollowups`, followUpData,
@@ -127,6 +130,7 @@ const ManageFollowups = () => {
                     </div>
                 </Row>
             </Div>
+            {/* {JSON.stringify(APIData456)} */}
             <Row className="mt-2">
                 <SimpleCard>
                     <h5 className='text-center'>Followup Detail's</h5>
@@ -137,18 +141,24 @@ const ManageFollowups = () => {
                                 <th>Sr No.</th>
                                 <th>Follow Date</th>
                                 <th>Follow Time</th>
+                                <th>Next Follow Date</th>
+                                <th>Next Follow Time</th>
                                 <th>Remarks</th>
                             </tr>
                         </thead>
-                        {APIData.map((follow, index) => {
-                            <tbody className='text-center'>
-                                <tr key={index}>
-                                    <td>{follow.id}</td>
-                                    <td>{follow.followUpDate}</td>
-                                    <td>{follow.followUpTme}</td>
-                                    <td>{follow.remarks}</td>
-                                </tr>
-                            </tbody>
+                        {APIData456.map((follow, index) => {
+                            return (
+                                <tbody className='text-center'>
+                                    <tr key={index}>
+                                        <td>{follow.id}</td>
+                                        <td>{new Date(follow.followUpDate).toLocaleDateString()}</td>
+                                        <td>{follow.followUpTme}</td>
+                                        <td>{new Date(follow.nextFollowUpDate).toLocaleDateString()}</td>
+                                        <td>{follow.nextFollowUpTme}</td>
+                                        <td>{follow.remarks}</td>
+                                    </tr>
+                                </tbody>
+                            )
                         })}
                     </table>
                 </SimpleCard>

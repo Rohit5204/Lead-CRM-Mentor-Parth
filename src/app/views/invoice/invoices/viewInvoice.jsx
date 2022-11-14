@@ -188,7 +188,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <tr key={index}>
                                         <td>{emi.instalmentNumber} </td>
                                         <td>{emi.instalmentAmount}</td>
-                                        <td>{format(new Date(emi.instalmentDate), 'mm/dd/yyyy')} </td>
+                                        <td>{new Date(emi.instalmentDate).toLocaleDateString()} </td>
 
                                     </tr>
                                 );

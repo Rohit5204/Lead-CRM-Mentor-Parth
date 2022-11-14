@@ -13,7 +13,7 @@ const LineGraph = ({ height, color = [] }) => {
     },
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: {
@@ -33,8 +33,17 @@ const LineGraph = ({ height, color = [] }) => {
     },
     series: [
       {
-        data: [30, 40, 20, 50, 40, 80, 90],
+        data: [25, 42, 11, 45, 38, 92, 98, 25, 42, 11, 45, 38, 92, 98],
         type: 'line',
+        stack: 'Employee',
+        name: 'Employee',
+        smooth: true,
+        symbolSize: 4,
+        lineStyle: { width: 4 },
+      },
+      {
+        data: [30, 40, 20, 50, 40, 80, 90, 30, 40, 20, 50, 40, 80, 90],
+        type: 'bar',
         stack: 'This month',
         name: 'This month',
         smooth: true,
@@ -42,8 +51,8 @@ const LineGraph = ({ height, color = [] }) => {
         lineStyle: { width: 4 },
       },
       {
-        data: [20, 50, 15, 50, 30, 70, 95],
-        type: 'line',
+        data: [20, 50, 15, 50, 30, 70, 95, 20, 50, 15, 50, 30, 70, 95],
+        type: 'bar',
         stack: 'Last month',
         name: 'Last month',
         smooth: true,

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Grid, TextField, Autocomplete, MenuItem, FormControl, Select } from '@mui/material';
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const EditUser = ({ theEditLead }) => {
@@ -122,8 +123,13 @@ const EditUser = ({ theEditLead }) => {
     axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
       .then(() => useEffect);
   };
+  const navigate = useNavigate();
+  const changePage = () => {
+    navigate('/catalogues/manageCatalogue');
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    changePage()
   };
   return (
     <Box sx={{ flexGrow: 1 }}>

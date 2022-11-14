@@ -102,13 +102,14 @@ const DoughnutChart = ({ height, color = [] }) => {
   };
 
   return (
-    <ReactEcharts
-      style={{ height: height }}
-      option={{
-        ...option,
-        color: [...color],
-      }}
-    />
+    <>
+      <ReactEcharts
+        style={{ height: height }}
+        option={{
+          ...option,
+          color: [...color],
+        }}
+      /></>
   );
 };
 
