@@ -281,15 +281,13 @@ const ManageInvoiceList = () => {
                     <TableCell align="center">{invoice.billTo}</TableCell>
                     <TableCell align="center">{invoice.clientContact}</TableCell>
                     <TableCell align="center">{invoice.grandTotal}</TableCell>
-
-
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(invoice)}>
-                        <Icon color="success">visibility</Icon>
+                        <Icon color="warning">visibility</Icon>
                       </IconButton>
-                      {/* <IconButton>
-                        <Icon color="warning">delete</Icon>
-                      </IconButton> */}
+                      <IconButton>
+                        <Icon color="success">edit</Icon>
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 );

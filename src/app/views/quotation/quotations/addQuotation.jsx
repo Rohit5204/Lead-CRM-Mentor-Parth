@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { uid } from 'uid';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import InvoiceItem from 'app/views/invoice/invoices/InvoiceItem';
-import InvoiceModal from 'app/views/invoice/invoices/InvoiceModal';
-import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import ReviewInvoice from 'app/views/invoice/invoices/ReviewInvoice';
 import incrementString from 'app/views/invoice/helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import QuotationEMI from './quotationItems';
 import axios from 'axios';
 import {
   Box,
@@ -133,7 +131,7 @@ const AddQuotation = () => {
     ]);
   };
   const deleteInstallment = (id) => {
-    setInstallments((prevItem) => prevItem.filter((item) => item.id !== id));
+    setInstallments((prevItem) => prevItem.filter((item) => item.instalmentNumber !== id));
   };
 
   const deleteItemHandler = (id) => {
@@ -167,7 +165,7 @@ const AddQuotation = () => {
 
     const newInstallments = installments.map((installments) => {
       for (const key in installments) {
-        if (key === editedItem1.name && installments.id === editedItem1.id) {
+        if (key === editedItem1.name && installments.instalmentNumber === editedItem1.id) {
           installments[key] = editedItem1.value;
         }
       }
@@ -225,7 +223,7 @@ const AddQuotation = () => {
       }
     }
   }
-  useEffect(() => {
+  const getFetchData = () => {
     axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
       { headers: { "x-access-token": token } }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
@@ -241,6 +239,9 @@ const AddQuotation = () => {
           setProductPrice(current => [...current, res.data.data[i].id, res.data.data[i].gsName, res.data.data[i].gsPrice])
         }
       });
+  }
+  useEffect(() => {
+    getFetchData()
   }, []);
 
   var leadid, catalogueid
@@ -834,9 +835,9 @@ const AddQuotation = () => {
                         </TableHead>
                         <TableBody>
                           {installments.map((item) => (
-                            <InvoiceEMI
+                            <QuotationEMI
                               key={item.instalmentNumber}
-                              // id={item.id}
+                              // id={item.instalmentNumber}
                               instalmentNumber={item.instalmentNumber}
                               instalmentDate={item.instalmentDate}
                               instalmentAmount={item.instalmentAmount}

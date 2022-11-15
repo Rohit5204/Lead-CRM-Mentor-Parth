@@ -121,51 +121,15 @@ const ManageEmployee = () => {
                         <Icon color="success">edit</Icon>
                       </IconButton>
                     </Link>
-                    <IconButton
-                    //  onClick={(event) => deleteData(event, subscriber)}
-                    >
+                    {/* <IconButton>
                       <Icon color="warning">delete</Icon>
-                    </IconButton>
+                    </IconButton> */}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </StyledTable>
         </Box>
-        {/* <Modal
-          show={show}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <Modal.Title>Update Catalogue</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            
-          </Modal.Body>
-          <Modal.Footer>
-            <button
-              type="submit"
-              className="btn btn-error"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleClose}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-success"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleClose}
-            >
-              Update
-            </button>
-          </Modal.Footer>
-        </Modal> */}
       </Box>
     </Container>
   );

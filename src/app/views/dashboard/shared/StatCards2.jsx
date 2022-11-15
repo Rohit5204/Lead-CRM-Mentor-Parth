@@ -6,14 +6,15 @@ import { Small } from 'app/components/Typography';
 
 
 const StatCards2 = (showData) => {
-  console.log(showData.showData)
+  // console.log(showData.showData)
   const { palette } = useTheme();
   const textError = palette.error.main;
   const bgError = lighten(palette.error.main, 0.85);
 
   // const [onType, setOnType] = useState(showData.showData);
   const [APIData123, setAPIData123] = useState([]);
-  useEffect(() => {
+
+  const getDashboardDataFetch = () => {
     const items = localStorage.getItem('accessToken');
 
     axios.post(`http://35.89.6.16:4002/api/getDashboardData`, {
@@ -25,7 +26,10 @@ const StatCards2 = (showData) => {
       .then((response) => {
         setAPIData123(response.data.data);
       });
-    console.log(APIData123)
+    // console.log(APIData123)
+  }
+  useEffect(() => {
+    getDashboardDataFetch()
   }, [APIData123]);
 
   return (

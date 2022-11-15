@@ -133,7 +133,7 @@ const AddInvoice = () => {
         ]);
     };
     const deleteInstallment = (id) => {
-        setInstallments((prevItem) => prevItem.filter((item) => item.id !== id));
+        setInstallments((prevItem) => prevItem.filter((item) => item.instalmentNumber !== id));
     };
 
     const deleteItemHandler = (id) => {

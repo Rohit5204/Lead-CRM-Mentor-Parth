@@ -40,7 +40,7 @@ const ManageLead = () => {
   const closeImport = () => setShow1(false);
   const showImport = () => setShow1(true);
   //get method
-  useEffect(() => {
+  const getFetchLeadData = () => {
     const items = localStorage.getItem('accessToken');
     axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
       leadId: 0,
@@ -50,7 +50,10 @@ const ManageLead = () => {
       .then((response) => {
         setAPIData(response.data.data);
       });
-  }, [APIData]);
+  }
+  useEffect(() => {
+    getFetchLeadData()
+  }, []);
 
   // on change states
   const [excelFile, setExcelFile] = useState(null);

@@ -20,10 +20,11 @@ const ContentBox = styled(Box)(() => ({
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
-  background: '#1A2038',
+  // background: '#6876b0',
+  backgroundImage: "url('/assets/images/Background login.jpg')",
   minHeight: '100% !important',
   '& .card': {
-    maxWidth: 800,
+    maxWidth: 500,
     minHeight: 400,
     margin: '1rem',
     display: 'flex',
@@ -73,82 +74,83 @@ const JwtLogin = () => {
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>
-            <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
-              <img src="/assets/images/illustrations/dreamer.svg" width="100%" alt="" />
+            <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }} className="ml-5">
+              <img src="/assets/images/CRM logo.png" width="100%" alt="" />
             </JustifyBox>
           </Grid>
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <ContentBox>
+            <Formik
+              onSubmit={handleFormSubmit}
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+            >
+              {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="text"
+                    name="userName"
+                    label="UserName"
+                    variant="outlined"
+                    onBlur={handleBlur}
+                    value={values.userName}
+                    onChange={handleChange}
+                    helperText={touched.userName && errors.userName}
+                    error={Boolean(errors.userName && touched.userName)}
+                    sx={{ mb: 3 }}
+                  />
 
-          <Grid item sm={6} xs={12}>
-            <ContentBox>
-              <Formik
-                onSubmit={handleFormSubmit}
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-              >
-                {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-                  <form onSubmit={handleSubmit}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      type="text"
-                      name="userName"
-                      label="UserName"
-                      variant="outlined"
-                      onBlur={handleBlur}
-                      value={values.userName}
-                      onChange={handleChange}
-                      helperText={touched.userName && errors.userName}
-                      error={Boolean(errors.userName && touched.userName)}
-                      sx={{ mb: 3 }}
-                    />
+                  <TextField
+                    fullWidth
+                    size="small"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    onBlur={handleBlur}
+                    value={values.password}
+                    onChange={handleChange}
+                    helperText={touched.password && errors.password}
+                    error={Boolean(errors.password && touched.password)}
+                    sx={{ mb: 1.5 }}
+                  />
 
-                    <TextField
-                      fullWidth
-                      size="small"
-                      name="password"
-                      type="password"
-                      label="Password"
-                      variant="outlined"
-                      onBlur={handleBlur}
-                      value={values.password}
-                      onChange={handleChange}
-                      helperText={touched.password && errors.password}
-                      error={Boolean(errors.password && touched.password)}
-                      sx={{ mb: 1.5 }}
-                    />
+                  <FlexBox justifyContent="space-between">
+                    <FlexBox gap={1}>
+                      <Checkbox
+                        size="small"
+                        name="remember"
+                        onChange={handleChange}
+                        checked={values.remember}
+                        sx={{ padding: 0 }}
+                      />
 
-                    <FlexBox justifyContent="space-between">
-                      <FlexBox gap={1}>
-                        <Checkbox
-                          size="small"
-                          name="remember"
-                          onChange={handleChange}
-                          checked={values.remember}
-                          sx={{ padding: 0 }}
-                        />
+                      <Paragraph>Remember Me</Paragraph>
+                    </FlexBox>
 
-                        <Paragraph>Remember Me</Paragraph>
-                      </FlexBox>
-
-                      <NavLink
+                    {/* <NavLink
                         to="/session/forgot-password"
                         style={{ color: theme.palette.primary.main }}
                       >
                         Forgot password?
-                      </NavLink>
-                    </FlexBox>
+                      </NavLink> */}
+                  </FlexBox>
 
-                    <LoadingButton
-                      type="submit"
-                      color="primary"
-                      loading={loading}
-                      variant="contained"
-                      sx={{ my: 2 }}
-                    >
-                      Login
-                    </LoadingButton>
+                  <LoadingButton
+                    style={{ marginLeft: "140px" }}
+                    type="submit"
+                    color="primary"
+                    loading={loading}
+                    variant="contained"
+                    sx={{ my: 2 }}
+                  >
+                    Login
+                  </LoadingButton>
 
-                    <Paragraph>
+                  {/* <Paragraph>
                       Don't have an account?
                       <NavLink
                         to="/session/signup"
@@ -156,12 +158,12 @@ const JwtLogin = () => {
                       >
                         Register
                       </NavLink>
-                    </Paragraph>
-                  </form>
-                )}
-              </Formik>
-            </ContentBox>
-          </Grid>
+                    </Paragraph> */}
+                </form>
+              )}
+            </Formik>
+          </ContentBox>
+
         </Grid>
       </Card>
     </JWTRoot>

@@ -1,71 +1,51 @@
 import React from 'react';
 import ItemField from './itemFields';
 import { Icon, IconButton } from '@mui/material';
-
-const QuotationItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
+const QuotationEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, onDeleteItem, onEdtiItem }) => {
     const deleteItemHandler = () => {
-        onDeleteItem(id);
+        onDeleteItem(instalmentNumber);
     };
-
     return (
-        <tr className='mt-1'>
+        <tr>
             <td className="w-full">
-                {/* <FormControl>
-                    <Autocomplete
-                        style={{ width: 250 }}
-                        freeSolo
-                        autoComplete
-                        autoHighlight
-                        options={!catalogueData ? [{ label: "Loading...", id: 0 }] : catalogueData}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                onChange={(e) => setCatalogueData(e.target.value)}
-                                variant="outlined"
-                                label="Select the Product or Service"
-                                size="small"
-                            />
-                        )}
-                    />
-                </FormControl> */}
+                {/* <input type="text" value={no} name={no} id={id} onChange={(event) => onEdtiItem(event)} /> */}
                 <ItemField
                     onEditItem={(event) => onEdtiItem(event)}
                     cellData={{
-                        placeholder: 'Item name',
+                        placeholder: 'Installment No.',
                         type: 'text',
-                        name: 'name',
-                        id: id,
-                        value: name,
+                        name: 'instalmentNumber',
+                        id: instalmentNumber,
+                        value: instalmentNumber,
                     }}
                 />
             </td>
-            <td className="min-w-[65px] md:min-w-[80px]">
+            <td className="w-full">
+                {/* <input type="date" value={date} name={date} onChange={(event) => onEdtiItem(event)} /> */}
                 <ItemField
                     onEditItem={(event) => onEdtiItem(event)}
                     cellData={{
-                        type: 'number',
-                        min: '1',
-                        name: 'qty',
-                        id: id,
-                        value: qty,
+                        type: 'date',
+                        name: 'instalmentDate',
+                        id: instalmentNumber,
+                        value: instalmentDate,
                     }}
                 />
             </td>
-            <td className="relative min-w-[100px] md:min-w-[150px]">
+            <td className="w-full">
+                {/* <input type="number" value={amount} name={amount} onChange={(event) => onEdtiItem(event)} /> */}
+                <ItemField
+                    onEditItem={(event) => onEdtiItem(event)}
+                    cellData={{
+                        placeholder: 'Installment Amount',
+                        type: 'text',
+                        name: 'instalmentAmount',
+                        id: instalmentNumber,
+                        value: instalmentAmount,
+                    }}
+                />
+            </td>
 
-                <ItemField
-                    onEditItem={(event) => onEdtiItem(event)}
-                    cellData={{
-                        // className: 'text-right',
-                        type: 'number',
-                        min: '1',
-                        // step: '1',
-                        name: 'price',
-                        id: id,
-                        value: price,
-                    }}
-                />
-            </td>
             <td className="flex items-center justify-center">
                 <IconButton onClick={deleteItemHandler}>
                     <Icon color="warning">delete</Icon>
@@ -75,4 +55,4 @@ const QuotationItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
     );
 };
 
-export default QuotationItem;
+export default QuotationEMI;

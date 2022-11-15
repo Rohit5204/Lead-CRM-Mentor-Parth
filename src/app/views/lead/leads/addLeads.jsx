@@ -52,7 +52,7 @@ const LeadForm = () => {
   const [id3, setId3] = useState([]);
   const [sourceId, setSourceId] = useState([]);
 
-  useEffect(() => {
+  const getAllLeadData = () => {
     const items = localStorage.getItem('accessToken');
     axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
@@ -83,6 +83,9 @@ const LeadForm = () => {
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
+  }
+  useEffect(() => {
+    getAllLeadData()
   }, []);
 
   //empty the form Text

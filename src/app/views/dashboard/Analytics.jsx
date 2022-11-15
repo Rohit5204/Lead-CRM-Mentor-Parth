@@ -116,18 +116,25 @@ const Analytics = () => {
           </Tabs>
         </SimpleCard>
         <br></br>
+        <Grid container spacing={0}>
+          <Grid item lg={12} md={8} sm={12} xs={12}>
+            <SimpleCard><Title>Lead Wise Chart</Title>
+              <SampleLine></SampleLine></SimpleCard>
+
+          </Grid>
+        </Grid>
+        <br />
         <Grid container spacing={3}>
           <Grid item lg={8} md={8} sm={12} xs={12}>
-            <Title>Monthly Leads</Title>
-            {/* <SampleLine></SampleLine> */}
-            <LineGraph
-              height="350px"
-              color={[palette.error.dark, palette.warning.main, palette.success.main]}
-            />
+            <SimpleCard>
+              <Title>Monthly Leads</Title>
+              <LineGraph
+                height="350px"
+                color={[palette.error.dark, palette.warning.main, palette.success.main]}
+              /></SimpleCard>
             <br></br>
             {/* <RowCards /> */}
           </Grid>
-
           <Grid item lg={4} md={4} sm={12} xs={12}>
             <Card sx={{ px: 3, py: 2, mb: 3 }}>
               <Title>Total Yearly Leads</Title>
@@ -140,7 +147,7 @@ const Analytics = () => {
             </Card>
           </Grid>
         </Grid>
-        <Campaigns />
+        {/* <Campaigns /> */}
       </ContentBox>
     </Fragment>
   );

@@ -6,6 +6,8 @@ import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import EditPlatform from './editPlatform';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import {
     Box,
     Icon,
@@ -76,9 +78,9 @@ const Div = styled('div')(({ theme }) => ({
 
 const PlatformMaster = () => {
     const [masterName, setMasterName] = useState('Platform');
-    const [inputText, setInputText] = useState('');
-    const [platformIcon, setplatformIcon] = useState('');
-    const [platformColor, setplatformColor] = useState('');
+    const [inputText, setInputText] = useState('Demo');
+    const [platformIcon, setplatformIcon] = useState('s');
+    const [platformColor, setplatformColor] = useState('#833ab4');
     const [APIData, setAPIData] = useState([]);
     const [obj1, setObj1] = useState(null);
     const [show, setShow] = useState(false);
@@ -137,18 +139,23 @@ const PlatformMaster = () => {
         e.preventDefault();
         postData();
         setInputText('');
+        setplatformIcon('');
+        setplatformColor('')
     };
-
-
     const handleCChange = (event, newValue) => {
         setValue(newValue);
     };
-
+    // const options = [
+    //     { name: 'Instalgram', value: "instagram", icon: <InstagramIcon /> }
+    // ];
+    // {options.map((item, index) => {
+    //     <MenuItem key={index} value={item.value}> {item.name}</MenuItem>
+    // })}
     return (
         <>
             <Row>
                 <Col lg="8">
-                    <SimpleCard>
+                    <SimpleCard title="Add Platform Master(*)">
                         <Row >
                             <Col>
                                 <Form.Label>Platform Name</Form.Label>
@@ -156,37 +163,39 @@ const PlatformMaster = () => {
                                     required
                                     onChange={(e) => setInputText(e.target.value)}
                                     value={inputText}
-                                    placeholder="Enter the Input Text"
+                                    placeholder="Enter the Platform Name"
                                 />
                             </Col>
                         </Row>
                         <Row className='mt-2'>
                             <Col>
+                                {/* <InstagramIcon></InstagramIcon> */}
                                 <Form.Label>Platform Icon</Form.Label>
-
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setplatformIcon(e.target.value)}
-                                    value={platformIcon}
-                                    placeholder="Enter the Input Text"
-                                />
-                                {/* <FormControl fullWidth>
+                                <FormControl sx={{ m: 0, minWidth: 620 }} size="small" className="mt-1">
+                                    {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
                                     <Select
-                                     defaultValue={ options [0] }
-                                        options={options}
+                                        // labelId="demo-simple-select-label"
+                                        // id="demo-simple-select"
                                         onChange={(e) => setplatformIcon(e.target.value)}
-                                        // value={platformIcon}
+                                        value={platformIcon}
                                         label="Age"
                                     >
+                                        <MenuItem value='s'>Select from the List</MenuItem>
+                                        <MenuItem value='facebook'>Facebook</MenuItem>
+                                        <MenuItem value='Twitter'>Twitter</MenuItem>
+                                        <MenuItem value='star'>Indiamart</MenuItem>
+                                        <MenuItem value='telegram'>Telegram</MenuItem>
+                                        <MenuItem value='Whatsapp'>Whatsapp</MenuItem>
+                                        <MenuItem value='Instagram'>Instagram</MenuItem>
                                     </Select>
-                                </FormControl> */}
+                                </FormControl>
                             </Col>
                         </Row>
-                        {/* InstagramIcon */}
+                        {/* linear-gradient(to right, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5)) */}
                         <Row>
                             <Col>
                                 <Form.Label>Platform Color</Form.Label>
-                                <FormControl fullWidth>
+                                <FormControl sx={{ m: 0, minWidth: 620 }} size="small" className="mt-1">
                                     {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
                                     <Select
                                         // labelId="demo-simple-select-label"
@@ -195,18 +204,13 @@ const PlatformMaster = () => {
                                         value={platformColor}
                                         label="Age"
                                     >
-                                        <MenuItem value='red'>Red</MenuItem>
-                                        <MenuItem value='cyan'>Cyan</MenuItem>
-                                        <MenuItem value='green'>Green</MenuItem>
+                                        <MenuItem value='v'>Select from the List</MenuItem>
+                                        <MenuItem value='#EB9694'>Light Pink</MenuItem>
+                                        <MenuItem value='#F4BE65'>Light Orange</MenuItem>
+                                        <MenuItem value='#19CABA'>Cyan</MenuItem>
+                                        <MenuItem value='#282f4e'>Green</MenuItem>
                                     </Select>
                                 </FormControl>
-                                {/* <Form.Label>Color</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setplatformColor(e.target.value)}
-                                    value={platformColor}
-                                    placeholder="Enter the Input Text"
-                                /> */}
                             </Col>
 
                         </Row>
@@ -214,19 +218,20 @@ const PlatformMaster = () => {
 
                 </Col>
                 <Col lg="4">
-                    <Card className="mb-4" height="120px" >
-                        <Grid item xs={2} md={2} >
-                            <StyledCard elevation={1} style={{ backgroundColor: platformColor }}>
-                                <ContentBox>
-                                    <FabIcon><Icon className="icon">{platformIcon}</Icon></FabIcon>
-
-                                    <Box ml="12px">
-                                        <H3 textcolor={'#fffff'}>{inputText}</H3>
-
-                                        {/* <H1 >Count {inputText}</H1> */}
-                                    </Box>
-                                </ContentBox>
-                            </StyledCard>
+                    <Card className="mb-4" style={{ height: '20vw', backgroundColor: platformColor }} >
+                        <Grid item xs={2} md={6} >
+                            {/* <StyledCard elevation={1} > */}
+                            <h6 className='ml-2 mt-2 text-center' >Card Will Look Like ....</h6>
+                            <ContentBox>
+                                <FabIcon>
+                                    <Icon style={{ fontSize: "60px" }} className="icon">{platformIcon}</Icon>
+                                </FabIcon>
+                            </ContentBox>
+                            <Box style={{ marginTop: '4px' }} className="text-center">
+                                <H3 textcolor={'#FFFFFF'}>{inputText}</H3>
+                                {/* <H1 >Count {inputText}</H1> */}
+                            </Box>
+                            {/* </StyledCard> */}
                         </Grid>
                     </Card>
                 </Col>
@@ -245,19 +250,6 @@ const PlatformMaster = () => {
                     </Row>
                 </Div>
             </Row>
-            {/* <Row>
-                <Col>
-                    <SimpleCard title="Add Platform ">
-
-                        <Row>
-
-
-                        </Row>
-                       
-                    </SimpleCard>
-                </Col>
-            </Row>
-            <br /> */}
             <Row>
                 <Col>
                     <SimpleCard title="List Of Platform Master ">
@@ -382,11 +374,12 @@ const ContentBox = styled('div')(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
+    marginLeft: '90px'
 }));
 
 const FabIcon = styled(Fab)(() => ({
-    width: '44px !important',
-    height: '44px !important',
+    width: '120px !important',
+    height: '120px !important',
     boxShadow: 'none !important',
 }));
 
