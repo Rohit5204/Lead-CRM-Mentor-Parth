@@ -14,7 +14,7 @@ const JustifyBox = styled(FlexBox)(() => ({ justifyContent: 'center' }));
 
 const ContentBox = styled(Box)(() => ({
   height: '100%',
-  padding: '32px',
+  padding: '24px',
   position: 'relative',
   background: 'rgba(0, 0, 0, 0.01)',
 }));

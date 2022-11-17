@@ -1,6 +1,20 @@
-import React from 'react';
-import { Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
 import { styled } from '@mui/system';
+import { Breadcrumb } from 'app/components';
+import React, { useState } from 'react';
+import SampleDigitalCardPreview from './SampleCard';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
+import {
+    Box,
+    Icon,
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    Chip,
+    TableRow,
+} from '@mui/material';
+
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -9,56 +23,98 @@ const Container = styled('div')(({ theme }) => ({
         [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
     },
 }));
+const StyledTable = styled(Table)(() => ({
+    whiteSpace: 'pre',
+    '& thead': {
+        '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
+    },
+    '& tbody': {
+        '& tr': { '& td': { paddingLeft: 0 } },
+    },
+}));
+// .btnShopNow .card {
+//     display:none;
+// }
+
+// .card:hover {
+//   transform:scale(1.1);
+//   background-color:#f8f9fa; 
+//   /* need to figure out how to do something like #btnShopNow display:block; */
+// }
+
 const ManageDigitalCard = () => {
+    const [showCardPreview, setShowCardPreview] = useState(false);
+
+    const showCard = () => {
+        setShowCardPreview(!showCardPreview);
+    };
     return (
-
         <Container>
-            <Row className="justify-content-center">
-                <Col md="9" lg="7" xl="5" className="mt-5">
-                    <Card style={{ borderRadius: '15px' }}>
-                        <Card.Body className="p-4">
-                            <div className="d-flex text-black">
-                                <div className="flex-shrink-0">
-                                    <img
-                                        style={{ width: '180px', borderRadius: '10px' }}
-                                        src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
-                                        alt='Generic placeholder image'
-                                        fluid />
-                                </div>
-                                &nbsp;&nbsp;&nbsp;
-                                <div className="flex-grow-1 ms-3">
-                                    <Card.Title>Danny McLoan</Card.Title>
-                                    <Card.Text>Senior Journalist</Card.Text>
-
-                                    <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                        style={{ backgroundColor: '#efefef' }}>
-                                        <div>
-                                            <p className="small text-muted mb-1">Articles</p>
-                                            <p className="mb-0">41</p>
-                                        </div>
-                                        <div className="px-3">
-                                            <p className="small text-muted mb-1">Followers</p>
-                                            <p className="mb-0">976</p>
-                                        </div>
-                                        <div>
-                                            <p className="small text-muted mb-1">Rating</p>
-                                            <p className="mb-0">8.5</p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex pt-1">
-                                        <Button className="me-1 flex-grow-1">Chat</Button>&nbsp;
-                                        <Button className="flex-grow-1">Follow</Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
+            <Box>
+                <Box className="breadcrumb">
+                    <Breadcrumb
+                        routeSegments={[
+                            { name: 'Manage Digital Card', path: '/digitalCards/managedigitalCard' },
+                            { name: 'Digital Card Detail Page' },
+                        ]}
+                    />
+                </Box>
+                <Box>
+                    <Row>
+                        <Col>
+                            <InputGroup className="mb-3">
+                                <button type="submit" className="btn btn-success" >
+                                    ADD
+                                </button>
+                                &nbsp;
+                                <Form.Control
+                                    placeholder="Search Box"
+                                    aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2"
+                                />&nbsp;
+                                <button type="button" className="btn btn-primary" onClick={showCard}>Card Design</button>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                </Box>
+                {showCardPreview && (
+                    <Box>
+                        <SampleDigitalCardPreview />
+                    </Box>)}
+                <Box className="text-center" width="100%" overflow="auto">
+                    {/* Table Section */}
+                    <h4>Digital Card Table List</h4>
+                    <StyledTable>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="justify">Sr. No</TableCell>
+                                <TableCell align="justify">Name</TableCell>
+                                <TableCell align="justify">DOB</TableCell>
+                                <TableCell align="justify">Mobile </TableCell>
+                                <TableCell align="justify">Email</TableCell>
+                                <TableCell align="center">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow >
+                                <TableCell align="justify">1</TableCell>
+                                <TableCell align="justify">Rohit Jaiswal</TableCell>
+                                <TableCell align="justify">19/12/2002</TableCell>
+                                <TableCell align="justify">7558227432</TableCell>
+                                <TableCell align="justify">rohit@gmail.com
+                                </TableCell>
+                                <TableCell align="center">
+                                    <IconButton>
+                                        <Icon color="success">visibility</Icon>
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </StyledTable>
+                </Box>
+            </Box>
         </Container>
-
-
-    )
+    );
 };
 
 export default ManageDigitalCard;

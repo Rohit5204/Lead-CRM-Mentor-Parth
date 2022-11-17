@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { SimpleCard } from "app/components";
 import { styled } from '@mui/system';
 import axios from 'axios';
@@ -123,7 +123,9 @@ const ManageFollowups = () => {
             <Div className="mt-2">
                 <Row>
                     <div>
-                        <Button variant="primary" onClick={changePage}>Back</Button>
+                        <Link to="/leads/manageLeads" >
+                            <Button variant="primary" >Back</Button>
+                        </Link>
                     </div>&nbsp;
                     <div>
                         <Button variant="success" onClick={handleSubmit}>Add</Button>

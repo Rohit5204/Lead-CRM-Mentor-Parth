@@ -53,7 +53,7 @@ const ManageLead = () => {
   }
   useEffect(() => {
     getFetchLeadData()
-  }, []);
+  }, [APIData]);
 
   // on change states
   const [excelFile, setExcelFile] = useState(null);

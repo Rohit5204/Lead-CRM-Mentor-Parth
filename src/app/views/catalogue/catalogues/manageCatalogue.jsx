@@ -51,11 +51,14 @@ const ManageCatalogue = () => {
   };
   //get method
   const items = localStorage.getItem('accessToken');
-  useEffect(() => {
+  const getCatalogueData = () => {
     axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
+  }
+  useEffect(() => {
+    getCatalogueData()
   }, [APIData]);
   return (
     <Container>

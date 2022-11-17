@@ -41,11 +41,11 @@ const ManageMettings = () => {
             { leadId: leadId, userId: 0, statusId: 0 },
             { headers: { "x-access-token": token } }).then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
-                    console.log("Meeting Data =")
+                    // console.log("Meeting Data =")
                     setAPIData123(response.data.data[i].meetingData)
                     // console.log(abc)
                     // setAPIData123(["hii", "hellos"]);
-                    console.log(APIData123)
+                    // console.log(APIData123)
                 }
             });
     }

@@ -2,8 +2,9 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import UpdateInstallments from './updateInstallments';
 import ViewInvoice from './viewInvoice';
 import {
   Box,
@@ -260,7 +261,7 @@ const ManageInvoiceList = () => {
           {/* Table Section */}
           <h4>Invoice Table</h4>
           <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-            <TableHead style={{ 'border - left': '1px solid red', 'border-right': '1px solid red' }} className='text-center'>
+            <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
               <TableRow>
                 <TableCell align="center">Invoice No</TableCell>
@@ -285,9 +286,11 @@ const ManageInvoiceList = () => {
                       <IconButton onClick={() => handleShow(invoice)}>
                         <Icon color="warning">visibility</Icon>
                       </IconButton>
-                      <IconButton>
-                        <Icon color="success">edit</Icon>
-                      </IconButton>
+                      <Link to="/invoices/updateInstallments" state={invoice}>
+                        <IconButton >
+                          <Icon color="success">edit</Icon>
+                        </IconButton>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 );
