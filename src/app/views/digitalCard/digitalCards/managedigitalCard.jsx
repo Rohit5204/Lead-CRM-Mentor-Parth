@@ -1,6 +1,7 @@
 import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SampleDigitalCardPreview from './SampleCard';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import {
@@ -63,9 +64,10 @@ const ManageDigitalCard = () => {
                     <Row>
                         <Col>
                             <InputGroup className="mb-3">
-                                <button type="submit" className="btn btn-success" >
+                                <Link to='/digitalCards/addDigitalCard'> <button type="submit" className="btn btn-success" >
                                     ADD
-                                </button>
+                                </button></Link>
+
                                 &nbsp;
                                 <Form.Control
                                     placeholder="Search Box"

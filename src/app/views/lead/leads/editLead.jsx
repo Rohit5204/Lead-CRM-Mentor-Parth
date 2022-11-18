@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const EditUser = ({ theEditLead }) => {
+const EditUser = ({ theEditLead, handleDialog }) => {
+  // const [abc, setAbc] = useState({ v: false })
   const [leadId, setLeadId] = useState(theEditLead.leadId);
   const [name, setName] = useState(theEditLead.name);
   const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
@@ -122,6 +123,7 @@ const EditUser = ({ theEditLead }) => {
     e.preventDefault();
     axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
       .then(() => useEffect);
+    handleDialog();
   };
   const navigate = useNavigate();
   const changePage = () => {
@@ -410,8 +412,7 @@ const EditUser = ({ theEditLead }) => {
               className="btn btn-success"
               style={{ marginTop: 5 + 'px' }}
               onClick={updateLead}
-            >
-              Update
+            > Update
             </button>
           </Col>
         </Row>

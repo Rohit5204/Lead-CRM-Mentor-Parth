@@ -5,6 +5,7 @@ import { styled } from '@mui/system';
 import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import EditEMI from "./editEMI";
+import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import {
     Box,
@@ -61,13 +62,12 @@ const UpdateInstallments = () => {
     //     updatedBy: 1
     // };
 
-    const [obj1, setObj1] = useState(null);
+    const [obj2, setObj2] = useState(null);
+    // Dilaog Box 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
-
-    const handleShow = (emi) => {
-        setObj1(emi);
+    const handleShow1 = (emi) => {
+        setObj2(emi);
         setShow(true);
     };
 
@@ -94,7 +94,16 @@ const UpdateInstallments = () => {
                         { name: 'Update Invoice Installments ' },
                     ]}
                 />
+
             </Box>
+            <Row>
+                <Col className="col-md-12 bg-light text-right">
+                    <Link to='/invoices/ManageInvoiceList'>
+                        <button type="button" className="btn btn-primary">Go Back</button>
+                    </Link>
+                </Col>
+            </Row>
+
             <Row>
                 <Col>
                     <Form.Label>Invoice Number</Form.Label>
@@ -166,39 +175,45 @@ const UpdateInstallments = () => {
                 </Col>
             </Row>
             <br />
-            <h5 className="text-center" style={{ color: 'green' }}>Installments Details</h5>
-            <Row className="mt-1">
-                <Col>
-                    <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-                        <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                            <TableRow>
-                                <TableCell align="center">Sr. No</TableCell>
-                                <TableCell align="center">Installment No</TableCell>
-                                <TableCell align="center">Date</TableCell>
-                                <TableCell align="center">Amount</TableCell>
-                                <TableCell align="center">Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {APIInstallment.map((emi, index) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableCell align="center">{emi.id}</TableCell>
-                                        <TableCell align="center">{emi.instalmentNumber}</TableCell>
-                                        <TableCell align="center">{new Date(emi.instalmentDate).toLocaleDateString()}</TableCell>
-                                        <TableCell align="center">{emi.instalmentAmount}</TableCell>
-                                        <TableCell align="center">
-                                            <IconButton onClick={handleShow}>
-                                                <Icon color="success">edit</Icon>
-                                            </IconButton>
-                                        </TableCell>
+            {Object.keys(APIInstallment).length > 0 ? (
+                <div>
+                    <h5 className="text-center" style={{ color: 'green' }}>Installments Details</h5>
+                    <Row className="mt-1">
+                        <Col>
+                            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                                    <TableRow>
+                                        {/* <TableCell align="center">Sr. No</TableCell> */}
+                                        <TableCell align="center">Installment No</TableCell>
+                                        <TableCell align="center">Date</TableCell>
+                                        <TableCell align="center">Amount</TableCell>
+                                        <TableCell align="center">Action</TableCell>
                                     </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </StyledTable>
-                </Col>
-            </Row>
+                                </TableHead>
+                                <TableBody>
+                                    {APIInstallment.map((emi, index) => {
+                                        return (
+                                            <TableRow key={index}>
+                                                {/* <TableCell align="center">{emi.id}</TableCell> */}
+                                                <TableCell align="center">{emi.instalmentNumber}</TableCell>
+                                                <TableCell align="center">{new Date(emi.instalmentDate).toLocaleDateString()}</TableCell>
+                                                <TableCell align="center">{emi.instalmentAmount}</TableCell>
+                                                <TableCell align="center">
+                                                    <IconButton onClick={() => handleShow1(emi)}>
+                                                        <Icon color="success">edit</Icon>
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </StyledTable>
+                        </Col>
+                    </Row>
+                </div>
+            ) : (
+                <div></div>
+            )}
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -210,9 +225,12 @@ const UpdateInstallments = () => {
             >
                 <Modal.Header>
                     <Modal.Title>Update Installment</Modal.Title>
+                    <IconButton type="button" onClick={handleClose}>
+                        <ClearIcon />
+                    </IconButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditEMI theEditEMI={obj1}></EditEMI>
+                    <EditEMI theEditEMI={obj2} handleDialog={handleClose}></EditEMI>
                 </Modal.Body>
                 <Modal.Footer>
                     <button
@@ -225,7 +243,7 @@ const UpdateInstallments = () => {
                     </button>
                 </Modal.Footer>
             </Modal>
-        </Container>
+        </Container >
     );
 };
 

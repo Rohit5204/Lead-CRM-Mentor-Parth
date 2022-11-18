@@ -20,7 +20,6 @@ import {
 
 const ManageLead = () => {
   const [showForm, setShowForm] = useState(false);
-
   const showForm1 = () => {
     setShowForm(!showForm);
   };
@@ -433,7 +432,7 @@ const ManageLead = () => {
               <Modal.Title>Update Lead Page</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <EditLead theEditLead={obj1} />
+              <EditLead theEditLead={obj1} handleDialog={handleClose} />
             </Modal.Body>
             <Modal.Footer>
               <button

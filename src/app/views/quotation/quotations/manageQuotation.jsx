@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import ViewQuotation from './viewQuotation';
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
   Icon,
@@ -261,7 +262,7 @@ const ManageQuotation = () => {
           {/* Table Section */}
           <h4>Quotation Table</h4>
           <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-            <TableHead style={{ 'border - left': '1px solid red', 'border-right': '1px solid red' }} className='text-center'>
+            <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
               <TableRow>
                 <TableCell align="center">Quotation No</TableCell>
@@ -309,6 +310,9 @@ const ManageQuotation = () => {
         >
           <Modal.Header>
             <Modal.Title>Preview Quotation</Modal.Title>
+            <IconButton type="button" onClick={handleClose}>
+              <ClearIcon />
+            </IconButton>
           </Modal.Header>
           <Modal.Body>
             <ViewQuotation theViewQuotation={obj1}></ViewQuotation>

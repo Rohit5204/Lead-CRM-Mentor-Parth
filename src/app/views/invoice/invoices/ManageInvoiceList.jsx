@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import ClearIcon from '@mui/icons-material/Clear';
 import UpdateInstallments from './updateInstallments';
 import ViewInvoice from './viewInvoice';
 import {
@@ -287,7 +288,7 @@ const ManageInvoiceList = () => {
                         <Icon color="warning">visibility</Icon>
                       </IconButton>
                       <Link to="/invoices/updateInstallments" state={invoice}>
-                        <IconButton >
+                        <IconButton>
                           <Icon color="success">edit</Icon>
                         </IconButton>
                       </Link>
@@ -309,6 +310,9 @@ const ManageInvoiceList = () => {
         >
           <Modal.Header>
             <Modal.Title>Preview invoice</Modal.Title>
+            <IconButton type="button" onClick={handleClose}>
+              <ClearIcon />
+            </IconButton>
           </Modal.Header>
           <Modal.Body>
             <ViewInvoice theViewInvoice={obj1}></ViewInvoice>

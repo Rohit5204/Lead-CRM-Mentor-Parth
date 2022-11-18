@@ -117,24 +117,25 @@ const Layout1Topbar = () => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          {/* <MatxSearchBox />
+          {/* <MatxSearchBox /> */}
 
-          <NotificationProvider>
-            <NotificationBar />
-          </NotificationProvider>
+          {/* <NotificationProvider> */}
+          <NotificationBar />
+          {/* </NotificationProvider> */}
 
-          <ShoppingCart /> */}
-
+          {/* <ShoppingCart /> */}
+          <Hidden xsDown>
+            <Span>
+              Welcome, <strong>Admin </strong> &nbsp;
+              {/* <strong>{user.name}</strong> */}
+            </Span>
+          </Hidden>
           <MatxMenu
             menuButton={
               <UserMenu>
-                <Hidden xsDown>
-                  <Span>
-                    Welcome, <strong>Admin</strong>
-                    {/* <strong>{user.name}</strong> */}
-                  </Span>
-                </Hidden>
+
                 {/* Comment on 08/11/2022 Rohit */}
+                <Avatar sx={{ cursor: 'pointer' }}></Avatar>
                 {/* <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} /> */}
               </UserMenu>
             }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Box, MenuItem, FormControl, Select } from '@mui/material';
+import { Box, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -10,13 +10,13 @@ import axios from 'axios';
 const Div = styled('div')(() => ({
     margin: '6px 0px 0px 350px',
 }));
-const EditEMI = ({ theEditEMI }) => {
-    console.log(theEditEMI)
+const EditEMI = ({ theEditEMI, handleDialog }) => {
+    // console.log(theEditEMI)
     const [id, setId] = useState(theEditEMI.id);
-    const [instalmentNumber, setInstalmentNumber] = useState(theEditEMI.instalmentAmount);
-    const [instalmentAmount, setinstalmentAmount] = useState(theEditEMI.instalmentNumber);
-    const [instalmentDate, setinstalmentDate] = useState(theEditEMI.instalmentNumber);
-    const [fineAmount, setfineAmount] = useState(theEditEMI.instalmentNumber);
+    const [instalmentNumber, setInstalmentNumber] = useState(theEditEMI.instalmentNumber);
+    const [instalmentAmount, setinstalmentAmount] = useState(theEditEMI.instalmentAmount);
+    const [instalmentDate, setinstalmentDate] = useState(theEditEMI.instalmentDate);
+    const [fineAmount, setfineAmount] = useState(theEditEMI.fineAmount);
 
     const UpdateData = {
         instalmentId: id,
@@ -29,16 +29,17 @@ const EditEMI = ({ theEditEMI }) => {
     };
     const updateInstallment = (e) => {
         const items = localStorage.getItem('accessToken');
-        console.log({ UpdateData });
+        // console.log({ UpdateData });
         e.preventDefault();
         axios.post(`http://35.89.6.16:4002/api/updateProductInstalment`, UpdateData, { headers: { "x-access-token": items } }).then(() => useEffect);
+        handleDialog();
     };
     const handleSubmit = (e) => {
         e.preventDefault();
     };
     return (
-        <>
-            <Form Form onSubmit={handleSubmit} >
+        <div>
+            <Form onSubmit={handleSubmit} >
                 <Row>
                     <Col className="mt-1">
                         <Form.Label>Installment No</Form.Label>
@@ -78,6 +79,13 @@ const EditEMI = ({ theEditEMI }) => {
                         />
                     </Col>
                 </Row>
+                <Row className="mt-1">
+                    <Col className="mt-1">
+                        <Form.Label>Payment Status</Form.Label>
+                        <FormGroup>
+                            <FormControlLabel control={<Switch />} label="Enable if Payment Recieved" />
+                        </FormGroup></Col>
+                </Row>
                 <Div>
                     <Row>
                         <Col>
@@ -92,7 +100,7 @@ const EditEMI = ({ theEditEMI }) => {
                     </Row>
                 </Div>
             </Form>
-        </>
+        </div>
     );
 };
 
