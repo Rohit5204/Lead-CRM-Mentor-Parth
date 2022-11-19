@@ -10,6 +10,8 @@ const EditUser = ({ theEditLead, handleDialog }) => {
   const [leadId, setLeadId] = useState(theEditLead.leadId);
   const [name, setName] = useState(theEditLead.name);
   const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
+  const [alternateMobile, setAlternateMobile] = useState(theEditLead.alternateMobile);
+  const [clientName, setClientName] = useState(theEditLead.clientName);
   const [emailId, setEmailId] = useState(theEditLead.emailId);
   const [streetName, setStreetName] = useState(theEditLead.streetName);
   const [stateName, setStateName] = useState(theEditLead.stateName);
@@ -116,7 +118,8 @@ const EditUser = ({ theEditLead, handleDialog }) => {
       assignId: assignedid,
       // status: statusid,
       label: labelid,
-      alternateMobile: mobileNo
+      alternateMobile: mobileNo,
+      clientName: "Pijush",
     };
     console.log({ UpdateUser });
     const items = localStorage.getItem('accessToken');

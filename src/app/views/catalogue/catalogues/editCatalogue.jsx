@@ -51,7 +51,7 @@ const EditCatalogue = ({ theEditCatalogue }) => {
           <Col md="4">
             <FormControl sx={{ m: 0, minWidth: 200 }} size="small" className="mt-1">
               <Form.Label>Type</Form.Label>
-              <Select readOnly value={gsType} label="Type" onChange={(e) => setGsType(e.target.value)}>
+              <Select value={gsType} label="Type" onChange={(e) => setGsType(e.target.value)}>
                 <MenuItem value="">Select the Type</MenuItem>
                 <MenuItem value="Service">Service</MenuItem>
                 <MenuItem value="Product">Product</MenuItem>

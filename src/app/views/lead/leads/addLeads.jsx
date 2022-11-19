@@ -26,13 +26,15 @@ const LeadForm = () => {
   const changePage = () => {
     navigate('/leads/manageLeads');
   };
-  const [name, setName] = useState('JAVASCRIPT');
-  const [mobileNo, setMobileNo] = useState('9547123652');
-  const [emailId, setEmailId] = useState('java@g.com');
-  const [streetName, setStreetName] = useState('Turbe');
-  const [stateName, setStateName] = useState('Maharshtra');
-  const [cityName, setCityName] = useState('Mumbai');
-  const [zipCode, setZipCode] = useState('422101');
+  const [name, setName] = useState('');
+  const [mobileNo, setMobileNo] = useState('');
+  const [alternateMobile, setAlternateMobile] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [stateName, setStateName] = useState('');
+  const [cityName, setCityName] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [countryName, setCountryName] = useState('India');
 
   const [intrestedIn, setIntrestedIn] = useState([]);
@@ -144,6 +146,8 @@ const LeadForm = () => {
       label: labelid,
       remarks: "",
       createdBy: 1,
+      alternateMobile: alternateMobile,
+      clientName: clientName
     }
     console.log({ AddLead })
     const items = localStorage.getItem('accessToken');
@@ -170,7 +174,7 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
+                  <h6 className="mt-1">Lead Name :&nbsp; </h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>work</Icon>
                   </InputGroup.Text>
@@ -185,7 +189,22 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Mobile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
+                  <h6 className="mt-1">Client&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>person</Icon>
+                  </InputGroup.Text>
+                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
+                    onChange={(e) => setClientName(e.target.value)}
+                    value={clientName}
+                    placeholder="Enter the Clien Name"
+                  /></InputGroup>
+
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>phone</Icon>
                   </InputGroup.Text>
@@ -193,6 +212,20 @@ const LeadForm = () => {
                     onChange={(e) => setMobileNo(e.target.value)}
                     value={mobileNo}
                     placeholder="Customer Mobile Number"
+                  /></InputGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Mobile 2&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>phone</Icon>
+                  </InputGroup.Text>
+                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
+                    onChange={(e) => setAlternateMobile(e.target.value)}
+                    value={alternateMobile}
+                    placeholder="Customer Alternate Mobile Numbe"
                   /></InputGroup>
               </Col>
             </Row>
@@ -317,7 +350,6 @@ const LeadForm = () => {
                     options={intrestedIn}
                     onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
                     renderInput={(params) => (
-
                       <TextField
                         {...params}
                         variant="outlined"
@@ -368,7 +400,6 @@ const LeadForm = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-
                         variant="outlined"
                         label="Select the Employee to Assign"
                         size="small"
@@ -376,7 +407,6 @@ const LeadForm = () => {
                     )}
                   />
                 </FormControl>
-
               </Col>
             </Row>
             <Row>
