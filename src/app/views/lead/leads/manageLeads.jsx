@@ -41,7 +41,7 @@ const ManageLead = () => {
   //get method
   const getFetchLeadData = () => {
     const items = localStorage.getItem('accessToken');
-    axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
+    axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,
@@ -106,7 +106,7 @@ const ManageLead = () => {
       excelData[i].label = 1;
       excelData[i].createdBy = 1;
     }
-    axios.post(`http://35.89.6.16:4002/api/saveLeadGenerationData`, excelData);
+    axios.post(`http://213.136.72.177/cms/api/saveLeadGenerationData`, excelData);
   };
 
   return (
