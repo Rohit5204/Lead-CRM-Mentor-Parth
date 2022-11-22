@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import ClearIcon from '@mui/icons-material/Clear';
+import SendInvoiceMail from "./sendMail";
 import UpdateInstallments from './updateInstallments';
 import ViewInvoice from './viewInvoice';
 import {
@@ -63,7 +64,7 @@ const ManageInvoiceList = () => {
       .then((response) => {
         setAPIData(response.data.data);
       });
-  }, [APIData]);
+  }, []);
   return (
     <Container>
       <Box>
@@ -258,6 +259,9 @@ const ManageInvoiceList = () => {
             </form>
           )}
         </Box>
+        <Row>
+          <SendInvoiceMail />
+        </Row>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
           <h4>Invoice Table</h4>
