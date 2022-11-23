@@ -41,7 +41,7 @@ export const navigations = [
     children: [
       { name: 'Send Qutation List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
       { name: 'Completed', iconText: 'SI', path: '/' },
-      { name: 'Add Invoice', iconText: 'SI', path: '/invoices/invoiceForm' },
+      { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
     ],
   },
   { label: 'Digital Card', type: 'label' },

@@ -73,7 +73,8 @@ const AddInvoice = () => {
     const [clientContact, setClientContact] = useState('');
     const [clientAddress, setClientAddress] = useState('');
     const [clientGstNo, setClientGstNo] = useState('');
-    // const [initalPayment, setInitalPayment] = useState(0);
+    const [initalPayment, setInitalPayment] = useState(0);
+    const [pendingPayment, setPendingPayment] = useState(0);
     const [remarks, setRemarks] = useState('');
     const [installments, setInstallments] = useState([]);
     const [items, setItems] = useState([
@@ -187,7 +188,7 @@ const AddInvoice = () => {
     // const taxRate = (tax * subtotal) / 100;
     // const discountRate = (discount * subtotal) / 100;
     // const total = subtotal - discountRate + taxRate;
-    // const pending = total - initalPayment;
+
     // const emiAmount = pending / Object.keys(installments).length;
 
     const [leadData, setLeadData] = useState([]);
@@ -205,7 +206,6 @@ const AddInvoice = () => {
 
 
     const token = localStorage.getItem('accessToken');
-
     // Fetching the Catalogue Name & Price
     const getPrice = (value) => {
         setMyOptions6(value)
@@ -223,9 +223,12 @@ const AddInvoice = () => {
                 setTaxRate((tax * amtQty / 100))
                 setdiscountRate((discount * amtQty) / 100)
                 settotal(amtQty - off + amtTax)
+                const pendingAMT = (amtQty - off + amtTax)
+                setPendingPayment((amtQty - off + amtTax) - initalPayment)
             }
         }
     }
+    const pending = total - initalPayment;
     useEffect(() => {
         axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
             { headers: { "x-access-token": token } }).then((res) => {
@@ -263,8 +266,6 @@ const AddInvoice = () => {
 
         const AddInvoice = {
             leadId: leadid,
-            // quotationNumber: quotationNumber,
-            // quotationDate: invoiceDate,
             comapnyAddress: companyAddress,
             companyEmail: companyEmail,
             companyContact: companyContact,
@@ -280,16 +281,13 @@ const AddInvoice = () => {
             gstNo: clientGstNo,
             gst: tax,
             remarks: remarks,
-            bankDetails: "test",
+            bankDetails: "SBI BANK",
             isDraft: 1,
             createdBy: 1,
+            clientPan: panNo,
+            initialPayment: initalPayment,
+            pendingPayment: pending,
             instalments: installments
-            // [{
-            //     instalmentNumber: 1,
-            //     instalmentAmount: 2000,
-            //     instalmentDate: "2022-10-21",
-            //     createdBy: 1
-            // }]
         }
         console.log({ AddInvoice });
         axios.post('http://213.136.72.177/cms/api/saveInvoice', AddInvoice,
@@ -804,7 +802,7 @@ const AddInvoice = () => {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        {/* <Col>
+                                        <Col>
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Inital Payment</Form.Label>
                                                 <Form.Control
@@ -819,7 +817,7 @@ const AddInvoice = () => {
                                                 <Form.Label>Pending Amount</Form.Label>
                                                 <Form.Control readOnly value={pending} />
                                             </Form.Group>
-                                        </Col> */}
+                                        </Col>
                                         <Col md="3" className="mt-4">
                                             <button
                                                 type="button"

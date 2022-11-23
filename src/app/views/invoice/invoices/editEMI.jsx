@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Box, MenuItem, FormGroup, FormControlLabel, Switch } from '@mui/material';
+import { Box, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -17,6 +17,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
     const [instalmentAmount, setinstalmentAmount] = useState(theEditEMI.instalmentAmount);
     const [instalmentDate, setinstalmentDate] = useState(theEditEMI.instalmentDate);
     const [fineAmount, setfineAmount] = useState(theEditEMI.fineAmount);
+    const [hasPaid, sethasPaid] = useState(theEditEMI.hasPaid);
 
     const UpdateData = {
         instalmentId: id,
@@ -24,7 +25,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
         instalmentAmount: instalmentAmount,
         instalmentDate: instalmentDate,
         fineAmount: fineAmount,
-        hasPaid: 1,
+        hasPaid: hasPaid,
         updatedBy: 1
     };
     const updateInstallment = (e) => {
@@ -61,7 +62,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
                 </Row>
                 <Row>
                     <Col className="mt-1">
-                        <Form.Label>Installment Date</Form.Label>
+                        <Form.Label>New Installment Date</Form.Label>
                         <Form.Control
                             type='date'
                             onChange={(e) => setinstalmentDate(e.target.value)}
@@ -81,10 +82,18 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
                 </Row>
                 <Row className="mt-1">
                     <Col className="mt-1">
-                        <Form.Label>Payment Status</Form.Label>
-                        <FormGroup>
-                            <FormControlLabel control={<Switch />} label="Enable if Payment Recieved" />
-                        </FormGroup></Col>
+                        <FormControl sx={{ m: 0, minWidth: 370 }} size="small">
+                            <Form.Label>Status</Form.Label>
+                            <Select
+                                value={hasPaid}
+                                label="Age"
+                                onChange={(e) => sethasPaid(e.target.value)}
+                            >
+                                <MenuItem value={0}>Payment Pending</MenuItem>
+                                <MenuItem value={1}>Payment Recieved</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Col>
                 </Row>
                 <Div>
                     <Row>

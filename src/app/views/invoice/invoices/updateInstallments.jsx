@@ -4,12 +4,14 @@ import { Breadcrumb } from 'app/components';
 import { styled } from '@mui/system';
 import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import EditEMI from "./editEMI";
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import {
     Box,
     Icon,
+    Chip,
     Autocomplete,
     TextField,
     FormControl,
@@ -160,7 +162,8 @@ const UpdateInstallments = () => {
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Inital Payment</Form.Label>
                         <Form.Control
-                            // value={location.state.initalPayment}
+                            readOnly
+                            value={location.state.initialPayment}
                             placeholder="Inital Payment"
                         />
                     </Form.Group>
@@ -169,7 +172,7 @@ const UpdateInstallments = () => {
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Pending Amount</Form.Label>
                         <Form.Control readOnly
-                        // value={pending} 
+                            value={location.state.pendingPayment}
                         />
                     </Form.Group>
                 </Col>
@@ -187,6 +190,8 @@ const UpdateInstallments = () => {
                                         <TableCell align="center">Installment No</TableCell>
                                         <TableCell align="center">Date</TableCell>
                                         <TableCell align="center">Amount</TableCell>
+                                        <TableCell align="center">Fine Amount</TableCell>
+                                        <TableCell align="center">Status</TableCell>
                                         <TableCell align="center">Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -198,10 +203,25 @@ const UpdateInstallments = () => {
                                                 <TableCell align="center">{emi.instalmentNumber}</TableCell>
                                                 <TableCell align="center">{new Date(emi.instalmentDate).toLocaleDateString()}</TableCell>
                                                 <TableCell align="center">{emi.instalmentAmount}</TableCell>
+                                                <TableCell align="center">{emi.fineAmount}</TableCell>
                                                 <TableCell align="center">
-                                                    <IconButton onClick={() => handleShow1(emi)}>
-                                                        <Icon color="success">edit</Icon>
-                                                    </IconButton>
+                                                    {emi.hasPaid == 1 ? (
+                                                        <Chip color="success" label="Recieved" />
+                                                    ) : (
+                                                        <Chip color="warning" label="Pending" />
+                                                    )}
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    {emi.hasPaid == 1 ? (
+                                                        <IconButton>
+                                                            <CurrencyRupeeIcon color="primary" />
+                                                        </IconButton>
+                                                    ) : (
+                                                        <IconButton onClick={() => handleShow1(emi)}>
+                                                            <Icon color="success">edit</Icon>
+                                                        </IconButton>
+                                                    )}
+
                                                 </TableCell>
                                             </TableRow>
                                         );
