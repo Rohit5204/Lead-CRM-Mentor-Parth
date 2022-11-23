@@ -2,19 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 
-const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
+const SendQuotationMail = ({ theClientMail, handleDialog }) => {
     // console.log(theClientMail)
     const [selectedFile, setSelectedFile] = useState();
-    const [invoiceNumber] = useState(theClientMail.invoiceNumber);
+    const [quotationNumber] = useState(theClientMail.quotationNumber);
     const [billTo] = useState(theClientMail.billTo);
     const [clientEmail] = useState(theClientMail.clientEmail);
 
     const data1 = {
-        invoiceNumber: invoiceNumber,
+        quotationNumber: quotationNumber,
         clientEmail: clientEmail
     }
     // const data1 = {
-    //     invoiceNumber: "0000000032",
+    //     quotationNumber: "0000000032",
     //     clientEmail: "rohit.mentorp@gmail.com"
     // }
     const changeHandler = (event) => {
@@ -30,7 +30,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
         // console.log({ data: data1, file: selectedFile })
-        await axios.post('http://213.136.72.177/cms/api/sendInvoiceMail',
+        await axios.post('http://213.136.72.177/cms/api/sendQuotationMail',
             formData, {
             headers: { "x-access-token": items }
         })
@@ -43,7 +43,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
                     <Form.Label>Invoice Number</Form.Label>
                     <Form.Control
                         disabled
-                        value={invoiceNumber}
+                        value={quotationNumber}
                     />
                 </Col>
                 <Col>
@@ -79,4 +79,4 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
     )
 };
 
-export default SendInvoiceMail;
+export default SendQuotationMail;

@@ -326,7 +326,7 @@ const ManageInvoiceList = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <SendInvoiceMail theClientMail={sendMailObj}></SendInvoiceMail>
+            <SendInvoiceMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendInvoiceMail>
           </Modal.Body>
           <Modal.Footer>
             <button

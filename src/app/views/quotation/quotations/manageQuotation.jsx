@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import ViewQuotation from './viewQuotation';
+import SendQuotationMail from './sendMail';
 import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
@@ -46,11 +47,18 @@ const ManageQuotation = () => {
     setShowForm(!showForm);
   };
   const [obj1, setObj1] = useState(null);
+  const [sendMailObj, setSendMailObj] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [show, setShow] = useState(false);
+  const [showMail, setShowMail] = useState(false);
   //Dialog Form
   const handleClose = () => setShow(false);
+  const handleCloseMail = () => setShowMail(false);
 
+  const handleSendMail = (quotation) => {
+    setSendMailObj(quotation);
+    setShowMail(true);
+  };
   const handleShow = (quotation) => {
     setObj1(quotation);
     setShow(true);
@@ -62,7 +70,7 @@ const ManageQuotation = () => {
       .then((response) => {
         setAPIData(response.data.data);
       });
-  }, [APIData]);
+  }, []);
   return (
     <Container>
       <Box>
@@ -283,9 +291,10 @@ const ManageQuotation = () => {
                     <TableCell align="center">{quotation.billTo}</TableCell>
                     <TableCell align="center">{quotation.clientContact}</TableCell>
                     <TableCell align="center">{quotation.grandTotal}</TableCell>
-
-
                     <TableCell align="center">
+                      <IconButton onClick={() => handleSendMail(quotation)}>
+                        <Icon color="primary">send</Icon>
+                      </IconButton>
                       <IconButton onClick={() => handleShow(quotation)}>
                         <Icon color="success">visibility</Icon>
                       </IconButton>
@@ -299,6 +308,35 @@ const ManageQuotation = () => {
             </TableBody>
           </StyledTable>
         </Box>
+        <Modal
+          show={showMail}
+          onHide={handleCloseMail}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title>Send Quotation To Client</Modal.Title>
+            <IconButton type="button" onClick={handleCloseMail}>
+              <ClearIcon />
+            </IconButton>
+          </Modal.Header>
+          <Modal.Body>
+            <SendQuotationMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendQuotationMail>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              type="submit"
+              className="btn btn-error"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={handleCloseMail}
+            >
+              Cancel
+            </button>
+          </Modal.Footer>
+        </Modal>
         <Modal
           show={show}
           onHide={handleClose}

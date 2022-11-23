@@ -29,15 +29,16 @@ const AddEmployee = () => {
     //     setPrice('');
     //     setDescription('');
     // };
+    const date = new Date()
     const AddUser = {
         id: 0,
         firstName: firstName,
         lastName: lastName,
         email: email,
         createdBy: 1,
-        lastActive: '2022-11-09',
-        userRoleId: 0,
-        addedBy: 0,
+        lastActive: new Date(date),
+        userRoleId: 2,
+        addedBy: 1,
         password: password,
         mobileNo: mobileNo,
         alternateMobileNo: alternateMobileNo,
@@ -92,7 +93,7 @@ const AddEmployee = () => {
                         <Row>
                             <Col md="6">
                                 <Form.Label>Mobile Number</Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>phone</Icon>
                                     </InputGroup.Text>
@@ -105,7 +106,7 @@ const AddEmployee = () => {
                             </Col>
                             <Col md="6">
                                 <Form.Label>Alternate Mobile</Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>phone</Icon>
                                     </InputGroup.Text>
@@ -118,9 +119,9 @@ const AddEmployee = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="mt-1">
+                            <Col>
                                 <Form.Label>Email</Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>email</Icon>
                                     </InputGroup.Text>
@@ -132,7 +133,7 @@ const AddEmployee = () => {
                                     />
                                 </InputGroup>
                             </Col>
-                            <Col className="mt-1">
+                            <Col>
                                 <Form.Label>Role </Form.Label>
                                 <Form.Control
                                     required
@@ -147,7 +148,7 @@ const AddEmployee = () => {
                         <Row>
                             <Col>
                                 <Form.Label>User Name </Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>person</Icon>
                                     </InputGroup.Text>
@@ -161,11 +162,12 @@ const AddEmployee = () => {
                             </Col>
                             <Col>
                                 <Form.Label>Password </Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>password</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
+                                        type='password'
                                         required
                                         onChange={(e) => setpassword(e.target.value)}
                                         value={password}

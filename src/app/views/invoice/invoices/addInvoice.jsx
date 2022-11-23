@@ -723,7 +723,7 @@ const AddInvoice = () => {
                                 Review
                             </Button>&nbsp;
                             <button type="button" onClick={handleSubmit} className="btn btn-success">
-                                ADD
+                                ADD Invoice
                             </button>
                             <hr />
                             <Row>

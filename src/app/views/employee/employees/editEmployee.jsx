@@ -34,8 +34,8 @@ const EditEmployee = () => {
         alternateMobileNo: alternateMobileNo,
         userName: userName,
         updatedBy: 1,
-        lastActive: "2022-11-09",
-        userRoleId: 0,
+        lastActive: new Date(),
+        userRoleId: 2,
         addedBy: 0,
         recodStatus: 1
     }

@@ -196,7 +196,7 @@ const LeadForm = () => {
                   <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
                     onChange={(e) => setClientName(e.target.value)}
                     value={clientName}
-                    placeholder="Enter the Clien Name"
+                    placeholder="Enter the Client Name"
                   /></InputGroup>
 
               </Col>
@@ -310,10 +310,9 @@ const LeadForm = () => {
             </Row>
             <Row>
               <Col xs={6}>
-
                 <FormControl sx={{ m: 0, minWidth: 750 }} size="small" className="mt-1">
                   {/* <Form.Label>Country</Form.Label> */}
-                  <InputGroup className="mb-2" width="750px">
+                  <InputGroup className="mb-2">
                     <h6 className="mt-1">Country&nbsp;&nbsp;  :&nbsp;</h6>
                     <Select
                       value={countryName}
@@ -337,8 +336,8 @@ const LeadForm = () => {
             <Row>
               <Col>
                 {/* <Form.Label>Interested In</Form.Label> */}
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Interested In&nbsp;&nbsp;  :&nbsp;</h6>
+                <InputGroup>
+                  <Form.Label className="mt-1">Interested In</Form.Label>
                 </InputGroup>
                 <FormControl>
                   <Autocomplete
@@ -415,7 +414,7 @@ const LeadForm = () => {
                   <Form.Label>Comment</Form.Label>
                   <Form.Control
                     as="textarea"
-                    rows={3}
+                    rows={1}
                     // onChange={(e) => setRemarks(e.target.value)}
                     // value={remarks}
                     placeholder="Comment"
@@ -446,7 +445,7 @@ const LeadForm = () => {
                   />
                 </FormControl>
               </Col>
-              <Col className="mt-1">
+              <Col >
                 <Form.Label>Label</Form.Label>
                 <FormControl>
                   <Autocomplete

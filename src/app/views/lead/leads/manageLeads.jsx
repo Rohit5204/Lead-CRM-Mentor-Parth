@@ -7,6 +7,8 @@ import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import * as XLSX from 'xlsx';
 import EditLead from './editLead';
 import { Link } from 'react-router-dom';
+import { EXCEL_FILE_BASE64 } from './constant'
+import FileSaver from 'file-saver';
 import {
   Box,
   Icon,
@@ -39,8 +41,8 @@ const ManageLead = () => {
   const closeImport = () => setShow1(false);
   const showImport = () => setShow1(true);
   //get method
+  const items = localStorage.getItem('accessToken');
   const getFetchLeadData = () => {
-    const items = localStorage.getItem('accessToken');
     axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
@@ -106,7 +108,29 @@ const ManageLead = () => {
       excelData[i].label = 1;
       excelData[i].createdBy = 1;
     }
-    axios.post(`http://213.136.72.177/cms/api/saveLeadGenerationData`, excelData);
+    axios.post(`http://213.136.72.177/cms/api/saveLeadGenerationData`, excelData,
+      { headers: { "x-access-token": items } });
+  };
+
+
+  const handleDownload = () => {
+    let sliceSize = 1024;
+    let byteCharacters = atob(EXCEL_FILE_BASE64);
+    let bytesLength = byteCharacters.length;
+    let slicesCount = Math.ceil(bytesLength / sliceSize);
+    let byteArrays = new Array(slicesCount);
+    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      let begin = sliceIndex * sliceSize;
+      let end = Math.min(begin + sliceSize, bytesLength);
+      let bytes = new Array(end - begin);
+      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    FileSaver.saveAs(new Blob(byteArrays, { type: "application/vnd.ms-excel" }),
+      "multiple-Lead-ADD.xls"
+    );
   };
 
   return (
@@ -276,7 +300,6 @@ const ManageLead = () => {
                 </InputGroup>
               </Col>
             </Row>
-
             <div className="container"></div>
           </Box>
           <Modal
@@ -314,6 +337,15 @@ const ManageLead = () => {
                           {excelFileError}
                         </div>
                       )}
+                    </Col>
+                    <Col>
+                      <button
+                        type="submit"
+                        className="btn btn-success"
+                        style={{ marginTop: 5 + 'px' }}
+                        onClick={handleDownload}>
+                        Sample File
+                      </button>
                     </Col>
                     <Col>
                       <button

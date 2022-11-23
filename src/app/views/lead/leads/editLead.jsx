@@ -113,13 +113,11 @@ const EditUser = ({ theEditLead, handleDialog }) => {
       zipCode: zipCode,
       countryName: countryName,
       intrestedIn: myOptions1,
-      // platformName: myOptions2,
       sourceId: platformid,
       assignId: assignedid,
-      // status: statusid,
       label: labelid,
       alternateMobile: mobileNo,
-      clientName: "Pijush",
+      clientName: clientName,
     };
     console.log({ UpdateUser });
     const items = localStorage.getItem('accessToken');
@@ -400,7 +398,7 @@ const EditUser = ({ theEditLead, handleDialog }) => {
                 onChange={(e) => setCountryName(e.target.value)}
               >
                 <MenuItem value="s">Select the Country</MenuItem>
-                <MenuItem value="test">INDIA</MenuItem>
+                <MenuItem value="India">INDIA</MenuItem>
                 <MenuItem value="USA">USA</MenuItem>
                 <MenuItem value="Russia">RUSSIA</MenuItem>
                 <MenuItem value="Australia">Australia</MenuItem>

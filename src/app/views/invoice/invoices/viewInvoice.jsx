@@ -83,7 +83,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                         pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
                     }
                     // Output / Save
-                    pdf.save(`invoice-${theViewInvoice.invoiceNumber}.pdf`);
+                    pdf.save(`invoice-${theViewInvoice.billTo}.pdf`);
                 };
             })
             .catch((error) => {
@@ -128,7 +128,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 </Col>
                                 <Col>
                                     <h5 style={{ "color": "MidnightBlue" }}>
-                                        MENTOR PARTH LEAD CRM
+                                        Boostock The Finance Advisor
                                     </h5>
                                     <span>Haware Fantasia Business Park</span>
                                     <br />
@@ -308,6 +308,18 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             ) : (
                                 <div></div>
                             )}
+                            <div >
+                                <Row>
+                                    <Col style={{ "color": "MidnightBlue" }}>
+                                        <h5>Term & Condition</h5>
+                                    </Col>
+                                </Row>
+                                <Row className='ml-2'>
+                                    <p>
+                                        We agree the terms and conditions which is mentioned in www.boostock.in
+                                    </p>
+                                </Row>
+                            </div>
                         </Form>
                     </div>
                 </StyledTable>

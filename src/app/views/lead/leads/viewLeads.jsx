@@ -44,10 +44,9 @@ const ViewLead = () => {
               <Col>
                 <Form.Label> Date</Form.Label>
                 <Form.Control
-                  type="date"
                   disabled
                   //onChange={(e) => setRemarks(e.target.value)}
-                  defaultValue={location.state.createdDate}
+                  defaultValue={new Date(location.state.createdDate).toLocaleDateString()}
                 />
               </Col>
             </Row>
@@ -56,8 +55,8 @@ const ViewLead = () => {
                 <Form.Label> Client Name</Form.Label>
                 <Form.Control
                   placeholder="Enter Customer Name"
-                //onChange={(e) => setRemarks(e.target.value)}
-                // value={location.state.createdDate}
+                  disabled
+                  value={location.state.clientName}
                 />
               </Col>
               <Col>
