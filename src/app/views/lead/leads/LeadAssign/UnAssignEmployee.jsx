@@ -29,7 +29,7 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
 
     useEffect(() => {
         const items = localStorage.getItem('accessToken');
-        axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+        axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
                 setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
@@ -65,7 +65,7 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
         console.log({ UpdateUser });
         const items = localStorage.getItem('accessToken');
         e.preventDefault();
-        axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
+        axios.post(`http://213.136.72.177/cms/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
             .then(() => useEffect);
     };
 

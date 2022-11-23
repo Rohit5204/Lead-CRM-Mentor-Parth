@@ -99,7 +99,7 @@ const PlatformMaster = () => {
     }
     useEffect(() => {
         axios
-            .get(`http://35.89.6.16:4002/api/getMasterData?masterName=platformmaster`,
+            .get(`http://213.136.72.177/cms/api/getMasterData?masterName=platformmaster`,
                 { headers: { "x-access-token": items } })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -112,14 +112,14 @@ const PlatformMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://35.89.6.16:4002/api/mastersUpsert`, PlatformPayload,
+            .post(`http://213.136.72.177/cms/api/mastersUpsert`, PlatformPayload,
                 { headers: { "x-access-token": items } })
             .then(() => useEffect);
     };
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('http://35.89.6.16:4002/api/mastersUpsert', {
+        axios.post('http://213.136.72.177/cms/api/mastersUpsert', {
             id: i.id,
             masterName: 'platform',
             inputText: i.platformName,

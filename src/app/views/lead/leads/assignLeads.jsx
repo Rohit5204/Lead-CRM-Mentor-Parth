@@ -99,7 +99,7 @@ const AssignLead = () => {
   const items = localStorage.getItem('accessToken');
   useEffect(() => {
     axios
-      .post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
+      .post(`http://213.136.72.177/cms/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
@@ -110,7 +110,7 @@ const AssignLead = () => {
   }, [APIData]);
 
   useEffect(() => {
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
       }

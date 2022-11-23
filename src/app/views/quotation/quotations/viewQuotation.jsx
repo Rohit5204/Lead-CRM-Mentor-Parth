@@ -85,7 +85,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                         pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
                     }
                     // Output / Save
-                    pdf.save(`invoice-00000005.pdf`);
+                    pdf.save(`invoice-${theViewQuotation.quotationNumber}.pdf`);
                 };
             })
             .catch((error) => {

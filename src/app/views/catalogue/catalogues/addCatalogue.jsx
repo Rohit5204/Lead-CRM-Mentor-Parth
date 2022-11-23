@@ -41,7 +41,7 @@ const AddCatalogue = () => {
       price: price,
       description: description,
     });
-    axios.post('http://35.89.6.16:4002/api/upsertCatalogue',
+    axios.post('http://213.136.72.177/cms/api/upsertCatalogue',
       {
         catId: 0,
         catType: catType,

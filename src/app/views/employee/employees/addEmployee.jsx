@@ -48,7 +48,7 @@ const AddEmployee = () => {
     //Add data in the table
     const postData = async () => {
         console.log({ AddUser })
-        await axios.post('http://35.89.6.16:4002/api/userMasterUpsert', AddUser,
+        await axios.post('http://213.136.72.177/cms/api/userMasterUpsert', AddUser,
             { headers: { "x-access-token": items } });
     };
 

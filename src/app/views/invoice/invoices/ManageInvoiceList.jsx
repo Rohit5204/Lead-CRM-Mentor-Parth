@@ -48,11 +48,19 @@ const ManageInvoiceList = () => {
     setShowForm(!showForm);
   };
   const [obj1, setObj1] = useState(null);
+  const [sendMailObj, setSendMailObj] = useState(null);
   const [APIData, setAPIData] = useState([]);
+
   const [show, setShow] = useState(false);
+  const [showMail, setShowMail] = useState(false);
   //Dialog Form
   const handleClose = () => setShow(false);
+  const handleCloseMail = () => setShowMail(false);
 
+  const handleSendMail = (invoice) => {
+    setSendMailObj(invoice);
+    setShowMail(true);
+  };
   const handleShow = (invoice) => {
     setObj1(invoice);
     setShow(true);
@@ -60,7 +68,7 @@ const ManageInvoiceList = () => {
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios.post(`http://35.89.6.16:4002/api/getInvoiceData`, { invoiceid: 0, empId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`http://213.136.72.177/cms/api/getInvoiceData`, { invoiceid: 0, empId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -259,13 +267,10 @@ const ManageInvoiceList = () => {
             </form>
           )}
         </Box>
-        <Row>
-          <SendInvoiceMail />
-        </Row>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
           <h4>Invoice Table</h4>
-          <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+          <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
             <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
               <TableRow>
@@ -274,7 +279,6 @@ const ManageInvoiceList = () => {
                 <TableCell align="center">Customer Name</TableCell>
                 <TableCell align="center">Mobile No</TableCell>
                 <TableCell align="center">Total Amount</TableCell>
-
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
@@ -288,6 +292,9 @@ const ManageInvoiceList = () => {
                     <TableCell align="center">{invoice.clientContact}</TableCell>
                     <TableCell align="center">{invoice.grandTotal}</TableCell>
                     <TableCell align="center">
+                      <IconButton onClick={() => handleSendMail(invoice)}>
+                        <Icon color="primary">send</Icon>
+                      </IconButton>
                       <IconButton onClick={() => handleShow(invoice)}>
                         <Icon color="warning">visibility</Icon>
                       </IconButton>
@@ -303,6 +310,35 @@ const ManageInvoiceList = () => {
             </TableBody>
           </StyledTable>
         </Box>
+        <Modal
+          show={showMail}
+          onHide={handleCloseMail}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title>Send Invoice</Modal.Title>
+            <IconButton type="button" onClick={handleCloseMail}>
+              <ClearIcon />
+            </IconButton>
+          </Modal.Header>
+          <Modal.Body>
+            <SendInvoiceMail theClientMail={sendMailObj}></SendInvoiceMail>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              type="submit"
+              className="btn btn-error"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={handleCloseMail}
+            >
+              Cancel
+            </button>
+          </Modal.Footer>
+        </Modal>
         <Modal
           show={show}
           onHide={handleClose}
@@ -341,7 +377,7 @@ const ManageInvoiceList = () => {
           </Modal.Footer>
         </Modal>
       </Box>
-    </Container>
+    </Container >
   );
 };
 

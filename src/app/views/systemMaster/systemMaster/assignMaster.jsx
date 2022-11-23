@@ -43,7 +43,7 @@ const AssignMaster = () => {
 
     useEffect(() => {
         axios
-            .get(`http://35.89.6.16:4002/api/getMasterData?masterName=assignmaster`,
+            .get(`http://213.136.72.177/cms/api/getMasterData?masterName=assignmaster`,
                 { headers: { "x-access-token": items } })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -56,7 +56,7 @@ const AssignMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://35.89.6.16:4002/api/mastersUpsert`, {
+            .post(`http://213.136.72.177/cms/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -69,7 +69,7 @@ const AssignMaster = () => {
 
     // const deleteData = (e, i) => {
     //     console.log(i);
-    //     axios.post('http://35.89.6.16:4002/api/mastersUpsert', {
+    //     axios.post('http://213.136.72.177/cms/api/mastersUpsert', {
     //         id: i.id,
     //         masterName: 'platform',
     //         inputText: i.platformName,

@@ -43,7 +43,7 @@ const EditEmployee = () => {
     //Update data in the table
     const UpdateData = () => {
         console.log({ UpdateUser })
-        axios.post('http://35.89.6.16:4002/api/userMasterUpsert', UpdateUser, { headers: { "x-access-token": items } });
+        axios.post('http://213.136.72.177/cms/api/userMasterUpsert', UpdateUser, { headers: { "x-access-token": items } });
     };
 
     const handleSubmit = (e) => {

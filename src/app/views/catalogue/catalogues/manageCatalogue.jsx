@@ -52,7 +52,7 @@ const ManageCatalogue = () => {
   //get method
   const items = localStorage.getItem('accessToken');
   const getCatalogueData = () => {
-    axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`http://213.136.72.177/cms/api/getCatalogue`, { catId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });

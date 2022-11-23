@@ -52,7 +52,7 @@ const ManageEmployee = () => {
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios.get(`http://35.89.6.16:4002/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((response) => {
+    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((response) => {
       setUserData(response.data.data);
     });
   }, [userData]);

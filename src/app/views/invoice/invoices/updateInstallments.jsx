@@ -72,7 +72,7 @@ const UpdateInstallments = () => {
     };
 
     const getInstallmentsData = () => {
-        axios.post(`http://35.89.6.16:4002/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0 },
+        axios.post(`http://213.136.72.177/cms/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0 },
             { headers: { "x-access-token": token } })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {

@@ -37,7 +37,7 @@ const ManageMettings = () => {
 
     const getData = () => {
         // let abc = null
-        axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`,
+        axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`,
             { leadId: leadId, userId: 0, statusId: 0 },
             { headers: { "x-access-token": token } }).then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
@@ -51,7 +51,7 @@ const ManageMettings = () => {
     }
     const postData = () => {
         // console.log({ MeetingData })
-        axios.post(`http://35.89.6.16:4002/api/saveLeadMeetings`, MeetingData,
+        axios.post(`http://213.136.72.177/cms/api/saveLeadMeetings`, MeetingData,
             { headers: { "x-access-token": token } });
     };
     const blankForm = () => {

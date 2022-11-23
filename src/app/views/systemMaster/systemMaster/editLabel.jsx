@@ -35,7 +35,7 @@ const EditLabel = ({ theEditLabel }) => {
         const items = localStorage.getItem('accessToken');
         console.log({ UpdatePlatform });
         e.preventDefault();
-        axios.post(`http://35.89.6.16:4002/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
+        axios.post(`http://213.136.72.177/cms/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
             .then(() => useEffect);
         setInputText('');
     };

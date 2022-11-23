@@ -17,7 +17,7 @@ const StatCards2 = (showData) => {
   const getDashboardDataFetch = () => {
     const items = localStorage.getItem('accessToken');
 
-    axios.post(`http://35.89.6.16:4002/api/getDashboardData`, {
+    axios.post(`http://213.136.72.177/cms/api/getDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,

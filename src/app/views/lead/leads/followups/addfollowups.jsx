@@ -36,7 +36,7 @@ const ManageFollowups = () => {
         getData1()
     }, [APIData456]);
     const getData1 = () => {
-        axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, { leadId: leadId, userId: 0, statusId: 0, },
+        axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, { leadId: leadId, userId: 0, statusId: 0, },
             { headers: { "x-access-token": token } })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
@@ -49,7 +49,7 @@ const ManageFollowups = () => {
     }
     const postData = () => {
         // console.log({ followUpData })
-        axios.post(`http://35.89.6.16:4002/api/saveLeadFollowups`, followUpData,
+        axios.post(`http://213.136.72.177/cms/api/saveLeadFollowups`, followUpData,
             { headers: { "x-access-token": token } });
     };
     const blankForm = () => {

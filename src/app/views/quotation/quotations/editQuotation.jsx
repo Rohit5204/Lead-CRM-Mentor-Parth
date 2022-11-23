@@ -57,14 +57,14 @@ const EditQuotation = () => {
     ]);
     const token = localStorage.getItem('accessToken');
     useEffect(() => {
-        axios.post(`http://35.89.6.16:4002/api/getFilteredLeadData`, {
+        axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, {
             leadId: 0, userId: 0, statusId: 0,
         }, { headers: { "x-access-token": token } }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setLeadData(current => [...current, res.data.data[i].name]);
             }
         });
-        axios.post(`http://35.89.6.16:4002/api/getCatalogue`, { catId: 0 },
+        axios.post(`http://213.136.72.177/cms/api/getCatalogue`, { catId: 0 },
             { headers: { "x-access-token": token } }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -135,7 +135,7 @@ const EditQuotation = () => {
     //Add data in the table
     const postData = () => {
         console.log({ addQuotation });
-        axios.post(`http://35.89.6.16:4002/api/saveQuotation`, addQuotation);
+        axios.post(`http://213.136.72.177/cms/api/saveQuotation`, addQuotation);
     };
 
     const handleSubmit = (e) => {

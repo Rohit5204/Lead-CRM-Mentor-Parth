@@ -38,7 +38,7 @@ const EditCatalogue = ({ theEditCatalogue }) => {
     const items = localStorage.getItem('accessToken');
     console.log({ UpdateCatalogue });
     e.preventDefault();
-    axios.post(`http://35.89.6.16:4002/api/upsertCatalogue`, UpdateCatalogue, { headers: { "x-access-token": items } }).then(() => useEffect);
+    axios.post(`http://213.136.72.177/cms/api/upsertCatalogue`, UpdateCatalogue, { headers: { "x-access-token": items } }).then(() => useEffect);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
