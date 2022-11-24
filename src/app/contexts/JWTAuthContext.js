@@ -19,12 +19,16 @@ const isValidToken = (accessToken) => {
   return decodedToken.exp > currentTime;
 };
 
-const setSession = (accessToken) => {
+const setSession = (accessToken, roleName, userName) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('roleName', roleName);
+    localStorage.setItem('userName', userName);
     axios.defaults.headers = { accessToken };
   } else {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('roleName');
+    localStorage.removeItem('userName');
     delete axios.defaults.headers;
   }
 };
@@ -88,9 +92,8 @@ export const AuthProvider = ({ children }) => {
       userName,
       password,
     });
-    const { accessToken, user } = response.data;
-
-    setSession(accessToken);
+    const { accessToken, roleName, user } = response.data;
+    setSession(accessToken, roleName, userName);
 
     dispatch({
       type: 'LOGIN',
@@ -128,10 +131,13 @@ export const AuthProvider = ({ children }) => {
     (async () => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
+        const roleName = window.localStorage.getItem('roleName');
+        const userName = window.localStorage.getItem('userName');
+
         // If we refresh the page also we will be on the same page.
         // Date 08/11/2022 [Rohit Jaiswal]
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken);
+          setSession(accessToken, roleName, userName);
           const response = await axios.get('/');
           const { user } = response.data;
 

@@ -156,12 +156,13 @@ const EditEmployee = () => {
                                 </InputGroup>
                             </Col>
                             <Col>
-                                <Form.Label>New Password </Form.Label>
+                                <Form.Label>Password </Form.Label>
                                 <InputGroup className="mb-3">
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>password</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
+                                        disabled
                                         required
                                         type='password'
                                         onChange={(e) => setpassword(e.target.value)}

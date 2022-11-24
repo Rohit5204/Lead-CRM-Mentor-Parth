@@ -92,6 +92,8 @@ const Layout1Topbar = () => {
     }
     updateSidebarMode({ mode });
   };
+  const roleName = window.localStorage.getItem('roleName');
+  const userName = window.localStorage.getItem('userName');
 
   return (
     <TopbarRoot>
@@ -126,7 +128,7 @@ const Layout1Topbar = () => {
           {/* <ShoppingCart /> */}
           <Hidden xsDown>
             <Span>
-              Welcome, <strong>Admin </strong> &nbsp;
+              Welcome, <strong>{userName} </strong> &nbsp;
               {/* <strong>{user.name}</strong> */}
             </Span>
           </Hidden>

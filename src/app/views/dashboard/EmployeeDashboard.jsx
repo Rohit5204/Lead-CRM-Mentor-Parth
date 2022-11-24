@@ -85,7 +85,7 @@ export default function EmployeeDashboard(props) {
   return (
 
     <Container className="py-2">
-      <h5 className='ml-2'>SUMMARY</h5>
+      <h5 className='ml-2'>Dashboard</h5>
       <SimpleCard>
         <Row>
           <Col>
@@ -111,12 +111,9 @@ export default function EmployeeDashboard(props) {
                 Date Range
               </InputGroup.Text>
               <Form.Control
-
                 type="date" />
               <Form.Control
-
                 type="date" />
-
             </InputGroup>
           </Col>
         </Row>

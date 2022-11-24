@@ -16,7 +16,6 @@ const StatCards2 = (showData) => {
 
   const getDashboardDataFetch = () => {
     const items = localStorage.getItem('accessToken');
-
     axios.post(`http://213.136.72.177/cms/api/getDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
@@ -31,6 +30,24 @@ const StatCards2 = (showData) => {
   useEffect(() => {
     getDashboardDataFetch()
   }, [APIData123]);
+
+
+  // const CancelToken = axios.CancelToken;
+  //   const source = CancelToken.source();
+  //   const items = localStorage.getItem('accessToken');
+  //   if (!showData) {
+  //     axios.post(`http://213.136.72.177/cms/api/getDashboardData`, {
+  //       opType: showData.showData.opType,
+  //       fromDate: showData.showData.fromDate,
+  //       toDate: showData.showData.toDate,
+  //       empId: 0
+  //     }, { headers: { "x-access-token": items } }, {
+  //       cancelToken: source.token
+  //     })
+  //       .then((response) => {
+  //         setAPIData123(response.data.data);
+  //       })
+  //   }
 
   return (
     <Grid container spacing={4} sx={{ mb: '24px' }}>

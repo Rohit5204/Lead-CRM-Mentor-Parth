@@ -36,14 +36,14 @@ const StatCards = () => {
     { name: 'Cold Lead', total: 55, amount: 'Rs. 0', icon: 'work' },
     { name: 'Total Lead', total: 70, amount: 'Rs. 4,85,015', icon: 'group' },
     { name: 'Order Recieved', total: 4, amount: 'Rs. 1,15,000', icon: 'attach_money' },
-    { name: 'Order Loss', total: 4, amount: 'Rs. 1,20,015', icon: 'fall' },
+    { name: 'Order Loss', total: 4, amount: 'Rs. 1,20,015', icon: 'arrow_downward' },
   ];
 
   return (
     <Grid container spacing={4} sx={{ mb: '24px' }}>
       {cardList.map((item, index) => (
         <Grid item xs={12} md={3} key={index}>
-          <StyledCard elevation={1}>
+          <StyledCard elevation={1} style={{ background: '#deb887  ' }}>
             <ContentBox>
               <Icon className="icon">{item.icon}</Icon>
               <Box ml="12px">
