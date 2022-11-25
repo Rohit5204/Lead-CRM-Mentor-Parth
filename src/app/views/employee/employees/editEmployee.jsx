@@ -1,7 +1,7 @@
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
-import { Box, Icon } from '@mui/material';
+import { Box, Icon, FormControl, Select, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -20,9 +20,10 @@ const EditEmployee = () => {
     const [password, setpassword] = useState(location.state.password);
     const [mobileNo, setmobileNo] = useState(location.state.mobileNo);
     const [alternateMobileNo, setalternateMobileNo] = useState(location.state.alternateMobileNo);
-    const [lastActive, setlastActive] = useState('');
+    const [lastActive, setlastActive] = useState(location.state.lastActive);
     const [userName, setuserName] = useState(location.state.userName);
     const [userRoleId, setuserRoleId] = useState(location.state.roleId);
+    const [recodStatus, setRecodStatus] = useState(location.state.recodStatus)
 
     const UpdateUser = {
         id: id,
@@ -34,10 +35,10 @@ const EditEmployee = () => {
         alternateMobileNo: alternateMobileNo,
         userName: userName,
         updatedBy: 1,
-        lastActive: new Date(),
-        userRoleId: 2,
+        lastActive: lastActive,
+        userRoleId: userRoleId,
         addedBy: 0,
-        recodStatus: 1
+        recodStatus: recodStatus
     }
     const items = localStorage.getItem('accessToken');
     //Update data in the table
@@ -49,6 +50,7 @@ const EditEmployee = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         UpdateData();
+        changePage();
     };
     return (
         <Container>
@@ -128,14 +130,16 @@ const EditEmployee = () => {
                                 </InputGroup>
                             </Col>
                             <Col>
-                                <Form.Label>Role </Form.Label>
-                                <Form.Control
-                                    required
-                                    disabled
-                                    onChange={(e) => setuserRoleId(e.target.value)}
-                                    value={userRoleId}
-                                    placeholder="Enter the Role Level"
-                                />
+                                <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
+                                    <Form.Label>Role </Form.Label>
+                                    <Select
+                                        value={userRoleId}
+                                        onChange={(e) => setuserRoleId(e.target.value)}
+                                        label="Role">
+                                        <MenuItem value={1}>ADMIN</MenuItem>
+                                        <MenuItem value={2}>EMPLOYEE</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Col>
                         </Row>
                         <h6 style={{ color: 'red' }}>User Credential's </h6>
@@ -155,7 +159,7 @@ const EditEmployee = () => {
                                     />
                                 </InputGroup>
                             </Col>
-                            <Col>
+                            {/* <Col>
                                 <Form.Label>Password </Form.Label>
                                 <InputGroup className="mb-3">
                                     <InputGroup.Text id="basic-addon1">
@@ -169,7 +173,20 @@ const EditEmployee = () => {
                                         value={password}
                                         placeholder="Enter the Password"
                                     /></InputGroup>
+                            </Col> */}
+                            <Col>
+                                <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
+                                    <Form.Label>Status </Form.Label>
+                                    <Select
+                                        value={recodStatus}
+                                        onChange={(e) => setRecodStatus(e.target.value)}
+                                        label="Status">
+                                        <MenuItem value={0}>Inactive</MenuItem>
+                                        <MenuItem value={1}>Active</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Col>
+
                         </Row>
                     </SimpleCard>
                 </Col>

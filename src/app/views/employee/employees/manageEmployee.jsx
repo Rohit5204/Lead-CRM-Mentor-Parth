@@ -35,15 +35,16 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const ManageEmployee = () => {
-  const [obj1, setObj1] = useState(null);
-  const [APIData, setAPIData] = useState([]);
-  const [show, setShow] = useState(false);
-  //Dialog Form
-  const handleClose = () => setShow(false);
-  const handleShow = (catalogue) => {
-    setObj1(catalogue);
-    setShow(true);
-  };
+  // const [obj1, setObj1] = useState(null);
+  // const [APIData, setAPIData] = useState([]);
+  // const [show, setShow] = useState(false);
+  // //Dialog Form
+  // const handleClose = () => setShow(false);
+
+  // const handleShow = (catalogue) => {
+  //   setObj1(catalogue);
+  //   setShow(true);
+  // };
   const navigate = useNavigate();
   const changePage = () => {
     navigate('/employees/addEmployee');
@@ -52,9 +53,10 @@ const ManageEmployee = () => {
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((response) => {
-      setUserData(response.data.data);
-    });
+    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`,
+      { headers: { "x-access-token": items } }).then((response) => {
+        setUserData(response.data.data);
+      });
   }, [userData]);
 
   return (
@@ -87,7 +89,7 @@ const ManageEmployee = () => {
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Employee List </h4>
+          <h4>Employee Login </h4>
           <StyledTable>
             <TableHead>
               <TableRow>

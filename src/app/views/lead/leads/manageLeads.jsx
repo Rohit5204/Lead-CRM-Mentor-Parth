@@ -314,6 +314,13 @@ const ManageLead = () => {
           >
             <Modal.Header>
               <Modal.Title>Upload Excel File</Modal.Title>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ marginTop: 5 + 'px' }}
+                onClick={handleDownload}>
+                Download Sample File
+              </button>
             </Modal.Header>
             <Modal.Body>
               {/* upload file section */}
@@ -337,15 +344,6 @@ const ManageLead = () => {
                           {excelFileError}
                         </div>
                       )}
-                    </Col>
-                    <Col>
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        style={{ marginTop: 5 + 'px' }}
-                        onClick={handleDownload}>
-                        Sample File
-                      </button>
                     </Col>
                     <Col>
                       <button
@@ -462,6 +460,7 @@ const ManageLead = () => {
           >
             <Modal.Header>
               <Modal.Title>Update Lead Page</Modal.Title>
+
             </Modal.Header>
             <Modal.Body>
               <EditLead theEditLead={obj1} handleDialog={handleClose} />

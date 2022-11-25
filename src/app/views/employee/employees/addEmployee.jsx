@@ -2,8 +2,13 @@ import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 import {
-    Box, Icon,
+    Box,
+    Icon,
     IconButton,
+    FormControl,
+    Select,
+    MenuItem
+
 } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -20,9 +25,8 @@ const AddEmployee = () => {
     const [password, setpassword] = useState('');
     const [mobileNo, setmobileNo] = useState('');
     const [alternateMobileNo, setalternateMobileNo] = useState('');
-    const [lastActive, setlastActive] = useState('');
     const [userName, setuserName] = useState('');
-    const [userRoleId, setuserRoleId] = useState('');
+    const [userRoleId, setuserRoleId] = useState(2);
     //empty the form Text
     // const blankForm = () => {
     //     setCatType('');
@@ -36,8 +40,8 @@ const AddEmployee = () => {
         lastName: lastName,
         email: email,
         createdBy: 1,
-        lastActive: new Date(date),
-        userRoleId: 2,
+        lastActive: "",
+        userRoleId: userRoleId,
         addedBy: 1,
         password: password,
         mobileNo: mobileNo,
@@ -56,6 +60,7 @@ const AddEmployee = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
+        changePage();
     };
     return (
         <Container>
@@ -134,13 +139,16 @@ const AddEmployee = () => {
                                 </InputGroup>
                             </Col>
                             <Col>
-                                <Form.Label>Role </Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setuserRoleId(e.target.value)}
-                                    value={userRoleId}
-                                    placeholder="Enter the Role Level"
-                                />
+                                <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
+                                    <Form.Label>Role </Form.Label>
+                                    <Select
+                                        value={userRoleId}
+                                        onChange={(e) => setuserRoleId(e.target.value)}
+                                        label="Role">
+                                        <MenuItem value={1}>ADMIN</MenuItem>
+                                        <MenuItem value={2}>EMPLOYEE</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Col>
                         </Row>
                         <br />

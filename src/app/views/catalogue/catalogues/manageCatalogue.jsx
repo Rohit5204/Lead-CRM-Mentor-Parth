@@ -16,6 +16,7 @@ import {
   Chip,
   TableRow,
 } from '@mui/material';
+import { capitalize } from 'lodash';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -112,7 +113,13 @@ const ManageCatalogue = () => {
                     <TableCell align="justify">{catalogue.gsName}</TableCell>
                     <TableCell align="justify">{catalogue.gsPrice}</TableCell>
                     <TableCell align="justify">
-                      <Chip label="Active" color="success" />
+                      {catalogue.status == 0 ? (
+                        <> <Chip label="Inactive" color="warning" /></>
+                      ) :
+                        (
+                          <> <Chip label="Active" color="success" /></>
+                        )
+                      }
                     </TableCell>
                     <TableCell align="center">
                       {/* <IconButton
@@ -147,7 +154,7 @@ const ManageCatalogue = () => {
             <Modal.Title>Update Catalogue</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <EditCatalogue theEditCatalogue={obj1} />
+            <EditCatalogue theEditCatalogue={obj1} handleDialog={handleClose} />
           </Modal.Body>
           <Modal.Footer>
             <button
