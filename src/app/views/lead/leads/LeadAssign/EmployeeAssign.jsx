@@ -60,7 +60,8 @@ const AssignEmployee = ({ theAssignedData }) => {
             sourceId: theAssignedData.sourceId,
             assignId: assignedid,
             label: theAssignedData.label,
-            alternateMobile: theAssignedData.mobileNo
+            alternateMobile: theAssignedData.alternateMobile,
+            clientName: theAssignedData.clientName
         };
         console.log({ UpdateUser });
         const items = localStorage.getItem('accessToken');

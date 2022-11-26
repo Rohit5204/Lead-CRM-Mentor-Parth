@@ -122,8 +122,8 @@ const EditUser = ({ theEditLead, handleDialog }) => {
     console.log({ UpdateUser });
     const items = localStorage.getItem('accessToken');
     e.preventDefault();
-    axios.post(`http://35.89.6.16:4002/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
-      .then(() => useEffect);
+    axios.post(`http://213.136.72.177/cms/api/updateLeadData`, UpdateUser,
+      { headers: { "x-access-token": items } });
     handleDialog();
   };
   const navigate = useNavigate();

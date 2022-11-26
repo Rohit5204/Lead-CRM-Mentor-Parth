@@ -1,8 +1,9 @@
 import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SampleDigitalCardPreview from './SampleCard';
+import axios from 'axios';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import {
     Box,
@@ -49,6 +50,18 @@ const ManageDigitalCard = () => {
     const showCard = () => {
         setShowCardPreview(!showCardPreview);
     };
+    const [empAPI, setEmpApi] = useState([])
+    const items = localStorage.getItem('accessToken');
+    const getEmpDigitalCard = () => {
+        axios.post(`http://213.136.72.177/cms/api/getDigitalCard`, { _id: 0 },
+            { headers: { "x-access-token": items } })
+            .then((response) => {
+                setEmpApi(response.data.data);
+            });
+    }
+    useEffect(() => {
+        getEmpDigitalCard()
+    }, []);
     return (
         <Container>
             <Box>
@@ -89,28 +102,37 @@ const ManageDigitalCard = () => {
                     <StyledTable>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="justify">Sr. No</TableCell>
-                                <TableCell align="justify">Name</TableCell>
-                                <TableCell align="justify">DOB</TableCell>
-                                <TableCell align="justify">Mobile </TableCell>
-                                <TableCell align="justify">Email</TableCell>
+                                <TableCell align="center">Sr. No</TableCell>
+                                <TableCell align="center">Name</TableCell>
+                                <TableCell align="center">DOB</TableCell>
+                                <TableCell align="center">Mobile </TableCell>
+                                <TableCell align="center">Email</TableCell>
                                 <TableCell align="center">Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow >
-                                <TableCell align="justify">1</TableCell>
-                                <TableCell align="justify">Rohit Jaiswal</TableCell>
-                                <TableCell align="justify">19/12/2002</TableCell>
-                                <TableCell align="justify">7558227432</TableCell>
-                                <TableCell align="justify">rohit@gmail.com
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <Icon color="success">visibility</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
+                            {empAPI.map((empCard, index) => {
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell align="center">{empCard.id}</TableCell>
+                                        <TableCell align="center">{empCard.name}</TableCell>
+                                        <TableCell align="center">{empCard.profileName}</TableCell>
+                                        <TableCell align="center">{empCard.mobileNo1}</TableCell>
+                                        <TableCell align="center">{empCard.email}                                      </TableCell>
+                                        <TableCell align="center">
+                                            <IconButton>
+                                                <Icon color="success">visibility</Icon>
+                                            </IconButton>
+                                            <IconButton>
+                                                <Icon color="success">edit</Icon>
+                                            </IconButton>
+                                            <IconButton>
+                                                <Icon color="success">delete</Icon>
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </StyledTable>
                 </Box>

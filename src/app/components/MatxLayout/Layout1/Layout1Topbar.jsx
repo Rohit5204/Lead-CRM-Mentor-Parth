@@ -150,7 +150,7 @@ const Layout1Topbar = () => {
             </StyledItem>
 
             <StyledItem>
-              <Link to="/digitalCards/adddigitalCard">
+              <Link to="/profile">
                 <Icon> person </Icon>
                 <Span> Profile </Span>
               </Link>
