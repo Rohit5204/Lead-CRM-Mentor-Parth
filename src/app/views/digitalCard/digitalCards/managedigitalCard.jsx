@@ -77,7 +77,7 @@ const ManageDigitalCard = () => {
                     <Row>
                         <Col>
                             <InputGroup className="mb-3">
-                                <Link to='/digitalCards/addDigitalCard'> <button type="submit" className="btn btn-success" >
+                                <Link to='/digitalCards/addCard'> <button type="submit" className="btn btn-success" >
                                     ADD
                                 </button></Link>
 
@@ -120,12 +120,16 @@ const ManageDigitalCard = () => {
                                         <TableCell align="center">{empCard.mobileNo1}</TableCell>
                                         <TableCell align="center">{empCard.email}                                      </TableCell>
                                         <TableCell align="center">
+                                            {/* <Link to="/leads/viewLeads" state={empCard}> */}
                                             <IconButton>
-                                                <Icon color="success">visibility</Icon>
+                                                <Icon color="red">visibility</Icon>
                                             </IconButton>
-                                            <IconButton>
-                                                <Icon color="success">edit</Icon>
-                                            </IconButton>
+                                            {/* </Link> */}
+                                            <Link to="/digitalCards/editCard" state={empCard}>
+                                                <IconButton>
+                                                    <Icon color="success">edit</Icon>
+                                                </IconButton>
+                                            </Link>
                                             <IconButton>
                                                 <Icon color="success">delete</Icon>
                                             </IconButton>

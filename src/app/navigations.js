@@ -49,7 +49,7 @@ export const navigations = [
     name: 'Digital Card',
     icon: 'security',
     children: [
-      { name: 'Manage Card', iconText: 'SI', path: '/digitalCards/managedigitalCard' },
+      { name: 'Manage Card', iconText: 'SI', path: '/digitalCards' },
       { name: 'Add Card', iconText: 'SI', path: '' },
     ],
   },

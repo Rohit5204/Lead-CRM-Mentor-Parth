@@ -4,11 +4,12 @@ import { lazy } from 'react';
 
 const ManageDigitalCard = Loadable(lazy(() => import('./digitalCards/managedigitalCard')));
 const AddFormCard = Loadable(lazy(() => import('./digitalCards/addDigitalCard')));
-
+const EditFormCard = Loadable(lazy(() => import('./digitalCards/editDigitalCard')));
 
 const digitalCardRoutes = [
-    { path: '/digitalCards/managedigitalCard', element: <ManageDigitalCard /> },
-    { path: '/digitalCards/addDigitalCard', element: <AddFormCard /> },
+    { path: '/digitalCards', element: <ManageDigitalCard /> },
+    { path: '/digitalCards/addCard', element: <AddFormCard /> },
+    { path: '/digitalCards/editCard', element: <EditFormCard /> },
 
 ];
 
