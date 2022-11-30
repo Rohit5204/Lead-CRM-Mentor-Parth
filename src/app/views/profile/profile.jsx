@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Breadcrumb } from 'app/components';
 import { styled } from '@mui/system';
 import { Tab, Tabs } from 'react-bootstrap';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow, Icon, IconButton } from '@mui/material';
@@ -44,6 +45,12 @@ function ManageProfile() {
         setObj1(catalogue);
         setShow(true);
     };
+    const [logo, setLogo] = useState('/assets/images/payment-card/boostock-logo.jpg')
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setLogo(URL.createObjectURL(event.target.files[0]));
+        }
+    }
     const getAccountsData = () => {
         axios.post(`http://213.136.72.177/cms/api/getCompanyMaster`, { id: 8 },
             { headers: { "x-access-token": items } })
@@ -88,19 +95,49 @@ function ManageProfile() {
         postData();
         changePage();
     };
+
+    // const submitForm = form => {
+    //     form.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append("image", mydata.file);
+    //     // for (var pair of formData.entries()) {
+    //     //   console.log(pair[1]);
+    //     // }
+    //     const config = {
+    //       headers: {
+    //         "content-type": "multipart/form-data"
+    //       }
+    //     };
+    //     axios
+    //       .post("api/profile/upload", formData, config)
+    //       .then(response => {
+    //         alert("The file is successfully uploaded");
+    //       })
+    //       .catch(error => {});
+    //   };
+
     return (
         <>
+
             <Container fluid className="mt-4 mb-5">
+                <Box className="breadcrumb">
+                    <Breadcrumb
+                        routeSegments={[
+                            { name: 'Manage Organization', path: '/manageProfile' },
+                            { name: 'Profile Page' },
+                        ]}
+                    />
+                </Box>
                 <Card>
                     <Card.Body>
                         <h6>Company Profile Details</h6>
                         <Row>
                             <Col md="3">
                                 <div className="text-center">
-                                    <img src="/assets/images/payment-card/boostock-logo.jpg" className="avatar img-circle img-thumbnail" alt="avatar" />
-                                    <button type="button" className="btn-warning">
+                                    <img src={logo} alt="preview image" className="avatar img-circle img-thumbnail" />
+                                    <button type="button" className="btn-warning" onChange={onImageChange}>
                                         Change Logo
-                                        <input type="file" />
+                                        <input type="file" accept="image/*" name="image-upload" id="input" />
                                     </button>
                                 </div>
                             </Col>

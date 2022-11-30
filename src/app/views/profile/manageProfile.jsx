@@ -58,8 +58,8 @@ const ManageAllProfile = () => {
         <Box className="breadcrumb">
           <Breadcrumb
             routeSegments={[
-              { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue' },
-              { name: 'Catalogue Detail Page' },
+              { name: 'Manage Organization' },
+
             ]}
           />
         </Box>

@@ -25,6 +25,12 @@ const EditFormCard = ({ theEditCard }) => {
     const [mobileNo2, setMobileNo2] = useState('5874745215');
     const [address, setAddress] = useState('Nashik Road ,Nashik');
     const [email, setEmail] = useState('rohit@gmail.com');
+    // const [name, setName] = useState(theEditCard.name);
+    // const [profileName, setProfileName] = useState(theEditCard.profileRole);
+    // const [mobileNo1, setMobileNo1] = useState(theEditCard.mobileNo1);
+    // const [mobileNo2, setMobileNo2] = useState(theEditCard.mobileNo2);
+    // const [address, setAddress] = useState(theEditCard.address);
+    // const [email, setEmail] = useState(theEditCard.email);
     const [dob, setDob] = useState('');
 
     const navigate = useNavigate();
