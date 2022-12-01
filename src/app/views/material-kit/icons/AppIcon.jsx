@@ -943,6 +943,7 @@ const IconList = [
   "zoom_in",
   "zoom_out",
   "zoom_out_map",
+  "followTheSignsIcon"
 ];
 
 const AppIcon = () => {

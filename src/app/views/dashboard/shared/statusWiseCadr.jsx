@@ -1,8 +1,15 @@
-import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme } from '@mui/material';
+import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme, IconButton } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Row, Col } from 'react-bootstrap'
 import { Small } from 'app/components/Typography';
-
+import "./statusCard.css";
+import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import DescriptionIcon from '@mui/icons-material/Description';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexWrap: 'wrap',
@@ -56,12 +63,142 @@ const StatusWiseCard = () => {
         { name: 'Total Renewal', total: 4, amount: 'Rs. 1,15,000', icon: 'card_membership' },
         { name: 'Total Expiry', total: 4, amount: 'Rs. 1,20,015', icon: 'card_membership' },
     ]
+    const [statusWiseData, setStatusWiseData] = useState([]);
+    const items = localStorage.getItem('accessToken');
+    useEffect(() => {
+        axios.get(`http://213.136.72.177/cms/api/getLeadStatusCount`, { headers: { "x-access-token": items } })
+            .then((response) => {
+                setStatusWiseData(response.data.data);
+            });
+        console.log(statusWiseData)
+    }, [statusWiseData]);
     return (
         <div>
-            <Grid container spacing={4} sx={{ mb: '24px' }}>
+            <div>
+                <div id="root">
+                    <div className="container" >
+                        <div className="row align-items-stretch">
+                            {statusWiseData.map((item, index) => (
+                                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
+                                    <div className="wrap">
+                                        <Row>
+                                            <Col md="4">
+                                                <IconButton>
+                                                    <Icon style={{ fontSize: "70px", }}>send</Icon>
+                                                </IconButton>
+                                            </Col>
+                                            <Col style={{ marginLeft: "12px" }}>
+                                                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">{item.statusName}
+                                                </h4>
+                                                <span className="hind-font caption-10 c-dashboardInfo__count">{item.count}</span>
+                                            </Col>
+
+                                        </Row>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* <div className="c-dashboardInfo col-lg-3 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton> <FollowTheSignsIcon style={{ fontSize: "65px", }}></FollowTheSignsIcon></IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Follow Up
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">2</span>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+
+                            <div className="c-dashboardInfo col-lg-3 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton> <EventNoteIcon style={{ fontSize: "65px", }}></EventNoteIcon></IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Meeting
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">0</span>
+                                        </Col>
+                                    </Row></div>
+                            </div>
+                            <div className="c-dashboardInfo col-lg-3 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton> <DescriptionIcon style={{ fontSize: "70px", }}></DescriptionIcon></IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Quotation
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">0</span>
+                                        </Col>
+
+                                    </Row>
+                                </div>
+                            </div> */}
+                            {/* </div>
+                        <div className="row align-items-stretch"> */}
+                            {/* <div className="c-dashboardInfo col-lg-4 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton> <ReceiptIcon style={{ fontSize: "70px" }}></ReceiptIcon></IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Invoice
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">1</span>
+                                        </Col>
+
+                                    </Row>
+                                </div>
+                            </div>
+
+                            <div className="c-dashboardInfo col-lg-4 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton> <AssignmentTurnedInIcon style={{ fontSize: "70px", }}></AssignmentTurnedInIcon></IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Lead Closed
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">1</span>
+                                        </Col>
+
+                                    </Row></div>
+                            </div>
+
+                            <div className="c-dashboardInfo col-lg-4 col-md-6">
+                                <div className="wrap">
+                                    <Row>
+                                        <Col md="4">
+                                            <IconButton>
+                                                <ArrowDropDownCircleIcon style={{ fontSize: "70px", }}></ArrowDropDownCircleIcon>
+                                            </IconButton>
+                                        </Col>
+                                        <Col style={{ marginLeft: "12px" }}>
+                                            <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">Lead Drop
+                                            </h4>
+                                            <span className="hind-font caption-10 c-dashboardInfo__count">0</span>
+                                        </Col>
+
+                                    </Row>
+                                </div>
+                            </div> */}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {/* <Grid container spacing={4} sx={{ mb: '24px' }}>
                 {cardList.map((item, index) => (
                     <Grid item xs={12} md={3} key={index}>
-                        {/* <FabIcon> */}
+
                         <Icon style={{
                             color: "#4886b0",
                             fontSize: "55px",
@@ -70,7 +207,7 @@ const StatusWiseCard = () => {
                             top: "40px",
                             left: "155px"
                         }} className="icon">{item.icon}</Icon>
-                        {/* </FabIcon> */}
+                       
                         <StyledCard elevation={1} style={{ background: '#B6D0E2' }}>
                             <ContentBox>
                                 <Box ml="5px">
@@ -87,7 +224,7 @@ const StatusWiseCard = () => {
             <Grid container spacing={4} sx={{ mb: '24px' }}>
                 {cardList2.map((item, index) => (
                     <Grid item xs={12} md={4} key={index}>
-                        {/* <FabIcon> */}
+                     
                         <Icon style={{
                             color: "#4886b0",
                             fontSize: "55px",
@@ -96,7 +233,7 @@ const StatusWiseCard = () => {
                             top: "40px",
                             left: "230px"
                         }} className="icon">{item.icon}</Icon>
-                        {/* </FabIcon> */}
+                       
                         <StyledCard elevation={1} style={{ background: '#B6D0E2' }}>
                             <ContentBox>
                                 <Box ml="5px">
@@ -109,21 +246,21 @@ const StatusWiseCard = () => {
                         </StyledCard>
                     </Grid>
                 ))}
-            </Grid>
-            <Grid container spacing={4} sx={{ mb: '24px' }}>
+            </Grid> */}
+            {/* <Grid container spacing={4} sx={{ mb: '24px' }}>
                 {cardList1.map((item, index) => (
-                    <Grid item xs={12} md={6} key={index}>
-                        {/* <FabIcon> */}
-                        <Icon style={{
+                    <Grid item xs={12} md={6} key={index}> */}
+            {/* <FabIcon> */}
+            {/* <Icon style={{
                             color: "#4886b0",
                             fontSize: "55px",
                             position: "relative",
                             marginTop: "-40px",
                             top: "40px",
                             left: "390px"
-                        }} className="icon">{item.icon}</Icon>
-                        {/* </FabIcon> */}
-                        <StyledCard elevation={1} style={{ background: '#B6D0E2' }}>
+                        }} className="icon">{item.icon}</Icon> */}
+            {/* </FabIcon> */}
+            {/* <StyledCard elevation={1} style={{ background: '#B6D0E2' }}>
                             <ContentBox>
                                 <Box ml="5px">
                                     <Small>{item.name}</Small>
@@ -133,9 +270,9 @@ const StatusWiseCard = () => {
                             </ContentBox>
 
                         </StyledCard>
-                    </Grid>
-                ))}
-            </Grid>
+                    </Grid> */}
+            {/* ))}
+            </Grid> */}
         </div>
     );
 };

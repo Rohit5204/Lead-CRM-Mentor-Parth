@@ -209,7 +209,7 @@ const AddFormCard = () => {
                         </Card>
                     </div>
                 </Col>
-
+                {/* Form Page Start */}
                 <Col>
                     <SimpleCard title="Fill Employee Detail's">
                         <Row>
@@ -328,6 +328,7 @@ const AddFormCard = () => {
                         </Row>
                     </SimpleCard>
                 </Col>
+                {/* Form Page End */}
             </Row>
             <Div className="mt-2">
                 <Row>

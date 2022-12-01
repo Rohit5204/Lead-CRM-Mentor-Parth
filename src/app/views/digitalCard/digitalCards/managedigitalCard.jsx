@@ -2,7 +2,6 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import SampleDigitalCardPreview from './SampleCard';
 import axios from 'axios';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import {
@@ -34,22 +33,13 @@ const StyledTable = styled(Table)(() => ({
         '& tr': { '& td': { paddingLeft: 0 } },
     },
 }));
-// .btnShopNow .card {
-//     display:none;
-// }
-
-// .card:hover {
-//   transform:scale(1.1);
-//   background-color:#f8f9fa; 
-//   /* need to figure out how to do something like #btnShopNow display:block; */
-// }
 
 const ManageDigitalCard = () => {
-    const [showCardPreview, setShowCardPreview] = useState(false);
+    // const [showCardPreview, setShowCardPreview] = useState(false);
 
-    const showCard = () => {
-        setShowCardPreview(!showCardPreview);
-    };
+    // const showCard = () => {
+    //     setShowCardPreview(!showCardPreview);
+    // };
     const [empAPI, setEmpApi] = useState([])
     const items = localStorage.getItem('accessToken');
     const getEmpDigitalCard = () => {
@@ -77,9 +67,11 @@ const ManageDigitalCard = () => {
                     <Row>
                         <Col>
                             <InputGroup className="mb-3">
-                                <Link to='/digitalCards/addCard'> <button type="submit" className="btn btn-success" >
-                                    ADD
-                                </button></Link>
+                                <Link to='/digitalCards/addCard'>
+                                    <button type="submit" className="btn btn-success" >
+                                        ADD
+                                    </button>
+                                </Link>
 
                                 &nbsp;
                                 <Form.Control
@@ -87,15 +79,60 @@ const ManageDigitalCard = () => {
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                 />&nbsp;
-                                <button type="button" className="btn btn-primary" onClick={showCard}>Card Design</button>
+                                <Link to='/digitalCards/SampleCard'>
+                                    <button type="button" className="btn btn-primary">
+                                        Card Design
+                                    </button>
+                                </Link>
                             </InputGroup>
                         </Col>
                     </Row>
                 </Box>
-                {showCardPreview && (
-                    <Box>
-                        <SampleDigitalCardPreview />
-                    </Box>)}
+                {/* {showCardPreview && (
+                    <Box> */}
+                {/* <Row> */}
+                {/* <Col>
+                                <div className='card-wrapper'>
+                                    <div className='card'>
+                                        <div className='card-front'>
+                                            <div className='left'>
+                                                <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                            </div>
+                                            <div className='right'>
+                                                <div className='person right-content'>
+                                                    <i><PersonIcon /></i>
+                                                    <div>
+                                                        <h4>Rohit Jaiswal</h4>
+                                                        <p>Full Stack Developer</p>
+                                                    </div>
+                                                </div>
+                                                <div className='phone right-content'>
+                                                    <i><PhoneIcon /> </i>
+                                                    <div>
+                                                        <p>+91-7558227432,+91-8862002278</p>
+
+                                                    </div>
+                                                </div>
+                                                <div className='email right-content'>
+                                                    <i><EmailIcon /> </i>
+                                                    <div>
+                                                        <p> rohit.mentorp@gmail.com</p>
+                                                    </div>
+                                                </div>
+                                                <div className='address right-content'>
+                                                    <i><HomeIcon /> </i>
+                                                    <div>
+                                                        <p> Nashik Road Nashik</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col> */}
+                {/* </Row> */}
+                {/* </Box>
+                    )} */}
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
                     <h4>Digital Card Table List</h4>

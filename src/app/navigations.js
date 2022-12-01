@@ -5,7 +5,7 @@ export const navigations = [
   { label: 'LEADS', type: 'label' },
   {
     name: 'Leads',
-    icon: 'security',
+    icon: 'send',
     children: [
       { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
@@ -17,29 +17,29 @@ export const navigations = [
   { label: 'Catalogue', type: 'label' },
   {
     name: 'Catalogue List',
-    icon: 'favorite',
+    icon: 'menu',
     children: [
-      { name: 'Add Catalogue', path: '/catalogues/addCatalogue', iconText: 'A' },
       { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue', iconText: 'B' },
+      { name: 'Add Catalogue', path: '/catalogues/addCatalogue', iconText: 'A' },
     ],
   },
-  { label: 'QUTATIONS', type: 'label' },
+  { label: 'QUOTATIONS', type: 'label' },
   {
-    name: 'Qutation List',
-    icon: 'favorite',
+    name: 'Quotation List',
+    icon: 'work',
     children: [
-      { name: 'Request For Qutation', path: '/quotations/addQuotation', iconText: 'A' },
+      { name: 'Request For Quotation', path: '/quotations/addQuotation', iconText: 'A' },
       { name: 'Draft', path: '/quotations/manageQuotation', iconText: 'B' },
       { name: 'Send', path: '/material/checkbox', iconText: 'C' },
     ],
   },
-  { name: 'Add Qutation', path: '/quotations/addQuotation', icon: 'dashboard' },
+  { name: 'Add Quotation', path: '/quotations/addQuotation', icon: 'book' },
   { label: 'INVOICE', type: 'label' },
   {
     name: 'Invoive',
-    icon: 'security',
+    icon: 'receipt',
     children: [
-      { name: 'Send Qutation List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
+      { name: 'Send Quotation List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
       { name: 'Completed', iconText: 'SI', path: '/' },
       { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
     ],
@@ -47,7 +47,7 @@ export const navigations = [
   { label: 'Digital Card', type: 'label' },
   {
     name: 'Digital Card',
-    icon: 'security',
+    icon: 'sd_card',
     children: [
       { name: 'Manage Card', iconText: 'SI', path: '/digitalCards' },
       { name: 'Add Card', iconText: 'SI', path: '' },
