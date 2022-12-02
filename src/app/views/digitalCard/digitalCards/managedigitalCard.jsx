@@ -58,7 +58,7 @@ const ManageDigitalCard = () => {
                 <Box className="breadcrumb">
                     <Breadcrumb
                         routeSegments={[
-                            { name: 'Manage Digital Card', path: '/digitalCards/managedigitalCard' },
+                            { name: 'Manage Digital Card', path: '/digitalCards' },
                             { name: 'Digital Card Detail Page' },
                         ]}
                     />

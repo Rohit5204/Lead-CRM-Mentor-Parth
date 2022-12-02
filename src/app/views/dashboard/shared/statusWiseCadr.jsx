@@ -88,7 +88,8 @@ const StatusWiseCard = () => {
                                                 </IconButton>
                                             </Col>
                                             <Col style={{ marginLeft: "12px" }}>
-                                                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">{item.statusName}
+                                                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+                                                    {item.statusName}
                                                 </h4>
                                                 <span className="hind-font caption-10 c-dashboardInfo__count">{item.count}</span>
                                             </Col>
