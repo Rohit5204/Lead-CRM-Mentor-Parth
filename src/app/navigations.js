@@ -53,16 +53,16 @@ export const navigations = [
       { name: 'Add Card', iconText: 'SI', path: '' },
     ],
   },
-  // { label: 'MY DEALS', type: 'label' },
-  // {
-  //   name: 'Deals',
-  //   icon: 'security',
-  //   children: [
-  //     { name: 'Completed (Invoive)', iconText: 'SI', path: '/session/signup' },
-  //     { name: 'Recovery', iconText: 'SI', path: '/session/signup' },
-  //     { name: 'Renewal', iconText: 'SI', path: '/session/signup' },
-  //   ],
-  // },
+  { label: 'MY DEALS', type: 'label' },
+  {
+    name: 'Deals',
+    icon: 'security',
+    children: [
+      { name: 'Completed (Invoive)', iconText: 'SI', path: '/myDeal/manageDeals' },
+      { name: 'Recovery', iconText: 'SI', path: '/myDeal/recovery' },
+      { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal' },
+    ],
+  },
   // { label: 'EMAIL', type: 'label' },
   // {
   //   name: 'Email',

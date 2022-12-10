@@ -30,9 +30,9 @@ const StatusWiseCard = () => {
         <FollowTheSignsIcon style={{ fontSize: "65px" }}></FollowTheSignsIcon>,
         <EventNoteIcon style={{ fontSize: "65px" }}></EventNoteIcon>,
         <DescriptionIcon style={{ fontSize: "70px" }}></DescriptionIcon>,
-        <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
+        <ArrowDropDownCircleIcon style={{ fontSize: "70px" }}></ArrowDropDownCircleIcon>,
         <ReceiptIcon style={{ fontSize: "70px" }}></ReceiptIcon>,
-        <ArrowDropDownCircleIcon style={{ fontSize: "70px" }}></ArrowDropDownCircleIcon>
+        <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
     ]
     return (
         <div>
@@ -45,9 +45,9 @@ const StatusWiseCard = () => {
                                     <div className="wrap">
                                         <Row>
                                             <Col md="4">
-                                                <IconButton>
+                                                <div style={{ color: palette.text.secondary }}>
                                                     {iconOption[index]}
-                                                </IconButton>
+                                                </div>
                                             </Col>
                                             <Col style={{ marginLeft: "12px" }}>
                                                 <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">

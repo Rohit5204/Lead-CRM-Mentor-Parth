@@ -14,6 +14,7 @@ import employeeRoutes from './views/employee/employeeRoutes';
 import digitalCardRoutes from './views/digitalCard/digitalCardRoutes';
 import systemMasterRoutes from './views/systemMaster/systemMaster';
 import profileRoutes from './views/profile/profileRoute';
+import myDealRoutes from './views/myDeals/myDealRoutes';
 const routes = [
   {
     element: (
@@ -32,7 +33,8 @@ const routes = [
       ...employeeRoutes,
       ...digitalCardRoutes,
       ...systemMasterRoutes,
-      ...profileRoutes
+      ...profileRoutes,
+      ...myDealRoutes
     ],
   },
   ...sessionRoutes,

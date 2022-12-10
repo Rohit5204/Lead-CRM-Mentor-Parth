@@ -1,24 +1,20 @@
-import { Card, Grid, styled, useTheme, Icon, IconButton } from '@mui/material';
+import { Card, Grid, styled, useTheme } from '@mui/material';
 import { Fragment } from 'react';
-import Campaigns from './shared/Campaigns';
 import DoughnutChart from './shared/Doughnut';
 import { SimpleCard } from 'app/components';
-import RowCards from './shared/RowCards';
 import StatCards from './shared/StatCards';
 import StatCards2 from './shared/StatCards2';
-import TopSellingTable from './shared/TopSellingTable';
-import UpgradeCard from './shared/UpgradeCard';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { InputGroup, Button } from 'react-bootstrap';
+import { InputGroup } from 'react-bootstrap';
 import LineGraph from './shared/LineGraph';
 import SampleLine from './shared/MixedGraph';
-import React, { useState, useEffect } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useState } from 'react';
 import EmployeeDashboard from './EmployeeDashboard';
 import StatusWiseCard from './shared/statusWiseCadr';
+
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
