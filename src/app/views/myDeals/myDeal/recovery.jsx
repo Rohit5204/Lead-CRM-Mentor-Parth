@@ -140,7 +140,7 @@ const Recovery = () => {
                                 </TableCell>
                                 <TableCell align="center">
                                     <IconButton>
-                                        <Icon color="success">visibility</Icon>
+                                        <Icon color="success">edit</Icon>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
@@ -155,11 +155,10 @@ const Recovery = () => {
                                 </TableCell>
                                 <TableCell align="center">
                                     <IconButton>
-                                        <Icon color="success">visibility</Icon>
+                                        <Icon color="success">edit</Icon>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
-
                         </TableBody>
                     </StyledTable>
                 </Box>
