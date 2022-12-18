@@ -8,7 +8,8 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <StyledEngineProvider injectFirst>
-    <BrowserRouter basename='/Lead-CRM-Mentor-Parth'>
+    {/* <BrowserRouter basename='/Lead-CRM-Mentor-Parth'> */}
+    <BrowserRouter>
       <CssBaseline />
       <App />
     </BrowserRouter>
