@@ -88,13 +88,10 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const login = async (userName, password) => {
-    const response = await axios.post(
-      'https://api.scraperapi.com/?api_key=9531cb331d81da90c0f1e2aa943de32e&url=http://213.136.72.177/cms/api/userLogin',
-      {
-        userName,
-        password,
-      }
-    );
+    const response = await axios.post('http://213.136.72.177/cms/api/userLogin', {
+      userName,
+      password,
+    });
     const { accessToken, roleName, user } = response.data;
     setSession(accessToken, roleName, userName);
 
