@@ -1,46 +1,54 @@
 import * as React from 'react';
-import { Box, Grid, TextField, Autocomplete, MenuItem, FormControl, Select } from '@mui/material';
-import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
+import { styled } from '@mui/system';
+import { Box, TextField, Autocomplete, MenuItem, FormControl, Select } from '@mui/material';
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Breadcrumb } from 'app/components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const EditUser = ({ theEditLead, handleDialog }) => {
-  // const [abc, setAbc] = useState({ v: false })
-  const [leadId, setLeadId] = useState(theEditLead.leadId);
-  const [name, setName] = useState(theEditLead.name);
-  const [mobileNo, setMobileNo] = useState(theEditLead.mobileNo);
-  const [alternateMobile, setAlternateMobile] = useState(theEditLead.alternateMobile);
-  const [clientName, setClientName] = useState(theEditLead.clientName);
-  const [emailId, setEmailId] = useState(theEditLead.emailId);
-  const [streetName, setStreetName] = useState(theEditLead.streetName);
-  const [stateName, setStateName] = useState(theEditLead.stateName);
-  const [cityName, setCityName] = useState(theEditLead.cityName);
-  const [zipCode, setZipCode] = useState(theEditLead.zipCode);
-  const [countryName, setCountryName] = useState(theEditLead.countryName);
-  //const [intrestedIn, setIntrestedIn] = useState(theEditLead.intrestedIn);
-  //const [platformName, setPlatformName] = useState(theEditLead.platformName);
-  // const [assignId, setAssignId] = useState(theEditLead.countryName);
-  // const [assignedUser, setAssignedUser] = useState(theEditLead.assignedUser);
-  // const [statusName, setStatusName] = useState(theEditLead.statusName);
-  // const [labelName, setLabelName] = useState(theEditLead.labelName);
+const Container = styled('div')(({ theme }) => ({
+  margin: '30px',
+  [theme.breakpoints.down('sm')]: { margin: '16px' },
+  '& .breadcrumb': {
+    marginBottom: '30px',
+    [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
+  },
+}));
+const Div = styled('div')(({ theme }) => ({
+  margin: '0px 0px 0px 441px',
+}));
+
+const EditUser = () => {
+  const location = useLocation();
+  const [leadId, setLeadId] = useState(location.state.leadId);
+  const [name, setName] = useState(location.state.name);
+  const [mobileNo, setMobileNo] = useState(location.state.mobileNo);
+  const [alternateMobile, setAlternateMobile] = useState(location.state.alternateMobile);
+  const [clientName, setClientName] = useState(location.state.clientName);
+  const [emailId, setEmailId] = useState(location.state.emailId);
+  const [streetName, setStreetName] = useState(location.state.streetName);
+  const [stateName, setStateName] = useState(location.state.stateName);
+  const [cityName, setCityName] = useState(location.state.cityName);
+  const [zipCode, setZipCode] = useState(location.state.zipCode);
+  const [countryName, setCountryName] = useState(location.state.countryName);
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
   const [labelName, setLabelName] = useState([]);
   const [statusName, setStatusName] = useState([]);
   const [assignTo, setAssignTo] = useState([]);
 
-  const [myOptions1, setMyOptions1] = useState(theEditLead.intrestedIn);
-  const [myOptions2, setMyOptions2] = useState(theEditLead.platformName);
-  const [myOptions3, setMyOptions3] = useState(theEditLead.assignedUser);
-  const [myOptions4, setMyOptions4] = useState(theEditLead.statusName);
-  const [myOptions5, setMyOptions5] = useState(theEditLead.labelName);
+  const [myOptions1, setMyOptions1] = useState(location.state.intrestedIn);
+  const [myOptions2, setMyOptions2] = useState(location.state.platformName);
+  const [myOptions3, setMyOptions3] = useState(location.state.assignedUser);
+  const [myOptions4, setMyOptions4] = useState(location.state.statusName);
+  const [myOptions5, setMyOptions5] = useState(location.state.labelName);
 
   const [id1, setId1] = useState([]);
   const [id2, setId2] = useState([]);
   const [id3, setId3] = useState([]);
   const [sourceId, setSourceId] = useState([]);
-  const [remarks, setRemarks] = useState(theEditLead.remarks);
+  const [remarks, setRemarks] = useState(location.state.remarks);
 
   useEffect(() => {
     const items = localStorage.getItem('accessToken');
@@ -124,68 +132,75 @@ const EditUser = ({ theEditLead, handleDialog }) => {
     e.preventDefault();
     axios.post(`http://213.136.72.177/cms/api/updateLeadData`, UpdateUser,
       { headers: { "x-access-token": items } });
-    handleDialog();
+    changePage()
   };
   const navigate = useNavigate();
   const changePage = () => {
-    navigate('/catalogues/manageCatalogue');
+    navigate('/leads/manageLeads');
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     changePage()
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col>
-            <Form.Label>Lead Name</Form.Label>
-            <Form.Control
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              placeholder="Enter the Lead Name"
-            />
-          </Col>
-          <Col >
-            <Form.Label>Client Name</Form.Label>
-            <Form.Control
-              onChange={(e) => setClientName(e.target.value)}
-              value={clientName}
-              placeholder="Enter the Client Name"
-            />
-          </Col>
-        </Row>
-        <Row className="mt-1">
-          <Col>
-            <Form.Label>Mobile Number</Form.Label>
-            <Form.Control
-              disabled
-              onChange={(e) => setMobileNo(e.target.value)}
-              value={mobileNo}
-              placeholder="Customer Mobile Number"
-            />
-          </Col>
-          <Col>
-            <Form.Label>Alternate Number</Form.Label>
-            <Form.Control
-              onChange={(e) => setAlternateMobile(e.target.value)}
-              value={alternateMobile}
-              placeholder="Customer Alternate Number"
-            />
-          </Col>
-        </Row>
-        <Row className="mt-1">
-          <Col>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              readOnly
-              onChange={(e) => setEmailId(e.target.value)}
-              value={emailId}
-              placeholder="Customer Email"
-            />
-          </Col>
-          <Col>
-            {/* <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
+    <Container>
+      <Box className="breadcrumb">
+        <Breadcrumb
+          routeSegments={[{ name: 'Managed Lead', path: '/leads/manageLeads' }, { name: 'Update Lead Page' }]}
+        />
+      </Box>
+
+      <Box sx={{ flexGrow: 1 }}>
+        <Form onSubmit={handleSubmit}>
+          <Row>
+            <Col>
+              <Form.Label>Lead Name</Form.Label>
+              <Form.Control
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="Enter the Lead Name"
+              />
+            </Col>
+            <Col >
+              <Form.Label>Client Name</Form.Label>
+              <Form.Control
+                onChange={(e) => setClientName(e.target.value)}
+                value={clientName}
+                placeholder="Enter the Client Name"
+              />
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <Col>
+              <Form.Label>Mobile Number</Form.Label>
+              <Form.Control
+                disabled
+                onChange={(e) => setMobileNo(e.target.value)}
+                value={mobileNo}
+                placeholder="Customer Mobile Number"
+              />
+            </Col>
+            <Col>
+              <Form.Label>Alternate Number</Form.Label>
+              <Form.Control
+                onChange={(e) => setAlternateMobile(e.target.value)}
+                value={alternateMobile}
+                placeholder="Customer Alternate Number"
+              />
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <Col>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                readOnly
+                onChange={(e) => setEmailId(e.target.value)}
+                value={emailId}
+                placeholder="Customer Email"
+              />
+            </Col>
+            <Col>
+              {/* <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
               <Form.Label>Interested In</Form.Label>
               <Select
                 value={intrestedIn}
@@ -198,217 +213,221 @@ const EditUser = ({ theEditLead, handleDialog }) => {
                 <MenuItem value="twitter">Twitter</MenuItem>
               </Select>
             </FormControl> */}
-            <Form.Label>Interested In</Form.Label>
-            <FormControl>
-              <Autocomplete
-                style={{ width: 370 }}
-                freeSolo
-                autoComplete
-                autoHighlight
-                value={myOptions1}
-                options={intrestedIn}
-                onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Select the Interested Catalogue"
-                    size="small"
-                  />
-                )}
-              />
-            </FormControl>
-          </Col>
-        </Row>
-        <Row className="mt-1">
-          <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Street Name</Form.Label>
+              <Form.Label>Interested In</Form.Label>
+
+              <FormControl>
+                <Autocomplete
+                  style={{ width: 500 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions1}
+                  options={intrestedIn}
+                  onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Interested Catalogue"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <Col>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Street Name</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  onChange={(e) => setStreetName(e.target.value)}
+                  value={streetName}
+                  placeholder="Street"
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Comment</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  value={remarks}
+                  placeholder="Comment"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Label>City Name</Form.Label>
               <Form.Control
-                as="textarea"
-                rows={3}
-                onChange={(e) => setStreetName(e.target.value)}
-                value={streetName}
-                placeholder="Street"
+                onChange={(e) => setCityName(e.target.value)}
+                value={cityName}
+                placeholder="Enter The City"
               />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Comment</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                onChange={(e) => setRemarks(e.target.value)}
-                value={remarks}
-                placeholder="Comment"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Label>City Name</Form.Label>
-            <Form.Control
-              onChange={(e) => setCityName(e.target.value)}
-              value={cityName}
-              placeholder="Enter The City"
-            />
-          </Col>
-          <Col>
-            {/* <Form.Label>Source/Platform Name</Form.Label>
+            </Col>
+            <Col>
+              {/* <Form.Label>Source/Platform Name</Form.Label>
             <Form.Control
               onChange={(e) => setPlatformName(e.target.value)}
               value={platformName}
               placeholder="Select the Source"
             /> */}
-            <Form.Label>Source(Platform Name)</Form.Label>
-            <FormControl>
-              <Autocomplete
-                style={{ width: 370 }}
-                freeSolo
-                autoComplete
-                autoHighlight
-                value={myOptions2}
-                options={platformName}
-                onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Select the Platform Name"
-                    size="small"
-                  />
-                )}
+              <Form.Label>Source(Platform Name)</Form.Label>
+              <FormControl>
+                <Autocomplete
+                  style={{ width: 500 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions2}
+                  options={platformName}
+                  onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Platform Name"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
+            </Col>
+          </Row>
+          <Row>
+            <Col >
+              <Form.Label>State Name</Form.Label>
+              <Form.Control
+                onChange={(e) => setStateName(e.target.value)}
+                value={stateName}
+                placeholder="Enter Sate Name"
               />
-            </FormControl>
-          </Col>
-        </Row>
-        <Row>
-          <Col >
-            <Form.Label>State Name</Form.Label>
-            <Form.Control
-              onChange={(e) => setStateName(e.target.value)}
-              value={stateName}
-              placeholder="Enter Sate Name"
-            />
-          </Col>
-          <Col>
-            {/* <Form.Label>Assigned To</Form.Label>
+            </Col>
+            <Col>
+              {/* <Form.Label>Assigned To</Form.Label>
             <Form.Control
               // onChange={(e) => setAssignedUser(e.target.value)}
               // value={assignedUser}
               placeholder="Select the Staff Member"
             /> */}
-            <FormControl>
-              <Form.Label>Assigned To</Form.Label>
-              <Autocomplete
-                style={{ width: 370 }}
-                freeSolo
-                autoComplete
-                autoHighlight
-                options={assignTo}
-                value={myOptions3}
-                onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
+              <FormControl>
+                <Form.Label>Assigned To</Form.Label>
+                <Autocomplete
+                  style={{ width: 500 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  value={myOptions3}
+                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
 
-                    variant="outlined"
-                    label="Select the Employee to Assign"
-                    size="small"
-                  />
-                )}
-              />
-            </FormControl>
-          </Col>
-        </Row>
+                      variant="outlined"
+                      label="Select the Employee to Assign"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
+            </Col>
+          </Row>
 
-        <Row>
-          <Col xs={6}>
-            <Form.Label>Pin Code</Form.Label>
-            <Form.Control
-              onChange={(e) => setZipCode(e.target.value)}
-              value={zipCode}
-              placeholder="Enter Zip Code"
-            />
-          </Col>
-          <Col xs={6}>
-            <Form.Label>Status</Form.Label>
-            <FormControl>
-              <Autocomplete
-                style={{ width: 370 }}
-                freeSolo
-                autoComplete
-                autoHighlight
-                value={myOptions4}
-                options={statusName}
-                onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Select the Status"
-                    size="small"
-                  />
-                )}
+          <Row>
+            <Col xs={6}>
+              <Form.Label>Pin Code</Form.Label>
+              <Form.Control
+                onChange={(e) => setZipCode(e.target.value)}
+                value={zipCode}
+                placeholder="Enter Zip Code"
               />
-            </FormControl>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
-              <Form.Label>Country</Form.Label>
-              <Select
-                value={countryName}
-                label="Country"
-                onChange={(e) => setCountryName(e.target.value)}
-              >
-                <MenuItem value="s">Select the Country</MenuItem>
-                <MenuItem value="India">INDIA</MenuItem>
-                <MenuItem value="USA">USA</MenuItem>
-                <MenuItem value="Russia">RUSSIA</MenuItem>
-                <MenuItem value="Australia">Australia</MenuItem>
-              </Select>
-            </FormControl>
-          </Col>
-          <Col xs={6}>
-            <Form.Label>Label</Form.Label>
-            <FormControl>
-              <Autocomplete
-                style={{ width: 370 }}
-                freeSolo
-                autoComplete
-                autoHighlight
-                options={labelName}
-                value={myOptions5}
-                onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Select the Label"
-                    size="small"
-                  />
-                )}
-              />
-            </FormControl>
-          </Col>
-        </Row>
+            </Col>
+            <Col xs={6}>
+              <Form.Label>Status</Form.Label>
+              <FormControl>
+                <Autocomplete
+                  style={{ width: 500 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions4}
+                  options={statusName}
+                  onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Status"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <FormControl sx={{ m: 0, minWidth: 500 }} size="small" className="mt-1">
+                <Form.Label>Country</Form.Label>
+                <Select
+                  value={countryName}
+                  label="Country"
+                  onChange={(e) => setCountryName(e.target.value)}
+                >
+                  <MenuItem value="s">Select the Country</MenuItem>
+                  <MenuItem value="India">INDIA</MenuItem>
+                  <MenuItem value="USA">USA</MenuItem>
+                  <MenuItem value="Russia">RUSSIA</MenuItem>
+                  <MenuItem value="Australia">Australia</MenuItem>
+                </Select>
+              </FormControl>
+            </Col>
+            <Col xs={6}>
+              <Form.Label>Label</Form.Label>
+              <FormControl>
+                <Autocomplete
+                  style={{ width: 500 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={labelName}
+                  value={myOptions5}
+                  onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Label"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
+            </Col>
+          </Row>
+        </Form>
+      </Box>
+      <Div className="mt-2">
         <Row>
           <Col>
-            <button
-              type="submit"
-              className="btn btn-success"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={updateLead}
-            > Update
-            </button>
+            <Button variant="secondary" onClick={changePage}>
+              Cancel
+            </Button>
+            &nbsp;
+            <Button variant="success" onClick={updateLead}>
+              Update
+            </Button>
           </Col>
         </Row>
-      </Form>
-    </Box>
+      </Div>
+    </Container>
   );
 };
 

@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
-import { Box, Grid, Autocomplete, TextField } from '@mui/material';
-import { InputLabel, MenuItem, FormControl, Select, Icon } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Box, Autocomplete, TextField } from '@mui/material';
+import { MenuItem, FormControl, Select, Icon } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -165,7 +165,7 @@ const LeadForm = () => {
     <Container>
       <Box className="breadcrumb">
         <Breadcrumb
-          routeSegments={[{ name: 'Lead', path: '/leads/addLeads' }, { name: 'Add Lead Page' }]}
+          routeSegments={[{ name: 'Manage Lead', path: '/leads/manageLeads' }, { name: 'Add Lead Page' }]}
         />
       </Box>
       <Row>
@@ -341,7 +341,7 @@ const LeadForm = () => {
                 </InputGroup>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 650 }}
                     freeSolo
                     autoComplete
                     autoHighlight

@@ -26,17 +26,9 @@ const ManageLead = () => {
     setShowForm(!showForm);
   };
 
-  const [obj1, setObj1] = useState(null);
   const [APIData, setAPIData] = useState([]);
-  const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
-  //Dialog Form
-  const handleClose = () => setShow(false);
 
-  const handleShow = (subscriber) => {
-    setObj1(subscriber);
-    setShow(true);
-  };
   // Import Dailog
   const closeImport = () => setShow1(false);
   const showImport = () => setShow1(true);
@@ -409,6 +401,7 @@ const ManageLead = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="justify">Lead Id</TableCell>
+                  <TableCell align="justify">Client Name</TableCell>
                   <TableCell align="justify">Lead Name</TableCell>
                   <TableCell align="justify">Email</TableCell>
                   <TableCell align="justify">Mobile Number</TableCell>
@@ -421,6 +414,7 @@ const ManageLead = () => {
                   return (
                     <TableRow key={index}>
                       <TableCell align="justify">{subscriber.leadId}</TableCell>
+                      <TableCell align="justify">{subscriber.clientName}</TableCell>
                       <TableCell align="justify">{subscriber.name}</TableCell>
                       <TableCell align="justify">{subscriber.emailId}</TableCell>
                       <TableCell align="justify">{subscriber.mobileNo}</TableCell>
@@ -430,17 +424,11 @@ const ManageLead = () => {
                             <Icon color="red">visibility</Icon>
                           </IconButton>
                         </Link>
-                        <IconButton
-                          // onClick={(event) => updateData(event, subscriber)}
-                          onClick={() => handleShow(subscriber)}
-                        >
-                          <Icon color="success">edit</Icon>
-                        </IconButton>
-                        {/* <IconButton
-                        // onClick={(event) => deleteData(event, subscriber)}
-                        >
-                          <Icon color="warning">delete</Icon>
-                        </IconButton> */}
+                        <Link to="/leads/editLead" state={subscriber}>
+                          <IconButton>
+                            <Icon color="success">edit</Icon>
+                          </IconButton>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   );
@@ -449,33 +437,6 @@ const ManageLead = () => {
               </TableBody>
             </StyledTable>
           </Box>
-          <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Header>
-              <Modal.Title>Update Lead Page</Modal.Title>
-
-            </Modal.Header>
-            <Modal.Body>
-              <EditLead theEditLead={obj1} handleDialog={handleClose} />
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                type="submit"
-                className="btn btn-error"
-                style={{ marginTop: 5 + 'px' }}
-                onClick={handleClose}
-              >
-                Cancel
-              </button>
-            </Modal.Footer>
-          </Modal>
         </Box>
       </Container>
     </SimpleCard>
