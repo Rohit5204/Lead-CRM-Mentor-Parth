@@ -183,7 +183,6 @@ const LeadForm = () => {
                     value={name}
                     placeholder="Enter the Lead Name"
                   /></InputGroup>
-
               </Col>
             </Row>
             <Row>
@@ -246,7 +245,6 @@ const LeadForm = () => {
             <Row className="mt-1">
               <Col>
                 <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
-
                   <InputGroup className="mb-2">
                     <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
                     <InputGroup.Text id="basic-addon1">

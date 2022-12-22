@@ -6,9 +6,14 @@ import React, { useState, useEffect } from 'react';
 import SubtitlesIcon from '@mui/icons-material/Subtitles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 import { saveAs } from 'file-saver'
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
+import "./card.css";
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -22,13 +27,14 @@ const Container = styled('div')(({ theme }) => ({
 
 const AddFormCard = () => {
 
-    const [name, setName] = useState('Rohit Jaiswal');
-    const [profileName, setProfileName] = useState('Full Stack Developer');
-    const [mobileNo1, setMobileNo1] = useState('8989898989');
-    const [mobileNo2, setMobileNo2] = useState('5874745215');
-    const [address, setAddress] = useState('Nashik Road ,Nashik');
-    const [email, setEmail] = useState('rohit.mmj66@gmail.com');
+    const [name, setName] = useState('Tony Stark');
+    const [profileName, setProfileName] = useState('Iron Man');
+    const [mobileNo1, setMobileNo1] = useState('0123456987');
+    const [mobileNo2, setMobileNo2] = useState('0123456987');
+    const [address, setAddress] = useState('California');
+    const [email, setEmail] = useState('tony@stark.com');
     const [dob, setDob] = useState('');
+    const [gender, setGender] = useState('');
 
     const [cardOptions, setCardOptions] = useState("Navy Blue");
     const [myOptions, setMyOptions] = useState({});
@@ -70,7 +76,9 @@ const AddFormCard = () => {
         status: 1,
         lastActive: null,
         createdBy: 1,
-        updatedBy: 1
+        updatedBy: 1,
+        dob: dob,
+        gender: gender
     }
     const postData = () => {
         const items = localStorage.getItem('accessToken');
@@ -84,7 +92,7 @@ const AddFormCard = () => {
     }, []);
     const handleSubmit = (e) => {
         e.preventDefault();
-        //postData();
+        postData();
         changePage();
     };
     const downloadImage = () => {
@@ -104,108 +112,50 @@ const AddFormCard = () => {
             </Box>
             <Row>
                 <Col>
-                    <button onClick={downloadImage} type="button" className="btn btn-success">Download</button>
+                    {/* <button onClick={downloadImage} type="button" className="btn btn-success">Download</button> */}
                     <div style={{ position: "static", marginLeft: "227px", top: "110px", marginTop: "-10px" }}>
-                        <Card style={{
-                            borderRadius: '29px', height: "250px", width: "520px",
-                            background: `url(${myOptions.image}) center/cover no-repeat`
-                        }}>
-                            <Card.Body className="text-center">
-                                <Row>
-                                    <Col style={{
-                                        position: "relative",
-                                        marginTop: "-10px",
-                                        // top: "7px",
-                                        left: "-15px"
-                                    }}>
-                                        <h5 style={{
-                                            fontSize: "20px",
-                                            color: myOptions.colorHeading1
-                                        }}>
-                                            Boostock
-                                        </h5>
-                                        <h6 style={{
-                                            fontSize: "18px",
-                                            color: "orange"
-                                        }}> The Finance Advisory
-                                        </h6>
-                                    </Col>
-                                    <Col>
-                                        <h5 style={{
-                                            marginTop: "77px",
-                                            position: "relative",
-                                            left: "35px",
-                                            color: myOptions.colorHeading1
-                                        }}>{userCard.name}</h5>
-                                        <Row>
-                                            <Col className='ml-3'>
-                                                <Card.Text className="text-muted">
-                                                    <h6 style={{
-                                                        position: "relative",
-                                                        left: "25px"
-                                                    }}>{userCard.profileRole}</h6>
-                                                </Card.Text>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <span style={{
-                                                    position: "relative",
-                                                    fontSize: "16px",
-                                                    left: "-10px",
-                                                    color: "orange"
-                                                }}>{userCard.mobileNo1}/{userCard.mobileNo2}
-                                                </span>
-                                                <Icon
-                                                    style={{
-                                                        position: "relative",
-                                                        marginTop: "-40px",
-                                                        top: "7px",
-                                                        left: "5px"
-                                                    }} color='primary' >phone
-                                                </Icon>
-                                            </Col>
+                        <Card className="testimonial-card">
+                            <div className='card-wrapper'>
+                                <div className='card'>
+                                    <div className='card-front'>
+                                        <div className='left'>
+                                            <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                        </div>
+                                        <div className='right'>
+                                            <div className='person right-content'>
+                                                <i><PersonIcon /></i>
+                                                <div>
+                                                    <h4>{userCard.name}</h4>
+                                                    <span>{userCard.profileRole}</span>
+                                                </div>
+                                            </div>
+                                            <div className='phone right-content'>
+                                                <i><PhoneIcon /> </i>
+                                                <div>
+                                                    <span>{userCard.mobileNo1}</span><br />
+                                                    <span>{userCard.mobileNo2}</span>
 
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <span style={{
-                                                    position: "relative",
-                                                    left: "-5px",
-                                                    fontSize: "16px",
-                                                    color: "orange"
-                                                }}>{userCard.email}</span>
-                                                <Icon
-                                                    style={{
-                                                        position: "relative",
-                                                        marginTop: "-40px",
-                                                        top: "7px",
-                                                        left: "7px"
-                                                    }}
-                                                    color='primary'>mail</Icon>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <span style={{
-                                                    position: "relative",
-                                                    color: "orange",
-                                                    fontSize: "16px",
-                                                    left: "10px"
-                                                }}>{userCard.address}</span>
-                                                <Icon
-                                                    style={{
-                                                        position: "relative",
-                                                        marginTop: "-40px",
-                                                        top: "7px",
-                                                        left: "22px"
-                                                    }}
-                                                    color='primary'>home</Icon>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </Card.Body>
+                                                </div>
+                                            </div>
+                                            <div className='email right-content'>
+                                                <i><EmailIcon /> </i>
+                                                <div>
+                                                    <p>{userCard.email}</p>
+                                                </div>
+                                            </div>
+                                            <div className='address right-content'>
+                                                <i><HomeIcon /> </i>
+                                                <div>
+                                                    <p> {userCard.address}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* <div className='card-back' hidden>
+                                        <img src="/assets/images/payment-card/boostock-logo.jpg" width="150" alt="logo" />
+                                    </div> */}
+                                    </div>
+                                </div>
+                            </div>
                         </Card>
                     </div>
                 </Col>
@@ -286,7 +236,7 @@ const AddFormCard = () => {
                             </Col>
                             <Col>
                                 <InputGroup>
-                                    <Form.Label className="mt-1">Interested In</Form.Label>
+                                    <Form.Label className="mt-1">Options</Form.Label>
                                 </InputGroup>
                                 <FormControl>
                                     <Autocomplete
@@ -310,6 +260,35 @@ const AddFormCard = () => {
 
                             </Col>
 
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Date Of Birth</Form.Label>
+                                <InputGroup>
+                                    <InputGroup.Text id="basic-addon1">
+                                        <Icon>phone</Icon>
+                                    </InputGroup.Text>
+                                    <Form.Control
+                                        required
+                                        type='date'
+                                        onChange={(e) => setDob(e.target.value)}
+                                        value={dob}
+                                        placeholder="Enter the Personal Mobile"
+                                    /></InputGroup>
+                            </Col>
+                            <Col>
+                                <Form.Label>Gender</Form.Label>
+                                <InputGroup>
+                                    <InputGroup.Text id="basic-addon1">
+                                        <Icon>phone</Icon>
+                                    </InputGroup.Text>
+                                    <Form.Control
+                                        required
+                                        onChange={(e) => setGender(e.target.value)}
+                                        value={gender}
+                                        placeholder="Enter the Alternate Mobile"
+                                    /></InputGroup>
+                            </Col>
                         </Row>
                         <Row >
                             <Col>

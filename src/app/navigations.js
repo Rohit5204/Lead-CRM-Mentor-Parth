@@ -50,7 +50,7 @@ export const navigations = [
     icon: 'sd_card',
     children: [
       { name: 'Manage Card', iconText: 'SI', path: '/digitalCards' },
-      { name: 'Add Card', iconText: 'SI', path: '' },
+      { name: 'Add Card', iconText: 'SI', path: '/digitalCards/addCard' },
     ],
   },
   { label: 'MY DEALS', type: 'label' },

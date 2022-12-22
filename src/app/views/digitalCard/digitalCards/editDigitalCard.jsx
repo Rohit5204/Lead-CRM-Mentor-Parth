@@ -3,9 +3,14 @@ import { Row, Col, Button, InputGroup, Form, Card } from 'react-bootstrap';
 import { styled } from '@mui/system';
 import { Icon, Box, Autocomplete, TextField, FormControl } from '@mui/material';
 import React, { useState } from 'react';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 import SubtitlesIcon from '@mui/icons-material/Subtitles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import "./card.css";
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -33,9 +38,10 @@ const EditFormCard = () => {
     // const [mobileNo2, setMobileNo2] = useState(theEditCard.mobileNo2);
     // const [address, setAddress] = useState(theEditCard.address);
     // const [email, setEmail] = useState(theEditCard.email);
-    const [dob, setDob] = useState('');
+    const [dob, setDob] = useState(location.state.dob);
     const [cardOptions, setCardOptions] = useState('Navy Blue');
     const [myOptions, setMyOptions] = useState({});
+    const [gender, setGender] = useState(location.state.gender);
 
     const options = [
         { id: 1, name: 'Navy Blue', colorHeading1: 'white', colorHeading2: 'orange', image: "https://i.pinimg.com/600x315/c5/b3/d2/c5b3d2da72ad50f5f196f64d2be24019.jpg" },
@@ -74,7 +80,9 @@ const EditFormCard = () => {
         status: 1,
         lastActive: null,
         createdBy: 1,
-        updatedBy: 1
+        updatedBy: 1,
+        dob: dob,
+        gender: gender
     }
     const postData = () => {
         const items = localStorage.getItem('accessToken');
@@ -96,18 +104,18 @@ const EditFormCard = () => {
                 <Breadcrumb
                     routeSegments={[
                         { name: 'Digital Card', path: '/digitalCards' },
-                        { name: 'Add Digital Card' },
+                        { name: 'Edit Employee Digital Card' },
                     ]}
                 />
             </Box>
             <Row>
                 <Col>
                     <div style={{ position: "static", marginLeft: "227px", top: "110px", marginTop: "-10px" }}>
-                        <Card style={{
+                        {/* <Card style={{
                             borderRadius: '29px', height: "250px", width: "520px",
                             background: `url(${myOptions.image}) center/cover no-repeat`
                         }}>
-                            {/* <Card.Img variant="top" src="" /> */}
+                            
                             <Card.Body className="text-center">
                                 <Row>
                                     <Col>
@@ -148,14 +156,53 @@ const EditFormCard = () => {
                                             Boostock
                                         </h5>
                                         The Finance Advisory
-
-                                        {/* <img width="180px"
-                                            height="180px"
-                                            sizes="12px"
-                                            src="/assets/images/payment-card/boostock-logo.jpg" /> */}
+                                      
                                     </Col>
                                 </Row>
                             </Card.Body>
+                        </Card> */}
+                        <Card className="testimonial-card">
+                            <div className='card-wrapper'>
+                                <div className='card'>
+                                    <div className='card-front'>
+                                        <div className='left'>
+                                            <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                        </div>
+                                        <div className='right'>
+                                            <div className='person right-content'>
+                                                <i><PersonIcon /></i>
+                                                <div>
+                                                    <h4>{userCard.name}</h4>
+                                                    <span>{userCard.profileRole}</span>
+                                                </div>
+                                            </div>
+                                            <div className='phone right-content'>
+                                                <i><PhoneIcon /> </i>
+                                                <div>
+                                                    <span>{userCard.mobileNo1}</span><br />
+                                                    <span>{userCard.mobileNo2}</span>
+
+                                                </div>
+                                            </div>
+                                            <div className='email right-content'>
+                                                <i><EmailIcon /> </i>
+                                                <div>
+                                                    <p>{userCard.email}</p>
+                                                </div>
+                                            </div>
+                                            <div className='address right-content'>
+                                                <i><HomeIcon /> </i>
+                                                <div>
+                                                    <p> {userCard.address}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* <div className='card-back' hidden>
+                                        <img src="/assets/images/payment-card/boostock-logo.jpg" width="150" alt="logo" />
+                                    </div> */}
+                                    </div>
+                                </div>
+                            </div>
                         </Card>
                     </div>
                 </Col>
