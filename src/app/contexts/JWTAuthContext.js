@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const login = async (userName, password) => {
-    const response = await axios.post('http://213.136.72.177/cms/api/userLogin', {
+    const response = await axios.post('http://43.204.38.243:3000/cms/api/userLogin', {
       userName,
       password,
     });
