@@ -56,30 +56,30 @@ const LeadForm = () => {
 
   const getAllLeadData = () => {
     const items = localStorage.getItem('accessToken');
-    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`http://213.136.72.177/cms/api/getCatalogue`, { catId: 0, }, { headers: { "x-access-token": items } }).then((res) => {
+    axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0, }, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -151,7 +151,7 @@ const LeadForm = () => {
     }
     console.log({ AddLead })
     const items = localStorage.getItem('accessToken');
-    axios.post(`http://213.136.72.177/cms/api/saveLeadGenerationData`, [AddLead], { headers: { "x-access-token": items } });
+    axios.post(`https://43.204.38.243:3000/api/saveLeadGenerationData`, [AddLead], { headers: { "x-access-token": items } });
   };
 
   const handleSubmit = (e) => {

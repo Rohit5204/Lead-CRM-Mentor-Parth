@@ -52,7 +52,7 @@ function ManageProfile() {
         }
     }
     const getAccountsData = () => {
-        axios.post(`http://213.136.72.177/cms/api/getCompanyMaster`, { id: 8 },
+        axios.post(`https://43.204.38.243:3000/api/getCompanyMaster`, { id: 8 },
             { headers: { "x-access-token": items } })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
@@ -79,7 +79,7 @@ function ManageProfile() {
     const postData = () => {
         const items = localStorage.getItem('accessToken');
         console.log(userCard);
-        axios.post('http://213.136.72.177/cms/api/updateCompanyMaster', userCard,
+        axios.post('https://43.204.38.243:3000/api/updateCompanyMaster', userCard,
             { headers: { "x-access-token": items } }
         );
     };

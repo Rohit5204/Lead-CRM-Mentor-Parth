@@ -41,7 +41,7 @@ const ManageAllProfile = () => {
   const getCatalogueData = () => {
     axios
       .post(
-        `http://213.136.72.177/cms/api/getCompanyMaster`,
+        `https://43.204.38.243:3000/api/getCompanyMaster`,
         { id: 0 },
         { headers: { 'x-access-token': items } }
       )

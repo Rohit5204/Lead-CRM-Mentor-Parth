@@ -87,7 +87,7 @@ const EditFormCard = () => {
     const postData = () => {
         const items = localStorage.getItem('accessToken');
         console.log(userCard);
-        axios.post('http://213.136.72.177/cms/api/digitalCardUpsert', userCard,
+        axios.post('https://43.204.38.243:3000/api/digitalCardUpsert', userCard,
             { headers: { "x-access-token": items } }
         );
     };

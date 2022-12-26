@@ -43,7 +43,7 @@ const ManageDigitalCard = () => {
     const [empAPI, setEmpApi] = useState([])
     const items = localStorage.getItem('accessToken');
     const getEmpDigitalCard = () => {
-        axios.post(`http://213.136.72.177/cms/api/getDigitalCard`, { _id: 0 },
+        axios.post(`https://43.204.38.243:3000/api/getDigitalCard`, { _id: 0 },
             { headers: { "x-access-token": items } })
             .then((response) => {
                 setEmpApi(response.data.data);

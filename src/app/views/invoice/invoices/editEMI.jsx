@@ -32,7 +32,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
         const items = localStorage.getItem('accessToken');
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`http://213.136.72.177/cms/api/updateProductInstalment`, UpdateData, { headers: { "x-access-token": items } }).then(() => useEffect);
+        axios.post(`https://43.204.38.243:3000/api/updateProductInstalment`, UpdateData, { headers: { "x-access-token": items } }).then(() => useEffect);
         handleDialog();
     };
     const handleSubmit = (e) => {

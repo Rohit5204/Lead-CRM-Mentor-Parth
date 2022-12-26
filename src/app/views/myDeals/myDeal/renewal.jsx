@@ -53,7 +53,7 @@ const Renewal = () => {
     const items = localStorage.getItem('accessToken');
     //get method
     useEffect(() => {
-        axios.get(`http://213.136.72.177/cms/api/getMasterData?masterName=usermaster`,
+        axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`,
             { headers: { "x-access-token": items } }).then((response) => {
                 setUserData(response.data.data);
             });

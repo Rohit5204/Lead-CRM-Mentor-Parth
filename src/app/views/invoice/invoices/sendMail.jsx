@@ -30,7 +30,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
         // console.log({ data: data1, file: selectedFile })
-        await axios.post('http://213.136.72.177/cms/api/sendInvoiceMail',
+        await axios.post('https://43.204.38.243:3000/api/sendInvoiceMail',
             formData, {
             headers: { "x-access-token": items }
         })

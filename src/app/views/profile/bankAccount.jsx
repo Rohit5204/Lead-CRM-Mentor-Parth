@@ -30,7 +30,7 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
         const items = localStorage.getItem('accessToken');
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`http://213.136.72.177/cms/api/updateCompanyAccounts`, UpdateData,
+        axios.post(`https://43.204.38.243:3000/api/updateCompanyAccounts`, UpdateData,
             { headers: { "x-access-token": items } }).then(() => useEffect);
         handleDialog();
     };

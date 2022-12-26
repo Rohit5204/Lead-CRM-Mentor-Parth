@@ -39,7 +39,7 @@ const EditPlatform = ({ theEditPlatform }) => {
     const items = localStorage.getItem('accessToken');
     console.log({ UpdatePlatform });
     e.preventDefault();
-    axios.post(`http://213.136.72.177/cms/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
+    axios.post(`https://43.204.38.243:3000/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
       .then(() => useEffect);
     setInputText('');
     setplatformIcon('');

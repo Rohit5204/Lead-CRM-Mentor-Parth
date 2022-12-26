@@ -42,7 +42,7 @@ const LabelMaster = () => {
 
     useEffect(() => {
         axios
-            .get(`http://213.136.72.177/cms/api/getMasterData?masterName=labelmaster`,
+            .get(`https://43.204.38.243:3000/api/getMasterData?masterName=labelmaster`,
                 { headers: { "x-access-token": items } })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -55,7 +55,7 @@ const LabelMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://213.136.72.177/cms/api/mastersUpsert`, {
+            .post(`https://43.204.38.243:3000/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -68,7 +68,7 @@ const LabelMaster = () => {
 
     // const deleteData = (e, i) => {
     //     console.log(i);
-    //     axios.post('http://213.136.72.177/cms/api/mastersUpsert', {
+    //     axios.post('https://43.204.38.243:3000/api/mastersUpsert', {
     //         id: i.id,
     //         masterName: 'platform',
     //         inputText: i.platformName,

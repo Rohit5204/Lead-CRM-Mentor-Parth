@@ -35,7 +35,7 @@ const ManageLead = () => {
   //get method
   const items = localStorage.getItem('accessToken');
   const getFetchLeadData = () => {
-    axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, {
+    axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,
@@ -100,7 +100,7 @@ const ManageLead = () => {
       excelData[i].label = 1;
       excelData[i].createdBy = 1;
     }
-    axios.post(`http://213.136.72.177/cms/api/saveLeadGenerationData`, excelData,
+    axios.post(`https://43.204.38.243:3000/api/saveLeadGenerationData`, excelData,
       { headers: { "x-access-token": items } });
   };
 

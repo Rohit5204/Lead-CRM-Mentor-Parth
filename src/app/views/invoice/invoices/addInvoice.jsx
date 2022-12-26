@@ -230,14 +230,14 @@ const AddInvoice = () => {
     }
     const pending = total - initalPayment;
     useEffect(() => {
-        axios.post(`http://213.136.72.177/cms/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
+        axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
             { headers: { "x-access-token": token } }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setLeadData(current => [...current, res.data.data[i].name]);
                     setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
                 }
             });
-        axios.post(`http://213.136.72.177/cms/api/getCatalogue`, { catId: 0 },
+        axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0 },
             { headers: { "x-access-token": token } }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -290,7 +290,7 @@ const AddInvoice = () => {
             instalments: installments
         }
         console.log({ AddInvoice });
-        axios.post('http://213.136.72.177/cms/api/saveInvoice', AddInvoice,
+        axios.post('https://43.204.38.243:3000/api/saveInvoice', AddInvoice,
             { headers: { "x-access-token": token } }
         );
     };

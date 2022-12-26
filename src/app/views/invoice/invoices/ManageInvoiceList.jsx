@@ -68,7 +68,7 @@ const ManageInvoiceList = () => {
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios.post(`http://213.136.72.177/cms/api/getInvoiceData`, { invoiceid: 0, empId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`https://43.204.38.243:3000/api/getInvoiceData`, { invoiceid: 0, empId: 0 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
