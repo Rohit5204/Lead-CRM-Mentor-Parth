@@ -133,6 +133,7 @@ const EditEmployee = () => {
                                 <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
                                     <Form.Label>Role </Form.Label>
                                     <Select
+                                        disabled
                                         value={userRoleId}
                                         onChange={(e) => setuserRoleId(e.target.value)}
                                         label="Role">

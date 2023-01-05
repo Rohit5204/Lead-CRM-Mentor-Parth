@@ -62,110 +62,110 @@ const Analytics = () => {
   return (
     <Fragment>
       <ContentBox className="analytics">
-        {/* {roleName == "Admin" ? ( */}
-        <>
-          <SimpleCard title="Dashboard">
-            <SimpleCard>
-              <Row>
-                <Col>
-                  <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-                  <br></br>
-                  <button type="button" className="btn btn-outline-success"
-                    value={onType}
-                    onClick={() => setOnType('LASTDAY')}>
-                    Last Day
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-outline-success"
-                    value={onType}
-                    onClick={() => setOnType('LASTWEEK')}>
-                    Last Week
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-outline-success"
-                    value={onType}
-                    onClick={() => setOnType('LASTMONTH')}>
-                    Last Month
-                  </button>
-                  &nbsp;
-                </Col>
-                <Col>
-                  <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
-
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      value={startDate}
-                      onChange={(e) => setstartDate(e.target.value)}
-                      type="date" />
-                    <Form.Control
-                      value={endDate}
-                      onChange={(e) => setendDate(e.target.value)}
-                      type="date" />
+        {roleName == "Admin" ? (
+          <>
+            <SimpleCard title="Dashboard">
+              <SimpleCard>
+                <Row>
+                  <Col>
+                    <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+                    <br></br>
                     <button type="button" className="btn btn-outline-success"
                       value={onType}
-                      onClick={() => setOnType('DATE')}>
-                      Search
+                      onClick={() => setOnType('LASTDAY')}>
+                      Last Day
                     </button>
+                    &nbsp;
+                    <button type="button" className="btn btn-outline-success"
+                      value={onType}
+                      onClick={() => setOnType('LASTWEEK')}>
+                      Last Week
+                    </button>
+                    &nbsp;
+                    <button type="button" className="btn btn-outline-success"
+                      value={onType}
+                      onClick={() => setOnType('LASTMONTH')}>
+                      Last Month
+                    </button>
+                    &nbsp;
+                  </Col>
+                  <Col>
+                    <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
 
-                  </InputGroup>
-                </Col>
-              </Row>
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        value={startDate}
+                        onChange={(e) => setstartDate(e.target.value)}
+                        type="date" />
+                      <Form.Control
+                        value={endDate}
+                        onChange={(e) => setendDate(e.target.value)}
+                        type="date" />
+                      <button type="button" className="btn btn-outline-success"
+                        value={onType}
+                        onClick={() => setOnType('DATE')}>
+                        Search
+                      </button>
+
+                    </InputGroup>
+                  </Col>
+                </Row>
+              </SimpleCard>
+              <br></br>
+              {/* Tab Section Start */}
+              <Tabs defaultActiveKey="home" id="justify-tab-example" className="mb-3 ml-8">
+                <Tab eventKey="home" title="Total Lead">
+                  <StatCards />
+                </Tab>
+                <Tab eventKey="profile" title="Platform Wise">
+                  <StatCards2 showData={dashboard} />
+                </Tab>
+              </Tabs>
+              {/* Tab Section End */}
             </SimpleCard>
             <br></br>
-            {/* Tab Section Start */}
-            <Tabs defaultActiveKey="home" id="justify-tab-example" className="mb-3 ml-8">
-              <Tab eventKey="home" title="Total Lead">
-                <StatCards />
-              </Tab>
-              <Tab eventKey="profile" title="Platform Wise">
-                <StatCards2 showData={dashboard} />
-              </Tab>
-            </Tabs>
-            {/* Tab Section End */}
-          </SimpleCard>
-          <br></br>
-          <Grid container spacing={0}>
-            <Grid item lg={12} md={8} sm={12} xs={12}>
-              <SimpleCard title="Status Wise Count">
-                <StatusWiseCard></StatusWiseCard>
-              </SimpleCard>
+            <Grid container spacing={0}>
+              <Grid item lg={12} md={8} sm={12} xs={12}>
+                <SimpleCard title="Status Wise Count">
+                  <StatusWiseCard></StatusWiseCard>
+                </SimpleCard>
+              </Grid>
             </Grid>
-          </Grid>
-          <br />
-          <Grid container spacing={0}>
-            <Grid item lg={12} md={8} sm={12} xs={12}>
-              <SimpleCard title="Lead Wise Chart">
-                <SampleLine></SampleLine></SimpleCard>
+            <br />
+            <Grid container spacing={0}>
+              <Grid item lg={12} md={8} sm={12} xs={12}>
+                <SimpleCard title="Lead Wise Chart">
+                  <SampleLine></SampleLine></SimpleCard>
+              </Grid>
             </Grid>
-          </Grid>
-          <br />
-          <Grid container spacing={3}>
-            <Grid item lg={8} md={8} sm={12} xs={12}>
-              <SimpleCard title="Monthly Leads">
-                <LineGraph
-                  height="350px"
-                  color={[palette.error.dark, palette.warning.main, palette.success.main]}
-                /></SimpleCard>
-              <br></br>
-              {/* <RowCards /> */}
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <Card sx={{ px: 3, py: 2, mb: 3 }}>
-                <Title>Total Yearly Leads</Title>
-                <SubTitle>Last 365 days</SubTitle>
+            <br />
+            <Grid container spacing={3}>
+              <Grid item lg={8} md={8} sm={12} xs={12}>
+                <SimpleCard title="Monthly Leads">
+                  <LineGraph
+                    height="350px"
+                    color={[palette.error.dark, palette.warning.main, palette.success.main]}
+                  /></SimpleCard>
+                <br></br>
+                {/* <RowCards /> */}
+              </Grid>
+              <Grid item lg={4} md={4} sm={12} xs={12}>
+                <Card sx={{ px: 3, py: 2, mb: 3 }}>
+                  <Title>Total Yearly Leads</Title>
+                  <SubTitle>Last 365 days</SubTitle>
 
-                <DoughnutChart
-                  height="300px"
-                  color={[palette.error.main, palette.warning.light, palette.success.light, palette.primary.dark]}
-                />
-              </Card>
+                  <DoughnutChart
+                    height="300px"
+                    color={[palette.error.main, palette.warning.light, palette.success.light, palette.primary.dark]}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-          {/* <Campaigns /> */}
-        </>
-        {/* // ) : (<>
-        //   <EmployeeDashboard />
-        // </>)} */}
+            {/* <Campaigns /> */}
+          </>
+        ) : (<>
+          <EmployeeDashboard />
+        </>)}
       </ContentBox>
     </Fragment>
   );
