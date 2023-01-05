@@ -339,7 +339,7 @@ const LeadForm = () => {
                 </InputGroup>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 650 }}
+                    style={{ width: 450 }}
                     freeSolo
                     autoComplete
                     autoHighlight

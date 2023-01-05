@@ -62,7 +62,8 @@ const Analytics = () => {
   return (
     <Fragment>
       <ContentBox className="analytics">
-        {roleName == "Admin" ? (<>
+        {/* {roleName == "Admin" ? ( */}
+        <>
           <SimpleCard title="Dashboard">
             <SimpleCard>
               <Row>
@@ -161,9 +162,10 @@ const Analytics = () => {
             </Grid>
           </Grid>
           {/* <Campaigns /> */}
-        </>) : (<>
-          <EmployeeDashboard />
-        </>)}
+        </>
+        {/* // ) : (<>
+        //   <EmployeeDashboard />
+        // </>)} */}
       </ContentBox>
     </Fragment>
   );

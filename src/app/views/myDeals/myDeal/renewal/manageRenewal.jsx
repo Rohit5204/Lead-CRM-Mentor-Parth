@@ -3,6 +3,8 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { useNavigate, Link } from 'react-router-dom';
 import {
     Box,
@@ -35,29 +37,19 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const Renewal = () => {
-    // const [obj1, setObj1] = useState(null);
-    // const [APIData, setAPIData] = useState([]);
-    // const [show, setShow] = useState(false);
-    // //Dialog Form
-    // const handleClose = () => setShow(false);
-
-    // const handleShow = (catalogue) => {
-    //   setObj1(catalogue);
-    //   setShow(true);
-    // };
     const navigate = useNavigate();
     const changePage = () => {
         navigate('/employees/addEmployee');
     };
-    const [userData, setUserData] = useState([]);
+    const [renewData, setRenewData] = useState([]);
     const items = localStorage.getItem('accessToken');
     //get method
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`,
-            { headers: { "x-access-token": items } }).then((response) => {
-                setUserData(response.data.data);
+        axios.post(`https://43.204.38.243:3000/api/getRenewalInstalments`,
+            { "userId": 1 }, { headers: { "x-access-token": items } }).then((response) => {
+                setRenewData(response.data.data);
             });
-    }, [userData]);
+    }, [renewData]);
 
     return (
         <Container>
@@ -116,47 +108,43 @@ const Renewal = () => {
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
                     <h4>Upcoming Renewal</h4>
-                    <StyledTable>
-                        <TableHead>
+                    <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                        <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                             <TableRow>
-                                <TableCell align="justify">Sr No</TableCell>
-                                <TableCell align="justify">Client Name</TableCell>
-                                <TableCell align="justify">Product Name</TableCell>
-                                <TableCell align="justify">Purchase Date</TableCell>
-                                <TableCell align="justify">Renewal Date</TableCell>
-                                <TableCell align="justify">Remaning Days</TableCell>
+                                <TableCell align="center">Invoice No</TableCell>
+                                <TableCell align="center">Product Name</TableCell>
+                                <TableCell align="center">Client Name</TableCell>
+                                <TableCell align="center">Client Email</TableCell>
                                 <TableCell align="center">Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell align="justify">0000000001</TableCell>
-                                <TableCell align="justify">Rohit Jaiswal</TableCell>
-                                <TableCell align="justify">INDEX Option</TableCell>
-                                <TableCell align="justify">02/11/2022</TableCell>
-                                <TableCell align="justify">02/01/2023</TableCell>
-
-                                <TableCell align="justify"><Chip color="warning" label="21 Days Left" /></TableCell>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <Icon color="success">send</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="justify">0000000025</TableCell>
-                                <TableCell align="justify">Vikram Jadhav</TableCell>
-                                <TableCell align="justify">EQUITY</TableCell>
-                                <TableCell align="justify">14/11/2022</TableCell>
-                                <TableCell align="justify">14/01/2023</TableCell>
-                                <TableCell align="justify"><Chip color="success" label="61 Days Left" /></TableCell>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <Icon color="success">send</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-
+                            {renewData.map((subscriber, index) => {
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell align="center">{subscriber.invoiceNumber}</TableCell>
+                                        <TableCell align="center">{subscriber.poductName}</TableCell>
+                                        <TableCell align="center"></TableCell>
+                                        <TableCell align="center">{subscriber.clientEmail}</TableCell>
+                                        <TableCell align="center">
+                                            <Link to="/myDeal/renewal/viewRenew" state={subscriber}>
+                                                <IconButton>
+                                                    <Icon color="red">visibility</Icon>
+                                                </IconButton>
+                                            </Link>
+                                            <IconButton>
+                                                <InsertInvitationIcon color="warning" />
+                                            </IconButton>
+                                            <Link to="/invoices/addInvoice" state={subscriber}>
+                                                <IconButton>
+                                                    <AutorenewIcon color="success" />
+                                                    {/* <Icon color="success">renew</Icon> */}
+                                                </IconButton>
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </StyledTable>
                 </Box>

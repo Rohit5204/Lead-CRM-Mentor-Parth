@@ -59,8 +59,8 @@ export const navigations = [
     icon: 'security',
     children: [
       { name: 'Completed (Invoive)', iconText: 'SI', path: '/myDeal/manageDeals' },
-      { name: 'Recovery', iconText: 'SI', path: '/myDeal/recovery' },
-      { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal' },
+      { name: 'Recovery', iconText: 'SI', path: '/myDeal/recovery/manageRecovery' },
+      { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal/manageRenewal' },
     ],
   },
   // { label: 'EMAIL', type: 'label' },
