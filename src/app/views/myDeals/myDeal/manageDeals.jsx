@@ -130,8 +130,8 @@ const ManageDeals = () => {
                         <TableBody>
                             <TableRow>
                                 <TableCell align="justify">0000000001</TableCell>
-                                <TableCell align="justify">Rohit Jaiswal</TableCell>
-                                <TableCell align="justify">7558227432</TableCell>
+                                <TableCell align="justify">Steve Rogers</TableCell>
+                                <TableCell align="justify">856932147</TableCell>
                                 <TableCell align="justify">52000</TableCell>
                                 <TableCell align="justify">
                                     <Chip color="success" label="PAID" />
@@ -144,7 +144,7 @@ const ManageDeals = () => {
                             </TableRow>
                             <TableRow>
                                 <TableCell align="justify">0000000025</TableCell>
-                                <TableCell align="justify">Vikram Jadhav</TableCell>
+                                <TableCell align="justify">Tony Stark</TableCell>
                                 <TableCell align="justify">0123654789</TableCell>
                                 <TableCell align="justify">45200</TableCell>
                                 <TableCell align="justify">

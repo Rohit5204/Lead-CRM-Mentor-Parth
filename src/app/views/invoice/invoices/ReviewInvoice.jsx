@@ -152,11 +152,11 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                     <Col></Col>
                     <Col md="2">
                       <h5 className="text-center text-lg font-bold text-gray-900">
-                        MENTOR PARTH LEAD CRM
+                        LEAD CRM Project
                       </h5>
-                      <span>Haware Fantasia Business Park</span>
+                      <span>IT Compnay Business Park</span>
                       <br />
-                      <span>Vashi, Navi Mumbai-402107</span>
+                      <span>Thane-West, Mumbai-456398</span>
                       <br />
                       <span>Company Reg. No :-896522147</span>
                       <br />

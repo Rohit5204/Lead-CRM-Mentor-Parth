@@ -37,34 +37,34 @@ const SampleDigitalCardPreview = () => {
                             <div className='card'>
                                 <div className='card-front'>
                                     <div className='left'>
-                                        <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0n4ODoAIA--3sUNXFOtz78IfoaPwViociyQ&usqp=CAU" alt="logo" />
                                     </div>
                                     <div className='right'>
                                         <div className='person right-content'>
                                             <i><PersonIcon /></i>
                                             <div>
-                                                <h4>Rohit Jaiswal</h4>
+                                                <h4>John Dev</h4>
                                                 <span>Full Stack Developer</span>
                                             </div>
                                         </div>
                                         <div className='phone right-content'>
                                             <i><PhoneIcon /> </i>
                                             <div>
-                                                <span>+91-7558227432</span><br />
-                                                <span>+91-8862002278</span>
+                                                <span>+91-123456789</span><br />
+                                                <span>+91-021365478</span>
 
                                             </div>
                                         </div>
                                         <div className='email right-content'>
                                             <i><EmailIcon /> </i>
                                             <div>
-                                                <p> rohit.mentorp@gmail.com</p>
+                                                <p>demo@gmail.com</p>
                                             </div>
                                         </div>
                                         <div className='address right-content'>
                                             <i><HomeIcon /> </i>
                                             <div>
-                                                <p> Nashik Road, Nashik</p>
+                                                <p> ABC,Street,456</p>
                                             </div>
                                         </div>
                                     </div>
@@ -83,34 +83,34 @@ const SampleDigitalCardPreview = () => {
                             <div className='card'>
                                 <div className='card-front'>
                                     <div className='left'>
-                                        <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0n4ODoAIA--3sUNXFOtz78IfoaPwViociyQ&usqp=CAU" alt="logo" />
                                     </div>
                                     <div className='right'>
                                         <div className='person1 right-content'>
                                             <i><PersonIcon /></i>
                                             <div>
-                                                <h4>Vikram Jadhav</h4>
+                                                <h4>Steve Rogers</h4>
                                                 <span>Backend Developer</span>
                                             </div>
                                         </div>
                                         <div className='phone right-content'>
                                             <i><PhoneIcon color='red' /> </i>
                                             <div>
-                                                <span>+91-0123654789</span><br />
-                                                <span>+91-9874521025</span>
+                                                <span>+44-0123654789</span><br />
+                                                <span>+44-9856321470</span>
 
                                             </div>
                                         </div>
                                         <div className='email right-content'>
                                             <i><EmailIcon /> </i>
                                             <div>
-                                                <p> vikram.jadhav@gmail.com</p>
+                                                <p> steve@yahoo.com</p>
                                             </div>
                                         </div>
                                         <div className='address right-content'>
                                             <i><HomeIcon /> </i>
                                             <div>
-                                                <p> Vashi, Navi Mumbai</p>
+                                                <p> 133,BlackMount Street</p>
                                             </div>
                                         </div>
                                     </div>

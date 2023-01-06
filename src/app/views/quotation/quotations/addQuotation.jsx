@@ -58,9 +58,9 @@ const AddQuotation = () => {
   const [invoiceDate, setInvoiceDate] = useState(defaultValue);
   const [quotationNumber, setQuotationNumber] = useState(1201);
   const [cashierName, setCashierName] = useState('');
-  const [companyEmail, setCompanyEmail] = useState('info@mentorparth.com');
-  const [companyContact, setCompanyContact] = useState('+91-7715815877');
-  const [companyAddress, setCompanyAddress] = useState('Haware Fantasia Business Park, Vashi, Navi-Mumbai');
+  const [companyEmail, setCompanyEmail] = useState('info@comanyname.com');
+  const [companyContact, setCompanyContact] = useState('+91-0123456789');
+  const [companyAddress, setCompanyAddress] = useState('Street 14 ,Black Mount Apartment');
   const [companyGstNo, setCompanyGstNo] = useState('ABCDEF01234');
   const [companyStateName, setCompanyStateName] = useState('Maharashtra');
   const [customerName, setCustomerName] = useState('');

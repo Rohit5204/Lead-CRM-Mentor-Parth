@@ -119,7 +119,7 @@ const AddFormCard = () => {
                                 <div className='card'>
                                     <div className='card-front'>
                                         <div className='left'>
-                                            <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0n4ODoAIA--3sUNXFOtz78IfoaPwViociyQ&usqp=CAU" alt="logo" />
                                         </div>
                                         <div className='right'>
                                             <div className='person right-content'>

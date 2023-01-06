@@ -30,7 +30,7 @@ export const navigations = [
     children: [
       { name: 'Request For Quotation', path: '/quotations/addQuotation', iconText: 'A' },
       { name: 'Draft', path: '/quotations/manageQuotation', iconText: 'B' },
-      { name: 'Send', path: '/material/checkbox', iconText: 'C' },
+      { name: 'Send', path: '/', iconText: 'C' },
     ],
   },
   { name: 'Add Quotation', path: '/quotations/addQuotation', icon: 'book' },
