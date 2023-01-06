@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useReducer } from 'react';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios.js';
 import { MatxLoading } from 'app/components';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   isAuthenticated: false,
@@ -85,6 +86,7 @@ const AuthContext = createContext({
 });
 // Login For Dashboard 08/11/2022 Rohit
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const login = async (userName, password) => {
@@ -93,7 +95,8 @@ export const AuthProvider = ({ children }) => {
       userName,
       password,
     });
-    const { accessToken, roleName, user } = response.data;
+    const { message, accessToken, roleName, user } = response.data;
+    console.log(response);
     setSession(accessToken, roleName, userName);
 
     dispatch({
@@ -102,6 +105,12 @@ export const AuthProvider = ({ children }) => {
         user,
       },
     });
+    console.log(response);
+    if (message != 'Invalid User Details') {
+      navigate('/');
+    } else {
+      navigate('/session/404');
+    }
   };
 
   const register = async (email, username, password) => {

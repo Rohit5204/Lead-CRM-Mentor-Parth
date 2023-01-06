@@ -52,16 +52,16 @@ const validationSchema = Yup.object().shape({
 
 const JwtLogin = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  const [userlogin, setuserlogin] = useState("");
+  const [passwordlogin, setuserpassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async () => {
     setLoading(true);
     try {
-      await login(values.userName, values.password);
-      navigate('/');
+      await login(userlogin, passwordlogin);
     } catch (e) {
       setLoading(false);
     }
@@ -82,75 +82,76 @@ const JwtLogin = () => {
         <Grid item sm={6} xs={12}>
           <ContentBox>
             <Formik
-              onSubmit={handleFormSubmit}
+              // onSubmit={handleFormSubmit}
               initialValues={initialValues}
               validationSchema={validationSchema}
             >
-              {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="text"
-                    name="userName"
-                    label="UserName"
-                    variant="outlined"
-                    onBlur={handleBlur}
-                    value={values.userName}
-                    onChange={handleChange}
-                    helperText={touched.userName && errors.userName}
-                    error={Boolean(errors.userName && touched.userName)}
-                    sx={{ mb: 3 }}
-                  />
+              {/* {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => ( */}
+              <form >
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="userName"
+                  label="UserName"
+                  variant="outlined"
+                  // onBlur={handleBlur}
+                  value={userlogin}
+                  onChange={(e) => setuserlogin(e.target.value)}
+                  // helperText={touched.userName && errors.userName}
+                  // error={Boolean(errors.userName && touched.userName)}
+                  sx={{ mb: 3 }}
+                />
 
-                  <TextField
-                    fullWidth
-                    size="small"
-                    name="password"
-                    type="password"
-                    label="Password"
-                    variant="outlined"
-                    onBlur={handleBlur}
-                    value={values.password}
-                    onChange={handleChange}
-                    helperText={touched.password && errors.password}
-                    error={Boolean(errors.password && touched.password)}
-                    sx={{ mb: 1.5 }}
-                  />
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="password"
+                  type="password"
+                  label="Password"
+                  variant="outlined"
+                  // onBlur={handleBlur}
+                  value={passwordlogin}
+                  onChange={(e) => setuserpassword(e.target.value)}
+                  // helperText={touched.password && errors.password}
+                  // error={Boolean(errors.password && touched.password)}
+                  sx={{ mb: 1.5 }}
+                />
 
-                  <FlexBox justifyContent="space-between">
-                    <FlexBox gap={1}>
-                      <Checkbox
-                        size="small"
-                        name="remember"
-                        onChange={handleChange}
-                        checked={values.remember}
-                        sx={{ padding: 0 }}
-                      />
+                <FlexBox justifyContent="space-between">
+                  <FlexBox gap={1}>
+                    <Checkbox
+                      size="small"
+                      name="remember"
+                      // onChange={handleChange}
+                      // checked={values.remember}
+                      sx={{ padding: 0 }}
+                    />
 
-                      <Paragraph>Remember Me</Paragraph>
-                    </FlexBox>
+                    <Paragraph>Remember Me</Paragraph>
+                  </FlexBox>
 
-                    {/* <NavLink
+                  {/* <NavLink
                         to="/session/forgot-password"
                         style={{ color: theme.palette.primary.main }}
                       >
                         Forgot password?
                       </NavLink> */}
-                  </FlexBox>
+                </FlexBox>
 
-                  <LoadingButton
-                    style={{ marginLeft: "140px" }}
-                    type="submit"
-                    color="primary"
-                    loading={loading}
-                    variant="contained"
-                    sx={{ my: 2 }}
-                  >
-                    Login
-                  </LoadingButton>
+                <LoadingButton
+                  style={{ marginLeft: "140px" }}
+                  type="submit"
+                  color="primary"
+                  loading={loading}
+                  onClick={handleFormSubmit}
+                  variant="contained"
+                  sx={{ my: 2 }}
+                >
+                  Login
+                </LoadingButton>
 
-                  {/* <Paragraph>
+                {/* <Paragraph>
                       Don't have an account?
                       <NavLink
                         to="/session/signup"
@@ -159,8 +160,8 @@ const JwtLogin = () => {
                         Register
                       </NavLink>
                     </Paragraph> */}
-                </form>
-              )}
+              </form>
+              {/* )} */}
             </Formik>
           </ContentBox>
 
