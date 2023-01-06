@@ -339,7 +339,7 @@ export default function EmployeeDashboard(props) {
         </Col>
       </Row>
       <br />
-      <Row>
+      {/* <Row>
         <Col md="12">
           <Card className="mb-4 mb-md-0" style={{ borderRadius: '10px' }}>
             <Card.Body>
@@ -378,7 +378,7 @@ export default function EmployeeDashboard(props) {
         </Col>
 
 
-      </Row>
+      </Row> */}
     </Container>
 
   );
