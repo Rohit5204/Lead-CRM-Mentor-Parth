@@ -152,7 +152,7 @@ const EditEmployee = () => {
                                         <Icon>person</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
-
+                                        disabled
                                         required
                                         onChange={(e) => setuserName(e.target.value)}
                                         value={userName}
