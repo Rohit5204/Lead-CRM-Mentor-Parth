@@ -126,9 +126,8 @@ const ViewQuotation = ({ theViewQuotation }) => {
                             <Row className='mt-2'>
                                 <Col md="7">
                                     <img
-                                        width="220px"
-                                        height="220px"
-                                        sizes="12px"
+
+                                        sizes="10px"
                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhVskpYXfF31NyGSjgoPfjnS6qH8TY8wWftKfux4&s"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img>

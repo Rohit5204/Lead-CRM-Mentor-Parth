@@ -120,9 +120,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             <Row className='mt-2'>
                                 <Col md="7">
                                     <img
-                                        width="220px"
-                                        height="220px"
-                                        sizes="12px"
+
+                                        sizes="10px"
                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhVskpYXfF31NyGSjgoPfjnS6qH8TY8wWftKfux4&s"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img>
@@ -145,7 +144,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <span className="font-bold">Email: {theViewInvoice.companyEmail}</span>
                                 </Col>
                             </Row>
-
+                            <br />
                             <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
                                 <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-left'>
                                     <tr>
@@ -310,6 +309,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             ) : (
                                 <div></div>
                             )}
+                            <br></br>
                             <div >
                                 <Row>
                                     <Col style={{ "color": "MidnightBlue" }}>
