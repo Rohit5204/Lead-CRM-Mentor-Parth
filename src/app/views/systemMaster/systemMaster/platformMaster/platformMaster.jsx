@@ -2,23 +2,18 @@ import { SimpleCard } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
 import axios from 'axios';
-import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import EditPlatform from './editPlatform';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 import {
     Box,
     Icon,
     Tabs,
     Tab,
-    MenuItem,
-    FormControl,
-    Select,
     Card,
     Fab,
-    Grid,
     IconButton,
     Table,
     TableBody,
@@ -78,12 +73,13 @@ const Div = styled('div')(({ theme }) => ({
 
 const PlatformMaster = () => {
     const [masterName, setMasterName] = useState('Platform');
-    const [inputText, setInputText] = useState('Demo');
+    const [inputText, setInputText] = useState('');
     const [platformIcon, setplatformIcon] = useState('s');
     const [platformColor, setplatformColor] = useState('#833ab4');
     const [APIData, setAPIData] = useState([]);
     const [obj1, setObj1] = useState(null);
     const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
     const [value, setValue] = useState(0);
     const items = localStorage.getItem('accessToken');
 
@@ -131,133 +127,58 @@ const PlatformMaster = () => {
 
     const handleClose = () => setShow(false);
 
+
     const handleShow = (subscriber) => {
         setObj1(subscriber)
         setShow(true);
+    };
+
+    const handleClose1 = () => setShow1(false);
+
+    const handleShow1 = () => {
+        setShow1(true);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
         setInputText('');
         setplatformIcon('');
-        setplatformColor('')
+        setplatformColor('');
+        setShow1(false)
     };
     const handleCChange = (event, newValue) => {
         setValue(newValue);
     };
-    // const options = [
-    //     { name: 'Instalgram', value: "instagram", icon: <InstagramIcon /> }
-    // ];
-    // {options.map((item, index) => {
-    //     <MenuItem key={index} value={item.value}> {item.name}</MenuItem>
-    // })}
     return (
         <>
             <Row>
-                <Col lg="8">
-                    <SimpleCard title="Add Platform Master(*)">
-                        <Row >
-                            <Col>
-                                <Form.Label>Platform Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setInputText(e.target.value)}
-                                    value={inputText}
-                                    placeholder="Enter the Platform Name"
-                                />
-                            </Col>
-                        </Row>
-                        <Row className='mt-2'>
-                            <Col>
-                                {/* <InstagramIcon></InstagramIcon> */}
-                                <Form.Label>Platform Icon</Form.Label>
-                                <FormControl sx={{ m: 0, minWidth: 620 }} size="small" className="mt-1">
-                                    {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
-                                    <Select
-                                        // labelId="demo-simple-select-label"
-                                        // id="demo-simple-select"
-                                        onChange={(e) => setplatformIcon(e.target.value)}
-                                        value={platformIcon}
-                                        label="Age"
-                                    >
-                                        <MenuItem value='s'>Select from the List</MenuItem>
-                                        <MenuItem value='facebook'>Facebook</MenuItem>
-                                        <MenuItem value='Twitter'>Twitter</MenuItem>
-                                        <MenuItem value='star'>Indiamart</MenuItem>
-                                        <MenuItem value='telegram'>Telegram</MenuItem>
-                                        <MenuItem value='Whatsapp'>Whatsapp</MenuItem>
-                                        <MenuItem value='Instagram'>Instagram</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Col>
-                        </Row>
-                        {/* linear-gradient(to right, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5)) */}
-                        <Row>
-                            <Col>
-                                <Form.Label>Platform Color</Form.Label>
-                                <FormControl sx={{ m: 0, minWidth: 620 }} size="small" className="mt-1">
-                                    {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
-                                    <Select
-                                        // labelId="demo-simple-select-label"
-                                        // id="demo-simple-select"
-                                        onChange={(e) => setplatformColor(e.target.value)}
-                                        value={platformColor}
-                                        label="Age"
-                                    >
-                                        <MenuItem value='v'>Select from the List</MenuItem>
-                                        <MenuItem value='#EB9694'>Light Pink</MenuItem>
-                                        <MenuItem value='#F4BE65'>Light Orange</MenuItem>
-                                        <MenuItem value='#19CABA'>Cyan</MenuItem>
-                                        <MenuItem value='#282f4e'>Green</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Col>
-
-                        </Row>
-                    </SimpleCard>
-
-                </Col>
-                <Col lg="4">
-                    <Card className="mb-4" style={{ height: '20vw', backgroundColor: platformColor }} >
-                        <Grid item xs={2} md={6} >
-                            {/* <StyledCard elevation={1} > */}
-                            <h6 className='ml-2 mt-2 text-center' >Card Will Look Like ....</h6>
-                            <ContentBox>
-                                <FabIcon>
-                                    <Icon style={{ fontSize: "60px" }} className="icon">{platformIcon}</Icon>
-                                </FabIcon>
-                            </ContentBox>
-                            <Box style={{ marginTop: '4px' }} className="text-center">
-                                <H3 textcolor={'#FFFFFF'}>{inputText}</H3>
-                                {/* <H1 >Count {inputText}</H1> */}
-                            </Box>
-                            {/* </StyledCard> */}
-                        </Grid>
-                    </Card>
-                </Col>
-                <Div className="mt-4">
-                    <Row>
-                        <Col>
-                            <Button variant="secondary" >
-                                Cancel
-                            </Button>
-                            &nbsp;
-                            <Button variant="success"
-                                onClick={handleSubmit}>
-                                Save
-                            </Button>
-                        </Col>
-                    </Row>
-                </Div>
-            </Row>
-            <Row>
                 <Col>
-                    <SimpleCard title="List Of Platform Master ">
+                    <Box>
+                        <Row>
+                            <Col md="1">
+                                <button type="button" className="btn btn-success" onClick={handleShow1}>
+                                    ADD
+                                </button>
+                            </Col>
+                            <Col md="11">
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        placeholder="Search Box"
+                                        aria-label="Recipient's username"
+                                        aria-describedby="basic-addon2"
+                                    />
+                                </InputGroup>
+                            </Col>
+
+                        </Row>
+                        <div className="container"></div>
+                    </Box>
+                    <SimpleCard>
                         {/* Tab Section */}
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} onChange={handleCChange} aria-label="basic tabs example">
-                                <Tab label="Active Leads" {...a11yProps(0)} />
-                                <Tab label="Inactive Leads" {...a11yProps(1)} />
+                                <Tab label="Active Platform" {...a11yProps(0)} />
+                                <Tab label="Inactive Platform" {...a11yProps(1)} />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
@@ -328,36 +249,93 @@ const PlatformMaster = () => {
                                 </StyledTable>
                             </Box>
                         </TabPanel>
-                        <Modal
-                            show={show}
-                            onHide={handleClose}
-                            backdrop="static"
-                            keyboard={false}
-                            size="lg"
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                        >
-                            <Modal.Header>
-                                <Modal.Title>Update Platform Master</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <EditPlatform theEditPlatform={obj1} />
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <button
-                                    type="submit"
-                                    className="btn btn-error"
-                                    style={{ marginTop: 5 + 'px' }}
-                                    onClick={handleClose}
-                                >
-                                    Cancel
-                                </button>
 
-                            </Modal.Footer>
-                        </Modal>
                     </SimpleCard>
                 </Col>
             </Row>
+
+            <Modal
+                show={show1}
+                onHide={handleClose1}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Add Platform </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row >
+                        <Col>
+                            <Form.Label>Master Name</Form.Label>
+                            <Form.Control
+                                required
+                                disabled
+                                onChange={(e) => setMasterName(e.target.value)}
+                                value={masterName}
+                                placeholder="Master Name"
+                            />
+                        </Col>
+                        <Col>
+                            <Form.Label>Platform Name</Form.Label>
+                            <Form.Control
+                                required
+                                onChange={(e) => setInputText(e.target.value)}
+                                value={inputText}
+                                placeholder="Enter the Platform Name"
+                            />
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button
+                        type="submit"
+                        className="btn btn-error"
+                        style={{ marginTop: 5 + 'px' }}
+                        onClick={handleClose1}>
+                        Cancel
+                    </button>&nbsp;
+                    <button
+                        type="submit"
+                        className="btn btn-success"
+                        style={{ marginTop: 5 + 'px' }}
+                        onClick={handleSubmit}>
+                        Save
+                    </button>
+
+                </Modal.Footer>
+            </Modal>
+            {/* Edit Modal */}
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Update Platform Master</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <EditPlatform theEditPlatform={obj1} handleDialog={handleClose} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <button
+                        type="submit"
+                        className="btn btn-error"
+                        style={{ marginTop: 5 + 'px' }}
+                        onClick={handleClose}
+                    >
+                        Cancel
+                    </button>
+
+                </Modal.Footer>
+            </Modal>
+
         </>
     );
 };

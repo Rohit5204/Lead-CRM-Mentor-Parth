@@ -1,6 +1,7 @@
 import { Box, Button, Card, Grid, styled, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const FlexBox = styled(Box)(() => ({
   display: 'flex',
@@ -28,12 +29,37 @@ const ForgotPasswordRoot = styled(JustifyBox)(() => ({
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('admin@example.com');
+  const [email, setEmail] = useState('');
+
+
+  const getResetPasswordMail = () => {
+    axios.get(`https://43.204.38.243:3000/api/resetUserPassword?userEmail=` + email)
+      .then(() => {
+        console.log("Password Reset Succefully.Please Check You Email");
+      });
+  }
 
   const handleFormSubmit = () => {
+    getResetPasswordMail()
     console.log(email);
   };
+  // const submit = () => {
 
+  //   alert({
+  //     title: 'Confirm to submit',
+  //     message: 'Are you sure to do this.',
+  //     buttons: [
+  //       {
+  //         label: 'Yes',
+  //         onClick: () => handleFormSubmit()
+  //       },
+  //       {
+  //         label: 'No',
+  //         //onClick: () => alert('Click No')
+  //       }
+  //     ]
+  //   });
+  // }
   return (
     <ForgotPasswordRoot>
       <Card className="card">
@@ -50,6 +76,7 @@ const ForgotPassword = () => {
                   name="email"
                   size="small"
                   label="Email"
+                  placeholder='admin@example.com'
                   value={email}
                   variant="outlined"
                   onChange={(e) => setEmail(e.target.value)}

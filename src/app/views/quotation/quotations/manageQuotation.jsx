@@ -66,7 +66,8 @@ const ManageQuotation = () => {
   const items = localStorage.getItem('accessToken');
   //get method  http://35.89.6.16:4002/api
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3000/api/getQuotationData`, { quotationId: 0, empId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`https://43.204.38.243:3000/api/getQuotationData`,
+      { quotationId: 0, empId: 0, statusId: 1 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -268,7 +269,7 @@ const ManageQuotation = () => {
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Quotation Table</h4>
+          <h4>Draft Quotation Table</h4>
           <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
             <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 

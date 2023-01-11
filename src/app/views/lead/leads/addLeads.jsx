@@ -2,11 +2,14 @@ import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
+import { Data } from 'app/components/Data';
+import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import { Box, Autocomplete, TextField } from '@mui/material';
 import { MenuItem, FormControl, Select, Icon } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import * as XLSX from 'xlsx';
+import { EXCEL_FILE_BASE64 } from './constant'
+import FileSaver from 'file-saver';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -26,6 +29,12 @@ const LeadForm = () => {
   const changePage = () => {
     navigate('/leads/manageLeads');
   };
+  const [show1, setShow1] = useState(false);
+
+  // Import Dailog
+  const closeImport = () => setShow1(false);
+  const showImport = () => setShow1(true);
+
   const [name, setName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [alternateMobile, setAlternateMobile] = useState('');
@@ -54,8 +63,8 @@ const LeadForm = () => {
   const [id3, setId3] = useState([]);
   const [sourceId, setSourceId] = useState([]);
 
+  const items = localStorage.getItem('accessToken');
   const getAllLeadData = () => {
-    const items = localStorage.getItem('accessToken');
     axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
@@ -89,6 +98,83 @@ const LeadForm = () => {
   useEffect(() => {
     getAllLeadData()
   }, []);
+  // on change states
+  const [excelFile, setExcelFile] = useState(null);
+  const [excelFileError, setExcelFileError] = useState(null);
+
+  // submit
+  const [excelData, setExcelData] = useState(null);
+  // it will contain array of objects
+
+  // handle File
+  const fileType = ['application/vnd.ms-excel'];
+  const handleFile = (e) => {
+    let selectedFile = e.target.files[0];
+    if (selectedFile) {
+      // console.log(selectedFile.type);
+      if (selectedFile && fileType.includes(selectedFile.type)) {
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(selectedFile);
+        reader.onload = (e) => {
+          setExcelFileError(null);
+          setExcelFile(e.target.result);
+        };
+      } else {
+        setExcelFileError('Please select only excel file types');
+        setExcelFile(null);
+      }
+    } else {
+      console.log('plz select your file');
+    }
+  };
+
+  // submit function
+  const handleSubmitFile = (e) => {
+    e.preventDefault();
+    if (excelFile !== null) {
+      const workbook = XLSX.read(excelFile, { type: 'buffer' });
+      const worksheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[worksheetName];
+      const data = XLSX.utils.sheet_to_json(worksheet);
+      setExcelData(data);
+    } else {
+      setExcelData(null);
+    }
+  };
+  // add data in the table from Import
+  const postData1 = () => {
+    console.log(excelData);
+    for (var i = 0; i < excelData.length; i++) {
+      excelData[i].sourceId = 1;
+      excelData[i].assignId = null;
+      excelData[i].label = 1;
+      excelData[i].createdBy = 1;
+    }
+    axios.post(`https://43.204.38.243:3000/api/saveLeadGenerationData`, excelData,
+      { headers: { "x-access-token": items } });
+    closeImport()
+  };
+
+
+  const handleDownload = () => {
+    let sliceSize = 1024;
+    let byteCharacters = atob(EXCEL_FILE_BASE64);
+    let bytesLength = byteCharacters.length;
+    let slicesCount = Math.ceil(bytesLength / sliceSize);
+    let byteArrays = new Array(slicesCount);
+    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      let begin = sliceIndex * sliceSize;
+      let end = Math.min(begin + sliceSize, bytesLength);
+      let bytes = new Array(end - begin);
+      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    FileSaver.saveAs(new Blob(byteArrays, { type: "application/vnd.ms-excel" }),
+      "multiple-Lead-ADD.xls"
+    );
+  };
 
   //empty the form Text
   const blankForm = () => {
@@ -168,6 +254,112 @@ const LeadForm = () => {
           routeSegments={[{ name: 'Manage Lead', path: '/leads/manageLeads' }, { name: 'Add Lead Page' }]}
         />
       </Box>
+      <Row className='mb-1'>
+        <Col>
+          <button type="submit" className="btn btn-success" onClick={showImport}>
+            Import Lead
+          </button>
+        </Col>
+      </Row>
+      <Modal
+        backdrop="static"
+        keyboard={false}
+        show={show1}
+        onHide={closeImport}
+        animation={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Upload Excel File</Modal.Title>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ marginTop: 5 + 'px' }}
+            onClick={handleDownload}>
+            Download Sample File
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          {/* upload file section */}
+          <div className="form">
+            <form
+              className="form-group"
+              width="1200px"
+              autoComplete="off"
+              onSubmit={handleSubmitFile}
+            >
+              <Row>
+                <Col lg="10">
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={handleFile}
+                    required
+                  ></input>
+                  {excelFileError && (
+                    <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
+                      {excelFileError}
+                    </div>
+                  )}
+                </Col>
+                <Col>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    style={{ marginTop: 5 + 'px' }}
+                  >
+                    Submit
+                  </button>
+                </Col>
+              </Row>
+            </form>
+          </div>
+          {/* view file section */}
+          <div>
+            <h5>View Excel file</h5>
+            <div className="viewer">
+              {excelData === null && <>No file selected</>}
+              {excelData !== null && (
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Email Id</th>
+                        <th scope="col">Lead Name</th>
+                        <th scope="col">Mobile No</th>
+                        <th scope="col">Street</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Pin Code</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Intersted</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <Data excelData={excelData} />
+                    </tbody>
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      style={{ marginTop: 5 + 'px' }}
+                      onClick={postData1}
+                    >
+                      Add Lead
+                    </button>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeImport}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Row>
         <Col xs={12} md={6}>
           <SimpleCard title="Fill Lead Details">
@@ -308,7 +500,7 @@ const LeadForm = () => {
             </Row>
             <Row>
               <Col xs={6}>
-                <FormControl sx={{ m: 0, minWidth: 750 }} size="small" className="mt-1">
+                <FormControl sx={{ m: 0, minWidth: 500 }} size="small" className="mt-1">
                   {/* <Form.Label>Country</Form.Label> */}
                   <InputGroup className="mb-2">
                     <h6 className="mt-1">Country&nbsp;&nbsp;  :&nbsp;</h6>
@@ -409,13 +601,13 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Comment</Form.Label>
+                  <Form.Label>Remark</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={1}
                     // onChange={(e) => setRemarks(e.target.value)}
                     // value={remarks}
-                    placeholder="Comment"
+                    placeholder="Optional"
                   />
                 </Form.Group>
               </Col>
@@ -476,7 +668,7 @@ const LeadForm = () => {
               Cancel
             </Button>
             &nbsp;
-            <Button variant="primary" onClick={handleSubmit}>
+            <Button variant="success" onClick={handleSubmit}>
               Save
             </Button>
           </Col>

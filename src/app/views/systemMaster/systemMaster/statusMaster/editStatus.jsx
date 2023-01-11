@@ -17,11 +17,11 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditLabel = ({ theEditLabel }) => {
-    console.log(theEditLabel)
-    const [id, setId] = useState(theEditLabel.id);
-    const [masterName, setMasterName] = useState('Label');
-    const [inputText, setInputText] = useState(theEditLabel.name);
+const EditStatus = ({ theEditStatus, handleDialog }) => {
+    console.log(theEditStatus)
+    const [id, setId] = useState(theEditStatus.id);
+    const [masterName, setMasterName] = useState('Status');
+    const [inputText, setInputText] = useState(theEditStatus.name);
 
     const UpdatePlatform = {
         id: id,
@@ -38,6 +38,7 @@ const EditLabel = ({ theEditLabel }) => {
         axios.post(`https://43.204.38.243:3000/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
             .then(() => useEffect);
         setInputText('');
+        handleDialog();
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,7 +58,7 @@ const EditLabel = ({ theEditLabel }) => {
                         />
                     </Col>
                     <Col md="6">
-                        <Form.Label>Label Name</Form.Label>
+                        <Form.Label>Satus Name</Form.Label>
                         <Form.Control
                             onChange={(e) => setInputText(e.target.value)}
                             value={inputText}
@@ -83,4 +84,4 @@ const EditLabel = ({ theEditLabel }) => {
     );
 };
 
-export default EditLabel;
+export default EditStatus;

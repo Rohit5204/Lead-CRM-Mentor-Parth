@@ -131,12 +131,12 @@ const JwtLogin = () => {
                     <Paragraph>Remember Me</Paragraph>
                   </FlexBox>
 
-                  {/* <NavLink
-                        to="/session/forgot-password"
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        Forgot password?
-                      </NavLink> */}
+                  <NavLink
+                    to="/session/forgot-password"
+                    style={{ color: theme.palette.primary.main }}
+                  >
+                    Forgot password?
+                  </NavLink>
                 </FlexBox>
 
                 <LoadingButton

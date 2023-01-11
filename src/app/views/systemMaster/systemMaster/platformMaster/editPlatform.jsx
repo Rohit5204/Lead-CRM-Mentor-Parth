@@ -17,7 +17,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
   margin: '410px',
 }));
-const EditPlatform = ({ theEditPlatform }) => {
+const EditPlatform = ({ theEditPlatform, handleDialog }) => {
   console.log(theEditPlatform)
   const [id, setId] = useState(theEditPlatform.id);
   const [masterName, setMasterName] = useState('Platform');
@@ -43,7 +43,8 @@ const EditPlatform = ({ theEditPlatform }) => {
       .then(() => useEffect);
     setInputText('');
     setplatformIcon('');
-    setplatformColor('')
+    setplatformColor('');
+    handleDialog();
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,14 +72,13 @@ const EditPlatform = ({ theEditPlatform }) => {
             />
           </Col>
         </Row>
-        <Row className='mt-2'>
+        {/* <Row className='mt-2'>
           <Col>
             <Form.Label>Platform Icon</Form.Label>
             <FormControl sx={{ m: 0, minWidth: 330 }} size="small" className="mt-1">
-              {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
+             
               <Select
-                // labelId="demo-simple-select-label"
-                // id="demo-simple-select"
+               
                 onChange={(e) => setplatformIcon(e.target.value)}
                 value={platformIcon}
                 label="Age"
@@ -97,10 +97,9 @@ const EditPlatform = ({ theEditPlatform }) => {
           <Col>
             <Form.Label>Platform Color</Form.Label>
             <FormControl sx={{ m: 0, minWidth: 330 }} size="small" className="mt-1">
-              {/* <InputLabel id="demo-simple-select-label">Platform Icon</InputLabel> */}
+             
               <Select
-                // labelId="demo-simple-select-label"
-                // id="demo-simple-select"
+                
                 onChange={(e) => setplatformColor(e.target.value)}
                 value={platformColor}
                 label="Age"
@@ -114,8 +113,8 @@ const EditPlatform = ({ theEditPlatform }) => {
             </FormControl>
           </Col>
 
-        </Row>
-        <Row>
+        </Row> */}
+        <Row className='mt-2'>
           <Col>
             <button
               type="submit"

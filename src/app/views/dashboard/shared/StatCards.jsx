@@ -17,7 +17,7 @@ const ContentBox = styled(Box)(({ theme }) => ({
   flexWrap: 'wrap',
   alignItems: 'center',
   '& small': { color: theme.palette.text.secondary, fontSize: '16px' },
-  '& .icon': { opacity: 0.6, fontSize: '44px', color: 'green' },
+  '& .icon': { opacity: 0.6, fontSize: '44px', color: '#1e55c7' },
 }));
 
 const Heading = styled('h6')(({ theme }) => ({
@@ -30,12 +30,12 @@ const Heading = styled('h6')(({ theme }) => ({
 
 const StatCards = () => {
   const cardList = [
-    { name: 'Total Pipelines', total: 0, amount: 'Rs. 0', icon: 'group' },
-    { name: 'Hot Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
-    { name: 'Warm Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
-    { name: 'Cold Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
-    { name: 'Total Lead', total: 0, amount: 'Rs. 0', icon: 'group' },
-    { name: 'Order Recieved', total: 0, amount: 'Rs. 0', icon: 'attach_money' },
+    { name: 'Total Pipeline', total: 0, amount: 'Rs. 0', icon: 'group' },
+    // { name: 'Hot Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
+    // { name: 'Warm Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
+    // { name: 'Cold Lead', total: 0, amount: 'Rs. 0', icon: 'work' },
+    { name: 'Total Lead', total: 0, amount: 'Rs. 0', icon: 'send' },
+    { name: 'Order Gain', total: 0, amount: 'Rs. 0', icon: 'attach_money' },
     { name: 'Order Loss', total: 0, amount: 'Rs. 0', icon: 'arrow_downward' },
   ];
 
@@ -43,7 +43,7 @@ const StatCards = () => {
     <Grid container spacing={4} sx={{ mb: '24px' }}>
       {cardList.map((item, index) => (
         <Grid item xs={12} md={3} key={index}>
-          <StyledCard elevation={1} style={{ background: '#deb887  ' }}>
+          <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }}>
             <ContentBox>
               <Icon className="icon">{item.icon}</Icon>
               <Box ml="12px">

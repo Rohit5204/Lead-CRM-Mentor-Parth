@@ -68,7 +68,8 @@ const ManageInvoiceList = () => {
   const items = localStorage.getItem('accessToken');
   //get method
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3000/api/getInvoiceData`, { invoiceid: 0, empId: 0 }, { headers: { "x-access-token": items } })
+    axios.post(`https://43.204.38.243:3000/api/getInvoiceData`,
+      { invoiceid: 0, empId: 0, statusId: 1 }, { headers: { "x-access-token": items } })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -76,13 +77,13 @@ const ManageInvoiceList = () => {
   return (
     <Container>
       <Box>
-        <Box className="breadcrumb">
+        {/* <Box className="breadcrumb">
           <Breadcrumb
             routeSegments={[
               { name: 'Manage Invoice', path: '/invoices/ManageInvoiceList' }
             ]}
           />
-        </Box>
+        </Box> */}
         {/* Search option */}
         <Box>
           {/* <Row>
@@ -129,7 +130,7 @@ const ManageInvoiceList = () => {
             <Col md="10">
               <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
               <br></br>
-              <button type="button" className="btn btn-outline-primary ">
+              <button type="button" className="btn btn-outline-primary">
                 Last Day
               </button>
               &nbsp;
@@ -269,7 +270,7 @@ const ManageInvoiceList = () => {
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Invoice Table</h4>
+          <h4>Draft Invoice List</h4>
           <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
             <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 

@@ -11,7 +11,8 @@ const SendQuotationMail = ({ theClientMail, handleDialog }) => {
 
     const data1 = {
         quotationNumber: quotationNumber,
-        clientEmail: clientEmail
+        clientEmail: clientEmail,
+        statusId: 0
     }
     // const data1 = {
     //     quotationNumber: "0000000032",

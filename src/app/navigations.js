@@ -29,8 +29,8 @@ export const navigations = [
     icon: 'work',
     children: [
       { name: 'Request For Quotation', path: '/quotations/addQuotation', iconText: 'A' },
-      { name: 'Draft', path: '/quotations/manageQuotation', iconText: 'B' },
-      { name: 'Send', path: '/', iconText: 'C' },
+      { name: 'Draft List', path: '/quotations/manageQuotation', iconText: 'B' },
+      { name: 'Send List', path: '/quotations/completedQuotationList', iconText: 'C' },
     ],
   },
   { name: 'Add Quotation', path: '/quotations/addQuotation', icon: 'book' },
@@ -39,8 +39,8 @@ export const navigations = [
     name: 'Invoive',
     icon: 'receipt',
     children: [
-      { name: 'Send Quotation List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
-      { name: 'Completed', iconText: 'SI', path: '/' },
+      { name: 'Draft Invoice List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
+      { name: 'Completed List', iconText: 'SI', path: '/invoices/completedInvoiceList' },
       { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
     ],
   },

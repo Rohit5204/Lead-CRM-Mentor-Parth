@@ -15,7 +15,7 @@ const CardTitle = styled('div')(({ subtitle }) => ({
 
 const SimpleCard = ({ children, title, subtitle, icon }) => {
   return (
-    <CardRoot elevation={6}>
+    <CardRoot elevation={6} style={{ backgroundColor: '#f5f5f5' }}>
       <CardTitle subtitle={subtitle}>{title}</CardTitle>
       {subtitle && <Box sx={{ mb: 2 }}>{subtitle}</Box>}
       {children}

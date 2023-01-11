@@ -11,7 +11,8 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
 
     const data1 = {
         invoiceNumber: invoiceNumber,
-        clientEmail: clientEmail
+        clientEmail: clientEmail,
+        statusId: 2
     }
     // const data1 = {
     //     invoiceNumber: "0000000032",

@@ -97,6 +97,8 @@ const ManageEmployee = () => {
                 <TableCell align="justify">Name</TableCell>
                 <TableCell align="justify">Email</TableCell>
                 <TableCell align="justify">Mobile Number</TableCell>
+                <TableCell align="justify">Role</TableCell>
+                <TableCell align="justify">UserName</TableCell>
                 <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -110,6 +112,9 @@ const ManageEmployee = () => {
                   </TableCell>
                   <TableCell align="justify">{subscriber.email}</TableCell>
                   <TableCell align="justify">{subscriber.mobileNo}</TableCell>
+                  <TableCell align="justify">{subscriber.userName}</TableCell>
+                  <TableCell align="justify">{
+                    subscriber.roleId == 1 ? (<div>Admin</div>) : (<div>Employee</div>)}</TableCell>
                   <TableCell align="justify">
                     {subscriber.recodStatus == 1 ? (
                       <Chip color="success" label="Active" />

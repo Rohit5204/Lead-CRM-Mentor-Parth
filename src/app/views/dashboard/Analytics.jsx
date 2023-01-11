@@ -4,8 +4,12 @@ import DoughnutChart from './shared/Doughnut';
 import { SimpleCard } from 'app/components';
 import StatCards from './shared/StatCards';
 import StatCards2 from './shared/StatCards2';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import LabelWiseCount from './shared/labelWiseCount';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
@@ -13,6 +17,7 @@ import LineGraph from './shared/LineGraph';
 import SampleLine from './shared/MixedGraph';
 import React, { useState } from 'react';
 import EmployeeDashboard from './EmployeeDashboard';
+import EmployeeLine from './shared/EmployeeChart';
 import StatusWiseCard from './shared/statusWiseCadr';
 
 const ContentBox = styled('div')(({ theme }) => ({
@@ -39,12 +44,40 @@ const H4 = styled('h4')(({ theme }) => ({
   textTransform: 'capitalize',
   color: theme.palette.text.secondary,
 }));
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 const Analytics = () => {
 
-  // const passObjectData1 = (startDate, endDate, onType) => {
-
-  // }
+  const [value, setValue] = useState(0);
   const { palette } = useTheme();
   const theme = useTheme();
   const [startDate, setstartDate] = useState('')
@@ -56,6 +89,9 @@ const Analytics = () => {
     toDate: endDate,
     empId: 0
   }
+  const handleCChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const roleName = window.localStorage.getItem('roleName');
   const userName = window.localStorage.getItem('userName');
 
@@ -65,69 +101,105 @@ const Analytics = () => {
         {roleName == "Admin" ? (
           <>
             <SimpleCard title="Dashboard">
-              <SimpleCard>
-                <Row>
-                  <Col>
-                    <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-                    <br></br>
-                    <button type="button" className="btn btn-outline-success"
-                      value={onType}
-                      onClick={() => setOnType('LASTDAY')}>
-                      Last Day
-                    </button>
-                    &nbsp;
-                    <button type="button" className="btn btn-outline-success"
-                      value={onType}
-                      onClick={() => setOnType('LASTWEEK')}>
-                      Last Week
-                    </button>
-                    &nbsp;
-                    <button type="button" className="btn btn-outline-success"
-                      value={onType}
-                      onClick={() => setOnType('LASTMONTH')}>
-                      Last Month
-                    </button>
-                    &nbsp;
-                  </Col>
-                  <Col>
-                    <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
 
-                    <InputGroup className="mb-3">
-                      <Form.Control
-                        value={startDate}
-                        onChange={(e) => setstartDate(e.target.value)}
-                        type="date" />
-                      <Form.Control
-                        value={endDate}
-                        onChange={(e) => setendDate(e.target.value)}
-                        type="date" />
-                      <button type="button" className="btn btn-outline-success"
-                        value={onType}
-                        onClick={() => setOnType('DATE')}>
-                        Search
-                      </button>
+              <Row>
+                <Col>
+                  <Form.Label >Apply Filter Search</Form.Label>
+                  <br></br>
+                  <button type="button" className="btn btn-outline-primary"
+                    value={onType}
+                    onClick={() => setOnType('DEFAULT')}>
+                    ALL
+                  </button>
+                  &nbsp;
+                  <button type="button" className="btn btn-outline-primary"
+                    value={onType}
+                    onClick={() => setOnType('LASTDAY')}>
+                    Last Day
+                  </button>
+                  &nbsp;
+                  <button type="button" className="btn btn-outline-primary"
+                    value={onType}
+                    onClick={() => setOnType('LASTWEEK')}>
+                    Last Week
+                  </button>
+                  &nbsp;
+                  <button type="button" className="btn btn-outline-primary"
+                    value={onType}
+                    onClick={() => setOnType('LASTMONTH')}>
+                    Last Month
+                  </button>
+                  &nbsp;
+                </Col>
+                <Col>
+                  <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
 
-                    </InputGroup>
-                  </Col>
-                </Row>
-              </SimpleCard>
+                  <InputGroup className="mb-3">
+                    <Form.Control
+                      value={startDate}
+                      onChange={(e) => setstartDate(e.target.value)}
+                      type="date" />
+                    <Form.Control
+                      value={endDate}
+                      onChange={(e) => setendDate(e.target.value)}
+                      type="date" />
+                    <button type="button" className="btn btn-outline-primary"
+                      value={onType}
+                      onClick={() => setOnType('DATE')}>
+                      Search
+                    </button>
+
+                  </InputGroup>
+                </Col>
+              </Row>
+
               <br></br>
+
+              {/* Tab Section */}
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                  <Tab label="Total Lead" {...a11yProps(0)} />
+                  <Tab label="Label Wise" {...a11yProps(1)} />
+
+                  <Tab label="Status Wise" {...a11yProps(2)} />
+                  <Tab label="Employee Wise" {...a11yProps(3)} />
+                </Tabs>
+              </Box>
+              <TabPanel value={value} index={0}>
+                <StatCards />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <LabelWiseCount />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <StatusWiseCard />
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <EmployeeLine />
+              </TabPanel>
+
               {/* Tab Section Start */}
-              <Tabs defaultActiveKey="home" id="justify-tab-example" className="mb-3 ml-8">
+              {/* <Tabs defaultActiveKey="home" id="justify-tab-example" className="mb-3" justify>
                 <Tab eventKey="home" title="Total Lead">
                   <StatCards />
-                </Tab>
+                </Tab>&nbsp;
+                <Tab eventKey="labelwise" title="Label Wise">
+                  <StatCards />
+                </Tab>&nbsp;
+                <Tab eventKey="empwise" title="Employee Wise">
+                  <StatCards />
+                </Tab>&nbsp;
                 <Tab eventKey="profile" title="Platform Wise">
                   <StatCards2 showData={dashboard} />
                 </Tab>
-              </Tabs>
+              </Tabs> */}
               {/* Tab Section End */}
             </SimpleCard>
             <br></br>
             <Grid container spacing={0}>
               <Grid item lg={12} md={8} sm={12} xs={12}>
-                <SimpleCard title="Status Wise Count">
-                  <StatusWiseCard></StatusWiseCard>
+                <SimpleCard backgroundColor="green" title="Platform Wise Count" >
+                  <StatCards2 showData={dashboard} ></StatCards2>
                 </SimpleCard>
               </Grid>
             </Grid>

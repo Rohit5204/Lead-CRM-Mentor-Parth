@@ -11,6 +11,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 
 const StatusWiseCard = () => {
     const { palette } = useTheme();
@@ -33,6 +34,7 @@ const StatusWiseCard = () => {
         <ArrowDropDownCircleIcon style={{ fontSize: "70px" }}></ArrowDropDownCircleIcon>,
         <ReceiptIcon style={{ fontSize: "70px" }}></ReceiptIcon>,
         <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
+        <WifiCalling3Icon style={{ fontSize: "65px" }}></WifiCalling3Icon>
     ]
     return (
         <div>
@@ -45,7 +47,7 @@ const StatusWiseCard = () => {
                                     <div className="wrap">
                                         <Row>
                                             <Col md="4">
-                                                <div style={{ color: palette.text.secondary }}>
+                                                <div style={{ color: '#7499e5' }}>
                                                     {iconOption[index]}
                                                 </div>
                                             </Col>

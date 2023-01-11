@@ -1,12 +1,15 @@
-import { Tab, Tabs } from 'react-bootstrap';
 import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
-import { Box } from '@mui/material';
-import PlatformMaster from './systemMaster/platformMaster';
-import AssignMaster from './systemMaster/assignMaster';
-import LabelMaster from './systemMaster/labelMaster';
-import StatusMaster from './systemMaster/statusMaster';
-
+import PlatformMaster from './systemMaster/platformMaster/platformMaster';
+import AssignMaster from './systemMaster/assignMaster/assignMaster';
+import LabelMaster from './systemMaster/labelMaster/labelMaster';
+import StatusMaster from './systemMaster/statusMaster/statusMaster';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import React, { useState } from 'react';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -16,8 +19,43 @@ const Container = styled('div')(({ theme }) => ({
         [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
     },
 }));
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
 
 function ManageMaster() {
+    const [value, setValue] = useState(0);
+    const handleCChange = (event, newValue) => {
+        setValue(newValue);
+    };
     return (
         <Container>
             <Box>
@@ -29,26 +67,29 @@ function ManageMaster() {
                         ]}
                     />
                 </Box>
-                <Box> <Tabs
-                    defaultActiveKey="home"
-                    id="fill-tab-example"
-                    className="mb-3"
-                    fill
-                >
-                    <Tab eventKey="home" title="Platform Master">
-                        <PlatformMaster />
-                    </Tab>
-                    <Tab eventKey="profile" title="Assign Master">
-                        <AssignMaster />
-                    </Tab>
-                    <Tab eventKey="longer-tab" title="Label Master">
-                        <LabelMaster />
-                    </Tab>
-                    <Tab eventKey="contact" title="Status Master">
-                        <StatusMaster />
-                    </Tab>
-                </Tabs></Box>
-            </Box></Container>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                        <Tab label="Platform Master" {...a11yProps(0)} />
+                        <Tab label="Assign Master" {...a11yProps(1)} />
+                        <Tab label="Label Master" {...a11yProps(2)} />
+                        <Tab label="Status Master" {...a11yProps(3)} />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <PlatformMaster />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <AssignMaster />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <LabelMaster />
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <StatusMaster />
+                </TabPanel>
+
+            </Box>
+        </Container >
     );
 }
 

@@ -1,7 +1,16 @@
 import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Row, Col } from 'react-bootstrap'
 import { Small } from 'app/components/Typography';
+import "./statusCard.css";
+import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import SendIcon from '@mui/icons-material/Send';
+import DescriptionIcon from '@mui/icons-material/Description';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 
 
@@ -48,71 +57,89 @@ const StatCards2 = (showData) => {
   //         setAPIData123(response.data.data);
   //       })
   //   }
+  const listOfImages = [
+    { url: '/assets/images/platformLogo/Untitled03.png' },
+    { url: '/assets/images/platformLogo/Untitled05.png' },
+    // { url: '/assets/images/platformLogo/Untitled01.png' },
 
+
+    { url: '/assets/images/platformLogo/Untitled08.png' },
+    { url: '/assets/images/platformLogo/Untitled02.png' },
+    { url: '/assets/images/platformLogo/Untitled06.png' },
+    { url: '/assets/images/platformLogo/Untitled01.png' },
+    { url: '/assets/images/platformLogo/Untitled04.png' },
+
+
+    { url: '/assets/images/platformLogo/Untitled07.png' },
+    { url: '/assets/images/platformLogo/Untitled03.png' },
+    { url: '/assets/images/platformLogo/Untitled01.png' },
+
+    { url: '/assets/images/platformLogo/Untitled05.png' },
+    { url: '/assets/images/platformLogo/Untitled08.png' },
+    { url: '/assets/images/platformLogo/Untitled02.png' },
+    { url: '/assets/images/platformLogo/Untitled06.png' },
+    { url: '/assets/images/platformLogo/Untitled01.png' },
+    { url: '/assets/images/platformLogo/Untitled04.png' },
+
+
+    { url: '/assets/images/platformLogo/Untitled07.png' },
+  ]
+  const iconOption = [
+    <SendIcon style={{ fontSize: "65px" }}></SendIcon>,
+    <FollowTheSignsIcon style={{ fontSize: "65px" }}></FollowTheSignsIcon>,
+    <EventNoteIcon style={{ fontSize: "65px" }}></EventNoteIcon>,
+    <DescriptionIcon style={{ fontSize: "70px" }}></DescriptionIcon>,
+    <ArrowDropDownCircleIcon style={{ fontSize: "70px" }}></ArrowDropDownCircleIcon>,
+    <ReceiptIcon style={{ fontSize: "70px" }}></ReceiptIcon>,
+    <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
+  ]
   return (
-    <Grid container spacing={4} sx={{ mb: '24px' }}>
-      {APIData123.map((item, index) => (
-        <Grid item xs={12} md={4} key={index}>
-          <StyledCard elevation={1} style={{ backgroundColor: '#F4BE65' }}>
-            <ContentBox>
-              <FabIcon><Icon className="icon">send</Icon></FabIcon>
-              <Box ml="12px">
-                <H3 textcolor={'green'}>{item.platformName}</H3>
-                <H1 >Count {item.count}</H1>
-                {/* <Heading>{item.amount}</Heading> */}
-              </Box>
-            </ContentBox>
+    <div>
+      <div>
+        <div id="root">
+          <div className="container">
+            <div className="row align-items-stretch">
+              {APIData123.map((item, index) => (
+                // <div className="c-dashboardInfo col-lg-4 col-md-6" key={index}>
+                //   <div className="wrap">
+                //     <h6 className="">{item.count}</h6>
+                //     <Row>
+                //       <Col >
+                //         <h5 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+                //           <img key={index} src={listOfImages[index].url} height={70} width={70} ></img>
+                //           {item.platformName}
+                //         </h5>
+                //       </Col>
+                //       <br />
+                //     </Row>
+                //   </div>
+                // </div>
+                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
+                  <div className="wrap">
+                    <Row className='mb-1'>
+                      <Col md="4">
+                        <div style={{ color: '#7499e5' }}>
+                          {/* {iconOption[index]} */}
+                          <img key={index} src={listOfImages[index].url} height={80} width={80} style={{ marginTop: '-15px' }} ></img>
+                        </div>
+                      </Col>
+                      <Col style={{ marginLeft: "12px" }}>
+                        <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+                          {item.platformName}
+                        </h4>
+                        <span className="hind-font "><b>{item.count}</b></span>
+                      </Col>
 
-            {/* <Tooltip title="View Details" placement="top">
-              <IconButton>
-                <Icon>arrow_right_alt</Icon>
-              </IconButton>
-            </Tooltip> */}
-          </StyledCard>
-        </Grid>
-      ))}
-      {/* {APIData123.map((item, index) => (
-        <Grid item xs={12} md={6} key={index}>
+                    </Row>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div >
 
-          <Card elevation={3} sx={{ p: 2, backgroundColor: '#3b5998' }}>
-            <ContentBox>
-              <FabIcon size="medium" sx={{ background: 'bgError' }}>
-                <Icon sx={{ color: '#fffff' }}>trending_up</Icon>
-              </FabIcon>
-              <H3 textcolor={'#FFFFFF'}>{item.platformName}</H3>
-            </ContentBox>
-
-            <ContentBox sx={{ pt: 2 }}>
-              <H1>{item.count}</H1> */}
-      {/* <IconBox sx={{ background: 'rgba(9, 182, 109, 0.15)' }}>
-                <Icon className="icon">expand_less</Icon>
-              </IconBox>
-              <Span textcolor={'#FFFFFF'}>(+21%)</Span> */}
-      {/* </ContentBox>
-          </Card>
-        </Grid>
-      ))} */}
-
-      {/* <Grid item xs={12} md={6}>
-        <Card elevation={3} sx={{ p: 2, backgroundColor: '#feda75' }}>
-          <ContentBox>
-            <FabIcon size="medium" sx={{ background: bgError, overflow: 'hidden' }}>
-              <Icon sx={{ color: textError }}>star_outline</Icon>
-            </FabIcon>
-            <H3 textcolor="#FFFFFF">Instagram</H3>
-          </ContentBox>
-
-          <ContentBox sx={{ pt: 2 }}>
-            <H1>$2.8M</H1>
-            <IconBox sx={{ background: bgError }}>
-              <Icon className="icon">expand_less</Icon>
-            </IconBox>
-            <Span textcolor="#FFFFFF">(+21%)</Span>
-          </ContentBox>
-        </Card>
-      </Grid> */}
-
-    </Grid>
   );
 };
 // #282f4e removed

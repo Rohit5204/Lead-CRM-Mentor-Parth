@@ -74,7 +74,7 @@ const UpdateInstallments = () => {
     };
 
     const getInstallmentsData = () => {
-        axios.post(`https://43.204.38.243:3000/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0 },
+        axios.post(`https://43.204.38.243:3000/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0, statusId: 0 },
             { headers: { "x-access-token": token } })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {

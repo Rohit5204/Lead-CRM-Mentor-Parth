@@ -11,7 +11,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import AssignEmployee from './LeadAssign/EmployeeAssign';
 import UnAssignEmployee from './LeadAssign/UnAssignEmployee';
-import { FormControl, Autocomplete, TextField } from '@mui/material';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import {
   Box,
   Icon,
@@ -163,72 +163,39 @@ const AssignLead = () => {
         </Row>
         <Row>
           <Col>
-            <LeadCards />
+            {/* <LeadCards /> */}
           </Col>
         </Row>
       </Box>
 
       {/* Tab Section */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleCChange} aria-label="basic tabs example">
-          <Tab label="Assigned Leads" {...a11yProps(0)} />
-          <Tab label="Un-Assigned Leads" {...a11yProps(1)} />
+        <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+          <Tab label="Un-Assigned Leads" {...a11yProps(0)} />
+          <Tab label="Assigned Leads" {...a11yProps(1)} />
+          <Tab label="Employee Wise Leads" {...a11yProps(2)} />
+          <Tab label="Transfer Leads" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {/* First Tab */}
-        {/* <Box className="text-center" width="100%" overflow="auto"> */}
-        {/* Table Section */}
-        <StyledTable>
-          <TableHead>
-            <TableRow>
-              <TableCell align="justify">Lead Id</TableCell>
-              <TableCell align="justify">Lead Name</TableCell>
-              <TableCell align="justify">Customer Name</TableCell>
-              <TableCell align="justify">Assign Employee</TableCell>
-              <TableCell align="justify">Mobile No</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {APIData.map((subscriber, index) => {
-              if (subscriber.assignedUser) {
-                return (
-                  <TableRow key={index}>
-                    <TableCell align="justify">{subscriber.leadId}</TableCell>
-                    <TableCell align="justify">{subscriber.name}</TableCell>
-                    <TableCell align="justify"></TableCell>
-                    <TableCell align="justify">{subscriber.assignedUser}</TableCell>
-                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                    <TableCell align="center">
-                      <IconButton onClick={() => handleShowAssign(subscriber)}>
-                        <Icon color="success">edit</Icon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            })}
-          </TableBody>
-        </StyledTable>
-        {/* </Box> */}
-      </TabPanel>
-      {/* Second Tab */}
-      <TabPanel value={value} index={1}>
         {/* <Box className="text-center" width="100%" overflow="auto"> */}
         {/* Inactive Table Section */}
         <Row>
-          <Col md="6">
+          <Col md="8">
             <InputGroup className="mb-3">
               <Form.Control aria-label="Starting Lead ID" placeholder="Starting Lead ID" />
               <InputGroup.Text>To</InputGroup.Text>
 
               <Form.Control aria-label="Last Lead ID" placeholder="Last Lead ID" />
+              <InputGroup.Text><Icon>person</Icon></InputGroup.Text>
+              <Form.Control aria-label="Select Employee Name" placeholder="Employee Name" />
             </InputGroup>
           </Col>
+          {/* <Col>
+            </Col> */}
           <Col>
             <button type="button" className="btn btn-success">
-              Select
+              Assign
             </button>
           </Col>
         </Row>
@@ -253,11 +220,11 @@ const AssignLead = () => {
                   </TableCell> */}
                     <TableCell align="justify">{subscriber.leadId}</TableCell>
                     <TableCell align="justify">{subscriber.name}</TableCell>
-                    <TableCell align="justify">{subscriber.emailId}</TableCell>
+                    <TableCell align="justify">{subscriber.clientName}</TableCell>
                     <TableCell align="justify">{subscriber.mobileNo}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleShow(subscriber)}>
-                        <Icon color="success">edit</Icon>
+                        <PersonAddAlt1Icon color="success"></PersonAddAlt1Icon>
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -268,6 +235,74 @@ const AssignLead = () => {
         </StyledTable>
         {/* </Box> */}
       </TabPanel>
+      <TabPanel value={value} index={1}>
+        <StyledTable>
+          <TableHead>
+            <TableRow>
+              <TableCell align="justify">Lead Id</TableCell>
+              <TableCell align="justify">Lead Name</TableCell>
+              <TableCell align="justify">Customer Name</TableCell>
+              <TableCell align="justify">Assign Employee</TableCell>
+              <TableCell align="justify">Mobile No</TableCell>
+              <TableCell align="center">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {APIData.map((subscriber, index) => {
+              if (subscriber.assignedUser) {
+                return (
+                  <TableRow key={index}>
+                    <TableCell align="justify">{subscriber.leadId}</TableCell>
+                    <TableCell align="justify">{subscriber.name}</TableCell>
+                    <TableCell align="justify">{subscriber.clientName}</TableCell>
+                    <TableCell align="justify">{subscriber.assignedUser}</TableCell>
+                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={() => handleShowAssign(subscriber)}>
+                        <Icon color="success">edit</Icon>
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+            })}
+          </TableBody>
+        </StyledTable>
+      </TabPanel>
+      {/* Third Tab */}
+      <TabPanel value={value} index={2}>
+        <StyledTable>
+          <TableHead>
+            <TableRow>
+              <TableCell align="justify">Employee Id</TableCell>
+              <TableCell align="justify">Employee Name</TableCell>
+              <TableCell align="justify">Total Count</TableCell>
+              <TableCell align="center">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* {APIData.map((subscriber, index) => {
+              if (subscriber.assignedUser) {
+                return ( */}
+            <TableRow>
+              <TableCell align="justify">102</TableCell>
+              <TableCell align="justify">Vicky S</TableCell>
+              <TableCell align="justify">452</TableCell>
+
+              <TableCell align="center">
+                <IconButton>
+                  <Icon color="success">edit</Icon>
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            {/* );
+              }
+            })} */}
+          </TableBody>
+        </StyledTable>
+
+      </TabPanel>
+      {/* Second Tab */}
       <Modal
         show={assign}
         onHide={handleCloseAssign}
