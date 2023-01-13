@@ -257,6 +257,7 @@ const EditUser = () => {
                   rows={3}
                   onChange={(e) => setRemarks(e.target.value)}
                   value={remarks}
+                  required
                   placeholder="Comment"
                 />
               </Form.Group>

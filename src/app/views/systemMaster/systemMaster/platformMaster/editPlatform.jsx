@@ -27,7 +27,7 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
 
   const UpdatePlatform = {
     id: id,
-    masterName: 'platform',
+    masterName: masterName,
     inputText: inputText,
     platformIcon: platformIcon,
     platformColor: platformColor,

@@ -123,6 +123,7 @@ const EditEmployee = () => {
                                     </InputGroup.Text>
                                     <Form.Control
                                         required
+                                        disabled
                                         onChange={(e) => setemail(e.target.value)}
                                         value={email}
                                         placeholder="Enter the personal Email Id"

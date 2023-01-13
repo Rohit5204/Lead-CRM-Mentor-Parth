@@ -76,7 +76,7 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
                                 label="Age"
                                 onChange={(e) => setrecordStatus(e.target.value)}
                             >
-                                <MenuItem value={0}>In-Active</MenuItem>
+                                <MenuItem value={0}>Inactive</MenuItem>
                                 <MenuItem value={1}>Active</MenuItem>
                             </Select>
                         </FormControl>

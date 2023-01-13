@@ -306,7 +306,7 @@ const AddInvoice = () => {
     };
     return (
         <Container>
-            <Card style={{ width: '65rem', background: '#C3CFC9' }}>
+            <Card style={{ width: '100%', background: '#C3CFC9' }}>
                 <Row>
                     <Col md="9">
                         <SimpleCard title="New Invoice">
@@ -560,7 +560,7 @@ const AddInvoice = () => {
                                         <Row>
                                             <Col></Col>
                                             <Col className="col-sm-12">
-                                                <h4 style={{ color: 'green' }}>Product Quotation List</h4>
+                                                <h4 style={{ color: 'green' }}>Product Invoice List</h4>
                                             </Col>
                                             {/* <Col>
                                                 <Col className="col-sm-1">

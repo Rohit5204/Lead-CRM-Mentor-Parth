@@ -52,9 +52,10 @@ function ManageProfile() {
         }
     }
     const getAccountsData = () => {
-        axios.post(`https://43.204.38.243:3000/api/getCompanyMaster`, { id: 8 },
+        axios.post(`https://43.204.38.243:3000/api/getCompanyMaster`, { id: 1 },
             { headers: { "x-access-token": items } })
             .then((response) => {
+                console.log("UPI", response)
                 for (var i = 0; i < response.data.data.length; i++) {
                     setCompanyUPI(response.data.data[i].accounts);
                 }
@@ -118,7 +119,6 @@ function ManageProfile() {
 
     return (
         <>
-
             <Container fluid className="mt-4 mb-5">
                 <Box className="breadcrumb">
                     <Breadcrumb
@@ -274,7 +274,7 @@ function ManageProfile() {
                                                     <Form.Group>
                                                         <label>Account Holder Name</label>
                                                         <Form.Control
-                                                            defaultValue="Boostock The Finance Advisory"
+                                                            defaultValue="Lead CRM Tracker"
                                                             placeholder="Company"
                                                             type="text"
                                                         ></Form.Control>
@@ -347,7 +347,7 @@ function ManageProfile() {
                                                 </button>
                                             </div>
                                         </Tab>
-                                        <Tab eventKey="longer-tab" title="Other">
+                                        <Tab eventKey="longer-tab" title="UPI ID">
 
                                             <h6>Online Transaction</h6>
                                             <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
@@ -797,7 +797,6 @@ function ManageProfile() {
                         </Modal.Footer>
                     </Modal>
                 </Card>
-
             </Container >
         </>
     );

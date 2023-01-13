@@ -25,6 +25,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
   const [gsPrice, setGsPrice] = useState(theEditCatalogue.gsPrice);
   const [catStatus, setCatStatus] = useState(theEditCatalogue.status);
   const [gsDescription, setGsDescription] = useState(theEditCatalogue.gsDescription);
+  const [duration, setDuration] = useState(0)
 
   const UpdateCatalogue = {
     catId: id,
@@ -87,6 +88,21 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
                 <MenuItem value={1}>ACTIVE</MenuItem>
               </Select>
             </FormControl>
+          </Col>
+        </Row>
+        <Row>
+          <Col >
+            <FormControl sx={{ m: 0, minWidth: 700 }} size="small" className="mt-1">
+              <Form.Label>Duration</Form.Label>
+              <Select value={duration} label="Type" onChange={(e) => setDuration(e.target.value)}>
+                <MenuItem value="0">30 Days [1 Month]</MenuItem>
+                <MenuItem value="1">60 Days [2 Months]</MenuItem>
+                <MenuItem value="2">90 Days [3 Months]</MenuItem>
+                <MenuItem value="3">180 Days [6 Months]</MenuItem>
+                <MenuItem value="4">365 Days [1 Year]</MenuItem>
+              </Select>
+            </FormControl>
+
           </Col>
         </Row>
         <Row className="mt-1">

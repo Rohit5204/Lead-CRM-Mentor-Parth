@@ -4,6 +4,7 @@ import { Row, Col, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ManageFollowups from './followups/addfollowups';
 import ManageMettings from './meetings/addMeeting';
+import { Link } from 'react-router-dom';
 
 const ViewLead = () => {
   const location = useLocation();
@@ -111,6 +112,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Address</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter the Address"
                   //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.streetName}
@@ -121,6 +123,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Pin Code</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter the Pin Code"
                   //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.zipCode}
@@ -129,6 +132,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>City</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter the City"
                   //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.cityName}
@@ -137,6 +141,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>State</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Mention the State"
                   //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.stateName}
@@ -147,6 +152,7 @@ const ViewLead = () => {
               <Col>
                 <Form.Label>Country</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Mention the Country"
                   //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.countryName}
@@ -174,9 +180,14 @@ const ViewLead = () => {
             <Div className="mt-2">
               <Row>
                 <Col>
-                  <Button variant="primary" onClick={changePage}>
+                  <Button variant="secondary" onClick={changePage}>
                     Back
-                  </Button>
+                  </Button>&nbsp;
+                  <Link to="/leads/editLead" state={location.state}>
+                    <Button variant="success">
+                      Edit
+                    </Button>
+                  </Link>
                 </Col>
               </Row>
             </Div>

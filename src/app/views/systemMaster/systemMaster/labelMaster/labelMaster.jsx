@@ -67,17 +67,17 @@ const LabelMaster = () => {
             .then(() => useEffect);
     };
 
-    // const deleteData = (e, i) => {
-    //     console.log(i);
-    //     axios.post('https://43.204.38.243:3000/api/mastersUpsert', {
-    //         id: i.id,
-    //         masterName: 'platform',
-    //         inputText: i.platformName,
-    //         recodStatus: 0,
-    //         addedBy: 1,
-    //         updatedBy: 1,
-    //     }, { headers: { "x-access-token": items } });
-    // };
+    const deleteData = (e, i) => {
+        console.log(i);
+        axios.post('https://43.204.38.243:3000/api/mastersUpsert', {
+            id: i.id,
+            masterName: 'label',
+            inputText: i.platformName,
+            recodStatus: 0,
+            addedBy: 1,
+            updatedBy: 1,
+        }, { headers: { "x-access-token": items } });
+    };
 
     const handleClose = () => setShow(false);
 
@@ -147,7 +147,7 @@ const LabelMaster = () => {
                                                                 <IconButton onClick={() => handleShow(subscriber)}>
                                                                     <Icon color="success">edit</Icon>
                                                                 </IconButton>
-                                                                <IconButton >
+                                                                <IconButton onClick={(event) => deleteData(event, subscriber)}>
                                                                     <Icon color="warning">delete</Icon>
                                                                 </IconButton>
                                                             </TableCell>

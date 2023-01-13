@@ -26,6 +26,7 @@ const AddCatalogue = () => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [duration, setDuration] = useState(0)
 
   //empty the form Text
   const blankForm = () => {
@@ -75,8 +76,8 @@ const AddCatalogue = () => {
         <Col>
           <SimpleCard title="Fill Catalogue Detail's">
             <Row>
-              <Col md="4">
-                <FormControl sx={{ m: 0, minWidth: 300 }} size="small" className="mt-1">
+              <Col md="6">
+                <FormControl sx={{ m: 0, minWidth: 480 }} size="small" className="mt-1">
                   <Form.Label>Type</Form.Label>
                   <Select value={catType} label="Type" onChange={(e) => setCatType(e.target.value)}>
                     <MenuItem value="">Select the Type</MenuItem>
@@ -85,7 +86,7 @@ const AddCatalogue = () => {
                   </Select>
                 </FormControl>
               </Col>
-              <Col className="mt-1">
+              <Col className="mt-1" md="6">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   required
@@ -94,7 +95,22 @@ const AddCatalogue = () => {
                   placeholder="Enter the Name"
                 />
               </Col>
-              <Col className="mt-1">
+            </Row>
+            <Row>
+              <Col md="6">
+                <FormControl sx={{ m: 0, minWidth: 480 }} size="small" className="mt-1">
+                  <Form.Label>Duration</Form.Label>
+                  <Select value={duration} label="Type" onChange={(e) => setDuration(e.target.value)}>
+                    <MenuItem value="0">30 Days [1 Month]</MenuItem>
+                    <MenuItem value="1">60 Days [2 Months]</MenuItem>
+                    <MenuItem value="2">90 Days [3 Months]</MenuItem>
+                    <MenuItem value="3">180 Days [6 Months]</MenuItem>
+                    <MenuItem value="4">365 Days [1 Year]</MenuItem>
+                  </Select>
+                </FormControl>
+
+              </Col>
+              <Col md="6" className="mt-1">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   required

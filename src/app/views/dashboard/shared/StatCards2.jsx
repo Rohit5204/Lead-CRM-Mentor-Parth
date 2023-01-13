@@ -59,10 +59,9 @@ const StatCards2 = (showData) => {
   //   }
   const listOfImages = [
     { url: '/assets/images/platformLogo/Untitled03.png' },
+    { url: '/assets/images/platformLogo/Untitled01.png' },
+
     { url: '/assets/images/platformLogo/Untitled05.png' },
-    // { url: '/assets/images/platformLogo/Untitled01.png' },
-
-
     { url: '/assets/images/platformLogo/Untitled08.png' },
     { url: '/assets/images/platformLogo/Untitled02.png' },
     { url: '/assets/images/platformLogo/Untitled06.png' },
@@ -127,7 +126,7 @@ const StatCards2 = (showData) => {
                         <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
                           {item.platformName}
                         </h4>
-                        <span className="hind-font "><b>{item.count}</b></span>
+                        <span className="hind-font ">{item.count}</span>
                       </Col>
 
                     </Row>

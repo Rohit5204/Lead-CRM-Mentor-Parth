@@ -100,6 +100,7 @@ const ManageCatalogue = () => {
                 <TableCell align="justify">Catalogue Type</TableCell>
                 <TableCell align="justify">Name</TableCell>
                 <TableCell align="justify">Price</TableCell>
+                <TableCell align="justify">Duration (In Days)</TableCell>
                 <TableCell align="justify">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -111,7 +112,8 @@ const ManageCatalogue = () => {
                     <TableCell align="justify">{catalogue.id}</TableCell>
                     <TableCell align="justify">{catalogue.gsType}</TableCell>
                     <TableCell align="justify">{catalogue.gsName}</TableCell>
-                    <TableCell align="justify">{catalogue.gsPrice}</TableCell>
+                    <TableCell align="justify">₹ {catalogue.gsPrice}</TableCell>
+                    <TableCell align="justify"></TableCell>
                     <TableCell align="justify">
                       {catalogue.status == 0 ? (
                         <> <Chip label="Inactive" color="warning" /></>

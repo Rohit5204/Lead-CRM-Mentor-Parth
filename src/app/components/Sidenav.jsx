@@ -2,6 +2,7 @@ import { styled } from '@mui/system';
 import { MatxVerticalNav } from 'app/components';
 import useSettings from 'app/hooks/useSettings';
 import { navigations } from 'app/navigations';
+import { navigationEmp } from 'app/navigationsEmp';
 import { Fragment } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 
@@ -41,15 +42,23 @@ const Sidenav = ({ children }) => {
       },
     });
   };
+  const roleName = window.localStorage.getItem('roleName');
 
   return (
     <Fragment>
-      <StyledScrollBar options={{ suppressScrollX: true }}>
-        {children}
-        <MatxVerticalNav items={navigations} />
-      </StyledScrollBar>
-
+      {roleName == "Admin" ? (
+        <StyledScrollBar options={{ suppressScrollX: true }}>
+          {children}
+          <MatxVerticalNav items={navigations} />
+        </StyledScrollBar>
+      ) : (<>
+        <StyledScrollBar options={{ suppressScrollX: true }}>
+          {children}
+          <MatxVerticalNav items={navigationEmp} />
+        </StyledScrollBar>
+      </>)}
       <SideNavMobile onClick={() => updateSidebarMode({ mode: 'close' })} />
+
     </Fragment>
   );
 };
