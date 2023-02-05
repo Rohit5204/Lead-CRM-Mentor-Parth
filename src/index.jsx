@@ -8,8 +8,8 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <StyledEngineProvider injectFirst>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {/* <BrowserRouter> */}
+    {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
+    <BrowserRouter>
       <CssBaseline />
       <App />
     </BrowserRouter>
