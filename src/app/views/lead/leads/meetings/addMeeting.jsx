@@ -19,6 +19,13 @@ const ManageMettings = () => {
     const [toTime, setToTime] = useState("");
     const [remark, setRemark] = useState("");
 
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": token,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     // Payload for Followup Lead
     const MeetingData = {
         leadId: leadId,
@@ -37,9 +44,12 @@ const ManageMettings = () => {
 
     const getData = () => {
         // let abc = null
-        axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`,
-            { leadId: leadId, userId: 0, statusId: 0 },
-            { headers: { "x-access-token": token } }).then((response) => {
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+            {
+                leadId: leadId, userId: 0, statusId: 0, searchKey: "",
+                locationkey: "", platformId: 0, opType: ""
+            },
+            { headers: headers }).then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
                     // console.log("Meeting Data =")
                     setAPIData123(response.data.data[i].meetingData)
@@ -51,8 +61,8 @@ const ManageMettings = () => {
     }
     const postData = () => {
         // console.log({ MeetingData })
-        axios.post(`https://43.204.38.243:3000/api/saveLeadMeetings`, MeetingData,
-            { headers: { "x-access-token": token } });
+        axios.post(`https://43.204.38.243:3001/api/saveLeadMeetings`, MeetingData,
+            { headers: headers });
     };
     const blankForm = () => {
         setMeetingDate('')
@@ -110,46 +120,45 @@ const ManageMettings = () => {
                     />
                 </Col>
             </Row>
-            <Div className="mt-2">
-                <Row>
-                    <div>
-                        <Button variant="primary" onClick={changePage}>Back</Button>
-                    </div>&nbsp;
-                    <div>
-                        <Button variant="success" onClick={handleSubmit}>Add</Button>
-                    </div>
-                </Row>
-            </Div>
+
+            <Row className="mt-2">
+                <Col className="text-center">
+                    <Button variant="secondary" onClick={changePage}>Back</Button>
+                    &nbsp;
+                    <Button variant="success" onClick={handleSubmit}>Add</Button>
+                </Col>
+            </Row>
+
             {/* {JSON.stringify(APIData123)} */}
             <Row className="mt-2">
-                <SimpleCard>
-                    <h5 className='text-center'>Meeting Detail's</h5>
-                    <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-                        <thead style={{ "color": "MidnightBlue" }} className='text-center'>
-                            <tr>
-                                <th>Sr No.</th>
-                                <th>Meeting Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
 
-                        {APIData123.map((follow, index) => {
-                            return (
-                                <tbody className='text-center'>
-                                    <tr key={index}>
-                                        <td>{follow.id}</td>
-                                        <td>{new Date(follow.meetingDate).toLocaleDateString()}</td>
-                                        <td>{follow.fromTime}</td>
-                                        <td>{follow.toTime}</td>
-                                        <td>{follow.remark}</td>
-                                    </tr>
-                                </tbody>
-                            )
-                        })}
-                    </table>
-                </SimpleCard>
+                <Col><h5 className='text-center'>Meeting Detail's</h5></Col>
+                <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                    <thead style={{ "color": "MidnightBlue" }} className='text-center'>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Meeting Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+
+                    {APIData123.map((follow, index) => {
+                        return (
+                            <tbody className='text-center'>
+                                <tr key={index}>
+                                    <td>{follow.id}</td>
+                                    <td>{new Date(follow.meetingDate).toLocaleDateString()}</td>
+                                    <td>{follow.fromTime}</td>
+                                    <td>{follow.toTime}</td>
+                                    <td>{follow.remark}</td>
+                                </tr>
+                            </tbody>
+                        )
+                    })}
+                </table>
+
             </Row>
         </div>
     );

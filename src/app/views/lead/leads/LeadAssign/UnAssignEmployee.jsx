@@ -27,9 +27,17 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
     const [id1, setId1] = useState([]);
     const [myOptions3, setMyOptions3] = useState(theUnAssignData.assignedUser);
 
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     useEffect(() => {
-        const items = localStorage.getItem('accessToken');
-        axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
                 setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
@@ -61,12 +69,12 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
             assignId: assignedid,
             label: theUnAssignData.label,
             alternateMobile: theUnAssignData.alternateMobile,
-            clientName: theUnAssignData.clientName
+            clientName: theUnAssignData.clientName,
+            expectedAmount: theUnAssignData.expectedAmount
         };
         console.log({ UpdateUser });
-        const items = localStorage.getItem('accessToken');
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3000/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/updateLeadData`, UpdateUser, { headers: headers })
             .then(() => useEffect);
     };
 

@@ -32,6 +32,7 @@ const EditUser = () => {
   const [cityName, setCityName] = useState(location.state.cityName);
   const [zipCode, setZipCode] = useState(location.state.zipCode);
   const [countryName, setCountryName] = useState(location.state.countryName);
+  const [expectedAmount, setExpectedAmount] = useState(location.state.expectedAmount);
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
   const [labelName, setLabelName] = useState([]);
@@ -50,32 +51,40 @@ const EditUser = () => {
   const [sourceId, setSourceId] = useState([]);
   const [remarks, setRemarks] = useState(location.state.remarks);
 
+  const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
   useEffect(() => {
-    const items = localStorage.getItem('accessToken');
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0, }, { headers: { "x-access-token": items } }).then((res) => {
+    axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -83,7 +92,21 @@ const EditUser = () => {
     });
   }, []);
 
-
+  const [APIData, setAPIData] = useState([]);
+  const getFetchLeadData = () => {
+    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+      leadId: 0,
+      userId: 0,
+      statusId: 0,
+      searchKey: "",
+      locationkey: "",
+      platformId: 0,
+      opType: ""
+    }, { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
+      .then((response) => {
+        setAPIData(response.data.data);
+      });
+  }
 
   const updateLead = (e) => {
     var assignedid, platformid, labelid, statusid;
@@ -124,14 +147,15 @@ const EditUser = () => {
       sourceId: platformid,
       assignId: assignedid,
       label: labelid,
-      alternateMobile: mobileNo,
+      alternateMobile: alternateMobile,
       clientName: clientName,
+      expectedAmount: expectedAmount
     };
     console.log({ UpdateUser });
-    const items = localStorage.getItem('accessToken');
     e.preventDefault();
-    axios.post(`https://43.204.38.243:3000/api/updateLeadData`, UpdateUser,
-      { headers: { "x-access-token": items } });
+    axios.post(`https://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
+      { headers: headers });
+    getFetchLeadData()
     changePage()
   };
   const navigate = useNavigate();
@@ -149,24 +173,25 @@ const EditUser = () => {
           routeSegments={[{ name: 'Managed Lead', path: '/leads/manageLeads' }, { name: 'Update Lead Page' }]}
         />
       </Box>
-
       <Box sx={{ flexGrow: 1 }}>
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col>
               <Form.Label>Lead Name</Form.Label>
               <Form.Control
+                disabled
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 placeholder="Enter the Lead Name"
               />
             </Col>
             <Col >
-              <Form.Label>Client Name</Form.Label>
+              <Form.Label>Expected Amount</Form.Label>
               <Form.Control
-                onChange={(e) => setClientName(e.target.value)}
-                value={clientName}
-                placeholder="Enter the Client Name"
+
+                onChange={(e) => setExpectedAmount(e.target.value)}
+                value={expectedAmount}
+                placeholder="Enter the Client Expected Amount"
               />
             </Col>
           </Row>
@@ -200,24 +225,10 @@ const EditUser = () => {
               />
             </Col>
             <Col>
-              {/* <FormControl sx={{ m: 0, minWidth: 370 }} size="small" className="mt-1">
               <Form.Label>Interested In</Form.Label>
-              <Select
-                value={intrestedIn}
-                label="Interested In"
-                onChange={(e) => setIntrestedIn(e.target.value)}
-              >
-                <MenuItem value="interest">Your Interest</MenuItem>
-                <MenuItem value="test">Facebook</MenuItem>
-                <MenuItem value="instagram">Instagram</MenuItem>
-                <MenuItem value="twitter">Twitter</MenuItem>
-              </Select>
-            </FormControl> */}
-              <Form.Label>Interested In</Form.Label>
-
               <FormControl>
                 <Autocomplete
-                  style={{ width: 500 }}
+                  style={{ width: 580 }}
                   freeSolo
                   autoComplete
                   autoHighlight
@@ -282,7 +293,7 @@ const EditUser = () => {
               <Form.Label>Source(Platform Name)</Form.Label>
               <FormControl>
                 <Autocomplete
-                  style={{ width: 500 }}
+                  style={{ width: 580 }}
                   freeSolo
                   autoComplete
                   autoHighlight
@@ -320,7 +331,7 @@ const EditUser = () => {
               <FormControl>
                 <Form.Label>Assigned To</Form.Label>
                 <Autocomplete
-                  style={{ width: 500 }}
+                  style={{ width: 580 }}
                   freeSolo
                   autoComplete
                   autoHighlight
@@ -354,7 +365,7 @@ const EditUser = () => {
               <Form.Label>Status</Form.Label>
               <FormControl>
                 <Autocomplete
-                  style={{ width: 500 }}
+                  style={{ width: 580 }}
                   freeSolo
                   autoComplete
                   autoHighlight
@@ -375,7 +386,7 @@ const EditUser = () => {
           </Row>
           <Row>
             <Col xs={6}>
-              <FormControl sx={{ m: 0, minWidth: 500 }} size="small" className="mt-1">
+              <FormControl sx={{ m: 0, minWidth: 580 }} size="small" className="mt-1">
                 <Form.Label>Country</Form.Label>
                 <Select
                   value={countryName}
@@ -394,7 +405,7 @@ const EditUser = () => {
               <Form.Label>Label</Form.Label>
               <FormControl>
                 <Autocomplete
-                  style={{ width: 500 }}
+                  style={{ width: 580 }}
                   freeSolo
                   autoComplete
                   autoHighlight

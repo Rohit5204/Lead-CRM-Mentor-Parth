@@ -20,16 +20,22 @@ const isValidToken = (accessToken) => {
   return decodedToken.exp > currentTime;
 };
 
-const setSession = (accessToken, roleName, userName) => {
+const setSession = (accessToken, roleName, userName, roleCode, userId, branchName) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('roleName', roleName);
     localStorage.setItem('userName', userName);
+    localStorage.setItem('roleCode', roleCode);
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('branchName', branchName);
     axios.defaults.headers = { accessToken };
   } else {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('roleName');
     localStorage.removeItem('userName');
+    localStorage.removeItem('roleCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('branchName');
     delete axios.defaults.headers;
   }
 };
@@ -81,7 +87,7 @@ const AuthContext = createContext({
   ...initialState,
   method: 'JWT',
   login: () => Promise.resolve(),
-  logout: () => {},
+  logout: () => { },
   register: () => Promise.resolve(),
 });
 // Login For Dashboard 08/11/2022 Rohit
@@ -91,13 +97,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userName, password) => {
     // http://43.204.38.243:3000/api/userLogin
-    const response = await axios.post('https://43.204.38.243:3000/api/userLogin', {
+    const response = await axios.post('https://43.204.38.243:3001/api/userLogin', {
       userName,
       password,
     });
-    const { message, accessToken, roleName, user } = response.data;
+    const { message, accessToken, roleName, user, roleCode, userId, branchName } = response.data;
     console.log(response);
-    setSession(accessToken, roleName, userName);
+    setSession(accessToken, roleName, userName, roleCode, userId, branchName);
 
     dispatch({
       type: 'LOGIN',
@@ -143,11 +149,14 @@ export const AuthProvider = ({ children }) => {
         const accessToken = window.localStorage.getItem('accessToken');
         const roleName = window.localStorage.getItem('roleName');
         const userName = window.localStorage.getItem('userName');
+        const roleCode = window.localStorage.getItem('roleCode');
+        const userId = window.localStorage.getItem('userId');
+        const branchName = window.localStorage.getItem('branchName');
 
         // If we refresh the page also we will be on the same page.
         // Date 08/11/2022 [Rohit Jaiswal]
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken, roleName, userName);
+          setSession(accessToken, roleName, userName, roleCode, userId, branchName);
           const response = await axios.get('/');
           const { user } = response.data;
 

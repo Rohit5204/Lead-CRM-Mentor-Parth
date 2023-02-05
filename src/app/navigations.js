@@ -4,14 +4,14 @@ export const navigations = [
   // { label: 'PAGES', type: 'label' },
   { label: 'LEADS', type: 'label' },
   {
-    name: 'Leads',
+    name: 'Lead',
     icon: 'send',
     children: [
       { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
       { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
-      { name: 'User Master', iconText: '404', path: '/employees/manageEmployee' },
+      { name: 'User Master', iconText: '404', path: '/employees/manageAllEmployee' },
     ],
   },
   { label: 'Catalogue', type: 'label' },
@@ -24,25 +24,44 @@ export const navigations = [
     ],
   },
   { label: 'QUOTATIONS', type: 'label' },
+  { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
+  
+  // {
+  //   name: 'Quotation List',
+  //   icon: 'work',
+  //   children: [
+  //     { name: 'Request For Quotation', path: '/quotations/addQuotation', iconText: 'A' },
+  //     { name: 'Draft List', path: '/quotations/manageQuotation', iconText: 'B' },
+  //     { name: 'Send List', path: '/quotations/completedQuotationList', iconText: 'C' },
+  //   ],
+  // },
+  
+  { label: 'INVOICE', type: 'label' },
+  { name: 'Invoice List', path: '/invoices/ManageInvoiceList', icon: 'receipt' },
+  // {
+  //   name: 'Invoive',
+  //   icon: 'receipt',
+  //   children: [
+  //     { name: 'Draft Invoice List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
+  //     { name: 'Completed List', iconText: 'SI', path: '/invoices/completedInvoiceList' },
+  //     { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
+  //   ],
+  // },
+  { label: 'MY DEALS', type: 'label' },  
   {
-    name: 'Quotation List',
-    icon: 'work',
+    name: 'Deals',
+    icon: 'security',
     children: [
-      { name: 'Request For Quotation', path: '/quotations/addQuotation', iconText: 'A' },
-      { name: 'Draft List', path: '/quotations/manageQuotation', iconText: 'B' },
-      { name: 'Send List', path: '/quotations/completedQuotationList', iconText: 'C' },
+      { name: 'Closed Lead', iconText: 'SI', path: '/myDeal/manageDeals' },
+      { name: 'Recovery', iconText: 'SI', path: '/myDeal/recovery/manageRecovery' },
+      { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal/manageRenewal' },
     ],
   },
-  { name: 'Add Quotation', path: '/quotations/addQuotation', icon: 'book' },
-  { label: 'INVOICE', type: 'label' },
+  { label: 'Email Template', type: 'label' },
   {
-    name: 'Invoive',
-    icon: 'receipt',
-    children: [
-      { name: 'Draft Invoice List', iconText: 'SI', path: '/invoices/ManageInvoiceList' },
-      { name: 'Completed List', iconText: 'SI', path: '/invoices/completedInvoiceList' },
-      { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
-    ],
+    name: 'Email',
+    icon: 'email',
+    path: '/manageEmailMessage',
   },
   { label: 'Digital Card', type: 'label' },
   {
@@ -53,16 +72,7 @@ export const navigations = [
       { name: 'Add Card', iconText: 'SI', path: '/digitalCards/addCard' },
     ],
   },
-  { label: 'MY DEALS', type: 'label' },
-  {
-    name: 'Deals',
-    icon: 'security',
-    children: [
-      { name: 'Completed (Invoive)', iconText: 'SI', path: '/myDeal/manageDeals' },
-      { name: 'Recovery', iconText: 'SI', path: '/myDeal/recovery/manageRecovery' },
-      { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal/manageRenewal' },
-    ],
-  },
+
   // { label: 'EMAIL', type: 'label' },
   // {
   //   name: 'Email',
@@ -82,7 +92,6 @@ export const navigations = [
   //     { name: 'Product Service Wise', iconText: 'SI', path: '/session/signup' },
   //   ],
   // },
-
   // {
   //   name: 'Session/Auth',
   //   icon: 'security',

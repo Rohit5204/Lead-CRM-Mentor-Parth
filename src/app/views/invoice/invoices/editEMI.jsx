@@ -12,6 +12,7 @@ const Div = styled('div')(() => ({
 }));
 const EditEMI = ({ theEditEMI, handleDialog }) => {
     // console.log(theEditEMI)
+    const [APIData, setAPIData] = useState([]);
     const [id, setId] = useState(theEditEMI.id);
     const [instalmentNumber, setInstalmentNumber] = useState(theEditEMI.instalmentNumber);
     const [instalmentAmount, setinstalmentAmount] = useState(theEditEMI.instalmentAmount);
@@ -19,6 +20,14 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
     const [fineAmount, setfineAmount] = useState(theEditEMI.fineAmount);
     const [hasPaid, sethasPaid] = useState(theEditEMI.hasPaid);
 
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     const UpdateData = {
         instalmentId: id,
         instalmentNumber: instalmentNumber,
@@ -28,12 +37,28 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
         hasPaid: hasPaid,
         updatedBy: 1
     };
+    const getFetchLeadData = () => {
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+            leadId: 0,
+            userId: 0,
+            statusId: 0,
+            searchKey: "",
+            locationkey: "",
+            platformId: 0,
+            opType: ""
+        }, { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
+            .then((response) => {
+                setAPIData(response.data.data);
+            });
+    }
     const updateInstallment = (e) => {
-        const items = localStorage.getItem('accessToken');
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3000/api/updateProductInstalment`, UpdateData, { headers: { "x-access-token": items } }).then(() => useEffect);
+        axios.post(`https://43.204.38.243:3001/api/updateProductInstalment`,
+            UpdateData, { headers: headers }).then(() => useEffect);
+        getFetchLeadData();
         handleDialog();
+
     };
     const handleSubmit = (e) => {
         e.preventDefault();

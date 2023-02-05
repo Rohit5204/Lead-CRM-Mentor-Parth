@@ -3,6 +3,10 @@ import { Row, Col, Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { SimpleCard } from "app/components";
 import { styled } from '@mui/system';
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
 
 const Div = styled('div')(({ theme }) => ({
@@ -12,6 +16,13 @@ const Div = styled('div')(({ theme }) => ({
 const ManageFollowups = () => {
     const location = useLocation();
     const token = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": token,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     // const [followUpLeads, setFollowUpLeads] = useState(APIData);
     // console.log("Lead Follow UP=" + followUpLeads)
     const [APIData456, setAPIData456] = useState([]);
@@ -28,16 +39,19 @@ const ManageFollowups = () => {
         followUpDate: followUpDate,
         followUpTme: followUpTme,
         remarks: remarks,
-        nextFollowUpDate: nextFollowUpDate,
-        nextFollowUpTme: nextFollowUpTme,
+        nextFollowUpDate: "",
+        nextFollowUpTme: "",
         createdBy: 1
     };
     useEffect(() => {
         getData1()
     }, [APIData456]);
     const getData1 = () => {
-        axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, { leadId: leadId, userId: 0, statusId: 0, },
-            { headers: { "x-access-token": token } })
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+            leadId: leadId, userId: 0, statusId: 0, searchKey: "",
+            locationkey: "", platformId: 0, opType: ""
+        },
+            { headers: headers })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
                     setAPIData456(response.data.data[i].followupData);
@@ -49,8 +63,8 @@ const ManageFollowups = () => {
     }
     const postData = () => {
         // console.log({ followUpData })
-        axios.post(`https://43.204.38.243:3000/api/saveLeadFollowups`, followUpData,
-            { headers: { "x-access-token": token } });
+        axios.post(`https://43.204.38.243:3001/api/saveLeadFollowups`, followUpData,
+            { headers: headers });
     };
     const blankForm = () => {
         setFollowUpDate('')
@@ -82,15 +96,24 @@ const ManageFollowups = () => {
                 </Col>
                 <Col>
                     <Form.Label>Followup Time</Form.Label>
+                    <br />
+                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <Stack spacing={3}>
+                            <TimePicker
+                                value={followUpTme}
+                                onChange={(e) => setFollowUpTime(e.target.value)}
+                                renderInput={(params) => <TextField {...params} />}
+                            /></Stack>
+                    </LocalizationProvider> */}
                     <Form.Control
                         type="time"
-                        placeholder="Enter Followup Time"
-                        onChange={(e) => setFollowUpTime(e.target.value)}
+                        placeholder="Enter Next Followup Time"
                         value={followUpTme}
+                        onChange={(e) => setFollowUpTime(e.target.value)}
                     />
                 </Col>
             </Row>
-            <Row>
+            {/* <Row>
                 <Col>
                     <Form.Label>Next Followup Date</Form.Label>
                     <Form.Control
@@ -109,7 +132,7 @@ const ManageFollowups = () => {
                         value={nextFollowUpTme}
                     />
                 </Col>
-            </Row>
+            </Row> */}
             <Row>
                 <Col>
                     <Form.Label>Remarks</Form.Label>
@@ -120,50 +143,46 @@ const ManageFollowups = () => {
                     />
                 </Col>
             </Row>
-            <Div className="mt-2">
-                <Row>
-                    <div>
-                        <Link to="/leads/manageLeads" >
-                            <Button variant="primary" >Back</Button>
-                        </Link>
-                    </div>&nbsp;
-                    <div>
-                        <Button variant="success" onClick={handleSubmit}>Add</Button>
-                    </div>
-                </Row>
-            </Div>
-            {/* {JSON.stringify(APIData456)} */}
-            <Row className="mt-2">
-                <SimpleCard>
-                    <h5 className='text-center'>Followup Detail's</h5>
 
-                    <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-                        <thead style={{ "color": "MidnightBlue" }} className='text-center'>
-                            <tr>
-                                <th>Sr No.</th>
-                                <th>Follow Date</th>
-                                <th>Follow Time</th>
-                                <th>Next Follow Date</th>
-                                <th>Next Follow Time</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        {APIData456.map((follow, index) => {
-                            return (
-                                <tbody className='text-center'>
-                                    <tr key={index}>
-                                        <td>{follow.id}</td>
-                                        <td>{new Date(follow.followUpDate).toLocaleDateString()}</td>
-                                        <td>{follow.followUpTme}</td>
-                                        <td>{new Date(follow.nextFollowUpDate).toLocaleDateString()}</td>
-                                        <td>{follow.nextFollowUpTme}</td>
-                                        <td>{follow.remarks}</td>
-                                    </tr>
-                                </tbody>
-                            )
-                        })}
-                    </table>
-                </SimpleCard>
+            <Row className="mt-2">
+                <Col className="text-center">
+                    <Link to="/leads/manageLeads" >
+                        <Button variant="secondary" >Back</Button>
+                    </Link>&nbsp;
+                    <Button variant="success" onClick={handleSubmit}>Add</Button>
+                </Col>
+            </Row>
+
+            {/* {JSON.stringify(APIData456)} */}
+            <Row className="mt-5">
+                <Col> <h5 className='text-center'>Followup Detail's</h5></Col>
+
+
+                <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                    <thead style={{ "color": "MidnightBlue" }} className='text-center'>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>FollowUp Date</th>
+                            <th>FollowUp Time</th>
+
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    {APIData456.map((follow, index) => {
+                        return (
+                            <tbody className='text-center'>
+                                <tr key={index}>
+                                    <td>{follow.id}</td>
+                                    <td>{new Date(follow.followUpDate).toLocaleDateString('en-GB')}</td>
+                                    <td>{follow.followUpTme}</td>
+
+                                    <td>{follow.remarks}</td>
+                                </tr>
+                            </tbody>
+                        )
+                    })}
+                </table>
+
             </Row>
         </div>
     );

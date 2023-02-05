@@ -33,9 +33,16 @@ const EditLabel = ({ theEditLabel, handleDialog }) => {
     };
     const updatePlatform = (e) => {
         const items = localStorage.getItem('accessToken');
+        const roleCode = localStorage.getItem('roleCode');
+        const userId = localStorage.getItem('userId');
+        const headers = {
+            "x-access-token": items,
+            "roleCode": roleCode,
+            "userId": userId
+        }
         console.log({ UpdatePlatform });
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3000/api/mastersUpsert`, UpdatePlatform, { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/mastersUpsert`, UpdatePlatform, { headers: headers })
             .then(() => useEffect);
         setInputText('');
         handleDialog()

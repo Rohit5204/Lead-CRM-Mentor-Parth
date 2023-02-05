@@ -43,10 +43,17 @@ const Renewal = () => {
     };
     const [renewData, setRenewData] = useState([]);
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     //get method
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3000/api/getRenewalInstalments`,
-            { "userId": 1 }, { headers: { "x-access-token": items } }).then((response) => {
+        axios.post(`https://43.204.38.243:3001/api/getRenewalInstalments`,
+            { "userId": 1 }, { headers: headers }).then((response) => {
                 setRenewData(response.data.data);
             });
     }, [renewData]);
@@ -62,49 +69,9 @@ const Renewal = () => {
                         ]}
                     />
                 </Box>
-                <Box>
-                    <Row>
-                        <Col>
-                            <InputGroup className="mb-3">
-                                {/* <button type="submit" className="btn btn-success" onClick={changePage}>
-                                    ADD
-                                </button>
-                                &nbsp; */}
-                                <Form.Control
-                                    placeholder="Search Box"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                />
-                            </InputGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Day
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Week
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Month
-                            </button>
-                            &nbsp;
-                        </Col>
-                        <Col></Col>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Advanced Filter</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Advanced Search
-                            </button>
-                        </Col>
-                    </Row>
-                </Box>
+                <Form.Label style={{ color: 'red' }}>
+                    Note :- List of Invoice Renewal in Upcoming 30 Days
+                </Form.Label>
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
                     <h4>Upcoming Renewal</h4>
@@ -115,7 +82,7 @@ const Renewal = () => {
                                 <TableCell align="center">Product Name</TableCell>
                                 <TableCell align="center">Client Name</TableCell>
                                 <TableCell align="center">Client Email</TableCell>
-                                <TableCell align="center">Action</TableCell>
+                                {/* <TableCell align="center">Action</TableCell> */}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -123,10 +90,10 @@ const Renewal = () => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell align="center">{subscriber.invoiceNumber}</TableCell>
-                                        <TableCell align="center">{subscriber.poductName}</TableCell>
-                                        <TableCell align="center"></TableCell>
+                                        <TableCell align="center">{subscriber.productName}</TableCell>
+                                        <TableCell align="center">{subscriber.clientName}</TableCell>
                                         <TableCell align="center">{subscriber.clientEmail}</TableCell>
-                                        <TableCell align="center">
+                                        {/* <TableCell align="center">
                                             <Link to="/myDeal/renewal/viewRenew" state={subscriber}>
                                                 <IconButton>
                                                     <Icon color="red">visibility</Icon>
@@ -138,10 +105,10 @@ const Renewal = () => {
                                             <Link to="/invoices/addInvoice" state={subscriber}>
                                                 <IconButton>
                                                     <AutorenewIcon color="success" />
-                                                    {/* <Icon color="success">renew</Icon> */}
+                                                   
                                                 </IconButton>
                                             </Link>
-                                        </TableCell>
+                                        </TableCell> */}
                                     </TableRow>
                                 );
                             })}

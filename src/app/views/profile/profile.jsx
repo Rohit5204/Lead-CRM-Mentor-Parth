@@ -23,7 +23,6 @@ function ManageProfile() {
     const location = useLocation();
     // console.log(location.state);
     const [companyUPI, setCompanyUPI] = useState([]);
-    const items = localStorage.getItem('accessToken');
 
     const [id, setId] = useState(location.state.id);
     const [name, setName] = useState(location.state.name);
@@ -37,6 +36,15 @@ function ManageProfile() {
     const [accountNo, setAccountNo] = useState(location.state.accountNo);
     const [ifsc, setIfsc] = useState(location.state.ifsc);
 
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+
     const [obj1, setObj1] = useState(null);
     const [show, setShow] = useState(false);
     //Dialog Form
@@ -45,7 +53,7 @@ function ManageProfile() {
         setObj1(catalogue);
         setShow(true);
     };
-    const [logo, setLogo] = useState('/assets/images/payment-card/boostock-logo.jpg')
+    const [logo, setLogo] = useState('/assets/images/illustrations/boostock-info-04.svg')
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setLogo(URL.createObjectURL(event.target.files[0]));
@@ -53,9 +61,8 @@ function ManageProfile() {
     }
     const getAccountsData = () => {
         axios.post(`https://43.204.38.243:3000/api/getCompanyMaster`, { id: 1 },
-            { headers: { "x-access-token": items } })
+            { headers: headers })
             .then((response) => {
-                console.log("UPI", response)
                 for (var i = 0; i < response.data.data.length; i++) {
                     setCompanyUPI(response.data.data[i].accounts);
                 }
@@ -78,10 +85,8 @@ function ManageProfile() {
         createdBy: 1
     }
     const postData = () => {
-        const items = localStorage.getItem('accessToken');
-        console.log(userCard);
         axios.post('https://43.204.38.243:3000/api/updateCompanyMaster', userCard,
-            { headers: { "x-access-token": items } }
+            { headers: headers }
         );
     };
     useEffect(() => {
@@ -134,7 +139,8 @@ function ManageProfile() {
                         <Row>
                             <Col md="3">
                                 <div className="text-center">
-                                    <img src={logo} alt="preview image" className="avatar img-circle img-thumbnail" />
+                                    <img src={logo} sizes="20px" width="200" alt="preview image" className="avatar img-circle img-thumbnail" />
+
                                     <button type="button" className="btn-warning" onChange={onImageChange}>
                                         Change Logo
                                         <input type="file" accept="image/*" name="image-upload" id="input" />
@@ -156,7 +162,7 @@ function ManageProfile() {
                                                         <Form.Group>
                                                             <label>Company Name</label>
                                                             <Form.Control
-                                                                disabled
+
                                                                 value={name}
                                                                 onChange={(e) => setName(e.target.value)}
                                                                 placeholder="Company Name"

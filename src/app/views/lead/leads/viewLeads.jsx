@@ -17,6 +17,7 @@ const ViewLead = () => {
   const sendToQuotation = () => {
     navigate('/quotations/addQuotation');
   };
+  const roleName = window.localStorage.getItem('roleName');
   return (
     <Container>
       <SimpleCard title="Lead Management">
@@ -43,13 +44,14 @@ const ViewLead = () => {
                 />
               </Col>
               <Col>
-                <Form.Label> Date</Form.Label>
+                <Form.Label> Expected Amount</Form.Label>
                 <Form.Control
                   disabled
                   //onChange={(e) => setRemarks(e.target.value)}
-                  defaultValue={new Date(location.state.createdDate).toLocaleDateString()}
+                  defaultValue={location.state.expectedAmount}
                 />
               </Col>
+
             </Row>
             <Row>
               <Col>
@@ -177,17 +179,40 @@ const ViewLead = () => {
                 />
               </Col>
             </Row>
+            <Row>
+              <Col md="4">
+                <Form.Label>Created Date</Form.Label>
+                <Form.Control
+                  disabled
+                  //onChange={(e) => setRemarks(e.target.value)}
+                  defaultValue={new Date(location.state.createdDate).toLocaleDateString('en-GB')}
+                />
+              </Col>
+
+            </Row>
             <Div className="mt-2">
               <Row>
                 <Col>
                   <Button variant="secondary" onClick={changePage}>
                     Back
                   </Button>&nbsp;
-                  <Link to="/leads/editLead" state={location.state}>
-                    <Button variant="success">
-                      Edit
-                    </Button>
-                  </Link>
+                  {(function () {
+                    if (roleName == "Employee") {
+
+                      return <>
+                      </>
+                    }
+                    else {
+                      return <>
+                        <Link to="/leads/editLead" state={location.state}>
+                          <Button variant="success">
+                            Edit
+                          </Button>
+                        </Link>
+                      </>
+                    }
+                  })()}
+
                 </Col>
               </Row>
             </Div>
@@ -201,7 +226,7 @@ const ViewLead = () => {
           </Tab>
           <Tab eventKey="quotations" title="Quotations">
             <Row>
-              <Col>
+              <Col className="text-center">
                 <button type="button" className="btn btn-success" onClick={sendToQuotation}>
                   Quotation for Lead
                 </button>

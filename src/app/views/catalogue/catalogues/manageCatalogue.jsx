@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import EditCatalogue from './editCatalogue';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
   Icon,
@@ -16,7 +17,6 @@ import {
   Chip,
   TableRow,
 } from '@mui/material';
-import { capitalize } from 'lodash';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -50,11 +50,47 @@ const ManageCatalogue = () => {
   const changePage = () => {
     navigate('/catalogues/addCatalogue');
   };
+
   //get method
   const items = localStorage.getItem('accessToken');
-  const getCatalogueData = () => {
-    axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0 },
-      { headers: { "x-access-token": items } })
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
+  const columns = [
+    { field: 'id', headerName: 'Sr. No', width: 120 },
+    { field: 'gsType', headerName: 'Catalogue Type', width: 240 },
+    { field: 'gsName', headerName: 'Catalogue Name', width: 240 },
+    { field: 'gsPrice', headerName: 'Product Price', width: 240 },
+    {
+      field: 'durationName',
+      headerName: 'Duration',
+      description: 'This column has a value getter and is not sortable.',
+      // sortable: false,
+      width: 240,
+      // valueGetter: (params) =>
+      //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      sortable: false,
+      renderCell: (params) => {
+        return (
+
+          <Icon color="success" onClick={(e) => handleShow(e, params.row)}>edit</Icon>
+
+        );
+      }
+    },
+  ];
+  const [searchBox, setSearchBox] = useState('')
+  const getCatalogueData = async () => {
+    await axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0, searchKey: searchBox, },
+      { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -62,6 +98,7 @@ const ManageCatalogue = () => {
   useEffect(() => {
     getCatalogueData()
   }, [APIData]);
+  const roleName = window.localStorage.getItem('roleName');
   return (
     <Container>
       <Box>
@@ -82,9 +119,11 @@ const ManageCatalogue = () => {
                 </button>
                 &nbsp;
                 <Form.Control
-                  placeholder="Search Box"
+                  placeholder="Search By Catalogue Name"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
+                  value={searchBox}
+                  onChange={(e) => setSearchBox(e.target.value)}
                 />
               </InputGroup>
             </Col>
@@ -93,28 +132,29 @@ const ManageCatalogue = () => {
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
           <h4>Catalogue Table</h4>
-          <StyledTable>
-            <TableHead>
+          <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+            <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
               <TableRow>
-                <TableCell align="justify">Catalogue Id</TableCell>
-                <TableCell align="justify">Catalogue Type</TableCell>
-                <TableCell align="justify">Name</TableCell>
-                <TableCell align="justify">Price</TableCell>
-                <TableCell align="justify">Duration (In Days)</TableCell>
-                <TableCell align="justify">Status</TableCell>
+                <TableCell align="center">Catalogue Id</TableCell>
+                <TableCell align="center">Catalogue Type</TableCell>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Duration (In Days)</TableCell>
+                <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
               {APIData.map((catalogue, index) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell align="justify">{catalogue.id}</TableCell>
-                    <TableCell align="justify">{catalogue.gsType}</TableCell>
-                    <TableCell align="justify">{catalogue.gsName}</TableCell>
-                    <TableCell align="justify">₹ {catalogue.gsPrice}</TableCell>
-                    <TableCell align="justify"></TableCell>
-                    <TableCell align="justify">
+                    <TableCell align="center">{catalogue.id}</TableCell>
+                    <TableCell align="center">{catalogue.gsType}</TableCell>
+                    <TableCell align="center">{catalogue.gsName}</TableCell>
+                    <TableCell align="center">₹ {catalogue.gsPrice}</TableCell>
+                    <TableCell align="center">{catalogue.durationName}</TableCell>
+                    <TableCell align="center">
                       {catalogue.status == 0 ? (
                         <> <Chip label="Inactive" color="warning" /></>
                       ) :
@@ -123,25 +163,28 @@ const ManageCatalogue = () => {
                         )
                       }
                     </TableCell>
+
                     <TableCell align="center">
-                      {/* <IconButton
-                        // onClick={(event) => updateData(event, subscriber)}
-                        onClick={() => handleShow(subscriber)}
-                      >
-                        <Icon color="success">edit</Icon>
-                      </IconButton> */}
                       <IconButton onClick={() => handleShow(catalogue)}>
                         <Icon color="success">edit</Icon>
                       </IconButton>
-                      {/* <IconButton>
-                        <Icon color="warning">delete</Icon>
-                      </IconButton> */}
                     </TableCell>
+
+
                   </TableRow>
                 );
               })}
             </TableBody>
           </StyledTable>
+          {/* <div style={{ height: 620, width: '100%' }}>
+            <DataGrid
+              rows={APIData}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+            // checkboxSelection
+            />
+          </div> */}
         </Box>
         <Modal
           show={show}
@@ -167,14 +210,6 @@ const ManageCatalogue = () => {
             >
               Cancel
             </button>
-            {/* <button
-              type="submit"
-              className="btn btn-success"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleClose}
-            >
-              Update
-            </button> */}
           </Modal.Footer>
         </Modal>
       </Box>

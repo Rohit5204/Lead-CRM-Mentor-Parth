@@ -80,11 +80,18 @@ const AddFormCard = () => {
         dob: dob,
         gender: gender
     }
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     const postData = () => {
-        const items = localStorage.getItem('accessToken');
         console.log(userCard);
-        axios.post('https://43.204.38.243:3000/api/digitalCardUpsert', userCard,
-            { headers: { "x-access-token": items } }
+        axios.post('https://43.204.38.243:3001/api/digitalCardUpsert', userCard,
+            { headers: headers }
         );
     };
     useEffect(() => {

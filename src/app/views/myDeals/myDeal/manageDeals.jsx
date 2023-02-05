@@ -35,131 +35,150 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const ManageDeals = () => {
-    // const [obj1, setObj1] = useState(null);
-    // const [APIData, setAPIData] = useState([]);
-    // const [show, setShow] = useState(false);
-    // //Dialog Form
-    // const handleClose = () => setShow(false);
+    const [APIData, setAPIData] = useState([]);
 
-    // const handleShow = (catalogue) => {
-    //   setObj1(catalogue);
-    //   setShow(true);
-    // };
-    const navigate = useNavigate();
-    const changePage = () => {
-        navigate('/employees/addEmployee');
-    };
-    const [userData, setUserData] = useState([]);
+    const [onType, setOnType] = useState('')
+    const [searchBox, setSearchBox] = useState('')
+    const [locationkey, setLocationkey] = useState('')
+
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     //get method
-    useEffect(() => {
-        axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`,
-            { headers: { "x-access-token": items } }).then((response) => {
-                setUserData(response.data.data);
+    const getFetchLeadData = () => {
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+            leadId: 0,
+            userId: 0,
+            statusId: 0,
+            searchKey: searchBox,
+            locationkey: locationkey,
+            platformId: 0,
+            opType: onType
+        }, { headers: headers })
+            .then((response) => {
+                setAPIData(response.data.data);
             });
-    }, [userData]);
+    }
+    useEffect(() => {
+        getFetchLeadData()
+    }, [APIData]);
+
+
 
     return (
         <Container>
             <Box>
-                <Box className="breadcrumb">
-                    <Breadcrumb
-                        routeSegments={[
-                            { name: 'Completed Invoice List', path: '/myDeal/manageDeals' },
-                            { name: 'Invoice List' },
-                        ]}
-                    />
-                </Box>
-                <Box>
-                    <Row>
-                        <Col>
-                            <InputGroup className="mb-3">
-                                {/* <button type="submit" className="btn btn-success" onClick={changePage}>
-                                    ADD
-                                </button>
-                                &nbsp; */}
-                                <Form.Control
-                                    placeholder="Search Box"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                />
-                            </InputGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Day
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Week
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Month
-                            </button>
-                            &nbsp;
-                        </Col>
-                        <Col></Col>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Advanced Filter</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Advanced Search
-                            </button>
-                        </Col>
-                    </Row>
-                </Box>
+                <Row>
+                    <Col md="4">
+                        <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
+                        <br></br>
+                        <button type="button" className="btn btn-outline-primary"
+                            value={onType}
+                            onClick={() => setOnType('DEFAULT')}>
+                            ALL
+                        </button>
+                        &nbsp;
+                        <button type="button" className="btn btn-outline-primary"
+                            value={onType}
+                            onClick={() => setOnType('LASTDAY')}>
+                            Last Day
+                        </button>
+                        &nbsp;
+                        <button type="button" className="btn btn-outline-primary"
+                            value={onType}
+                            onClick={() => setOnType('LASTWEEK')}>
+                            Last Week
+                        </button>
+                        &nbsp;
+                        <button type="button" className="btn btn-outline-primary"
+                            value={onType}
+                            onClick={() => setOnType('LASTMONTH')}>
+                            Last Month
+                        </button>
+
+                    </Col>
+                    <Col md="4">
+                        <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
+                        <br></br>
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                placeholder="Search By Lead ID, Name, Mobile Number"
+                                aria-label="Recipient's username"
+                                aria-describedby="basic-addon2"
+                                value={searchBox}
+                                onChange={(e) => setSearchBox(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Col>
+                    <Col md="4">
+                        <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
+                        <br></br>
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                placeholder="Search By Street, City, State, Country"
+                                aria-label="Recipient's username"
+                                aria-describedby="basic-addon2"
+                                value={locationkey}
+                                onChange={(e) => setLocationkey(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
-                    <h4>Invoice List</h4>
-                    <StyledTable>
-                        <TableHead>
+                    <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                        <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                             <TableRow>
-                                <TableCell align="justify">Invoice No</TableCell>
-                                <TableCell align="justify">Client Name</TableCell>
-                                <TableCell align="justify">Mobile Number</TableCell>
-                                <TableCell align="justify">Total Amount</TableCell>
-                                <TableCell align="justify">Payament</TableCell>
+                                <TableCell align="center">Lead Id</TableCell>
+                                <TableCell align="center">Lead Name</TableCell>
+                                <TableCell align="center">Email</TableCell>
+                                <TableCell align="center">Mobile Number</TableCell>
+                                <TableCell align="center">Intersted In</TableCell>
+                                <TableCell align="center">Status</TableCell>
                                 <TableCell align="center">Action</TableCell>
                             </TableRow>
                         </TableHead>
-                        {/* <TableBody>
-                            <TableRow>
-                                <TableCell align="justify"></TableCell>
-                                <TableCell align="justify"> </TableCell>
-                                <TableCell align="justify"></TableCell>
-                                <TableCell align="justify"></TableCell>
-                                <TableCell align="justify">
-                                    <Chip color="success" label="PAID" />
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <Icon color="success">visibility</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="justify">0000000025</TableCell>
-                                <TableCell align="justify">Tony Stark</TableCell>
-                                <TableCell align="justify">0123654789</TableCell>
-                                <TableCell align="justify">45200</TableCell>
-                                <TableCell align="justify">
-                                    <Chip color="warning" label="EMI" />
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <Icon color="success">visibility</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
+                        <TableBody>
+                            {APIData.map((subscriber, index) => {
+                                if (subscriber.statusName == "Closed") {
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableCell align="center">{subscriber.leadId}</TableCell>
+                                            <TableCell align="center">{subscriber.name}</TableCell>
+                                            <TableCell align="center">{subscriber.emailId}</TableCell>
+                                            <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                                            <TableCell align="center">{subscriber.intrestedIn}</TableCell>
+                                            <TableCell align="center">
+                                                {(function () {
+                                                    if (subscriber.statusName == "Closed") {
+                                                        return <Chip label="Closed" />;
+                                                    }
+                                                    else {
+                                                        return <Chip label="Not Listed" color="error" />
+                                                    }
+                                                })()}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Link to="/leads/viewLeads" state={subscriber}>
+                                                    <IconButton>
+                                                        <Icon color="red">visibility</Icon>
+                                                    </IconButton>
+                                                </Link>
 
-                        </TableBody> */}
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                }
+                            })}
+                        </TableBody>
                     </StyledTable>
                 </Box>
+
             </Box>
         </Container>
     );

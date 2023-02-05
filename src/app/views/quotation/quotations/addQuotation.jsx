@@ -54,16 +54,16 @@ const StyledTable = styled(Table)(() => ({
 
 const AddQuotation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState(5);
+  const [discount, setDiscount] = useState(0);
   const [tax, setTax] = useState(18);
   const [invoiceDate, setInvoiceDate] = useState(defaultValue);
   const [quotationNumber, setQuotationNumber] = useState(1201);
   const [cashierName, setCashierName] = useState('');
-  const [companyEmail, setCompanyEmail] = useState('info@comanyname.com');
-  const [companyContact, setCompanyContact] = useState('+91-0123456789');
-  const [companyAddress, setCompanyAddress] = useState('Street 14 ,Black Mount Apartment');
-  const [companyGstNo, setCompanyGstNo] = useState('ABCDEF01234');
-  const [companyStateName, setCompanyStateName] = useState('Maharashtra');
+  const [companyEmail, setCompanyEmail] = useState();
+  const [companyContact, setCompanyContact] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [companyGstNo, setCompanyGstNo] = useState('');
+  const [companyStateName, setCompanyStateName] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [panNo, setPanNo] = useState('');
   const [gsQuantity, setGsQuantity] = useState(1);
@@ -205,6 +205,13 @@ const AddQuotation = () => {
 
 
   const token = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": token,
+    "roleCode": roleCode,
+    "userId": userId
+  }
 
   // Fetching the Catalogue Name & Price
   const getPrice = (value) => {
@@ -228,27 +235,28 @@ const AddQuotation = () => {
   }
   const [leadID2, setLeadId2] = useState([])
   const getLeadByID = () => {
-    axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, { leadId: leadID1, userId: 0, statusId: 0 },
-      { headers: { "x-access-token": token } }).then((res) => {
-        if (res == null) {
-          alert("Lead ID not found !!!")
-
-        }
-        else {
-          setLeadId2(res.data.data)
-        }
+    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+      {
+        leadId: leadID1, userId: 0, statusId: 0, searchKey: "",
+        locationkey: "", platformId: 0, opType: ""
+      }, { headers: headers }).
+      then((res) => {
+        setLeadId2(res.data.data)
       });
   }
   const getFetchData = () => {
-    axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
-      { headers: { "x-access-token": token } }).then((res) => {
+    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+      leadId: 0, userId: 0, statusId: 0, searchKey: "",
+      locationkey: "", platformId: 0, opType: ""
+    },
+      { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setLeadData(current => [...current, res.data.data[i].name]);
           setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
         }
       });
-    axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0 },
-      { headers: { "x-access-token": token } }).then((res) => {
+    axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+      { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setCatalogueData(current => [...current, res.data.data[i].gsName]);
           setId3(current => [...current, res.data.data[i].id, res.data.data[i].gsName])
@@ -256,8 +264,21 @@ const AddQuotation = () => {
         }
       });
   }
+  const [compnayData, setCompanyData] = useState([])
+  const getCompanyData = () => {
+    axios
+      .post(
+        `https://43.204.38.243:3000/api/getCompanyMaster`,
+        { id: 4 },
+        { headers: { 'x-access-token': token } }
+      )
+      .then((response) => {
+        setCompanyData(response.data.data[0]);
+      });
+  }
   useEffect(() => {
     getFetchData()
+    getCompanyData()
   }, []);
 
   var leadid, catalogueid
@@ -278,12 +299,12 @@ const AddQuotation = () => {
 
 
     const AddQuotation = {
-      leadId: leadid,
+      leadId: leadID1,
       quotationNumber: quotationNumber,
       quotationDate: invoiceDate,
-      comapnyAddress: companyAddress,
-      companyEmail: companyEmail,
-      companyContact: companyContact,
+      comapnyAddress: compnayData.address,
+      companyEmail: compnayData.email,
+      companyContact: compnayData.contactNo,
       billTo: customerName,
       clientAddress: clientAddress,
       clientEmail: clientEmail,
@@ -303,8 +324,8 @@ const AddQuotation = () => {
       instalments: installments
     }
     console.log({ AddQuotation });
-    axios.post('https://43.204.38.243:3000/api/saveQuotation', AddQuotation,
-      { headers: { "x-access-token": token } }
+    axios.post('https://43.204.38.243:3001/api/saveQuotation', AddQuotation,
+      { headers: headers }
     );
   };
   const navigate = useNavigate();
@@ -333,7 +354,7 @@ const AddQuotation = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  {/* <Col>
                     <Form.Label>Quotation Number:</Form.Label>
                     <Form.Control
                       disabled
@@ -341,6 +362,19 @@ const AddQuotation = () => {
                       onChange={(event) => setQuotationNumber(event.target.value)}
                       placeholder="Enter the Invoice Number"
                     />
+                  </Col> */}
+                  <Col>
+                    <Form.Label>Lead Id:</Form.Label>
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        value={leadID1}
+                        onChange={(event) => setLeadID1(event.target.value)}
+                        placeholder="Enter the Invoice Number"
+                      />
+                      <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
+                        Fetch Lead
+                      </Button>
+                    </InputGroup>
                   </Col>
                   <Col>
                     <Form.Label>Date:</Form.Label>
@@ -360,21 +394,7 @@ const AddQuotation = () => {
 
 
                 </Row>
-                <Row>
-                  <Col>
-                    <Form.Label>Lead Id:</Form.Label>
-                    <InputGroup className="mb-3">
-                      <Form.Control
-                        value={leadID1}
-                        onChange={(event) => setLeadID1(event.target.value)}
-                        placeholder="Enter the Invoice Number"
-                      />
-                      <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
-                        Fetch Lead
-                      </Button>
-                    </InputGroup>
-                  </Col>
-                </Row>
+
                 <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
                   <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
@@ -412,13 +432,8 @@ const AddQuotation = () => {
                       <Form.Label>Company Email:</Form.Label>
                       <Form.Control
                         disabled
-                        required
-                        // className="flex-1"
                         placeholder="Company Email"
-                        // type="text"
-                        // name="companyEmail"
-                        // id="companyEmail"
-                        value={companyEmail}
+                        value={compnayData.email}
                         onChange={(event) => setCompanyEmail(event.target.value)}
                       />
                     </Col>
@@ -432,7 +447,7 @@ const AddQuotation = () => {
                         type="text"
                         name="companyContact"
                         id="companyContact"
-                        value={companyContact}
+                        value={compnayData.contactNo}
                         onChange={(event) => setCompanyContact(event.target.value)}
                       />
                     </Col>
@@ -446,7 +461,7 @@ const AddQuotation = () => {
                           as="textarea"
                           rows={2}
                           onChange={(event) => setCompanyAddress(event.target.value)}
-                          value={companyAddress}
+                          value={compnayData.address}
                           placeholder="Company Address"
                         />
                       </Form.Group>
@@ -463,7 +478,7 @@ const AddQuotation = () => {
                         type="text"
                         name="companyGstNo"
                         id="companyGstNo"
-                        value={companyGstNo}
+                        value={compnayData.gstNo}
                         onChange={(event) => setCompanyGstNo(event.target.value)}
                       />
                     </Col>
@@ -477,7 +492,7 @@ const AddQuotation = () => {
                         type="text"
                         name="companyStateName"
                         id="companyStateName"
-                        value={companyStateName}
+                        value={compnayData.stateName}
                         onChange={(event) => setCompanyStateName(event.target.value)}
                       />
                     </Col>
@@ -497,7 +512,7 @@ const AddQuotation = () => {
                         type="text"
                         name="customerName"
                         id="customerName"
-                        value={customerName}
+                        value={leadID2.name}
                         onChange={(event) => setCustomerName(event.target.value)}
                       />
                     </Col>
@@ -571,13 +586,20 @@ const AddQuotation = () => {
                         onChange={(event) => setClientGstNo(event.target.value)}
                       />
                     </Col>
-                  </Row>
 
-                  <Box className="text-center mt-2" width="100%" >
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col>
+                      <Form.Label style={{ color: 'red' }}>
+                        Note :- Please add Tax Rate, Discount & Quantity before selecting the Product Catalgoue.
+                      </Form.Label></Col>
+                  </Row>
+                  <Box className="mt-2" width="100%" >
                     {/* Table Section */}
                     <Row>
                       <Col></Col>
-                      <Col className="col-sm-12">
+                      <Col className="col-sm-12 text-center">
                         <h4 style={{ color: 'green' }}>Product Quotation List</h4>
                       </Col>
                       {/* <Col>
@@ -593,11 +615,23 @@ const AddQuotation = () => {
                       </Col> */}
                     </Row>
                     <Row>
-                      <Col md="3">
+                      {/* <Col>
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control
+                          // style={{ width: 180 }}
+                          type='number'
+                          min='1'
+                          max='1000'
+                          onChange={(event) => setGsQuantity(event.target.value)}
+                          value={gsQuantity}
+                          placeholder="Product/Service Quantity"
+                        />
+                      </Col> */}
+                      <Col md="6">
                         <Form.Label>Select the Catalogue</Form.Label><br />
                         <FormControl>
                           <Autocomplete
-                            style={{ width: 180 }}
+                            style={{ width: 350 }}
                             freeSolo
                             autoComplete
                             autoHighlight
@@ -615,40 +649,11 @@ const AddQuotation = () => {
                           />
                         </FormControl>
                       </Col>
-                      <Col md="3">
-                        <Form.Label>Duration</Form.Label>
-                        <FormControl sx={{ m: 0, minWidth: 180 }} size="small">
-
-                          <Select
-                            //value={duration} 
-                            label="Type"
-                          //onChange={(e) => setDuration(e.target.value)}
-                          >
-                            <MenuItem value="0">30 Days [1 Month]</MenuItem>
-                            <MenuItem value="1">60 Days [2 Months]</MenuItem>
-                            <MenuItem value="2">90 Days [3 Months]</MenuItem>
-                            <MenuItem value="3">180 Days [6 Months]</MenuItem>
-                            <MenuItem value="4">365 Days [1 Year]</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Col>
-                      <Col md="3">
-                        <Form.Label className='mr-5'>Quantity</Form.Label>
-                        <Form.Control
-                          style={{ width: 180 }}
-                          type='number'
-                          min='1'
-                          max='1000'
-                          onChange={(event) => setGsQuantity(event.target.value)}
-                          value={gsQuantity}
-                          placeholder="Customer Address"
-                        />
-                      </Col>
-                      <Col md="3">
+                      <Col md="6">
                         <Form.Label className='mr-5'>Price</Form.Label>
                         <Form.Control
                           disabled
-                          style={{ width: 180 }}
+                          // style={{ width: 180 }}
                           onChange={(e) => console.log(e)}
                           value={listamt}
                           placeholder="Product/Service Price"
@@ -754,9 +759,9 @@ const AddQuotation = () => {
           </Col>
           <Col>
             <Card.Body>
-              {/* <Button variant="primary" onClick={reviewInvoiceHandler}>
-                Review
-              </Button>&nbsp; */}
+              <Button variant="primary" onClick={reviewInvoiceHandler}>
+                Preview
+              </Button>&nbsp;
               <button type="button" onClick={handleSubmit} className="btn btn-success">
                 ADD Quotation
               </button>
@@ -960,7 +965,7 @@ const AddQuotation = () => {
           items={items}
           onAddNextInvoice={addNextInvoiceHandler}
         /> */}
-    </Container>
+    </Container >
   );
 };
 

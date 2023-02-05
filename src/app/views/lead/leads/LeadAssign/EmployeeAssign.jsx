@@ -19,17 +19,26 @@ const Div = styled('div')(() => ({
 }));
 const AssignEmployee = ({ theAssignedData }) => {
     // console.log(theAssignedData)
-    const [id, setId] = useState(theAssignedData.leadId);
-    const [name, setName] = useState(theAssignedData.name);
+    const [id, setId] = useState(theAssignedData.empId);
+    const [name, setName] = useState(theAssignedData.employeeName);
     const [assignedUser, setAssignedUser] = useState(theAssignedData.assignedUser);
+    const [remark, setRemark] = useState('');
     // const [reassign, setReassign] = useState(theAssignedData.gsPrice);
     const [assignTo, setAssignTo] = useState([]);
     const [id1, setId1] = useState([]);
     const [myOptions3, setMyOptions3] = useState(null);
 
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     useEffect(() => {
-        const items = localStorage.getItem('accessToken');
-        axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
                 setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
@@ -61,12 +70,12 @@ const AssignEmployee = ({ theAssignedData }) => {
             assignId: assignedid,
             label: theAssignedData.label,
             alternateMobile: theAssignedData.alternateMobile,
-            clientName: theAssignedData.clientName
+            clientName: theAssignedData.clientName,
+            expectedAmount: theAssignedData.expectedAmount
         };
         console.log({ UpdateUser });
-        const items = localStorage.getItem('accessToken');
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3000/api/updateLeadData`, UpdateUser, { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/updateLeadData`, UpdateUser, { headers: headers })
             .then(() => useEffect);
     };
 
@@ -84,26 +93,6 @@ const AssignEmployee = ({ theAssignedData }) => {
         <Container>
             {/* <SimpleCard title="Update Catalogue Detail's"> */}
             <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col>
-                        <Form.Label>Lead ID</Form.Label>
-                        <Form.Control
-                            disabled
-                            onChange={(e) => setId(e.target.value)}
-                            value={id}
-                            placeholder="Enter the Lead Name"
-                        />
-                    </Col>
-                    <Col>
-                        <Form.Label>Lead Name</Form.Label>
-                        <Form.Control
-                            disabled
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            placeholder="Enter the Lead Name"
-                        />
-                    </Col>
-                </Row>
                 <Row>
                     <Col>
                         <Form.Label>Current Assign Employee</Form.Label>
@@ -140,13 +129,25 @@ const AssignEmployee = ({ theAssignedData }) => {
                 </Row>
                 <Row>
                     <Col>
+                        <Form.Label>Remark</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={1}
+                            onChange={(e) => setRemark(e.target.value)}
+                            value={remark}
+                            placeholder="Street"
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
                         <button
                             type="submit"
                             className="btn btn-success"
                             style={{ marginTop: 5 + 'px' }}
                             onClick={updateLead}
                         >
-                            Re-Assign
+                            Transfer
                         </button>
                     </Col>
                 </Row>

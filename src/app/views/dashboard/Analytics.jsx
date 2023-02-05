@@ -10,15 +10,16 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Col, Row } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import { InputGroup } from 'react-bootstrap';
+import { Col, Row, Form, InputGroup } from 'react-bootstrap';
 import LineGraph from './shared/LineGraph';
 import SampleLine from './shared/MixedGraph';
 import React, { useState } from 'react';
 import EmployeeDashboard from './EmployeeDashboard';
 import EmployeeLine from './shared/EmployeeChart';
 import StatusWiseCard from './shared/statusWiseCadr';
+import UserWiseCount from './shared/userLoginWiseCount';
+import TLWiseCount from './shared/TeamLeadCount';
+import EmpWiseCount from './shared/EmpWiseCount';
 
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -98,7 +99,7 @@ const Analytics = () => {
   return (
     <Fragment>
       <ContentBox className="analytics">
-        {roleName == "Admin" ? (
+        {roleName == "Admin" || "Branch Manager" ? (
           <>
             <SimpleCard title="Dashboard">
 
@@ -156,44 +157,104 @@ const Analytics = () => {
               <br></br>
 
               {/* Tab Section */}
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
-                  <Tab label="Total Lead" {...a11yProps(0)} />
-                  <Tab label="Label Wise" {...a11yProps(1)} />
+              {(function () {
+                if (roleName == "Admin") {
+                  return <>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                        <Tab label="Total Lead" {...a11yProps(0)} />
+                        <Tab label="Label Wise" {...a11yProps(1)} />
+                        <Tab label="Status Wise" {...a11yProps(2)} />
+                        <Tab label="Branch Wise" {...a11yProps(3)} />
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                      <StatCards showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <LabelWiseCount showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <StatusWiseCard showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                      <UserWiseCount />
+                    </TabPanel>
+                  </>;
+                }
+                else if (roleName == "Branch Manager") {
+                  return <>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                        <Tab label="Total Lead" {...a11yProps(0)} />
+                        <Tab label="Label Wise" {...a11yProps(1)} />
+                        <Tab label="Status Wise" {...a11yProps(2)} />
+                        <Tab label="Team Lead Wise" {...a11yProps(3)} />
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                      <StatCards showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <LabelWiseCount showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <StatusWiseCard showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                      <TLWiseCount />
+                    </TabPanel>
+                  </>;
+                }
+                else if (roleName == "Team Lead") {
+                  return <>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                        <Tab label="Total Lead" {...a11yProps(0)} />
+                        <Tab label="Label Wise" {...a11yProps(1)} />
+                        <Tab label="Status Wise" {...a11yProps(2)} />
+                        <Tab label="Employee Wise" {...a11yProps(3)} />
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                      <StatCards showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <LabelWiseCount showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <StatusWiseCard showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                      <EmpWiseCount />
+                    </TabPanel>
+                  </>;
+                }
+                else {
+                  return <>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
+                        <Tab label="Total Lead" {...a11yProps(0)} />
+                        <Tab label="Label Wise" {...a11yProps(1)} />
+                        <Tab label="Status Wise" {...a11yProps(2)} />
 
-                  <Tab label="Status Wise" {...a11yProps(2)} />
-                  <Tab label="Employee Wise" {...a11yProps(3)} />
-                </Tabs>
-              </Box>
-              <TabPanel value={value} index={0}>
-                <StatCards />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <LabelWiseCount />
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <StatusWiseCard />
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                <EmployeeLine />
-              </TabPanel>
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                      <StatCards showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <LabelWiseCount showData={dashboard} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <StatusWiseCard showData={dashboard} />
+                    </TabPanel>
+                  </>
+                }
+              })()}
 
-              {/* Tab Section Start */}
-              {/* <Tabs defaultActiveKey="home" id="justify-tab-example" className="mb-3" justify>
-                <Tab eventKey="home" title="Total Lead">
-                  <StatCards />
-                </Tab>&nbsp;
-                <Tab eventKey="labelwise" title="Label Wise">
-                  <StatCards />
-                </Tab>&nbsp;
-                <Tab eventKey="empwise" title="Employee Wise">
-                  <StatCards />
-                </Tab>&nbsp;
-                <Tab eventKey="profile" title="Platform Wise">
-                  <StatCards2 showData={dashboard} />
-                </Tab>
-              </Tabs> */}
-              {/* Tab Section End */}
+
+
             </SimpleCard>
             <br></br>
             <Grid container spacing={0}>
@@ -215,7 +276,7 @@ const Analytics = () => {
               <Grid item lg={8} md={8} sm={12} xs={12}>
                 <SimpleCard title="Monthly Leads">
                   <LineGraph
-                    height="350px"
+                    height="330px"
                     color={[palette.error.dark, palette.warning.main, palette.success.main]}
                   /></SimpleCard>
                 <br></br>
@@ -227,7 +288,7 @@ const Analytics = () => {
                   <SubTitle>Last 365 days</SubTitle>
 
                   <DoughnutChart
-                    height="300px"
+                    height="400px"
                     color={[palette.error.main, palette.warning.light, palette.success.light, palette.primary.dark]}
                   />
                 </Card>

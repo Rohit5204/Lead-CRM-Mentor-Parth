@@ -44,6 +44,13 @@ const UpdateInstallments = () => {
     const location = useLocation();
     // console.log(location.state.id)
     const token = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": token,
+        "roleCode": roleCode,
+        "userId": userId
+    }
 
     const [APIInstallment, setAPIInstallment] = useState([]);
     const [invoiceId, setInvoiceId] = useState(location.state.id);
@@ -74,8 +81,8 @@ const UpdateInstallments = () => {
     };
 
     const getInstallmentsData = () => {
-        axios.post(`https://43.204.38.243:3000/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0, statusId: 0 },
-            { headers: { "x-access-token": token } })
+        axios.post(`https://43.204.38.243:3001/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0, statusId: 0 },
+            { headers: headers })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
                     setAPIInstallment(response.data.data[i].instalments);

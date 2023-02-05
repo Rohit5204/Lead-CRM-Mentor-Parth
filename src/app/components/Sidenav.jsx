@@ -2,7 +2,9 @@ import { styled } from '@mui/system';
 import { MatxVerticalNav } from 'app/components';
 import useSettings from 'app/hooks/useSettings';
 import { navigations } from 'app/navigations';
+import { navigationTL } from 'app/navigationTL';
 import { navigationEmp } from 'app/navigationsEmp';
+import { navigationBM } from 'app/navigationBM';
 import { Fragment } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 
@@ -46,17 +48,33 @@ const Sidenav = ({ children }) => {
 
   return (
     <Fragment>
-      {roleName == "Admin" ? (
-        <StyledScrollBar options={{ suppressScrollX: true }}>
-          {children}
-          <MatxVerticalNav items={navigations} />
-        </StyledScrollBar>
-      ) : (<>
-        <StyledScrollBar options={{ suppressScrollX: true }}>
-          {children}
-          <MatxVerticalNav items={navigationEmp} />
-        </StyledScrollBar>
-      </>)}
+      {(function () {
+        if (roleName == "Admin") {
+          return <StyledScrollBar options={{ suppressScrollX: true }}>
+            {children}
+            <MatxVerticalNav items={navigations} />
+          </StyledScrollBar>;
+        }
+        else if (roleName == "Branch Manager") {
+          return <StyledScrollBar options={{ suppressScrollX: true }}>
+            {children}
+            <MatxVerticalNav items={navigationBM} />
+          </StyledScrollBar>;
+        }
+        else if (roleName == "Team Lead") {
+          return <StyledScrollBar options={{ suppressScrollX: true }}>
+            {children}
+            <MatxVerticalNav items={navigationTL} />
+          </StyledScrollBar>;
+        }
+        else {
+          return <StyledScrollBar options={{ suppressScrollX: true }}>
+            {children}
+            <MatxVerticalNav items={navigationEmp} />
+          </StyledScrollBar>
+        }
+      })()}
+
       <SideNavMobile onClick={() => updateSidebarMode({ mode: 'close' })} />
 
     </Fragment>

@@ -4,25 +4,38 @@ import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 
 const ReminderMail = ({ theClientMail, handleDialog }) => {
     // console.log(theClientMail)
-
-    const [invoiceNumber] = useState(theClientMail.invoiceNumber);
-    const [billTo] = useState(theClientMail.billTo);
-    const [clientEmail] = useState(theClientMail.clientEmail);
-
-    const data1 = {
-        invoiceNumber: invoiceNumber,
-        clientEmail: clientEmail
-    }
-
-
     const items = localStorage.getItem('accessToken');
-    // const handleSubmission = async () => {
-    //     await axios.post('https://43.204.38.243:3000/api/sendInvoiceMail',
-    //         formData, {
-    //         headers: { "x-access-token": items }
-    //     })
-    //     handleDialog();
-    // };
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const [invoiceNumber] = useState(theClientMail.invoiceNumber);
+    const [clientName] = useState(theClientMail.clientName);
+    const [clientEmail] = useState(theClientMail.clientEmail);
+    const [productName] = useState(theClientMail.productName)
+    const [instalmentAmount] = useState(theClientMail.instalmentAmount)
+    const [instalmentDate] = useState(theClientMail.instalmentDate)
+
+    const sendReminderMail = () => {
+        const mailBody = {
+            invoiceNo: invoiceNumber,
+            itemName: "Stock Option",
+            date: instalmentDate,
+            amount: instalmentAmount,
+            emailId: clientEmail,
+            emailTemplateId: 3
+        }
+        axios.post('https://43.204.38.243:3001/api/sendReminderMail', mailBody, {
+            headers: headers
+        })
+    }
+    const handleSubmission = () => {
+        sendReminderMail()
+        handleDialog();
+    };
     return (
         <div>
             <Row>
@@ -46,11 +59,34 @@ const ReminderMail = ({ theClientMail, handleDialog }) => {
                     <Form.Label>Client Name</Form.Label>
                     <Form.Control
                         disabled
-                        value={billTo}
+                        value={clientName}
                     />
                 </Col>
                 <Col>
-                    <Form.Label>Select Invoice</Form.Label>
+                    <Form.Label>Installment Amount</Form.Label>
+                    <Form.Control
+                        disabled
+                        value={instalmentAmount}
+
+                    />
+                    {/* <input type="file" name="file" onChange={changeHandler} /> */}
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Label>Product Name</Form.Label>
+                    <Form.Control
+                        disabled
+                        value={productName}
+                    />
+                </Col>
+                <Col>
+                    <Form.Label>Installment Date</Form.Label>
+                    <Form.Control
+                        disabled
+                        value={new Date(instalmentDate).toLocaleDateString('en-GB')}
+
+                    />
                     {/* <input type="file" name="file" onChange={changeHandler} /> */}
                 </Col>
             </Row>
@@ -59,7 +95,7 @@ const ReminderMail = ({ theClientMail, handleDialog }) => {
                 <button type="submit"
                     className="btn btn-success"
                     style={{ margin: 5 + 'px' }}
-                // onClick={handleSubmission}
+                    onClick={handleSubmission}
                 >
                     Send
                 </button>

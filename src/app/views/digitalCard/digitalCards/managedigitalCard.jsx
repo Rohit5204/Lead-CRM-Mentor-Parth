@@ -42,9 +42,16 @@ const ManageDigitalCard = () => {
     // };
     const [empAPI, setEmpApi] = useState([])
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     const getEmpDigitalCard = () => {
-        axios.post(`https://43.204.38.243:3000/api/getDigitalCard`, { _id: 0 },
-            { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/getDigitalCard`, { _id: 0 },
+            { headers: headers })
             .then((response) => {
                 setEmpApi(response.data.data);
             });
@@ -153,7 +160,7 @@ const ManageDigitalCard = () => {
                                     <TableRow key={index}>
                                         <TableCell align="center">{empCard.id}</TableCell>
                                         <TableCell align="center">{empCard.name}</TableCell>
-                                        <TableCell align="center">{empCard.profileName}</TableCell>
+                                        <TableCell align="center">{new Date(empCard.dob).toLocaleDateString('en-GB')}</TableCell>
                                         <TableCell align="center">{empCard.mobileNo1}</TableCell>
                                         <TableCell align="center">{empCard.email}                                      </TableCell>
                                         <TableCell align="center">

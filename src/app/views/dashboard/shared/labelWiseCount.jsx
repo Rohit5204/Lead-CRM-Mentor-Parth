@@ -1,6 +1,7 @@
 import { Box, Card, Grid, Icon, IconButton, styled, Tooltip } from '@mui/material';
-import { green } from '@mui/material/colors';
 import { Small } from 'app/components/Typography';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
@@ -28,36 +29,62 @@ const Heading = styled('h6')(({ theme }) => ({
     color: theme.palette.primary.main,
 }));
 
-const LabelWiseCount = () => {
+const LabelWiseCount = (showData) => {
+    const onj = {
+        "hot": 20,
+        "Cold": 1,
+        "Warm": 1
+    }
     const cardList = [
-        // { name: 'Pipelines', total: 0, amount: 'Rs. 0', icon: 'group' },
-        { name: 'Hot Lead', total: 0, amount: 'Rs. 0', icon: 'brightness_high' },
-        { name: 'Warm Lead', total: 0, amount: 'Rs. 0', icon: 'brightness_medium' },
-        { name: 'Cold Lead', total: 0, amount: 'Rs. 0', icon: 'brightness_low' },
-        // { name: 'Total Lead', total: 0, amount: 'Rs. 0', icon: 'group' },
-        // { name: 'Order Gain', total: 0, amount: 'Rs. 0', icon: 'attach_money' },
-        // { name: 'Order Loss', total: 0, amount: 'Rs. 0', icon: 'arrow_downward' },
+        { icon: 'brightness_high' },
+        { icon: 'brightness_medium' },
+        { icon: 'brightness_low' },
     ];
+    const [labelWiseData, setLabelWiseData] = useState([]);
+
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const getDashboardDataFetch = () => {
+        axios.post(`https://43.204.38.243:3001/api/getDashboardDataByLabel`, {
+            opType: showData.showData.opType,
+            fromDate: showData.showData.fromDate,
+            toDate: showData.showData.toDate,
+            empId: 0
+        }, { headers: headers })
+            .then((response) => {
+                setLabelWiseData(response.data.data);
+            });
+        // console.log(LabelWiseData)
+    }
+    useEffect(() => {
+        getDashboardDataFetch()
+    }, [labelWiseData]);
 
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>
-            {cardList.map((item, index) => (
+            {labelWiseData.map((item, index) => (
                 <Grid item xs={12} md={4} key={index}>
                     <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }}>
                         <ContentBox>
-                            <Icon className="icon">{item.icon}</Icon>
+                            <Icon className="icon">{cardList[index].icon}</Icon>
                             <Box ml="12px">
-                                <Small>{item.name}</Small>
-                                <Heading>{item.total}</Heading>
-                                <Heading>{item.amount}</Heading>
+                                <Small>{item.labelName}</Small>
+                                <Heading>{item.count}</Heading>
+                                {/* <Heading>{item.amount}</Heading> */}
                             </Box>
                         </ContentBox>
 
                         {/* <Tooltip title="View Details" placement="top">
-              <IconButton>
-                <Icon>arrow_right_alt</Icon>
-              </IconButton>
-            </Tooltip> */}
+                         <IconButton>
+                              <Icon>arrow_right_alt</Icon>
+                        </IconButton>
+                         </Tooltip> */}
                     </StyledCard>
                 </Grid>
             ))}

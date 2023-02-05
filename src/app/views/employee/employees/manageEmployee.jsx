@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Box,
@@ -51,10 +51,17 @@ const ManageEmployee = () => {
   };
   const [userData, setUserData] = useState([]);
   const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
   //get method
   useEffect(() => {
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`,
-      { headers: { "x-access-token": items } }).then((response) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+      { headers: headers }).then((response) => {
         setUserData(response.data.data);
       });
   }, [userData]);
@@ -72,68 +79,74 @@ const ManageEmployee = () => {
         </Box>
         <Box>
           <Row>
-            <Col>
+            <Col md="5">
               <InputGroup className="mb-3">
                 <button type="submit" className="btn btn-success" onClick={changePage}>
                   ADD
                 </button>
                 &nbsp;
-                <Form.Control
+                {/* <Form.Control
                   placeholder="Search Box"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
-                />
+                /> */}
               </InputGroup>
             </Col>
+            <Col>
+              <h4>Employee Login </h4></Col>
           </Row>
         </Box>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
-          <h4>Employee Login </h4>
-          <StyledTable>
-            <TableHead>
+
+          <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+            <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
               <TableRow>
-                <TableCell align="justify">User Id</TableCell>
-                <TableCell align="justify">Name</TableCell>
-                <TableCell align="justify">Email</TableCell>
-                <TableCell align="justify">Mobile Number</TableCell>
-                <TableCell align="justify">Role</TableCell>
-                <TableCell align="justify">UserName</TableCell>
-                <TableCell align="justify">Status</TableCell>
+                <TableCell align="center">User Id</TableCell>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Mobile Number</TableCell>
+                <TableCell align="center">Username</TableCell>
+                <TableCell align="center">Role</TableCell>
+                <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {userData.map((subscriber, index) => (
-                <TableRow key={index}>
-                  <TableCell align="justify">{subscriber.userId}</TableCell>
-                  <TableCell align="justify">
-                    {subscriber.firstName} {subscriber.lastName}
-                  </TableCell>
-                  <TableCell align="justify">{subscriber.email}</TableCell>
-                  <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                  <TableCell align="justify">{subscriber.userName}</TableCell>
-                  <TableCell align="justify">{
-                    subscriber.roleId == 1 ? (<div>Admin</div>) : (<div>Employee</div>)}</TableCell>
-                  <TableCell align="justify">
-                    {subscriber.recodStatus == 1 ? (
-                      <Chip color="success" label="Active" />
-                    ) : (
-                      <Chip color="warning" label="Inactive" />
-                    )}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Link to="/employees/editEmployee" state={subscriber}>
-                      <IconButton>
-                        <Icon color="success">edit</Icon>
-                      </IconButton>
-                    </Link>
-                    {/* <IconButton>
+              {userData.map((subscriber, index) => {
+                if (subscriber.branchManagerId == userId) {
+                  return (
+                    <TableRow key={index}>
+                      <TableCell align="center">{subscriber.userId}</TableCell>
+                      <TableCell align="center">
+                        {subscriber.firstName} {subscriber.lastName}
+                      </TableCell>
+                      <TableCell align="center">{subscriber.email}</TableCell>
+                      <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                      <TableCell align="center">{subscriber.userName}</TableCell>
+                      <TableCell align="center">{subscriber.roleName}</TableCell>
+                      <TableCell align="center">
+                        {subscriber.recodStatus == 1 ? (
+                          <Chip color="success" label="Active" />
+                        ) : (
+                          <Chip color="warning" label="Inactive" />
+                        )}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link to="/employees/editEmployee" state={subscriber}>
+                          <IconButton>
+                            <Icon color="success">edit</Icon>
+                          </IconButton>
+                        </Link>
+                        {/* <IconButton>
                       <Icon color="warning">delete</Icon>
                     </IconButton> */}
-                  </TableCell>
-                </TableRow>
-              ))}
+                      </TableCell>
+                    </TableRow>
+                  )
+                }
+
+              })}
             </TableBody>
           </StyledTable>
         </Box>

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { styled } from '@mui/system';
 import { Box, IconButton, Tooltip, Table } from '@mui/material';
 import { Form, Row, Col, } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { format } from 'date-fns'
@@ -90,6 +91,29 @@ const ViewInvoice = ({ theViewInvoice }) => {
                 console.error('oops, something went wrong!', error);
             });
     };
+    const [APIData, setAPIData] = useState([]);
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const getCatalogueData = () => {
+        axios.post(
+            `https://43.204.38.243:3000/api/getCompanyMaster`,
+            { id: 4 },
+            { headers: headers }
+        )
+            .then((response) => {
+                console.log(response)
+                setAPIData(response.data.data[0]);
+            });
+    };
+    useEffect(() => {
+        getCatalogueData();
+    }, []);
     return (
         <Box sx={{ flexGrow: 1 }} style={{ 'borderRadius': '5px' }}>
             <div style={{ float: "right" }}>
@@ -117,30 +141,32 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <h5 className='text-center'>INVOICE</h5>
                                 </Col>
                             </Row>
-                            <Row className='mt-2'>
+                            <Row>
                                 <Col md="7">
-                                    <img
+                                    {/* <img
                                         sizes="10px"
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhVskpYXfF31NyGSjgoPfjnS6qH8TY8wWftKfux4&s"
+                                        width={220}
+                                        height={220}                                       
+                                    // src="https://boostock.in/img/boostock-info-04.png"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
-                                    ></img>
-
+                                    ></img> */}
+                                    <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
                                 </Col>
-                                <Col>
+                                <Col className='mt-4'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
-                                        Company Name
+                                        {APIData.name}
                                     </h5>
-                                    <span>Street Addrees</span>
+                                    <span>{APIData.address}</span>
                                     <br />
-                                    <span>City Name, State Name-Pincode </span>
+                                    <span>{APIData.stateName}-{APIData.pincode} </span>
                                     <br />
-                                    <span>Company Reg. No :-896522147</span>
-                                    <br />
-                                    <span className="font-bold">GST No: {theViewInvoice.gstNo}</span>
+                                    <span>Company Reg. No :- {APIData.gstNo}</span>
+                                    {/* <br />
+                        <span className="font-bold">GST No: {theViewInvoice.gstNo}</span> */}
                                     {/* <br /> */}
                                     {/* <span className="font-bold">State: {theViewInvoice.companyStateName}</span> */}
                                     <br />
-                                    <span className="font-bold">Email: {theViewInvoice.companyEmail}</span>
+                                    <span className="font-bold">Email :- {APIData.email}</span>
                                 </Col>
                             </Row>
 
@@ -148,7 +174,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-left'>
                                     <tr>
                                         <th> Billing Information </th>
-                                        <th> Quotation Details </th>
+                                        <th> Invoice Details </th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -166,7 +192,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                             <span> Invoice No  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:    </span>
                                             <b style={{ "color": "MidnightBlue" }}>{theViewInvoice.invoiceNumber}</b>
                                             <br />
-                                            <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {new Date(theViewInvoice.createdDate).toLocaleDateString()}</span>
+                                            <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {new Date(theViewInvoice.createdDate).toLocaleDateString('en-GB')}</span>
                                             <br />
                                             <span className="font-bold"> Generated By    : {theViewInvoice.cashierName}</span>
                                             <br />
@@ -178,13 +204,14 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span> Bank Details   :   {bankDetails}</span><br />
-                                            <span> Account No  &nbsp;:   {bankDetails}</span><br />
-                                            <span> IFSC Code   &nbsp;&nbsp;&nbsp;:   {bankDetails}</span>
+                                            <span> Bank Details  :  {APIData.bankName}</span><br />
+                                            <span> Account No   :  {APIData.accountNo}</span><br />
+                                            <span> IFSC Code   &nbsp;&nbsp;:  {APIData.ifsc}</span>
                                         </td>
                                         <td>
-                                            <span> Payment Mode   :   {bankDetails}</span><br />
-                                            <span> No. of EMI  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {Object.keys(installments).length}</span>
+                                            <span> Payment Mode   :   {APIData.paymentTransferType}</span><br />
+                                            <span> No. of EMI  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {Object.keys(installments).length}</span><br />
+                                            <span> Initial Payment   :   {theViewInvoice.initialPayment}</span><br />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -193,8 +220,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
                                 <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-center'>
                                     <tr>
-                                        <th> Discription </th>
-                                        <th> Quantity </th>
+                                        <th> Product Name </th>
+                                        <th> Duration </th>
                                         <th> Unit Price </th>
                                         <th> Total </th>
                                     </tr>
@@ -203,8 +230,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 <tbody className='text-center'>
                                     <tr>
                                         {/* <td>{theViewInvoice.gsCatalogueId}</td> */}
-                                        <td> Equity </td>
-                                        <td>{theViewInvoice.gsQuantity}</td>
+                                        <td> {theViewInvoice.gsName} </td>
+                                        <td>{theViewInvoice.duration}</td>
                                         <td>{theViewInvoice.amount}</td>
                                         <td>{subtotal}</td>
                                     </tr>
@@ -287,7 +314,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                                 <tr key={index}>
                                                     <td>{emi.instalmentNumber} </td>
                                                     <td>{emi.instalmentAmount}</td>
-                                                    <td>{new Date(emi.instalmentDate).toLocaleDateString()} </td>
+                                                    <td>{new Date(emi.instalmentDate).toLocaleDateString('en-GB')} </td>
 
                                                 </tr>
                                             );

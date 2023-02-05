@@ -56,16 +56,23 @@ const EditQuotation = () => {
         }
     ]);
     const token = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": token,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, {
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
             leadId: 0, userId: 0, statusId: 0,
-        }, { headers: { "x-access-token": token } }).then((res) => {
+        }, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setLeadData(current => [...current, res.data.data[i].name]);
             }
         });
-        axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0 },
-            { headers: { "x-access-token": token } }).then((res) => {
+        axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+            { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
                 }
@@ -135,7 +142,7 @@ const EditQuotation = () => {
     //Add data in the table
     const postData = () => {
         console.log({ addQuotation });
-        axios.post(`https://43.204.38.243:3000/api/saveQuotation`, addQuotation);
+        axios.post(`https://43.204.38.243:3001/api/saveQuotation`, addQuotation);
     };
 
     const handleSubmit = (e) => {

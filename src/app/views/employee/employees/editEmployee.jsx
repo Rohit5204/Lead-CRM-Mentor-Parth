@@ -1,8 +1,8 @@
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
-import { Box, Icon, FormControl, Select, MenuItem } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Icon, FormControl, Select, MenuItem, Autocomplete, TextField } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -25,6 +25,75 @@ const EditEmployee = () => {
     const [userRoleId, setuserRoleId] = useState(location.state.roleId);
     const [recodStatus, setRecodStatus] = useState(location.state.recodStatus)
 
+    const [showForm, setShowForm] = useState(false);
+    const [showForm1, setShowForm1] = useState(false);
+    const [showForm2, setShowForm2] = useState(false);
+    const [roleTo, setRoleTo] = useState([]);
+    const [officeTo, setOfficeTo] = useState([]);
+    const [id1, setId1] = useState([]);
+    const [id2, setId2] = useState([]);
+    const [myOptions3, setMyOptions3] = useState(location.state.roleName);
+    const [myOptions4, setMyOptions4] = useState(location.state.branchName);
+
+    const [userData, setUserData] = useState([]);
+    const [id3, setId3] = useState([]);
+    const [myOptions5, setMyOptions5] = useState(location.state.bmName);
+
+    const [userTLData, setUserTLData] = useState([]);
+    const [id4, setId4] = useState([]);
+    const [myOptions6, setMyOptions6] = useState(location.state.tlName);
+
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+
+    useEffect(() => {
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=rolemaster`,
+            { headers: headers }).then((res) => {
+                for (var i = 0; i < res.data.data.length; i++) {
+                    setRoleTo(current => [...current, res.data.data[i].roleName]);
+                    setId1(current => [...current, res.data.data[i].id, res.data.data[i].roleName])
+                }
+            });
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=branchmaster`,
+            { headers: headers }).then((res) => {
+                for (var i = 0; i < res.data.data.length; i++) {
+                    setOfficeTo(current => [...current, res.data.data[i].branchName]);
+                    setId2(current => [...current, res.data.data[i].branchId, res.data.data[i].branchName])
+                }
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+            { headers: headers }).then((res) => {
+                for (var i = 0; i < res.data.data.length; i++) {
+                    if (res.data.data[i].roleId == 2) {
+                        setUserData(current => [...current, res.data.data[i].firstName + " "
+                            + res.data.data[i].lastName]);
+                        setId3(current => [...current, res.data.data[i].userId, res.data.data[i].firstName
+                            + " " + res.data.data[i].lastName])
+                    }
+                }
+            });
+        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+            { headers: headers }).then((res) => {
+                for (var i = 0; i < res.data.data.length; i++) {
+                    if (res.data.data[i].roleId == 3) {
+                        setUserTLData(current => [...current, res.data.data[i].firstName + " "
+                            + res.data.data[i].lastName]);
+                        setId4(current => [...current, res.data.data[i].userId, res.data.data[i].firstName
+                            + " " + res.data.data[i].lastName])
+                    }
+                }
+            });
+    }, []);
+
     const UpdateUser = {
         id: id,
         firstName: firstName,
@@ -40,11 +109,10 @@ const EditEmployee = () => {
         addedBy: 0,
         recodStatus: recodStatus
     }
-    const items = localStorage.getItem('accessToken');
     //Update data in the table
     const UpdateData = () => {
         console.log({ UpdateUser })
-        axios.post('https://43.204.38.243:3000/api/userMasterUpsert', UpdateUser, { headers: { "x-access-token": items } });
+        axios.post('https://43.204.38.243:3001/api/userMasterUpsert', UpdateUser, { headers: headers });
     };
 
     const handleSubmit = (e) => {
@@ -130,20 +198,214 @@ const EditEmployee = () => {
                                     />
                                 </InputGroup>
                             </Col>
-                            <Col>
-                                <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
-                                    <Form.Label>Role </Form.Label>
-                                    <Select
-                                        disabled
-                                        value={userRoleId}
-                                        onChange={(e) => setuserRoleId(e.target.value)}
-                                        label="Role">
-                                        <MenuItem value={1}>ADMIN</MenuItem>
-                                        <MenuItem value={2}>EMPLOYEE</MenuItem>
-                                    </Select>
-                                </FormControl>
+                            <Col md="6">
+                                <InputGroup>
+                                    <Form.Label>Role</Form.Label>
+                                </InputGroup>
+                                <Autocomplete
+                                    disabled
+                                    freeSolo
+                                    autoComplete
+                                    autoHighlight
+                                    options={roleTo}
+                                    value={myOptions3}
+                                    onChange={(e) => {
+                                        setMyOptions3(e.currentTarget.innerHTML);
+                                        if (e.currentTarget.innerHTML == "Branch Manager") {
+                                            setShowForm(true);
+                                            setShowForm1(false);
+                                            setShowForm2(false);
+                                        }
+                                        else if (e.currentTarget.innerHTML == "Team Lead") {
+                                            setShowForm(false);
+                                            setShowForm1(true);
+                                            setShowForm2(false);
+                                        }
+                                        else if (e.currentTarget.innerHTML == "Employee") {
+                                            setShowForm(false);
+                                            setShowForm1(false);
+                                            setShowForm2(true);
+                                        }
+                                        else {
+                                            setShowForm(false);
+                                            setShowForm1(false);
+                                            setShowForm2(false);
+                                        }
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+
+                                            variant="outlined"
+                                            label="Select the Calalogue Duration"
+                                            size="small"
+                                        />
+                                    )}
+                                />
+
                             </Col>
                         </Row>
+                        {
+                            showForm ? (
+                                <Row>
+                                    <Col md="6">
+                                        <InputGroup>
+                                            <Form.Label>Branch</Form.Label>
+                                        </InputGroup>
+                                        <Autocomplete
+                                            freeSolo
+                                            autoComplete
+                                            autoHighlight
+                                            options={officeTo}
+                                            value={myOptions4}
+                                            onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+
+                                                    variant="outlined"
+                                                    label="Select the Branch Name"
+                                                    size="small"
+                                                />
+                                            )}
+                                        />
+                                    </Col>
+                                </Row>
+
+                            ) : (
+                                ""
+                            )
+                        }
+                        {
+                            showForm1 ? (
+                                <Row>
+                                    <Col md="6">
+                                        <InputGroup>
+                                            <Form.Label>Branch</Form.Label>
+                                        </InputGroup>
+                                        <Autocomplete
+                                            freeSolo
+                                            autoComplete
+                                            autoHighlight
+                                            options={officeTo}
+                                            value={myOptions4}
+                                            onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+
+                                                    variant="outlined"
+                                                    label="Select the Branch Name"
+                                                    size="small"
+                                                />
+                                            )}
+                                        />
+                                    </Col>
+                                    <Col md="6">
+                                        <InputGroup>
+                                            <Form.Label>Branch Manager</Form.Label>
+                                        </InputGroup>
+                                        <Autocomplete
+                                            freeSolo
+                                            autoComplete
+                                            autoHighlight
+                                            options={userData}
+                                            value={myOptions5}
+                                            onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+
+                                                    variant="outlined"
+                                                    label="Select the Branch Manager"
+                                                    size="small"
+                                                />
+                                            )}
+                                        />
+                                    </Col>
+                                </Row>
+                            ) : (
+                                ""
+                            )
+                        }
+                        {
+                            showForm2 ? (
+                                <>
+                                    <Row>
+                                        <Col md="6">
+                                            <InputGroup>
+                                                <Form.Label>Branch</Form.Label>
+                                            </InputGroup>
+                                            <Autocomplete
+                                                freeSolo
+                                                autoComplete
+                                                autoHighlight
+                                                options={officeTo}
+                                                value={myOptions4}
+                                                onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+
+                                                        variant="outlined"
+                                                        label="Select the Branch Name"
+                                                        size="small"
+                                                    />
+                                                )}
+                                            />
+                                        </Col>
+                                        <Col md="6">
+                                            <InputGroup>
+                                                <Form.Label>Branch Manager</Form.Label>
+                                            </InputGroup>
+                                            <Autocomplete
+                                                freeSolo
+                                                autoComplete
+                                                autoHighlight
+                                                options={userData}
+                                                value={myOptions5}
+                                                onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+
+                                                        variant="outlined"
+                                                        label="Select the Branch Manager"
+                                                        size="small"
+                                                    />
+                                                )}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="6">
+                                            <InputGroup>
+                                                <Form.Label>Team Leader</Form.Label>
+                                            </InputGroup>
+                                            <Autocomplete
+                                                freeSolo
+                                                autoComplete
+                                                autoHighlight
+                                                options={userTLData}
+                                                value={myOptions6}
+                                                onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+
+                                                        variant="outlined"
+                                                        label="Select the Team Leader"
+                                                        size="small"
+                                                    />
+                                                )}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </>
+                            ) : (
+                                ""
+                            )
+                        }
                         <h6 style={{ color: 'red' }}>User Credential's </h6>
                         <Row>
                             <Col>
@@ -176,7 +438,7 @@ const EditEmployee = () => {
                                         placeholder="Enter the Password"
                                     /></InputGroup>
                             </Col> */}
-                            <Col>
+                            <Col md="6">
                                 <FormControl sx={{ m: 0, minWidth: 470 }} size="small" className="mt-1">
                                     <Form.Label>Status </Form.Label>
                                     <Select

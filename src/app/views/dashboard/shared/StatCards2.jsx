@@ -25,12 +25,19 @@ const StatCards2 = (showData) => {
 
   const getDashboardDataFetch = () => {
     const items = localStorage.getItem('accessToken');
-    axios.post(`https://43.204.38.243:3000/api/getDashboardData`, {
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+      "x-access-token": items,
+      "roleCode": roleCode,
+      "userId": userId
+    }
+    axios.post(`https://43.204.38.243:3001/api/getDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
       empId: 0
-    }, { headers: { "x-access-token": items } })
+    }, { headers: headers })
       .then((response) => {
         setAPIData123(response.data.data);
       });
@@ -45,12 +52,12 @@ const StatCards2 = (showData) => {
   //   const source = CancelToken.source();
   //   const items = localStorage.getItem('accessToken');
   //   if (!showData) {
-  //     axios.post(`https://43.204.38.243:3000/api/getDashboardData`, {
+  //     axios.post(`https://43.204.38.243:3001/api/getDashboardData`, {
   //       opType: showData.showData.opType,
   //       fromDate: showData.showData.fromDate,
   //       toDate: showData.showData.toDate,
   //       empId: 0
-  //     }, { headers: { "x-access-token": items } }, {
+  //     }, { headers: headers }, {
   //       cancelToken: source.token
   //     })
   //       .then((response) => {
@@ -59,20 +66,16 @@ const StatCards2 = (showData) => {
   //   }
   const listOfImages = [
     { url: '/assets/images/platformLogo/Untitled03.png' },
-    { url: '/assets/images/platformLogo/Untitled01.png' },
-
     { url: '/assets/images/platformLogo/Untitled05.png' },
     { url: '/assets/images/platformLogo/Untitled08.png' },
     { url: '/assets/images/platformLogo/Untitled02.png' },
     { url: '/assets/images/platformLogo/Untitled06.png' },
     { url: '/assets/images/platformLogo/Untitled01.png' },
     { url: '/assets/images/platformLogo/Untitled04.png' },
-
-
     { url: '/assets/images/platformLogo/Untitled07.png' },
     { url: '/assets/images/platformLogo/Untitled03.png' },
-    { url: '/assets/images/platformLogo/Untitled01.png' },
 
+    { url: '/assets/images/platformLogo/Untitled01.png' },
     { url: '/assets/images/platformLogo/Untitled05.png' },
     { url: '/assets/images/platformLogo/Untitled08.png' },
     { url: '/assets/images/platformLogo/Untitled02.png' },
@@ -99,21 +102,9 @@ const StatCards2 = (showData) => {
           <div className="container">
             <div className="row align-items-stretch">
               {APIData123.map((item, index) => (
-                // <div className="c-dashboardInfo col-lg-4 col-md-6" key={index}>
-                //   <div className="wrap">
-                //     <h6 className="">{item.count}</h6>
-                //     <Row>
-                //       <Col >
-                //         <h5 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
-                //           <img key={index} src={listOfImages[index].url} height={70} width={70} ></img>
-                //           {item.platformName}
-                //         </h5>
-                //       </Col>
-                //       <br />
-                //     </Row>
-                //   </div>
-                // </div>
-                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
+                // if (item.platformName != "") {
+                //   return (
+                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index} >
                   <div className="wrap">
                     <Row className='mb-1'>
                       <Col md="4">
@@ -132,7 +123,9 @@ const StatCards2 = (showData) => {
                     </Row>
                   </div>
                 </div>
-              ))}
+                // )}
+              )
+              )}
             </div>
           </div>
         </div>
@@ -141,6 +134,20 @@ const StatCards2 = (showData) => {
 
   );
 };
+// <div className="c-dashboardInfo col-lg-4 col-md-6" key={index}>
+//   <div className="wrap">
+//     <h6 className="">{item.count}</h6>
+//     <Row>
+//       <Col >
+//         <h5 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+//           <img key={index} src={listOfImages[index].url} height={70} width={70} ></img>
+//           {item.platformName}
+//         </h5>
+//       </Col>
+//       <br />
+//     </Row>
+//   </div>
+// </div>
 // #282f4e removed
 
 // #EB9694

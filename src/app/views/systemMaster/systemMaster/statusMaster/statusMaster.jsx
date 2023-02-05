@@ -39,11 +39,18 @@ const StatusMaster = () => {
     const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
 
     useEffect(() => {
         axios
-            .get(`https://43.204.38.243:3000/api/getMasterData?masterName=statusmaster`,
-                { headers: { "x-access-token": items } })
+            .get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`,
+                { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
             });
@@ -55,27 +62,27 @@ const StatusMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`https://43.204.38.243:3000/api/mastersUpsert`, {
+            .post(`https://43.204.38.243:3001/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
                 recodStatus: 1,
                 addedBy: 1,
                 updatedBy: 1,
-            }, { headers: { "x-access-token": items } })
+            }, { headers: headers })
             .then(() => useEffect);
     };
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('https://43.204.38.243:3000/api/mastersUpsert', {
+        axios.post('https://43.204.38.243:3001/api/mastersUpsert', {
             id: i.id,
             masterName: 'status',
             inputText: i.platformName,
             recodStatus: 0,
             addedBy: 1,
             updatedBy: 1,
-        }, { headers: { "x-access-token": items } });
+        }, { headers: headers });
     };
 
     const handleClose = () => setShow(false);
@@ -127,11 +134,11 @@ const StatusMaster = () => {
 
                                 <Box className="text-center" width="100%" overflow="auto">
                                     {/* Table Section */}
-                                    <StyledTable>
-                                        <TableHead>
+                                    <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                                        <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                                             <TableRow>
-                                                <TableCell align="justify">Status Id</TableCell>
-                                                <TableCell align="justify">Status Name</TableCell>
+                                                <TableCell align="center">Status Id</TableCell>
+                                                <TableCell align="center">Status Name</TableCell>
                                                 <TableCell align="center">Action</TableCell>
                                             </TableRow>
                                         </TableHead>
@@ -140,8 +147,8 @@ const StatusMaster = () => {
                                                 if (subscriber.status == 1) {
                                                     return (
                                                         <TableRow key={index}>
-                                                            <TableCell align="justify">{subscriber.id}</TableCell>
-                                                            <TableCell align="justify">{subscriber.name}</TableCell>
+                                                            <TableCell align="center">{subscriber.id}</TableCell>
+                                                            <TableCell align="center">{subscriber.name}</TableCell>
                                                             <TableCell align="center">
                                                                 <IconButton onClick={() => handleShow(subscriber)}>
                                                                     <Icon color="success">edit</Icon>

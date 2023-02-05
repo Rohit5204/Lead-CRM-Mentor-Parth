@@ -142,29 +142,66 @@ const Layout1Topbar = () => {
               </UserMenu>
             }
           >
-            <StyledItem>
-              <Link to="/">
-                <Icon> home </Icon>
-                <Span> Home </Span>
-              </Link>
-            </StyledItem>
+            {(function () {
+              if (roleName == "Employee") {
 
-            <StyledItem>
-              <Link to="/manageProfile">
-                <Icon> person </Icon>
-                <Span> Profile </Span>
-              </Link>
-            </StyledItem>
+                return <> <StyledItem>
+                  <Link to="/">
+                    <Icon> home </Icon>
+                    <Span> Home </Span>
+                  </Link>
+                </StyledItem>
+                  <StyledItem onClick={logout}>
+                    <Icon> power_settings_new </Icon>
+                    <Span> Logout </Span>
+                  </StyledItem>
 
-            <StyledItem>
-              <Icon> settings </Icon>
-              <Span> Settings </Span>
-            </StyledItem>
+                </>
+              }
+              else if (roleName == "Team Lead") {
 
-            <StyledItem onClick={logout}>
-              <Icon> power_settings_new </Icon>
-              <Span> Logout </Span>
-            </StyledItem>
+                return <> <StyledItem>
+                  <Link to="/">
+                    <Icon> home </Icon>
+                    <Span> Home </Span>
+                  </Link>
+                </StyledItem>
+                  <StyledItem onClick={logout}>
+                    <Icon> power_settings_new </Icon>
+                    <Span> Logout </Span>
+                  </StyledItem>
+
+                </>
+              }
+              else {
+                return <>
+                  <StyledItem>
+                    <Link to="/">
+                      <Icon> home </Icon>
+                      <Span> Home </Span>
+                    </Link>
+                  </StyledItem>
+
+                  <StyledItem>
+                    <Link to="/manageProfile">
+                      <Icon> person </Icon>
+                      <Span> Profile </Span>
+                    </Link>
+                  </StyledItem>
+
+                  <StyledItem>
+                    <Icon> settings </Icon>
+                    <Span> Settings </Span>
+                  </StyledItem>
+
+                  <StyledItem onClick={logout}>
+                    <Icon> power_settings_new </Icon>
+                    <Span> Logout </Span>
+                  </StyledItem>
+                </>
+              }
+            })()}
+
           </MatxMenu>
         </Box>
       </TopbarContainer>

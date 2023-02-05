@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Box, MenuItem, FormControl, Select } from '@mui/material';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Box, MenuItem, FormControl, Select, Autocomplete, TextField, } from '@mui/material';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -27,20 +27,48 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
   const [gsDescription, setGsDescription] = useState(theEditCatalogue.gsDescription);
   const [duration, setDuration] = useState(0)
 
-  const UpdateCatalogue = {
-    catId: id,
-    catType: gsType,
-    gsName: gsName,
-    price: gsPrice,
-    description: gsDescription,
-    catStatus: catStatus,
-    actionBy: 1,
-  };
+  const [assignTo, setAssignTo] = useState([]);
+  const [id1, setId1] = useState([]);
+  const [myOptions3, setMyOptions3] = useState(theEditCatalogue.durationName);
+
+  useEffect(() => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
+      { headers: headers }).then((res) => {
+        for (var i = 0; i < res.data.data.length; i++) {
+          setAssignTo(current => [...current, res.data.data[i].name]);
+          setId1(current => [...current, res.data.data[i].id, res.data.data[i].name])
+        }
+      });
+  }, []);
+
+  const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
+
   const updateCatalogue = (e) => {
-    const items = localStorage.getItem('accessToken');
-    console.log({ UpdateCatalogue });
-    e.preventDefault();
-    axios.post(`https://43.204.38.243:3000/api/upsertCatalogue`, UpdateCatalogue, { headers: { "x-access-token": items } }).then(() => useEffect);
+    var catdurationid
+    for (var i = 0; i < id1.length; i++) {
+      if (myOptions3 == id1[i]) {
+        catdurationid = id1[i - 1]
+      }
+    }
+    const UpdateCatalogue = {
+      catId: id,
+      catType: gsType,
+      gsName: gsName,
+      price: gsPrice,
+      description: gsDescription,
+      catStatus: catStatus,
+      actionBy: 1,
+      durationId: catdurationid
+    };
+    axios.post(`https://43.204.38.243:3001/api/upsertCatalogue`, UpdateCatalogue,
+      { headers: headers }).then(() => useEffect);
     handleDialog();
   };
   const handleSubmit = (e) => {
@@ -92,16 +120,29 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
         </Row>
         <Row>
           <Col >
-            <FormControl sx={{ m: 0, minWidth: 700 }} size="small" className="mt-1">
-              <Form.Label>Duration</Form.Label>
-              <Select value={duration} label="Type" onChange={(e) => setDuration(e.target.value)}>
-                <MenuItem value="0">30 Days [1 Month]</MenuItem>
-                <MenuItem value="1">60 Days [2 Months]</MenuItem>
-                <MenuItem value="2">90 Days [3 Months]</MenuItem>
-                <MenuItem value="3">180 Days [6 Months]</MenuItem>
-                <MenuItem value="4">365 Days [1 Year]</MenuItem>
-              </Select>
-            </FormControl>
+
+            <InputGroup>
+              <Form.Label className="mt-1">Duration</Form.Label>
+            </InputGroup>
+            <Autocomplete
+              style={{ width: 700 }}
+              freeSolo
+              autoComplete
+              autoHighlight
+              options={assignTo}
+              value={myOptions3}
+              onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+
+                  variant="outlined"
+                  label="Select the Calalogue Duration"
+                  size="small"
+                />
+              )}
+            />
+
 
           </Col>
         </Row>

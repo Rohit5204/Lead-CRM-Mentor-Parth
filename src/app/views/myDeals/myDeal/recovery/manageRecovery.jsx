@@ -6,6 +6,7 @@ import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import ReminderMail from './reminderMail';
 import ClearIcon from '@mui/icons-material/Clear';
+import moment from 'moment/moment';
 import {
     Box,
     Icon,
@@ -53,15 +54,30 @@ const ManageRecovery = () => {
     };
     const [userData, setUserData] = useState([]);
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const firstdate = moment().startOf('month').format('YYYY-MM-DD');
+    const lastdate = moment().endOf('month').format("YYYY-MM-DD");
+
+    const [startDate, setstartDate] = useState(firstdate)
+    const [endDate, setendDate] = useState(lastdate)
     //get method
-    useEffect(() => {
-        axios.post(`https://43.204.38.243:3000/api/getPendingInstalments`, {
-            fromDate: "2023-01-01",
-            toDate: "2023-01-31",
+    const fetchRecovery = () => {
+        axios.post(`https://43.204.38.243:3001/api/getPendingInstalments`, {
+            fromDate: startDate,
+            toDate: endDate,
             userId: 1
-        }, { headers: { "x-access-token": items } }).then((response) => {
+        }, { headers: headers }).then((response) => {
             setUserData(response.data.data);
         });
+    }
+    useEffect(() => {
+        fetchRecovery()
     }, [userData]);
 
     return (
@@ -77,57 +93,34 @@ const ManageRecovery = () => {
                 </Box>
                 <Box>
                     <Row>
-                        <Col>
+                        <Col md="6">
+                            <Form.Label htmlFor="basic-url">Apply Date Range (By Default Current Month Start Date and End Date is selected) </Form.Label>
                             <InputGroup className="mb-3">
-                                {/* <button type="submit" className="btn btn-success" onClick={changePage}>
-                                    ADD
-                                </button>
-                                &nbsp; */}
                                 <Form.Control
-                                    placeholder="Search Box"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                />
+                                    value={startDate}
+                                    onChange={(e) => setstartDate(e.target.value)}
+                                    type="date" />
+                                <Form.Control
+                                    value={endDate}
+                                    onChange={(e) => setendDate(e.target.value)}
+                                    type="date" />
+
                             </InputGroup>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Day
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Week
-                            </button>
-                            &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
-                                Last Month
-                            </button>
-                            &nbsp;
-                        </Col>
-                        <Col></Col>
-                        <Col>
-                            <Form.Label htmlFor="basic-url">Apply Advanced Filter</Form.Label>
-                            <br></br>
-                            <button type="button" className="btn btn-outline-primary">
-                                Advanced Search
-                            </button>
-                        </Col>
+
                     </Row>
                 </Box>
+
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
                     <h4>Recovery List</h4>
                     <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                         <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                             <TableRow>
-                                <TableCell align="center">Sr No</TableCell>
+                                <TableCell align="center">Invoice No</TableCell>
+                                <TableCell align="center">Client Name</TableCell>
                                 <TableCell align="center">EMI Date</TableCell>
                                 <TableCell align="center">EMI Amount</TableCell>
-                                <TableCell align="center">Mobile Number</TableCell>
                                 <TableCell align="center">Fine Amount</TableCell>
                                 <TableCell align="center">Status</TableCell>
                                 <TableCell align="center">Action</TableCell>
@@ -139,9 +132,9 @@ const ManageRecovery = () => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell align="center">{subscriber.invoiceNumber}</TableCell>
+                                        <TableCell align="center">{subscriber.clientName}</TableCell>
                                         <TableCell align="center">{new Date(subscriber.instalmentDate).toLocaleDateString('en-GB')}</TableCell>
                                         <TableCell align="center">₹ {subscriber.instalmentAmount}</TableCell>
-                                        <TableCell align="center">{subscriber.companyContact}</TableCell>
                                         <TableCell align="center">₹ {subscriber.fineAmount == null ? 0 : subscriber.fineAmount}</TableCell>
                                         <TableCell align="center">
                                             {subscriber.hasPaid == 1 ? (

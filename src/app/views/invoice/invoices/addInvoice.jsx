@@ -18,6 +18,8 @@ import {
     TextField,
     FormControl,
     IconButton,
+    MenuItem,
+    Select,
     Table,
     TableBody,
     TableCell,
@@ -56,16 +58,16 @@ const StyledTable = styled(Table)(() => ({
 
 const AddInvoice = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [discount, setDiscount] = useState(5);
+    const [discount, setDiscount] = useState(0);
     const [tax, setTax] = useState(18);
     const [invoiceDate, setInvoiceDate] = useState(defaultValue);
     const [quotationNumber, setQuotationNumber] = useState(1201);
     const [cashierName, setCashierName] = useState('');
-    const [companyEmail, setCompanyEmail] = useState('info@company.com');
-    const [companyContact, setCompanyContact] = useState('+91-01123654789');
-    const [companyAddress, setCompanyAddress] = useState('Street 14 ,Black Mount Apartment');
-    const [companyGstNo, setCompanyGstNo] = useState('ABCDEF01234');
-    const [companyStateName, setCompanyStateName] = useState('Maharashtra');
+    const [companyEmail, setCompanyEmail] = useState('');
+    const [companyContact, setCompanyContact] = useState('');
+    const [companyAddress, setCompanyAddress] = useState('');
+    const [companyGstNo, setCompanyGstNo] = useState('');
+    const [companyStateName, setCompanyStateName] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [panNo, setPanNo] = useState('');
     const [gsQuantity, setGsQuantity] = useState(1);
@@ -77,6 +79,7 @@ const AddInvoice = () => {
     const [pendingPayment, setPendingPayment] = useState(0);
     const [remarks, setRemarks] = useState('');
     const [installments, setInstallments] = useState([]);
+    const [invoiceType, setInvoiceType] = useState('s')
     const [items, setItems] = useState([
         {
             id: uid(6),
@@ -206,6 +209,13 @@ const AddInvoice = () => {
 
 
     const token = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": token,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     // Fetching the Catalogue Name & Price
     const getPrice = (value) => {
         setMyOptions6(value)
@@ -228,17 +238,51 @@ const AddInvoice = () => {
             }
         }
     }
+    const [leadID1, setLeadID1] = useState('')
+    const [leadID2, setLeadId2] = useState([])
+    const getLeadByID = () => {
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+            {
+                leadId: leadID1,
+                userId: 0,
+                statusId: 0,
+                searchKey: "",
+                locationkey: "",
+                platformId: 0,
+                opType: ""
+            }, { headers: headers }).
+            then((res) => {
+                setLeadId2(res.data.data)
+            });
+    }
+    const [compnayData, setCompanyData] = useState([])
+    const getCompanyData = () => {
+        axios
+            .post(
+                `https://43.204.38.243:3000/api/getCompanyMaster`,
+                { id: 4 },
+                { headers: headers }
+            )
+            .then((response) => {
+                console.log(response)
+                setCompanyData(response.data.data[0]);
+            });
+    }
     const pending = total - initalPayment;
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3000/api/getFilteredLeadData`, { leadId: 0, userId: 0, statusId: 0 },
-            { headers: { "x-access-token": token } }).then((res) => {
+        getCompanyData()
+        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+            leadId: 0, userId: 0, statusId: 0, searchKey: "",
+            locationkey: "", platformId: 0, opType: ""
+        },
+            { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setLeadData(current => [...current, res.data.data[i].name]);
                     setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
                 }
             });
-        axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0 },
-            { headers: { "x-access-token": token } }).then((res) => {
+        axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+            { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
                     setId3(current => [...current, res.data.data[i].id, res.data.data[i].gsName])
@@ -265,10 +309,11 @@ const AddInvoice = () => {
 
 
         const AddInvoice = {
-            leadId: leadid,
-            comapnyAddress: companyAddress,
-            companyEmail: companyEmail,
-            companyContact: companyContact,
+            leadId: leadID1,
+            invoiceDate: invoiceDate,
+            comapnyAddress: compnayData.address,
+            companyEmail: compnayData.email,
+            companyContact: compnayData.contactNo,
             billTo: customerName,
             clientAddress: clientAddress,
             clientEmail: clientEmail,
@@ -287,11 +332,12 @@ const AddInvoice = () => {
             clientPan: panNo,
             initialPayment: initalPayment,
             pendingPayment: pending,
-            instalments: installments
+            instalments: installments,
+            invoiceType: invoiceType
         }
         console.log({ AddInvoice });
-        axios.post('https://43.204.38.243:3000/api/saveInvoice', AddInvoice,
-            { headers: { "x-access-token": token } }
+        axios.post('https://43.204.38.243:3001/api/saveInvoice', AddInvoice,
+            { headers: headers }
         );
     };
     const navigate = useNavigate();
@@ -318,15 +364,6 @@ const AddInvoice = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    {/* / <Col>
-                                        <Form.Label>Invoice Number:</Form.Label>
-                                        <Form.Control
-                                            disabled
-                                            value={quotationNumber}
-                                            onChange={(event) => setQuotationNumber(event.target.value)}
-                                            placeholder="Enter the Invoice Number"
-                                        />
-                                    </Col> */}
                                     <Col>
                                         <Form.Label>Date:</Form.Label>
                                         <InputGroup className="mb-2">
@@ -341,50 +378,67 @@ const AddInvoice = () => {
                                                 <CalendarMonthIcon />
                                             </InputGroup.Text></InputGroup>
                                     </Col>
-
-
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Form.Label>Select Lead</Form.Label><br />
-                                        <FormControl>
-                                            <Autocomplete
-                                                style={{ width: 350 }}
-                                                freeSolo
-                                                autoComplete
-                                                autoHighlight
-                                                options={leadData}
-                                                value={myOptions5}
-                                                onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        variant="outlined"
-                                                        label="Select the Lead"
-                                                        size="small"
-                                                    />
-                                                )}
+                                        <Form.Label>Lead Id:</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <Form.Control
+                                                value={leadID1}
+                                                onChange={(event) => setLeadID1(event.target.value)}
+                                                placeholder="Enter the Invoice Number"
                                             />
-                                        </FormControl>
+                                            <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
+                                                Fetch Lead
+                                            </Button>
+                                        </InputGroup>
                                     </Col>
                                     <Col>
-                                        <Form.Label> Generated By:</Form.Label>
-                                        <InputGroup className="mb-2">
-                                            <InputGroup.Text id="basic-addon1">
-                                                <Icon>person</Icon>
-                                            </InputGroup.Text>
-                                            <Form.Control
-                                                required
-                                                className="flex-1"
-                                                placeholder="Cashier name"
-                                                type="text"
-                                                name="cashierName"
-                                                id="cashierName"
-                                                value={cashierName}
-                                                onChange={(event) => setCashierName(event.target.value)}
-                                            /></InputGroup>
+                                        <FormControl sx={{ m: 0, minWidth: 350 }} size="small" className="mt-1">
+                                            <InputGroup>
+                                                <Form.Label className="mt-1">Invoice Type</Form.Label>
+                                            </InputGroup>
+                                            <Select
+                                                value={invoiceType}
+                                                label="."
+                                                onChange={(e) => setInvoiceType(e.target.value)}
+                                            >
+                                                <MenuItem value="s">Select the Type</MenuItem>
+                                                <MenuItem value="Regular">Regular</MenuItem>
+                                                <MenuItem value="Renewal">Renewal</MenuItem>
+                                                <MenuItem value="Recovery">Recovery</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Col>
                                 </Row>
+                                <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                                    <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+
+                                        <TableRow>
+                                            <TableCell align="center">Lead ID</TableCell>
+                                            {/* <TableCell align="justify">Date</TableCell> */}
+                                            <TableCell align="center">Lead Name</TableCell>
+                                            <TableCell align="center">Platform Name</TableCell>
+                                            <TableCell align="center">Label</TableCell>
+
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {leadID2.map((data, index) => {
+                                            return (
+                                                <TableRow key={index}>
+                                                    <TableCell align="center">{data.leadId}</TableCell>
+                                                    {/* <TableCell align="justify">{quotation.createdDate}</TableCell> */}
+                                                    <TableCell align="center">{data.name}</TableCell>
+                                                    <TableCell align="center">{data.platformName}</TableCell>
+                                                    <TableCell align="center">{data.labelName}</TableCell>
+
+                                                </TableRow>
+                                            );
+                                        })}
+
+                                    </TableBody>
+                                </StyledTable>
                                 <div className="mt-2">
                                     <b>
                                         <h6 style={{ color: 'green' }}>Company Detail's</h6>
@@ -394,13 +448,8 @@ const AddInvoice = () => {
                                             <Form.Label>Company Email:</Form.Label>
                                             <Form.Control
                                                 disabled
-                                                required
-                                                // className="flex-1"
                                                 placeholder="Company Email"
-                                                // type="text"
-                                                // name="companyEmail"
-                                                // id="companyEmail"
-                                                value={companyEmail}
+                                                value={compnayData.email}
                                                 onChange={(event) => setCompanyEmail(event.target.value)}
                                             />
                                         </Col>
@@ -414,7 +463,7 @@ const AddInvoice = () => {
                                                 type="text"
                                                 name="companyContact"
                                                 id="companyContact"
-                                                value={companyContact}
+                                                value={compnayData.contactNo}
                                                 onChange={(event) => setCompanyContact(event.target.value)}
                                             />
                                         </Col>
@@ -428,7 +477,7 @@ const AddInvoice = () => {
                                                     as="textarea"
                                                     rows={2}
                                                     onChange={(event) => setCompanyAddress(event.target.value)}
-                                                    value={companyAddress}
+                                                    value={compnayData.address}
                                                     placeholder="Company Address"
                                                 />
                                             </Form.Group>
@@ -445,7 +494,7 @@ const AddInvoice = () => {
                                                 type="text"
                                                 name="companyGstNo"
                                                 id="companyGstNo"
-                                                value={companyGstNo}
+                                                value={compnayData.gstNo}
                                                 onChange={(event) => setCompanyGstNo(event.target.value)}
                                             />
                                         </Col>
@@ -459,7 +508,7 @@ const AddInvoice = () => {
                                                 type="text"
                                                 name="companyStateName"
                                                 id="companyStateName"
-                                                value={companyStateName}
+                                                value={compnayData.stateName}
                                                 onChange={(event) => setCompanyStateName(event.target.value)}
                                             />
                                         </Col>
@@ -554,12 +603,18 @@ const AddInvoice = () => {
                                             />
                                         </Col>
                                     </Row>
-
-                                    <Box className="text-center mt-2" width="100%" >
+                                    <br />
+                                    <Row>
+                                        <Col>
+                                            <Form.Label style={{ color: 'red' }}>
+                                                Note :- Please add Tax Rate, Discount & Quantity before selecting the Product Catalgoue.
+                                            </Form.Label></Col>
+                                    </Row>
+                                    <Box className="mt-2" width="100%" >
                                         {/* Table Section */}
                                         <Row>
                                             <Col></Col>
-                                            <Col className="col-sm-12">
+                                            <Col className="text-center col-sm-12">
                                                 <h4 style={{ color: 'green' }}>Product Invoice List</h4>
                                             </Col>
                                             {/* <Col>
@@ -575,11 +630,23 @@ const AddInvoice = () => {
                                             </Col> */}
                                         </Row>
                                         <Row>
-                                            <Col>
+                                            {/* <Col>
+                                                <Form.Label className='mr-5'>Quantity</Form.Label>
+                                                <Form.Control
+                                                    style={{ width: 180 }}
+                                                    type='number'
+                                                    min='1'
+                                                    max='1000'
+                                                    onChange={(event) => setGsQuantity(event.target.value)}
+                                                    value={gsQuantity}
+                                                    placeholder="Customer Address"
+                                                />
+                                            </Col> */}
+                                            <Col md="6">
                                                 <Form.Label>Select the Catalogue</Form.Label><br />
                                                 <FormControl>
                                                     <Autocomplete
-                                                        style={{ width: 180 }}
+                                                        style={{ width: 350 }}
                                                         freeSolo
                                                         autoComplete
                                                         autoHighlight
@@ -597,23 +664,10 @@ const AddInvoice = () => {
                                                     />
                                                 </FormControl>
                                             </Col>
-                                            <Col>
-                                                <Form.Label className='mr-5'>Quantity</Form.Label>
-                                                <Form.Control
-                                                    style={{ width: 180 }}
-                                                    type='number'
-                                                    min='1'
-                                                    max='1000'
-                                                    onChange={(event) => setGsQuantity(event.target.value)}
-                                                    value={gsQuantity}
-                                                    placeholder="Customer Address"
-                                                />
-                                            </Col>
-                                            <Col>
+                                            <Col md="6">
                                                 <Form.Label className='mr-5'>Price</Form.Label>
                                                 <Form.Control
                                                     disabled
-                                                    style={{ width: 180 }}
                                                     onChange={(e) => console.log(e)}
                                                     value={listamt}
                                                     placeholder="Customer Address"
@@ -720,7 +774,7 @@ const AddInvoice = () => {
                     <Col>
                         <Card.Body>
                             <Button variant="primary" onClick={reviewInvoiceHandler}>
-                                Review
+                                Preview
                             </Button>&nbsp;
                             <button type="button" onClick={handleSubmit} className="btn btn-success">
                                 ADD Invoice

@@ -66,62 +66,42 @@ const CompletedInvoiceList = () => {
         setShow(true);
     };
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     //get method
+    const [onType, setOnType] = useState('')
+    const [searchBox, setSearchBox] = useState('')
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3000/api/getInvoiceData`,
-            { invoiceid: 0, empId: 0, statusId: 2 }, { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/getInvoiceData`,
+            { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
             });
-    }, []);
+    }, [APIData]);
     return (
         <Container>
             <Box>
-                <Box className="breadcrumb">
-                    <Breadcrumb
-                        routeSegments={[
-                            { name: 'Manage Invoice', path: '/invoices/ManageInvoiceList' }
-                        ]}
-                    />
-                </Box>
-                {/* Search option */}
                 <Box>
-                    {/* <Row>
-            <Col>
-              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-              <br></br>
-              <button type="button" className="btn btn-outline-success">
-                Last Day
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-success">
-                Last Week
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-success">
-                Last Month
-              </button>
-              &nbsp;
-            </Col>
-          </Row> */}
-                    <br />
                     <Row>
                         <Col>
-                            <Form.Label htmlFor="basic-url">Serach Box</Form.Label>
+                            <Form.Label htmlFor="basic-url">Search Box</Form.Label>
                             <InputGroup className="mb-3">
                                 <button type="button" className="btn btn-success" onClick={changePage}>
                                     ADD
                                 </button>
                                 &nbsp;
                                 <Form.Control
-                                    placeholder="Search Box"
+                                    placeholder="Search By Quotation Number, Client Name, Product Name, Mobile Number & Amount"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
-                                />
-                                {/* &nbsp;
-                <button type="submit" className="btn btn-success" onClick={changePage}>
-                  ADD
-                </button> */}
+                                    value={searchBox}
+                                    onChange={(e) => setSearchBox(e.target.value)}
+                                />&nbsp;
                             </InputGroup>
                         </Col>
 
@@ -130,143 +110,31 @@ const CompletedInvoiceList = () => {
                         <Col md="10">
                             <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
                             <br></br>
-                            <button type="button" className="btn btn-outline-primary">
+                            <button type="button" className="btn btn-outline-primary"
+                                value={onType}
+                                onClick={() => setOnType('DEFAULT')}>
+                                ALL
+                            </button>
+                            &nbsp;
+                            <button type="button" className="btn btn-outline-primary"
+                                value={onType}
+                                onClick={() => setOnType('LASTDAY')}>
                                 Last Day
                             </button>
                             &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
+                            <button type="button" className="btn btn-outline-primary"
+                                value={onType}
+                                onClick={() => setOnType('LASTWEEK')}>
                                 Last Week
                             </button>
                             &nbsp;
-                            <button type="button" className="btn btn-outline-primary">
+                            <button type="button" className="btn btn-outline-primary"
+                                value={onType}
+                                onClick={() => setOnType('LASTMONTH')}>
                                 Last Month
-                            </button>
-                            &nbsp;
-                        </Col>
-
-                        <Col md="2">
-                            <Form.Label htmlFor="basic-url"> Advanced Search</Form.Label>
-                            <br />
-                            <button type="button" className="btn btn-outline-primary" onClick={showForm1}>
-                                Apply Filter
                             </button>
                         </Col>
                     </Row>
-                    <br />
-                    {showForm && (
-                        <form>
-                            <Row>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Serach By Customer Name</label>
-                                        <input
-                                            type="email"
-                                            class="form-control"
-                                            id="exampleInputEmail1"
-                                            aria-describedby="emailHelp"
-                                            placeholder="Enter Customer Name"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Serach By Product Name</label>
-                                        <input
-                                            type="email"
-                                            class="form-control"
-                                            id="exampleInputEmail1"
-                                            aria-describedby="emailHelp"
-                                            placeholder="Enter Product Name"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Serach By Quantity</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Serach By Quantity"
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Search By Contact Number</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Serach By Contact Number"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Search By Amount</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Search By Amount"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Search By Date</label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Search By Date"
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Select Assign To</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Select Assign To"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Select Generated By</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Select Generated By"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Select Monitor By</label>
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPassword1"
-                                            placeholder="Select Monitor By"
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
-                            <button type="submit" class="btn btn-primary">
-                                Serach
-                            </button>
-                        </form>
-                    )}
                 </Box>
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
@@ -278,6 +146,7 @@ const CompletedInvoiceList = () => {
                                 <TableCell align="center">Invoice No</TableCell>
                                 <TableCell align="center">Date</TableCell>
                                 <TableCell align="center">Customer Name</TableCell>
+                                <TableCell align="center">Product Name</TableCell>
                                 <TableCell align="center">Mobile No</TableCell>
                                 <TableCell align="center">Total Amount</TableCell>
                                 <TableCell align="center">Action</TableCell>
@@ -288,8 +157,9 @@ const CompletedInvoiceList = () => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell align="center">{invoice.invoiceNumber}</TableCell>
-                                        <TableCell align="center">{new Date(invoice.createdDate).toLocaleDateString()}</TableCell>
+                                        <TableCell align="center">{new Date(invoice.createdDate).toLocaleDateString('en-GB')}</TableCell>
                                         <TableCell align="center">{invoice.billTo}</TableCell>
+                                        <TableCell align="center">{invoice.gsName}</TableCell>
                                         <TableCell align="center">{invoice.clientContact}</TableCell>
                                         <TableCell align="center">{invoice.grandTotal}</TableCell>
                                         <TableCell align="center">
@@ -299,11 +169,6 @@ const CompletedInvoiceList = () => {
                                             <IconButton onClick={() => handleShow(invoice)}>
                                                 <Icon color="warning">visibility</Icon>
                                             </IconButton>
-                                            <Link to="/invoices/updateInstallments" state={invoice}>
-                                                <IconButton>
-                                                    <Icon color="success">edit</Icon>
-                                                </IconButton>
-                                            </Link>
                                         </TableCell>
                                     </TableRow>
                                 );

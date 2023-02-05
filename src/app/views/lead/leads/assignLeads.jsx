@@ -20,6 +20,9 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  FormControl,
+  TextField,
+  Autocomplete,
   TableRow,
 } from '@mui/material';
 
@@ -72,21 +75,31 @@ function a11yProps(index) {
   };
 }
 const AssignLead = () => {
-  const [obj1, setObj1] = useState(null);
-  // const [obj2, setObj2] = useState(null);
+  const today = new Date();
+  const numberOfDaysToAdd = 0;
+  const date = today.setDate(today.getDate() + numberOfDaysToAdd);
+  const defaultValue = new Date(date).toISOString().split('T')[0]; // yyyy-mm-dd
+
   const [APIData, setAPIData] = useState([]);
+  const [APIDataEmp, setAPIDataEmp] = useState([]);
   const [show, setShow] = useState(false);
   const [assign, setAssign] = useState(false);
   const [assignTo, setAssignTo] = useState([]);
+  const [id1, setId1] = useState([]);
+  const [myOptions3, setMyOptions3] = useState(null);
+
+  const [idFrom, setIdFrom] = useState('');
+  const [idTo, setIdTo] = useState('');
+  const [userId, setUserId] = useState('');
+
+
   //Dialog Form
   const handleCloseAssign = () => setAssign(false);
-  const handleShowAssign = (subscriber) => {
-    setObj1(subscriber);
+  const handleShowAssign = () => {
     setAssign(true);
   };
   const handleClose = () => setShow(false);
   const handleShow = (subscriber) => {
-    setObj1(subscriber);
     setShow(true);
   };
   const [value, setValue] = useState(0);
@@ -97,25 +110,95 @@ const AssignLead = () => {
 
   //get method
   const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId1 = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId1
+  }
+  const [onType, setOnType] = useState('')
+  const [searchBox, setSearchBox] = useState('')
+  const [locationkey, setLocationkey] = useState('')
   useEffect(() => {
     axios
-      .post(`https://43.204.38.243:3000/api/getFilteredLeadData`, {
+      .post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
-      }, { headers: { "x-access-token": items } })
+        searchKey: searchBox,
+        locationkey: locationkey,
+        platformId: 0,
+        opType: onType
+      }, { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);
       });
-  }, [APIData]);
+  }, [APIData])
 
   useEffect(() => {
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
+        setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-  }, [])
+  }, []);
+
+  const blankForm = () => {
+    setIdFrom('');
+    setIdTo('');
+    setMyOptions3('');
+  };
+
+  const assignBulkLead = (e) => {
+    var assignedid
+    for (var i = 0; i < id1.length; i++) {
+      if (myOptions3 == id1[i]) {
+        assignedid = id1[i - 1]
+      }
+    }
+    const bulkAssign = {
+      idFrom: idFrom,
+      idTo: idTo,
+      userId: assignedid
+    };
+    e.preventDefault();
+    axios.post(`https://43.204.38.243:3001/api/assignBulkLeads`,
+      bulkAssign, { headers: headers })
+      .then(() => useEffect);
+    blankForm();
+  };
+  const [selectedDate, setSelectedDate] = useState(defaultValue)
+  const searchLeadByEmp = () => {
+    const leadByEmp = {
+      selectedDate: selectedDate
+    }
+    axios.post(`https://43.204.38.243:3001/api/getLeadsByEmployee`,
+      leadByEmp, { headers: headers })
+      .then((response) => {
+        setAPIDataEmp(response.data.data);
+      });
+  }
+  const [fromEmp, setFromEmp] = useState('')
+  const [toEmp, setToEmp] = useState('')
+  const [remark, setRemark] = useState('')
+  const [transferDate, setTransferDate] = useState('')
+
+  const transferEmp = () => {
+    const emp = {
+      fromEmp: fromEmp,
+      toEmp: toEmp,
+      transferRemarks: remark,
+      transferDate: transferDate,
+    }
+    axios.post(`https://43.204.38.243:3001/api/transferLeads`,
+      emp, { headers: headers })
+      .then((response) => {
+        setAPIDataEmp(response.data.data);
+      });
+    setAssign(false)
+  }
 
   return (
     <Container>
@@ -130,41 +213,65 @@ const AssignLead = () => {
       </Box>
       <Box>
         <Row>
-          <Col>
+          <Col md="4">
             <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
             <br></br>
-            <button type="button" className="btn btn-outline-primary">
+            <button type="button" className="btn btn-outline-primary"
+              value={onType}
+              onClick={() => setOnType('DEFAULT')}>
+              ALL
+            </button>
+            &nbsp;
+            <button type="button" className="btn btn-outline-primary"
+              value={onType}
+              onClick={() => setOnType('LASTDAY')}>
               Last Day
             </button>
             &nbsp;
-            <button type="button" className="btn btn-outline-primary">
+            <button type="button" className="btn btn-outline-primary"
+              value={onType}
+              onClick={() => setOnType('LASTWEEK')}>
               Last Week
             </button>
             &nbsp;
-            <button type="button" className="btn btn-outline-primary">
+            <button type="button" className="btn btn-outline-primary"
+              value={onType}
+              onClick={() => setOnType('LASTMONTH')}>
               Last Month
             </button>
-            &nbsp;
+
           </Col>
-          <Col md="8">
-            <Form.Label htmlFor="basic-url">Search Box</Form.Label>
+          <Col md="4">
+            <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
+            <br></br>
             <InputGroup className="mb-3">
               <Form.Control
-                placeholder="Search Box"
+                placeholder="Search By Lead ID, Name, Mobile Number"
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
+                value={searchBox}
+                onChange={(e) => setSearchBox(e.target.value)}
               />
-              {/* &nbsp;
-                <button type="button" className="btn btn-success">
-                  ADD
-                </button> */}
+            </InputGroup>
+          </Col>
+          <Col md="4">
+            <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
+            <br></br>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search By Street, City, State, Country"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={locationkey}
+                onChange={(e) => setLocationkey(e.target.value)}
+              />
             </InputGroup>
           </Col>
         </Row>
         <Row>
-          <Col>
-            {/* <LeadCards /> */}
-          </Col>
+          {/* <Col>
+            <LeadCards />
+          </Col> */}
         </Row>
       </Box>
 
@@ -174,94 +281,113 @@ const AssignLead = () => {
           <Tab label="Un-Assigned Leads" {...a11yProps(0)} />
           <Tab label="Assigned Leads" {...a11yProps(1)} />
           <Tab label="Employee Wise Leads" {...a11yProps(2)} />
-          <Tab label="Transfer Leads" {...a11yProps(3)} />
         </Tabs>
       </Box>
+
+      {/* First Tab */}
       <TabPanel value={value} index={0}>
-        {/* <Box className="text-center" width="100%" overflow="auto"> */}
-        {/* Inactive Table Section */}
         <Row>
           <Col md="8">
             <InputGroup className="mb-3">
-              <Form.Control aria-label="Starting Lead ID" placeholder="Starting Lead ID" />
+              <Form.Control
+                onChange={(e) => setIdFrom(e.target.value)}
+                value={idFrom}
+                placeholder="Starting Lead ID" />
               <InputGroup.Text>To</InputGroup.Text>
 
-              <Form.Control aria-label="Last Lead ID" placeholder="Last Lead ID" />
+              <Form.Control
+                placeholder="Last Lead ID"
+                onChange={(e) => setIdTo(e.target.value)}
+                value={idTo}
+              />
               <InputGroup.Text><Icon>person</Icon></InputGroup.Text>
-              <Form.Control aria-label="Select Employee Name" placeholder="Employee Name" />
+              <FormControl>
+                {/* <Form.Label>Re-Assign</Form.Label> */}
+                <Autocomplete
+                  style={{ width: 330 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  value={myOptions3}
+                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+
+                      variant="outlined"
+                      label="Select the Employee to Assign"
+                      size="small"
+                    />
+                  )}
+                />
+              </FormControl>
             </InputGroup>
           </Col>
-          {/* <Col>
-            </Col> */}
+
           <Col>
-            <button type="button" className="btn btn-success">
+            <button type="submit"
+              onClick={assignBulkLead}
+              className="btn btn-success">
               Assign
             </button>
           </Col>
         </Row>
-        <StyledTable>
-          <TableHead>
+        <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+          <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
             <TableRow>
-              {/* <TableCell align="justify">Select</TableCell> */}
-              <TableCell align="justify">Lead Id</TableCell>
-              <TableCell align="justify">Lead Name</TableCell>
-              <TableCell align="justify">Customer Name</TableCell>
-              <TableCell align="justify">Created Date</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Lead Id</TableCell>
+              <TableCell align="center">Lead Name</TableCell>
+              <TableCell align="center">Platform Name</TableCell>
+              <TableCell align="center">Interested In</TableCell>
+              <TableCell align="center">Mobile No</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {APIData.map((subscriber, index) => {
+            {APIData?.map((subscriber, index) => {
               if (subscriber.assignedUser == null) {
                 return (
                   <TableRow key={index}>
-                    {/* <TableCell align="justify">
-                    <Form.Check type="switch" id="custom-switch" label="" />
-                  </TableCell> */}
-                    <TableCell align="justify">{subscriber.leadId}</TableCell>
-                    <TableCell align="justify">{subscriber.name}</TableCell>
-                    <TableCell align="justify">{subscriber.clientName}</TableCell>
-                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                    <TableCell align="center">
-                      <IconButton onClick={() => handleShow(subscriber)}>
-                        <PersonAddAlt1Icon color="success"></PersonAddAlt1Icon>
-                      </IconButton>
-                    </TableCell>
+                    <TableCell align="center">{subscriber.leadId}</TableCell>
+                    <TableCell align="center">{subscriber.name}</TableCell>
+                    <TableCell align="center">{subscriber.platformName}</TableCell>
+                    <TableCell align="center">{subscriber.intrestedIn}</TableCell>
+                    <TableCell align="center">{subscriber.mobileNo}</TableCell>
                   </TableRow>
                 );
               }
             })}
           </TableBody>
         </StyledTable>
-        {/* </Box> */}
       </TabPanel>
+      {/* Second Tab */}
       <TabPanel value={value} index={1}>
-        <StyledTable>
-          <TableHead>
+        <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+          <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
             <TableRow>
-              <TableCell align="justify">Lead Id</TableCell>
-              <TableCell align="justify">Lead Name</TableCell>
-              <TableCell align="justify">Customer Name</TableCell>
-              <TableCell align="justify">Assign Employee</TableCell>
-              <TableCell align="justify">Mobile No</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Lead Id</TableCell>
+              <TableCell align="center">Lead Name</TableCell>
+              <TableCell align="center">Label Name</TableCell>
+              <TableCell align="center">Assign Employee</TableCell>
+              <TableCell align="center">Mobile No</TableCell>
+              {/* <TableCell align="center">Action</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {APIData.map((subscriber, index) => {
+            {APIData?.map((subscriber, index) => {
               if (subscriber.assignedUser) {
                 return (
                   <TableRow key={index}>
-                    <TableCell align="justify">{subscriber.leadId}</TableCell>
-                    <TableCell align="justify">{subscriber.name}</TableCell>
-                    <TableCell align="justify">{subscriber.clientName}</TableCell>
-                    <TableCell align="justify">{subscriber.assignedUser}</TableCell>
-                    <TableCell align="justify">{subscriber.mobileNo}</TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center">{subscriber.leadId}</TableCell>
+                    <TableCell align="center">{subscriber.name}</TableCell>
+                    <TableCell align="center">{subscriber.labelName}</TableCell>
+                    <TableCell align="center">{subscriber.assignedUser}</TableCell>
+                    <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                    {/* <TableCell align="center">
                       <IconButton onClick={() => handleShowAssign(subscriber)}>
                         <Icon color="success">edit</Icon>
                       </IconButton>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               }
@@ -271,38 +397,69 @@ const AssignLead = () => {
       </TabPanel>
       {/* Third Tab */}
       <TabPanel value={value} index={2}>
-        <StyledTable>
-          <TableHead>
+        <Row>
+          <Col>
+            <span>Note : Please Select the Date and Search to view the record</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="8">
+            <InputGroup className="mb-3">
+              <Form.Control
+                onChange={(e) => setSelectedDate(e.target.value)}
+                value={selectedDate}
+                type='date'
+              />
+            </InputGroup>
+          </Col>
+          {/* <Col>
+            </Col> */}
+          <Col>
+            <button type="button"
+              onClick={searchLeadByEmp}
+              className="btn btn-success">
+              Search
+            </button>&nbsp;
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={handleShowAssign}
+            >
+              Transfer Leads
+            </button>
+          </Col>
+
+        </Row>
+        <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+          <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
             <TableRow>
-              <TableCell align="justify">Employee Id</TableCell>
-              <TableCell align="justify">Employee Name</TableCell>
-              <TableCell align="justify">Total Count</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Employee Id</TableCell>
+              <TableCell align="center">Employee Name</TableCell>
+              <TableCell align="center">Total Count</TableCell>
+              {/* <TableCell align="center">Action</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {APIData.map((subscriber, index) => {
-              if (subscriber.assignedUser) {
-                return ( */}
-            <TableRow>
-              <TableCell align="justify">102</TableCell>
-              <TableCell align="justify">Vicky S</TableCell>
-              <TableCell align="justify">452</TableCell>
-
-              <TableCell align="center">
-                <IconButton>
-                  <Icon color="success">edit</Icon>
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            {/* );
-              }
-            })} */}
+            {APIDataEmp?.map((subscriber, index) => {
+              // if (subscriber.assignedUser) {
+              return (
+                <TableRow key={index}>
+                  <TableCell align="center">{subscriber.empId}</TableCell>
+                  <TableCell align="center">{subscriber.employeeName}</TableCell>
+                  <TableCell align="center">{subscriber.assignedLeads}</TableCell>
+                  {/* <TableCell align="center">
+                    <IconButton onClick={() => handleShowAssign(subscriber)}>
+                      <Icon color="success">edit</Icon>
+                    </IconButton>
+                  </TableCell> */}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </StyledTable>
 
       </TabPanel>
-      {/* Second Tab */}
+
       <Modal
         show={assign}
         onHide={handleCloseAssign}
@@ -313,20 +470,56 @@ const AssignLead = () => {
         centered
       >
         <Modal.Header>
-          <Modal.Title>Assigned Employee</Modal.Title>
+          <Modal.Title>Transfer Lead</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AssignEmployee theAssignedData={obj1}></AssignEmployee>
+          <Row>
+            <Col>
+              <Form.Label>Current Employee ID</Form.Label>
+              <Form.Control
+                onChange={(e) => setFromEmp(e.target.value)}
+                value={fromEmp}
+                placeholder="Enter the Current Employee ID"
+              />
+            </Col>
+            <Col>
+              <Form.Label>New Employee ID</Form.Label>
+              <Form.Control
+                onChange={(e) => setToEmp(e.target.value)}
+                value={toEmp}
+                placeholder="Enter the New Employee Id"
+              />
+            </Col>
+          </Row>
+          <Row className='mt-2'>
+            <Col>
+              <Form.Label>Select the Date (For Which you have to Transfer Lead)</Form.Label>
+              <Form.Control
+                onChange={(e) => setTransferDate(e.target.value)}
+                value={transferDate}
+                type='date'
+              />
+            </Col>
+          </Row>
+          <Row className='mt-2'>
+            <Col>
+              <Form.Label>Remark</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={1}
+                onChange={(e) => setRemark(e.target.value)}
+                value={remark}
+                placeholder="Remark"
+              />
+            </Col>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
-          {/* <button
-            type="submit"
-            className="btn btn-success"
-            style={{ marginTop: 5 + 'px' }}
-            onClick={handleCloseAssign}
-          >
-            Re-Assign
-          </button> */}
+          <button type="submit"
+            onClick={transferEmp}
+            className="btn btn-success">
+            Transfer Employee
+          </button>&nbsp;
           <button
             type="submit"
             className="btn btn-error"
@@ -335,32 +528,7 @@ const AssignLead = () => {
           >
             Cancel
           </button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header>
-          <Modal.Title>Unassigned Employee</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <UnAssignEmployee theUnAssignData={obj1}></UnAssignEmployee>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            type="submit"
-            className="btn btn-error"
-            style={{ marginTop: 5 + 'px' }}
-            onClick={handleClose}
-          >
-            Cancel
-          </button>
+
         </Modal.Footer>
       </Modal>
     </Container>

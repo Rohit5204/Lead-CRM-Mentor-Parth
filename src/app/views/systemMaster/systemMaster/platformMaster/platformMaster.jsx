@@ -6,7 +6,7 @@ import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import EditPlatform from './editPlatform';
-
+import { DataGrid } from '@mui/x-data-grid';
 import {
     Box,
     Icon,
@@ -82,6 +82,19 @@ const PlatformMaster = () => {
     const [show1, setShow1] = useState(false);
     const [value, setValue] = useState(0);
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const columns = [
+        { field: 'id', headerName: 'Platform Id', width: 180 },
+        { field: 'platformName', headerName: 'Platform Name', width: 240 },
+
+    ];
+
 
     const PlatformPayload = {
         id: 0,
@@ -95,8 +108,8 @@ const PlatformMaster = () => {
     }
     useEffect(() => {
         axios
-            .get(`https://43.204.38.243:3000/api/getMasterData?masterName=platformmaster`,
-                { headers: { "x-access-token": items } })
+            .get(`https://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`,
+                { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
             });
@@ -108,21 +121,21 @@ const PlatformMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`https://43.204.38.243:3000/api/mastersUpsert`, PlatformPayload,
-                { headers: { "x-access-token": items } })
+            .post(`https://43.204.38.243:3001/api/mastersUpsert`, PlatformPayload,
+                { headers: headers })
             .then(() => useEffect);
     };
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('https://43.204.38.243:3000/api/mastersUpsert', {
+        axios.post('https://43.204.38.243:3001/api/mastersUpsert', {
             id: i.id,
             masterName: 'platform',
             inputText: i.platformName,
             recodStatus: 0,
             addedBy: 1,
             updatedBy: 1,
-        }, { headers: { "x-access-token": items } });
+        }, { headers: headers });
     };
 
     const handleClose = () => setShow(false);
@@ -185,11 +198,11 @@ const PlatformMaster = () => {
                             {/* First Tab */}
                             <Box className="text-center" width="100%" overflow="auto">
                                 {/* Table Section */}
-                                <StyledTable>
-                                    <TableHead>
+                                <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                                    <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                                         <TableRow>
-                                            <TableCell align="justify">Lead Id</TableCell>
-                                            <TableCell align="justify">Lead Name</TableCell>
+                                            <TableCell align="center">Lead Id</TableCell>
+                                            <TableCell align="center">Lead Name</TableCell>
                                             <TableCell align="center">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -198,8 +211,8 @@ const PlatformMaster = () => {
                                             if (subscriber.status == 1) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell align="justify">{subscriber.id}</TableCell>
-                                                        <TableCell align="justify">{subscriber.platformName}</TableCell>
+                                                        <TableCell align="center">{subscriber.id}</TableCell>
+                                                        <TableCell align="center">{subscriber.platformName}</TableCell>
                                                         <TableCell align="center">
                                                             <IconButton onClick={() => handleShow(subscriber)}>
                                                                 <Icon color="success">edit</Icon>
@@ -214,17 +227,26 @@ const PlatformMaster = () => {
                                         })}
                                     </TableBody>
                                 </StyledTable>
+                                {/* <div style={{ height: 570, width: '100%' }}>
+                                    <DataGrid
+                                        rows={APIData}
+                                        columns={columns}
+                                        pageSize={10}
+                                        rowsPerPageOptions={[10]}
+                                    // checkboxSelection
+                                    />
+                                </div> */}
                             </Box>
                         </TabPanel>
                         {/* Second Tab */}
                         <TabPanel value={value} index={1}>
                             <Box className="text-center" width="100%" overflow="auto">
                                 {/* Inactive Table Section */}
-                                <StyledTable>
-                                    <TableHead>
+                                <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                                    <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                                         <TableRow>
-                                            <TableCell align="justify">Lead Id</TableCell>
-                                            <TableCell align="justify">Lead Name</TableCell>
+                                            <TableCell align="center">Lead Id</TableCell>
+                                            <TableCell align="center">Lead Name</TableCell>
                                             <TableCell align="center">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -233,13 +255,12 @@ const PlatformMaster = () => {
                                             if (subscriber.status == 0) {
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell align="justify">{subscriber.id}</TableCell>
-                                                        <TableCell align="justify">{subscriber.platformName}</TableCell>
+                                                        <TableCell align="center">{subscriber.id}</TableCell>
+                                                        <TableCell align="center">{subscriber.platformName}</TableCell>
                                                         <TableCell align="center">
                                                             <IconButton onClick={() => handleShow(subscriber)}>
                                                                 <Icon color="success">edit</Icon>
                                                             </IconButton>
-
                                                         </TableCell>
                                                     </TableRow>
                                                 );
@@ -343,7 +364,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    centerContent: 'space-between',
     padding: '24px !important',
     // background: '#19CABA',
     [theme.breakpoints.down('sm')]: { padding: '16px !important' },

@@ -13,17 +13,29 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 
-const StatusWiseCard = () => {
+const StatusWiseCard = (showData) => {
     const { palette } = useTheme();
 
     const [statusWiseData, setStatusWiseData] = useState([]);
     const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3000/api/getLeadStatusCount`, { headers: { "x-access-token": items } })
+        axios.post(`https://43.204.38.243:3001/api/getLeadStatusCount`, {
+            opType: showData.showData.opType,
+            fromDate: showData.showData.fromDate,
+            toDate: showData.showData.toDate,
+            empId: 0
+        }, { headers: headers })
             .then((response) => {
+                console.log(response.data.data)
                 setStatusWiseData(response.data.data);
             });
-        console.log(statusWiseData)
     }, [statusWiseData]);
 
     const iconOption = [

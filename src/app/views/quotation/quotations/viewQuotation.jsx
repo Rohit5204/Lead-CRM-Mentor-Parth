@@ -2,9 +2,10 @@ import * as React from 'react';
 import { styled } from '@mui/system';
 import { Box, Table, IconButton, Tooltip } from '@mui/material';
 import { Form, Row, Col, } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
+import axios from 'axios';
 import { format } from 'date-fns'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
@@ -85,14 +86,36 @@ const ViewQuotation = ({ theViewQuotation }) => {
                         pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
                     }
                     // Output / Save
-                    pdf.save(`invoice-${theViewQuotation.quotationNumber}.pdf`);
+                    pdf.save(`Quotation-${theViewQuotation.billTo}.pdf`);
                 };
             })
             .catch((error) => {
                 console.error('oops, something went wrong!', error);
             });
     };
-
+    const [APIData, setAPIData] = useState([]);
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const getCatalogueData = () => {
+        axios.post(
+            `https://43.204.38.243:3000/api/getCompanyMaster`,
+            { id: 4 },
+            { headers: headers }
+        )
+            .then((response) => {
+                console.log(response)
+                setAPIData(response.data.data[0]);
+            });
+    };
+    useEffect(() => {
+        getCatalogueData();
+    }, []);
     return (
         <Box sx={{ flexGrow: 1 }} style={{ 'borderRadius': '5px' }}>
             {/* <button type="button" className="btn btn-success" >
@@ -109,7 +132,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
             <div id="print">
                 <StyledTable
                     style={{
-                        paddingLeft: '2px',
+                        paddingLeft: '4px',
                         borderWidth: '2px',
                         borderColor: '#aaaaaa',
                         borderStyle: 'solid',
@@ -120,32 +143,35 @@ const ViewQuotation = ({ theViewQuotation }) => {
                         <Form className='mt-1 ml-1 mr-1'>
                             <Row>
                                 <Col>
-                                    <h5 className='text-center'>QUOTATION</h5>
+                                    <h5 className='text-center'>INVOICE</h5>
                                 </Col>
                             </Row>
-                            <Row className='mt-2'>
+                            <Row>
                                 <Col md="7">
-                                    <img
+                                    {/* <img
                                         sizes="10px"
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhVskpYXfF31NyGSjgoPfjnS6qH8TY8wWftKfux4&s"
+                                        width={220}
+                                        height={220}                                       
+                                    // src="https://boostock.in/img/boostock-info-04.png"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
-                                    ></img>
+                                    ></img> */}
+                                    <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
                                 </Col>
-                                <Col>
+                                <Col className='mt-4'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
-                                        Company Name
+                                        {APIData.name}
                                     </h5>
-                                    <span>Street Addrees</span>
+                                    <span>{APIData.address}</span>
                                     <br />
-                                    <span>City Name, State Name-Pincode </span>
+                                    <span>{APIData.stateName}-{APIData.pincode} </span>
                                     <br />
-                                    <span>Company Reg. No :-896522147</span>
+                                    <span>Company Reg. No :- {APIData.gstNo}</span>
                                     {/* <br />
-                        <span className="font-bold">GST No: {theViewQuotation.gstNo}</span> */}
+                        <span className="font-bold">GST No: {theViewInvoice.gstNo}</span> */}
                                     {/* <br /> */}
-                                    {/* <span className="font-bold">State: {theViewQuotation.companyStateName}</span> */}
+                                    {/* <span className="font-bold">State: {theViewInvoice.companyStateName}</span> */}
                                     <br />
-                                    <span className="font-bold">Email: company@email.com</span>
+                                    <span className="font-bold">Email :- {APIData.email}</span>
                                 </Col>
                             </Row>
                             <br />
@@ -162,7 +188,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                             <br />
                                             <span className="font-bold"> GST NO  &nbsp;:   {theViewQuotation.gstNo}</span>
                                             <br />
-                                            <span className="font-bold"> PAN No  &nbsp;:   {theViewQuotation.panNo}</span>
+                                            <span className="font-bold"> PAN No  &nbsp;:   {theViewQuotation.clientPan}</span>
                                             <br />
                                             <span className="font-bold"> Contact &nbsp;&nbsp;:   {theViewQuotation.clientContact}</span>
                                             <br />
@@ -171,7 +197,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                             <span> Quotation No  :    </span>
                                             <b style={{ "color": "MidnightBlue" }}>{theViewQuotation.quotationNumber}</b>
                                             <br />
-                                            <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {quotationDate}</span>
+                                            <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {new Date(quotationDate).toLocaleDateString('en-GB')}</span>
                                             <br />
                                             <span className="font-bold"> Generated By  : {theViewQuotation.cashierName}</span>
                                             <br />
@@ -181,25 +207,25 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                     <tr>
                                         <td><span> Address   :   {theViewQuotation.clientAddress}</span></td>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                         <td>
-                                            <span> Bank Details  :  NA</span><br />
-                                            <span> Account No   :  NA</span><br />
-                                            <span> IFSC Code   &nbsp;&nbsp;:  NA</span>
+                                            <span> Bank Details  :  {APIData.bankName}</span><br />
+                                            <span> Account No   :  {APIData.accountNo}</span><br />
+                                            <span> IFSC Code   &nbsp;&nbsp;:  {APIData.ifsc}</span>
                                         </td>
                                         <td>
                                             <span> Payment Mode   :   Paid</span><br />
                                             <span> No. of EMI  :   {Object.keys(installments).length}</span>
                                         </td>
-                                    </tr>
+                                    </tr> */}
                                 </tbody>
                             </table>
                             <h5 className='text-center'> PRODUCT INFORMATION </h5>
                             <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
                                 <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-center'>
                                     <tr>
-                                        <th>Discription</th>
-                                        <th>Quantity</th>
+                                        <th>Product Name</th>
+                                        <th>Duration</th>
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                     </tr>
@@ -208,8 +234,8 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                 <tbody className='text-center'>
                                     <tr>
                                         {/* <td>{theViewQuotation.gsCatalogueId}</td> */}
-                                        <td>Stocks</td>
-                                        <td>{theViewQuotation.gsQuantity}</td>
+                                        <td>{theViewQuotation.gsName}</td>
+                                        <td>{theViewQuotation.duration}</td>
                                         <td>{theViewQuotation.amount}</td>
                                         <td>{subtotal}</td>
                                     </tr>
@@ -287,13 +313,17 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                 <div></div>
                             )}
                             {/* hide amd show condition */}
+
+
+                        </Form>
+                        <Form>
                             {Object.keys(installments).length > 0 ? (
                                 <table className="table table-striped table-bordered text-center" style={{ 'borderRadius': '2px' }}>
-                                    <thead style={{ 'border - left': '1px solid red', "color": "MidnightBlue", 'border-right': '1px solid red' }}>
+                                    <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }}>
                                         <tr >
                                             <th>Sr.No</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
+                                            <th>Installment Amount</th>
+                                            <th>EMI Date</th>
                                         </tr>
                                     </thead>
                                     <tbody >
@@ -302,7 +332,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                                 <tr key={index}>
                                                     <td>{emi.instalmentNumber} </td>
                                                     <td>{emi.instalmentAmount}</td>
-                                                    <td>{format(new Date(emi.instalmentDate), 'mm/dd/yyyy')} </td>
+                                                    <td>{new Date(emi.instalmentDate).toLocaleDateString('en-GB')} </td>
 
                                                 </tr>
                                             );
@@ -326,7 +356,6 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                     </p>
                                 </Row>
                             </div>
-
                         </Form>
                     </div>
                 </StyledTable>

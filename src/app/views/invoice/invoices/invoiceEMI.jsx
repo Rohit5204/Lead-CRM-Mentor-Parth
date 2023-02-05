@@ -47,7 +47,7 @@ const InvoiceEMI = ({ id, instalmentNumber, instalmentDate, instalmentAmount, on
       </td>
 
       <td className="flex items-center justify-center">
-        <IconButton onClick={deleteItemHandler}>
+        <IconButton onClick={deleteItemHandler} className="ml-5">
           <Icon color="warning">delete</Icon>
         </IconButton>
       </td>

@@ -45,6 +45,7 @@ const LeadForm = () => {
   const [cityName, setCityName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [countryName, setCountryName] = useState('India');
+  const [expectedAmount, setExpectedAmount] = useState('');
 
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
@@ -55,8 +56,8 @@ const LeadForm = () => {
   const [myOptions1, setMyOptions1] = useState("");
   const [myOptions2, setMyOptions2] = useState("");
   const [myOptions3, setMyOptions3] = useState("");
-  const [myOptions4, setMyOptions4] = useState("");
-  const [myOptions5, setMyOptions5] = useState("");
+  const [myOptions4, setMyOptions4] = useState("Lead");
+  const [myOptions5, setMyOptions5] = useState("Warm");
 
   const [id1, setId1] = useState([]);
   const [id2, setId2] = useState([]);
@@ -64,31 +65,40 @@ const LeadForm = () => {
   const [sourceId, setSourceId] = useState([]);
 
   const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
+
+
   const getAllLeadData = () => {
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=usermaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`https://43.204.38.243:3000/api/getCatalogue`, { catId: 0, }, { headers: { "x-access-token": items } }).then((res) => {
+    axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=platformmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=labelmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`https://43.204.38.243:3000/api/getMasterData?masterName=statusmaster`, { headers: { "x-access-token": items } }).then((res) => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -143,15 +153,45 @@ const LeadForm = () => {
   };
   // add data in the table from Import
   const postData1 = () => {
-    console.log(excelData);
     for (var i = 0; i < excelData.length; i++) {
-      excelData[i].sourceId = 1;
+      if (excelData[i].platformName == "Facebook") {
+        excelData[i].sourceId = 3;
+      }
+      else if (excelData[i].platformName == "Whatsapp") {
+        excelData[i].sourceId = 4;
+      }
+      else if (excelData[i].platformName == "Indiamart") {
+        excelData[i].sourceId = 5;
+      }
+      else if (excelData[i].platformName == "Justdial") {
+        excelData[i].sourceId = 6;
+      }
+      else if (excelData[i].platformName == "99acress") {
+        excelData[i].sourceId = 7;
+      }
+      else if (excelData[i].platformName == "magikbrics") {
+        excelData[i].sourceId = 8;
+      }
+      else if (excelData[i].platformName == "Instagram") {
+        excelData[i].sourceId = 9;
+      }
+      else if (excelData[i].platformName == "Google Ads") {
+        excelData[i].sourceId = 10;
+      }
+      else if (excelData[i].platformName == "" || null) {
+        excelData[i].sourceId = 3;
+      }
+      else {
+        excelData[i].sourceId = 11
+      }
+      excelData[i].status = 1
       excelData[i].assignId = null;
-      excelData[i].label = 1;
+      excelData[i].label = 1;       //Label
       excelData[i].createdBy = 1;
     }
-    axios.post(`https://43.204.38.243:3000/api/saveLeadGenerationData`, excelData,
-      { headers: { "x-access-token": items } });
+    // console.log(excelData);
+    axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`, excelData,
+      { headers: headers });
     closeImport()
   };
 
@@ -193,6 +233,22 @@ const LeadForm = () => {
     setMyOptions5('')
   };
   //Add data in the table
+  const [APIData, setAPIData] = useState([]);
+  const getFetchLeadData = () => {
+    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+      leadId: 0,
+      userId: 0,
+      statusId: 0,
+      searchKey: "",
+      locationkey: "",
+      platformId: 0,
+      opType: ""
+    }, { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
+      .then((response) => {
+        setAPIData(response.data.data);
+      });
+  }
+
   const postData = () => {
     var assignedid, platformid, labelid, statusid;
     for (var i = 0; i < id1.length; i++) {
@@ -216,7 +272,7 @@ const LeadForm = () => {
       }
     }
     const AddLead = {
-      name: "Enquiry For" + " " + name,
+      name: name,
       mobileNo: mobileNo,
       emailId: emailId,
       streetName: streetName,
@@ -230,22 +286,23 @@ const LeadForm = () => {
       assignId: assignedid,
       status: statusid,
       label: labelid,
-      remarks: "",
       createdBy: 1,
       alternateMobile: alternateMobile,
-      clientName: clientName
+      clientName: clientName,
+      expectedAmount: expectedAmount
     }
     console.log({ AddLead })
     const items = localStorage.getItem('accessToken');
-    axios.post(`https://43.204.38.243:3000/api/saveLeadGenerationData`, [AddLead], { headers: { "x-access-token": items } });
+    axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`,
+      [AddLead], { headers: headers });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
     blankForm();
+    getFetchLeadData();
     changePage();
-    // alert('Lead Successfully Added');
   };
   return (
     <Container>
@@ -326,29 +383,33 @@ const LeadForm = () => {
                   <table className="table">
                     <thead>
                       <tr>
-                        <th scope="col">Email Id</th>
                         <th scope="col">Lead Name</th>
                         <th scope="col">Mobile No</th>
+                        <th scope="col">Email Id</th>
                         <th scope="col">Street</th>
                         <th scope="col">City</th>
                         <th scope="col">State</th>
                         <th scope="col">Pin Code</th>
                         <th scope="col">Country</th>
-                        <th scope="col">Intersted</th>
+                        <th scope="col">Intersted In</th>
+                        <th scope="col">Platform Name</th>
+                        <th scope="col">Alternate No</th>
+                        <th scope="col">Expected Amount</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
                       <Data excelData={excelData} />
                     </tbody>
-                    <button
-                      type="submit"
-                      className="btn btn-success"
-                      style={{ marginTop: 5 + 'px' }}
-                      onClick={postData1}
-                    >
-                      Add Lead
-                    </button>
                   </table>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    style={{ marginTop: 5 + 'px' }}
+                    onClick={postData1}
+                  >
+                    Add Lead
+                  </button>
                 </div>
               )}
             </div>
@@ -366,18 +427,18 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Lead Name :&nbsp; </h6>
+                  <h6 className="mt-1">Lead Name&nbsp; </h6>
                   <InputGroup.Text id="basic-addon1">
-                    <Icon>work</Icon>
+                    <Icon>person</Icon>
                   </InputGroup.Text>
-                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
+                  <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
                     onChange={(e) => setName(e.target.value)}
                     value={name}
                     placeholder="Enter the Lead Name"
                   /></InputGroup>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col>
                 <InputGroup className="mb-2">
                   <h6 className="mt-1">Client&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
@@ -391,11 +452,11 @@ const LeadForm = () => {
                   /></InputGroup>
 
               </Col>
-            </Row>
+            </Row> */}
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
+                  <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>phone</Icon>
                   </InputGroup.Text>
@@ -409,7 +470,7 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Mobile 2&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
+                  <h6 className="mt-1">Mobile 2&nbsp;&nbsp;  &nbsp; </h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>phone</Icon>
                   </InputGroup.Text>
@@ -423,7 +484,7 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;</h6>
+                  <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>email</Icon>
                   </InputGroup.Text>
@@ -438,7 +499,7 @@ const LeadForm = () => {
               <Col>
                 <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
                   <InputGroup className="mb-2">
-                    <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
+                    <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</h6>
                     <InputGroup.Text id="basic-addon1">
                       <Icon>house</Icon>
                     </InputGroup.Text>
@@ -457,7 +518,7 @@ const LeadForm = () => {
 
                 {/* <Form.Label>City Name</Form.Label> */}
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
+                  <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>village</Icon>
                   </InputGroup.Text>
@@ -472,7 +533,7 @@ const LeadForm = () => {
               <Col>
                 {/* <Form.Label>State Name</Form.Label> */}
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;</h6>
+                  <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>village</Icon>
                   </InputGroup.Text>
@@ -486,7 +547,7 @@ const LeadForm = () => {
             <Row>
               <Col>
                 <InputGroup className="mb-2">
-                  <h6 className="mt-1">Zip Code&nbsp;   :&nbsp;</h6>
+                  <h6 className="mt-1">Zip Code&nbsp;  &nbsp;</h6>
                   <InputGroup.Text id="basic-addon1">
                     <Icon>subway</Icon>
                   </InputGroup.Text>
@@ -499,23 +560,17 @@ const LeadForm = () => {
               </Col>
             </Row>
             <Row>
-              <Col xs={6}>
-                <FormControl sx={{ m: 0, minWidth: 500 }} size="small" className="mt-1">
-                  {/* <Form.Label>Country</Form.Label> */}
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Country&nbsp;&nbsp;  :&nbsp;</h6>
-                    <Select
-                      value={countryName}
-                      label="Country"
-                      onChange={(e) => setCountryName(e.target.value)}
-                    >
-                      <MenuItem value="s">Select the Country</MenuItem>
-                      <MenuItem value="India">INDIA</MenuItem>
-                      <MenuItem value="USA">USA</MenuItem>
-                      <MenuItem value="Russia">RUSSIA</MenuItem>
-                      <MenuItem value="Australia">RUSSIA</MenuItem>
-                    </Select></InputGroup>
-                </FormControl>
+              <Col>
+                <InputGroup className="mb-2">
+                  <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                  <InputGroup.Text id="basic-addon1">
+                    <Icon>₹</Icon>
+                  </InputGroup.Text>
+                  <Form.Control
+                    onChange={(e) => setExpectedAmount(e.target.value)}
+                    value={expectedAmount}
+                    placeholder="Client Expected Amount"
+                  /></InputGroup>
               </Col>
             </Row>
           </SimpleCard>
@@ -524,6 +579,33 @@ const LeadForm = () => {
         <Col xs={12} md={6}>
           <SimpleCard>
             <Row>
+              <Col xs={6}>
+                <FormControl sx={{ m: 0, minWidth: 550 }} size="small" className="mt-1">
+
+                  <InputGroup>
+                    <Form.Label className="mt-1">Country</Form.Label>
+                  </InputGroup>
+                  <Select
+                    value={countryName}
+                    label="Country"
+                    onChange={(e) => setCountryName(e.target.value)}
+                  >
+                    <MenuItem value="s">Select the Country</MenuItem>
+                    <MenuItem value="India">INDIA</MenuItem>
+                    <MenuItem value="Dubai">Dubai</MenuItem>
+                    <MenuItem value="USA">USA</MenuItem>
+                    <MenuItem value="London">London</MenuItem>
+                    <MenuItem value="Italy">Italy</MenuItem>
+                    <MenuItem value="China">China</MenuItem>
+                    <MenuItem value="Russia">RUSSIA</MenuItem>
+                    <MenuItem value="Australia">Australia</MenuItem>
+                  </Select>
+
+
+                </FormControl>
+              </Col>
+            </Row>
+            <Row>
               <Col>
                 {/* <Form.Label>Interested In</Form.Label> */}
                 <InputGroup>
@@ -531,7 +613,7 @@ const LeadForm = () => {
                 </InputGroup>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 550 }}
                     freeSolo
                     autoComplete
                     autoHighlight
@@ -555,7 +637,7 @@ const LeadForm = () => {
                 <Form.Label>Source(Platform Name)</Form.Label>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 550 }}
                     freeSolo
                     autoComplete
                     autoHighlight
@@ -579,7 +661,7 @@ const LeadForm = () => {
                 <FormControl>
                   <Form.Label>Assigned To</Form.Label>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 550 }}
                     freeSolo
                     autoComplete
                     autoHighlight
@@ -600,24 +682,10 @@ const LeadForm = () => {
             </Row>
             <Row>
               <Col>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>Remark</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={1}
-                    // onChange={(e) => setRemarks(e.target.value)}
-                    // value={remarks}
-                    placeholder="Optional"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
                 <Form.Label>Status</Form.Label>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 550 }}
                     freeSolo
                     autoComplete
                     autoHighlight
@@ -639,7 +707,7 @@ const LeadForm = () => {
                 <Form.Label>Label</Form.Label>
                 <FormControl>
                   <Autocomplete
-                    style={{ width: 450 }}
+                    style={{ width: 550 }}
                     freeSolo
                     autoComplete
                     autoHighlight

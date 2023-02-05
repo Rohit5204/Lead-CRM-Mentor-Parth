@@ -1,8 +1,8 @@
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Form, Row, Col, Button } from 'react-bootstrap';
-import { Box, MenuItem, FormControl, Select } from '@mui/material';
-import React, { useState } from 'react';
+import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
+import { Box, MenuItem, Autocomplete, TextField, FormControl, Select } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const Container = styled('div')(({ theme }) => ({
@@ -26,7 +26,11 @@ const AddCatalogue = () => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(0);
+
+  const [assignTo, setAssignTo] = useState([]);
+  const [id1, setId1] = useState([]);
+  const [myOptions3, setMyOptions3] = useState(null);
 
   //empty the form Text
   const blankForm = () => {
@@ -34,15 +38,33 @@ const AddCatalogue = () => {
     setPrice('');
     setDescription('');
   };
+  const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
+  useEffect(() => {
+    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
+      { headers: headers }).then((res) => {
+        for (var i = 0; i < res.data.data.length; i++) {
+          setAssignTo(current => [...current, res.data.data[i].name]);
+          setId1(current => [...current, res.data.data[i].id, res.data.data[i].name])
+        }
+      });
+  }, []);
+
   //Add data in the table
   const postData = () => {
-    const items = localStorage.getItem('accessToken');
-    console.log({
-      catType: catType,
-      price: price,
-      description: description,
-    });
-    axios.post('https://43.204.38.243:3000/api/upsertCatalogue',
+    var catdurationid
+    for (var i = 0; i < id1.length; i++) {
+      if (myOptions3 == id1[i]) {
+        catdurationid = id1[i - 1]
+      }
+    }
+    axios.post('https://43.204.38.243:3001/api/upsertCatalogue',
       {
         catId: 0,
         catType: catType,
@@ -51,7 +73,8 @@ const AddCatalogue = () => {
         description: description,
         catStatus: 1,
         actionBy: 1,
-      }, { headers: { "x-access-token": items } }
+        durationId: catdurationid
+      }, { headers: headers }
     );
   };
 
@@ -89,7 +112,6 @@ const AddCatalogue = () => {
               <Col className="mt-1" md="6">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
-                  required
                   onChange={(e) => setName(e.target.value)}
                   value={name}
                   placeholder="Enter the Name"
@@ -98,17 +120,27 @@ const AddCatalogue = () => {
             </Row>
             <Row>
               <Col md="6">
-                <FormControl sx={{ m: 0, minWidth: 480 }} size="small" className="mt-1">
-                  <Form.Label>Duration</Form.Label>
-                  <Select value={duration} label="Type" onChange={(e) => setDuration(e.target.value)}>
-                    <MenuItem value="0">30 Days [1 Month]</MenuItem>
-                    <MenuItem value="1">60 Days [2 Months]</MenuItem>
-                    <MenuItem value="2">90 Days [3 Months]</MenuItem>
-                    <MenuItem value="3">180 Days [6 Months]</MenuItem>
-                    <MenuItem value="4">365 Days [1 Year]</MenuItem>
-                  </Select>
-                </FormControl>
+                <InputGroup>
+                  <Form.Label className="mt-1">Duration</Form.Label>
+                </InputGroup>
+                <Autocomplete
+                  style={{ width: 480 }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  value={myOptions3}
+                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
 
+                      variant="outlined"
+                      label="Select the Calalogue Duration"
+                      size="small"
+                    />
+                  )}
+                />
               </Col>
               <Col md="6" className="mt-1">
                 <Form.Label>Price</Form.Label>

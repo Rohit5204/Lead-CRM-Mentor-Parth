@@ -28,10 +28,17 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
     };
     const updateInstallment = (e) => {
         const items = localStorage.getItem('accessToken');
+        const roleCode = localStorage.getItem('roleCode');
+        const userId = localStorage.getItem('userId');
+        const headers = {
+            "x-access-token": items,
+            "roleCode": roleCode,
+            "userId": userId
+        }
         // console.log({ UpdateData });
         e.preventDefault();
         axios.post(`https://43.204.38.243:3000/api/updateCompanyAccounts`, UpdateData,
-            { headers: { "x-access-token": items } }).then(() => useEffect);
+            { headers: headers }).then(() => useEffect);
         handleDialog();
     };
     const handleSubmit = (e) => {

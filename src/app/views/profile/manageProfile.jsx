@@ -38,12 +38,19 @@ const ManageAllProfile = () => {
 
   //get method
   const items = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": items,
+    "roleCode": roleCode,
+    "userId": userId
+  }
   const getCatalogueData = () => {
     axios
       .post(
         `https://43.204.38.243:3000/api/getCompanyMaster`,
-        { id: 0 },
-        { headers: { 'x-access-token': items } }
+        { id: 4 },
+        { headers: headers }
       )
       .then((response) => {
         setAPIData(response.data.data);
@@ -101,7 +108,7 @@ const ManageAllProfile = () => {
                       {catalogue.recordStatus == 0 ? <></> : <></>}
                       <TableCell align="center">{catalogue.id}</TableCell>
                       <TableCell align="center">{catalogue.name}</TableCell>
-                      <TableCell align="center">Vikram Jadhav</TableCell>
+                      <TableCell align="center">CRM Owner</TableCell>
                       <TableCell align="center">{catalogue.stateName}</TableCell>
                       <TableCell align="center">
                         <Link to="/profile" state={catalogue}>

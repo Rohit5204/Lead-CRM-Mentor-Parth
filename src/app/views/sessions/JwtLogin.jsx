@@ -1,12 +1,17 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Card, Checkbox, Grid, IconButton, TextField, FormControl } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import useAuth from 'app/hooks/useAuth';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Form, } from 'react-bootstrap';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -56,6 +61,14 @@ const JwtLogin = () => {
   const [passwordlogin, setuserpassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const { login } = useAuth();
 
   const handleFormSubmit = async () => {
@@ -88,22 +101,23 @@ const JwtLogin = () => {
             >
               {/* {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => ( */}
               <form >
+                <Form.Label>Username </Form.Label>
                 <TextField
                   fullWidth
                   size="small"
                   type="text"
                   name="userName"
-                  label="UserName"
+                  label="."
                   variant="outlined"
                   // onBlur={handleBlur}
                   value={userlogin}
                   onChange={(e) => setuserlogin(e.target.value)}
                   // helperText={touched.userName && errors.userName}
                   // error={Boolean(errors.userName && touched.userName)}
-                  sx={{ mb: 3 }}
+                  sx={{ mb: 1 }}
                 />
 
-                <TextField
+                {/* <TextField
                   fullWidth
                   size="small"
                   name="password"
@@ -116,7 +130,30 @@ const JwtLogin = () => {
                   // helperText={touched.password && errors.password}
                   // error={Boolean(errors.password && touched.password)}
                   sx={{ mb: 1.5 }}
-                />
+                /> */}
+                <FormControl sx={{ mb: 1, width: "100%" }} variant="outlined" >
+                  <Form.Label>Password </Form.Label>
+                  <OutlinedInput
+                    size="small"
+                    id="outlined-adornment-password"
+                    onChange={(e) => setuserpassword(e.target.value)}
+                    value={passwordlogin}
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="h"
+                  />
+                </FormControl>
 
                 <FlexBox justifyContent="space-between">
                   <FlexBox gap={1}>
@@ -140,7 +177,7 @@ const JwtLogin = () => {
                 </FlexBox>
 
                 <LoadingButton
-                  style={{ marginLeft: "140px" }}
+                  style={{ marginLeft: "180px" }}
                   type="submit"
                   color="primary"
                   loading={loading}
