@@ -20,7 +20,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AddEmployee = () => {
+const AddEmpBranch = () => {
     const navigate = useNavigate();
     const changePage = () => {
         navigate('/employees/manageEmployee');
@@ -101,6 +101,9 @@ const AddEmployee = () => {
                 }
             });
     }, []);
+    const branchName = window.localStorage.getItem('branchName');
+    const managerName = window.localStorage.getItem('userName');
+    const managerId = window.localStorage.getItem('userId');
     //Add data in the table
     const postData = async () => {
         var catdurationid, branchid, branchManagerId, teamLeaderId
@@ -131,26 +134,26 @@ const AddEmployee = () => {
             email: email,
             createdBy: 1,
             lastActive: "",
-            userRoleId: catdurationid,
+            userRoleId: 2,
             addedBy: 1,
             password: password,
             mobileNo: mobileNo,
             alternateMobileNo: alternateMobileNo,
             userName: userName,
             recodStatus: 1,
-            branchId: branchid,
+            branchId: 2,
             tlId: teamLeaderId,
-            branchManagerId: branchManagerId
+            branchManagerId: managerId
         }
         console.log({ AddUser })
-        // await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
-        //     { headers: headers });
+        await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
+            { headers: headers });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
-        // changePage();
+        changePage();
     };
     const [showPassword, setShowPassword] = useState(false);
 
@@ -159,8 +162,7 @@ const AddEmployee = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const branchName = window.localStorage.getItem('branchName');
-    const managerName = window.localStorage.getItem('userName');
+
     return (
         <Container>
             <Box className="breadcrumb">
@@ -309,7 +311,7 @@ const AddEmployee = () => {
                                             />
                                         </Col>
                                         <Col xs={6}>
-                                            <FormControl sx={{ m: 0, minWidth: 550 }} size="small" >
+                                            <FormControl sx={{ m: 0, width: '100%' }} size="small" >
 
                                                 <InputGroup>
                                                     <Form.Label>Role</Form.Label>
@@ -331,7 +333,7 @@ const AddEmployee = () => {
 
                         </Row>
                         {(function () {
-                            if (myOptions3 == 4) {
+                            if (myOptions3 == 3) {
                                 return <>
                                     <Row>
                                         <Col md="6">
@@ -613,4 +615,4 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '0px 0px 0px 441px',
 }));
-export default AddEmployee;
+export default AddEmpBranch;

@@ -11,7 +11,7 @@ export const navigationBM = [
             { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
             { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
             // { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
-            { name: 'User Master', iconText: '404', path: '/employees/manageEmployee' },
+            { name: 'User Master', iconText: '404', path: '/employees/addEmpBranch' },
         ],
     },
     { label: 'Catalogue', type: 'label' },
