@@ -80,7 +80,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
         axios.post(`https://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
             { headers: headers });
         // getFetchLeadData()
-        // handleDialog()
+        handleDialog()
     };
     const [followUpDate, setFollowUpDate] = useState("");
     const [followUpTme, setFollowUpTime] = useState("");

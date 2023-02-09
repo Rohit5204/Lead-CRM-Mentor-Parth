@@ -56,8 +56,8 @@ const LeadForm = () => {
   const [myOptions1, setMyOptions1] = useState("");
   const [myOptions2, setMyOptions2] = useState("");
   const [myOptions3, setMyOptions3] = useState("");
-  const [myOptions4, setMyOptions4] = useState("Lead");
-  const [myOptions5, setMyOptions5] = useState("Warm");
+  const [myOptions4, setMyOptions4] = useState("");
+  const [myOptions5, setMyOptions5] = useState("");
 
   const [id1, setId1] = useState([]);
   const [id2, setId2] = useState([]);
@@ -72,7 +72,6 @@ const LeadForm = () => {
     "roleCode": roleCode,
     "userId": userId
   }
-
 
   const getAllLeadData = () => {
     axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
@@ -154,35 +153,35 @@ const LeadForm = () => {
   // add data in the table from Import
   const postData1 = () => {
     for (var i = 0; i < excelData.length; i++) {
-      if (excelData[i].platformName == "Facebook") {
-        excelData[i].sourceId = 3;
+      if (excelData[i].platformName == "Facebook" || excelData[i].platformName == "FB") {
+        excelData[i].sourceId = 1;
       }
       else if (excelData[i].platformName == "Whatsapp") {
-        excelData[i].sourceId = 4;
+        excelData[i].sourceId = 2;
       }
       else if (excelData[i].platformName == "Indiamart") {
-        excelData[i].sourceId = 5;
-      }
-      else if (excelData[i].platformName == "Justdial") {
-        excelData[i].sourceId = 6;
-      }
-      else if (excelData[i].platformName == "99acress") {
-        excelData[i].sourceId = 7;
-      }
-      else if (excelData[i].platformName == "magikbrics") {
-        excelData[i].sourceId = 8;
-      }
-      else if (excelData[i].platformName == "Instagram") {
-        excelData[i].sourceId = 9;
-      }
-      else if (excelData[i].platformName == "Google Ads") {
-        excelData[i].sourceId = 10;
-      }
-      else if (excelData[i].platformName == "" || null) {
         excelData[i].sourceId = 3;
       }
+      else if (excelData[i].platformName == "Justdial") {
+        excelData[i].sourceId = 4;
+      }
+      else if (excelData[i].platformName == "99acress") {
+        excelData[i].sourceId = 5;
+      }
+      else if (excelData[i].platformName == "magikbrics") {
+        excelData[i].sourceId = 6;
+      }
+      else if (excelData[i].platformName == "Instagram") {
+        excelData[i].sourceId = 7;
+      }
+      else if (excelData[i].platformName == "Google Ads") {
+        excelData[i].sourceId = 8;
+      }
+      else if (excelData[i].platformName == "" || null) {
+        excelData[i].sourceId = 1;
+      }
       else {
-        excelData[i].sourceId = 11
+        excelData[i].sourceId = 1
       }
       excelData[i].status = 1
       excelData[i].assignId = null;
@@ -192,7 +191,7 @@ const LeadForm = () => {
     // console.log(excelData);
     axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`, excelData,
       { headers: headers });
-    closeImport()
+    changePage();
   };
 
 
@@ -292,7 +291,6 @@ const LeadForm = () => {
       expectedAmount: expectedAmount
     }
     console.log({ AddLead })
-    const items = localStorage.getItem('accessToken');
     axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`,
       [AddLead], { headers: headers });
   };

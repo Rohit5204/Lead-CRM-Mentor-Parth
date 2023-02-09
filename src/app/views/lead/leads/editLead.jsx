@@ -25,7 +25,7 @@ const EditUser = () => {
   const [name, setName] = useState(location.state.name);
   const [mobileNo, setMobileNo] = useState(location.state.mobileNo);
   const [alternateMobile, setAlternateMobile] = useState(location.state.alternateMobile);
-  const [clientName, setClientName] = useState(location.state.clientName);
+  const [clientName, setClientName] = useState("");
   const [emailId, setEmailId] = useState(location.state.emailId);
   const [streetName, setStreetName] = useState(location.state.streetName);
   const [stateName, setStateName] = useState(location.state.stateName);
@@ -268,7 +268,6 @@ const EditUser = () => {
                   rows={3}
                   onChange={(e) => setRemarks(e.target.value)}
                   value={remarks}
-                  required
                   placeholder="Comment"
                 />
               </Form.Group>
