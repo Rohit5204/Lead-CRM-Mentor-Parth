@@ -72,7 +72,7 @@ const ManageAllEmployee = () => {
                 <Box className="breadcrumb">
                     <Breadcrumb
                         routeSegments={[
-                            { name: 'Manage Employee', path: '/employees/manageEmployee' },
+                            { name: 'Manage Employee', path: '/employees/manageAllEmployee' },
                             { name: 'Employee Detail Page' },
                         ]}
                     />

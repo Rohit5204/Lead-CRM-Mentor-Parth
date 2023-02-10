@@ -47,7 +47,7 @@ const ManageEmployee = () => {
   // };
   const navigate = useNavigate();
   const changePage = () => {
-    navigate('/employees/addEmployee');
+    navigate('/employees/addEmpBranch');
   };
   const [userData, setUserData] = useState([]);
   const items = localStorage.getItem('accessToken');

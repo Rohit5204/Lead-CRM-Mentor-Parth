@@ -20,7 +20,7 @@ const isValidToken = (accessToken) => {
   return decodedToken.exp > currentTime;
 };
 
-const setSession = (accessToken, roleName, userName, roleCode, userId, branchName) => {
+const setSession = (accessToken, roleName, userName, roleCode, userId, branchName, branchId) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('roleName', roleName);
@@ -28,6 +28,7 @@ const setSession = (accessToken, roleName, userName, roleCode, userId, branchNam
     localStorage.setItem('roleCode', roleCode);
     localStorage.setItem('userId', userId);
     localStorage.setItem('branchName', branchName);
+    localStorage.setItem('branchId', branchId);
     axios.defaults.headers = { accessToken };
   } else {
     localStorage.removeItem('accessToken');
@@ -36,6 +37,7 @@ const setSession = (accessToken, roleName, userName, roleCode, userId, branchNam
     localStorage.removeItem('roleCode');
     localStorage.removeItem('userId');
     localStorage.removeItem('branchName');
+    localStorage.removeItem('branchId');
     delete axios.defaults.headers;
   }
 };
@@ -101,17 +103,14 @@ export const AuthProvider = ({ children }) => {
       userName,
       password,
     });
-    const { message, accessToken, roleName, user, roleCode, userId, branchName } = response.data;
-    console.log(response);
-    setSession(accessToken, roleName, userName, roleCode, userId, branchName);
-
+    const { message, accessToken, roleName, user, roleCode, userId, branchName, branchId } = response.data;
+    setSession(accessToken, roleName, userName, roleCode, userId, branchName, branchId);
     dispatch({
       type: 'LOGIN',
       payload: {
         user,
       },
     });
-    console.log(response);
     if (message != 'Invalid User Details') {
       navigate('/');
     } else {
@@ -152,11 +151,11 @@ export const AuthProvider = ({ children }) => {
         const roleCode = window.localStorage.getItem('roleCode');
         const userId = window.localStorage.getItem('userId');
         const branchName = window.localStorage.getItem('branchName');
-
+        const branchId = window.localStorage.getItem('branchId');
         // If we refresh the page also we will be on the same page.
         // Date 08/11/2022 [Rohit Jaiswal]
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken, roleName, userName, roleCode, userId, branchName);
+          setSession(accessToken, roleName, userName, roleCode, userId, branchName, branchId);
           const response = await axios.get('/');
           const { user } = response.data;
 

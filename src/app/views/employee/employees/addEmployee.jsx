@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 const AddEmployee = () => {
     const navigate = useNavigate();
     const changePage = () => {
-        navigate('/employees/manageEmployee');
+        navigate('/employees/manageAllEmployee');
     };
     const [firstName, setfirstName] = useState('');
     const [lastName, setlastName] = useState('');
@@ -143,14 +143,14 @@ const AddEmployee = () => {
             branchManagerId: branchManagerId
         }
         console.log({ AddUser })
-        // await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
-        //     { headers: headers });
+        await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
+            { headers: headers });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
-        // changePage();
+        changePage();
     };
     const [showPassword, setShowPassword] = useState(false);
 
@@ -166,7 +166,7 @@ const AddEmployee = () => {
             <Box className="breadcrumb">
                 <Breadcrumb
                     routeSegments={[
-                        { name: 'Manage Employee', path: '/employees/manageEmployee' },
+                        { name: 'Manage Employee', path: '/employees/manageAllEmployee' },
                         { name: 'Add Employee Page' },
                     ]}
                 />
