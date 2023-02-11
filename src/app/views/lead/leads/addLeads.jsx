@@ -578,29 +578,31 @@ const LeadForm = () => {
           <SimpleCard>
             <Row>
               <Col xs={6}>
-                <FormControl sx={{ m: 0, minWidth: 550 }} size="small" className="mt-1">
-
-                  <InputGroup>
-                    <Form.Label className="mt-1">Country</Form.Label>
-                  </InputGroup>
-                  <Select
-                    value={countryName}
-                    label="Country"
-                    onChange={(e) => setCountryName(e.target.value)}
-                  >
-                    <MenuItem value="s">Select the Country</MenuItem>
-                    <MenuItem value="India">INDIA</MenuItem>
-                    <MenuItem value="Dubai">Dubai</MenuItem>
-                    <MenuItem value="USA">USA</MenuItem>
-                    <MenuItem value="London">London</MenuItem>
-                    <MenuItem value="Italy">Italy</MenuItem>
-                    <MenuItem value="China">China</MenuItem>
-                    <MenuItem value="Russia">RUSSIA</MenuItem>
-                    <MenuItem value="Australia">Australia</MenuItem>
-                  </Select>
 
 
-                </FormControl>
+                <InputGroup>
+                  <Form.Label className="mt-1">Country</Form.Label>
+                </InputGroup>
+                <Select
+                  size='small'
+                  style={{ width: '210%' }}
+                  value={countryName}
+                  label="Country"
+                  onChange={(e) => setCountryName(e.target.value)}
+                >
+                  <MenuItem value="s">Select the Country</MenuItem>
+                  <MenuItem value="India">INDIA</MenuItem>
+                  <MenuItem value="Dubai">Dubai</MenuItem>
+                  <MenuItem value="USA">USA</MenuItem>
+                  <MenuItem value="London">London</MenuItem>
+                  <MenuItem value="Italy">Italy</MenuItem>
+                  <MenuItem value="China">China</MenuItem>
+                  <MenuItem value="Russia">RUSSIA</MenuItem>
+                  <MenuItem value="Australia">Australia</MenuItem>
+                </Select>
+
+
+
               </Col>
             </Row>
             <Row>
@@ -609,119 +611,121 @@ const LeadForm = () => {
                 <InputGroup>
                   <Form.Label className="mt-1">Interested In</Form.Label>
                 </InputGroup>
-                <FormControl>
-                  <Autocomplete
-                    style={{ width: 550 }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions1}
-                    options={intrestedIn}
-                    onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Interested Catalogue"
-                        size="small"
-                      />
-                    )}
-                  />
-                </FormControl>
+
+                <Autocomplete
+                  style={{ minWidth: '100%' }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions1}
+                  options={intrestedIn}
+                  onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Interested Catalogue"
+                      size="small"
+                    />
+                  )}
+                />
+
               </Col>
             </Row>
             <Row>
               <Col className="mt-1">
                 <Form.Label>Source(Platform Name)</Form.Label>
-                <FormControl>
-                  <Autocomplete
-                    style={{ width: 550 }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions2}
-                    options={platformName}
-                    onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Platform Name"
-                        size="small"
-                      />
-                    )}
-                  />
-                </FormControl>
+
+                <Autocomplete
+                  style={{ minWidth: '100%' }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions2}
+                  options={platformName}
+                  onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Platform Name"
+                      size="small"
+                    />
+                  )}
+                />
+
               </Col>
             </Row>
             <Row>
               <Col className="mt-1">
-                <FormControl>
-                  <Form.Label>Assigned To</Form.Label>
-                  <Autocomplete
-                    style={{ width: 550 }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    options={assignTo}
-                    value={myOptions3}
-                    onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Employee to Assign"
-                        size="small"
-                      />
-                    )}
-                  />
-                </FormControl>
+
+                <Form.Label>Assigned To</Form.Label>
+                <Autocomplete
+                  style={{ minWidth: '100%' }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={assignTo}
+                  value={myOptions3}
+                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Employee to Assign"
+                      size="small"
+                    />
+                  )}
+                />
+
               </Col>
             </Row>
             <Row>
               <Col>
                 <Form.Label>Status</Form.Label>
-                <FormControl>
-                  <Autocomplete
-                    style={{ width: 550 }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions4}
-                    options={status}
-                    onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Status"
-                        size="small"
-                      />
-                    )}
-                  />
-                </FormControl>
+
+                <Autocomplete
+                  style={{ minWidth: '100%' }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  value={myOptions4}
+                  options={status}
+                  onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Status"
+                      size="small"
+                    />
+                  )}
+                />
+
               </Col>
+            </Row>
+            <Row>
               <Col >
                 <Form.Label>Label</Form.Label>
-                <FormControl>
-                  <Autocomplete
-                    style={{ width: 550 }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    options={labelName}
-                    value={myOptions5}
-                    onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Label"
-                        size="small"
-                      />
-                    )}
-                  />
-                </FormControl>
+
+                <Autocomplete
+                  style={{ minWidth: '100%' }}
+                  freeSolo
+                  autoComplete
+                  autoHighlight
+                  options={labelName}
+                  value={myOptions5}
+                  onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Select the Label"
+                      size="small"
+                    />
+                  )}
+                />
+
               </Col>
             </Row>
           </SimpleCard>
@@ -740,7 +744,7 @@ const LeadForm = () => {
           </Col>
         </Row>
       </Div>
-    </Container>
+    </Container >
   );
 };
 

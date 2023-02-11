@@ -101,6 +101,7 @@ const AddEmployee = () => {
                 }
             });
     }, []);
+    // const [errorMessage, setErrorMessage] = useState('');
     //Add data in the table
     const postData = async () => {
         var catdurationid, branchid, branchManagerId, teamLeaderId
@@ -142,15 +143,27 @@ const AddEmployee = () => {
             tlId: teamLeaderId,
             branchManagerId: branchManagerId
         }
-        console.log({ AddUser })
+        // console.log({ AddUser })
+
         await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
-            { headers: headers });
+            { headers: headers }).catch((error) => { // error is handled in catch block
+                if (error.response) { // status code out of the range of 2xx
+                    // setErrorMessage(error.response.data.message);
+                    alert(error.response.data.message)
+                    console.log("Status :" + error.response.status);
+                } else if (error.request) { // The request was made but no response was received
+                    console.log(error.request);
+                } else {// Error on setting up the request
+                    console.log('Error', error.message);
+                }
+            });
+
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         postData();
-        changePage();
+        // changePage();
     };
     const [showPassword, setShowPassword] = useState(false);
 
