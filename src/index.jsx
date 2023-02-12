@@ -1,7 +1,7 @@
+import ReactDOM from 'react-dom';
 import App from './app/App';
 import { StyledEngineProvider } from '@mui/styled-engine';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import ReactDOM from 'react-dom';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
