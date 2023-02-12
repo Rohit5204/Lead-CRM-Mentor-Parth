@@ -111,7 +111,17 @@ const AddEmpBranch = () => {
         }
         console.log({ AddUser })
         await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
-            { headers: headers });
+            { headers: headers }).catch((error) => { // error is handled in catch block
+                if (error.response) { // status code out of the range of 2xx
+                    // setErrorMessage(error.response.data.message);
+                    alert(error.response.data.message)
+                    console.log("Status :" + error.response.status);
+                } else if (error.request) { // The request was made but no response was received
+                    console.log(error.request);
+                } else {// Error on setting up the request
+                    console.log('Error', error.message);
+                }
+            });
     };
 
     const handleSubmit = (e) => {
@@ -126,7 +136,20 @@ const AddEmpBranch = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-
+    // const [validated, setValidated] = useState(false);
+    // const handleSubmit1 = (event) => {
+    //     const form = event.currentTarget;
+    //     if (form.checkValidity() === false) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //         // alert("Please Provide appropriate Data")
+    //     }
+    //     else if (form.checkValidity() != false) {
+    //         postData();
+    //         changePage();
+    //     }
+    //     setValidated(true);
+    // };
     return (
         <Container>
             <Box className="breadcrumb">
@@ -137,6 +160,7 @@ const AddEmpBranch = () => {
                     ]}
                 />
             </Box>
+            {/* <Form noValidate validated={validated} onSubmit={handleSubmit1}> */}
             <Row>
                 <Col>
                     <SimpleCard title="Fill Employee Detail's">
@@ -148,7 +172,9 @@ const AddEmpBranch = () => {
                                     onChange={(e) => setfirstName(e.target.value)}
                                     value={firstName}
                                     placeholder="Enter the First Name"
-                                />
+                                /><Form.Control.Feedback type="invalid">
+                                    First Name is Required
+                                </Form.Control.Feedback>
                             </Col>
                             <Col md="6">
                                 <Form.Label>Last Name</Form.Label>
@@ -157,7 +183,9 @@ const AddEmpBranch = () => {
                                     onChange={(e) => setlastName(e.target.value)}
                                     value={lastName}
                                     placeholder="Enter the Last Name"
-                                />
+                                /><Form.Control.Feedback type="invalid">
+                                    Last Name is Required
+                                </Form.Control.Feedback>
                             </Col>
                         </Row>
                         <Row>
@@ -172,7 +200,9 @@ const AddEmpBranch = () => {
                                         onChange={(e) => setmobileNo(e.target.value)}
                                         value={mobileNo}
                                         placeholder="Enter the Mobile Number"
-                                    /></InputGroup>
+                                    /><Form.Control.Feedback type="invalid">
+                                        Mobile Number is Required
+                                    </Form.Control.Feedback></InputGroup>
                             </Col>
                             <Col md="6">
                                 <Form.Label>Alternate Mobile</Form.Label>
@@ -181,7 +211,6 @@ const AddEmpBranch = () => {
                                         <Icon>phone</Icon>
                                     </InputGroup.Text>
                                     <Form.Control
-                                        required
                                         onChange={(e) => setalternateMobileNo(e.target.value)}
                                         value={alternateMobileNo}
                                         placeholder="Enter the Alternate Number"
@@ -197,10 +226,13 @@ const AddEmpBranch = () => {
                                     </InputGroup.Text>
                                     <Form.Control
                                         required
+                                        type='email'
                                         onChange={(e) => setemail(e.target.value)}
                                         value={email}
                                         placeholder="Enter the personal Email Id"
-                                    />
+                                    /><Form.Control.Feedback type="invalid">
+                                        Email is Required
+                                    </Form.Control.Feedback>
                                 </InputGroup>
                             </Col>
                             <Col md="6">
@@ -335,6 +367,7 @@ const AddEmpBranch = () => {
                     </Col>
                 </Row>
             </Div>
+            {/* </Form> */}
         </Container >
     );
 };

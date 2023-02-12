@@ -1,5 +1,5 @@
-import '../fake-db';
 import { Provider } from 'react-redux';
+import '../fake-db';
 import { useRoutes } from 'react-router-dom';
 import { MatxTheme } from './components';
 import { AuthProvider } from './contexts/JWTAuthContext';

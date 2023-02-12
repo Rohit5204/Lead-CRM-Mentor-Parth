@@ -1,15 +1,15 @@
-import { CssBaseline } from '@mui/material';
+import App from './app/App';
 import { StyledEngineProvider } from '@mui/styled-engine';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import ReactDOM from 'react-dom';
+import { CssBaseline } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
-import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <StyledEngineProvider injectFirst>
-    {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      {/* <BrowserRouter> */}
       <CssBaseline />
       <App />
     </BrowserRouter>
