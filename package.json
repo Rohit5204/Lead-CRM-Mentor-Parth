@@ -3,6 +3,8 @@
   "version": "3.0.0",
   "private": true,
   "homepage": "",
+  "main": "index.jsx",
+  "type": "module",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.19.2",
     "@emotion/react": "^11.5.0",
@@ -56,7 +58,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build"       
   },
   "eslintConfig": {
     "extends": "react-app"
