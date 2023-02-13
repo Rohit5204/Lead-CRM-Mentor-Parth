@@ -51,7 +51,7 @@ const LabelWiseCount = (showData) => {
         "userId": userId
     }
     const getDashboardDataFetch = () => {
-        axios.post(`https://43.204.38.243:3001/api/getDashboardDataByLabel`, {
+        axios.post(`http://43.204.38.243:3001/api/getDashboardDataByLabel`, {
             opType: showData.showData.opType,
             fromDate: showData.showData.fromDate,
             toDate: showData.showData.toDate,

@@ -51,7 +51,7 @@ const StatCards = (showData) => {
     "userId": userId
   }
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3001/api/getAdvancedDashboardData`, {
+    axios.post(`http://43.204.38.243:3001/api/getAdvancedDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -63,7 +63,7 @@ const StatCards = (showData) => {
   }, [totalPipeline]);
 
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3001/api/getDashboardTotalLeadData`, {
+    axios.post(`http://43.204.38.243:3001/api/getDashboardTotalLeadData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -75,7 +75,7 @@ const StatCards = (showData) => {
   }, [totalLead]);
 
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3001/api/getDashboardOrderGainData`, {
+    axios.post(`http://43.204.38.243:3001/api/getDashboardOrderGainData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -86,7 +86,7 @@ const StatCards = (showData) => {
       });
   }, [totalGain]);
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3001/api/getDashboardOrderLossData`, {
+    axios.post(`http://43.204.38.243:3001/api/getDashboardOrderLossData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,

@@ -103,7 +103,7 @@ const CompletedManageQuotation = () => {
     ];
     //get method  http://35.89.6.16:4002/api
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3001/api/getQuotationData`,
+        axios.post(`http://43.204.38.243:3001/api/getQuotationData`,
             { quotationId: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);

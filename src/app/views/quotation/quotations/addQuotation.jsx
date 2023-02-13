@@ -235,7 +235,7 @@ const AddQuotation = () => {
   }
   const [leadID2, setLeadId2] = useState([])
   const getLeadByID = () => {
-    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`,
       {
         leadId: leadID1, userId: 0, statusId: 0, searchKey: "",
         locationkey: "", platformId: 0, opType: ""
@@ -245,7 +245,7 @@ const AddQuotation = () => {
       });
   }
   const getFetchData = () => {
-    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
       leadId: 0, userId: 0, statusId: 0, searchKey: "",
       locationkey: "", platformId: 0, opType: ""
     },
@@ -255,7 +255,7 @@ const AddQuotation = () => {
           setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
         }
       });
-    axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+    axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
       { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -268,9 +268,9 @@ const AddQuotation = () => {
   const getCompanyData = () => {
     axios
       .post(
-        `https://43.204.38.243:3000/api/getCompanyMaster`,
-        { id: 4 },
-        { headers: { 'x-access-token': token } }
+        `http://43.204.38.243:3001/api/getCompanyMaster`,
+        { id: 0 },
+        { headers: headers }
       )
       .then((response) => {
         setCompanyData(response.data.data[0]);
@@ -324,7 +324,7 @@ const AddQuotation = () => {
       instalments: installments
     }
     console.log({ AddQuotation });
-    axios.post('https://43.204.38.243:3001/api/saveQuotation', AddQuotation,
+    axios.post('http://43.204.38.243:3001/api/saveQuotation', AddQuotation,
       { headers: headers }
     );
   };

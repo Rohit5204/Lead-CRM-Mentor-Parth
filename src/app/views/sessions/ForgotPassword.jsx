@@ -33,7 +33,7 @@ const ForgotPassword = () => {
 
 
   const getResetPasswordMail = () => {
-    axios.get(`https://43.204.38.243:3001/api/resetUserPassword?userEmail=` + email)
+    axios.get(`http://43.204.38.243:3001/api/resetUserPassword?userEmail=` + email)
       .then(() => {
         console.log("Password Reset Succefully.Please Check You Email");
       });

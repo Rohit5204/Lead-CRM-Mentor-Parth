@@ -108,7 +108,7 @@ const PlatformMaster = () => {
     }
     useEffect(() => {
         axios
-            .get(`https://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`,
+            .get(`http://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -121,14 +121,14 @@ const PlatformMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`https://43.204.38.243:3001/api/mastersUpsert`, PlatformPayload,
+            .post(`http://43.204.38.243:3001/api/mastersUpsert`, PlatformPayload,
                 { headers: headers })
             .then(() => useEffect);
     };
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('https://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
             id: i.id,
             masterName: 'platform',
             inputText: i.platformName,

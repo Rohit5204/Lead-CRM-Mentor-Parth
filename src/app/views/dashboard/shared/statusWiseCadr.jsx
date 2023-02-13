@@ -26,7 +26,7 @@ const StatusWiseCard = (showData) => {
         "userId": userId
     }
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3001/api/getLeadStatusCount`, {
+        axios.post(`http://43.204.38.243:3001/api/getLeadStatusCount`, {
             opType: showData.showData.opType,
             fromDate: showData.showData.fromDate,
             toDate: showData.showData.toDate,

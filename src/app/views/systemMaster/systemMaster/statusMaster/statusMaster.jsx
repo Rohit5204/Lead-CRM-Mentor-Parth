@@ -49,7 +49,7 @@ const StatusMaster = () => {
 
     useEffect(() => {
         axios
-            .get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`,
+            .get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -62,7 +62,7 @@ const StatusMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`https://43.204.38.243:3001/api/mastersUpsert`, {
+            .post(`http://43.204.38.243:3001/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -75,7 +75,7 @@ const StatusMaster = () => {
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('https://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
             id: i.id,
             masterName: 'status',
             inputText: i.platformName,

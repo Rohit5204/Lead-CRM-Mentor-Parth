@@ -115,7 +115,7 @@ const ManageLead = () => {
     },
   ];
   const getFetchLeadData = () => {
-    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,

@@ -56,7 +56,7 @@ const AddEmpBranch = () => {
 
 
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 2) {
@@ -67,7 +67,7 @@ const AddEmpBranch = () => {
                     }
                 }
             });
-        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 3) {
@@ -110,7 +110,7 @@ const AddEmpBranch = () => {
             branchManagerId: managerId
         }
         console.log({ AddUser })
-        await axios.post('https://43.204.38.243:3001/api/userMasterUpsert', AddUser,
+        await axios.post('http://43.204.38.243:3001/api/userMasterUpsert', AddUser,
             { headers: headers }).catch((error) => { // error is handled in catch block
                 if (error.response) { // status code out of the range of 2xx
                     // setErrorMessage(error.response.data.message);

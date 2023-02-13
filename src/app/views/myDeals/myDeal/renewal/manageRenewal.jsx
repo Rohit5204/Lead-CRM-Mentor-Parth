@@ -52,7 +52,7 @@ const Renewal = () => {
     }
     //get method
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3001/api/getRenewalInstalments`,
+        axios.post(`http://43.204.38.243:3001/api/getRenewalInstalments`,
             { "userId": 1 }, { headers: headers }).then((response) => {
                 setRenewData(response.data.data);
             });

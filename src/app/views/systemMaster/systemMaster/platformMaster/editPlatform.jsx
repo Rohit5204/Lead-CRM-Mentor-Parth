@@ -46,7 +46,7 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
     }
     console.log({ UpdatePlatform });
     e.preventDefault();
-    axios.post(`https://43.204.38.243:3001/api/mastersUpsert`, UpdatePlatform, { headers: headers })
+    axios.post(`http://43.204.38.243:3001/api/mastersUpsert`, UpdatePlatform, { headers: headers })
       .then(() => useEffect);
     setInputText('');
     setplatformIcon('');

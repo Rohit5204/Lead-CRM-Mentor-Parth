@@ -158,7 +158,7 @@ const ManageQuotation = () => {
   //   }
   // }
   const fetchAllLead = () => {
-    axios.post(`https://43.204.38.243:3001/api/getQuotationData`,
+    axios.post(`http://43.204.38.243:3001/api/getQuotationData`,
       {
         quotationId: 0, empId: 0, statusId: 1, searchKey: searchBox, opType: onType
       }, { headers: headers })
@@ -168,7 +168,7 @@ const ManageQuotation = () => {
   }
   const [sendListData, setSendListData] = useState([])
   const fetchSendList = () => {
-    axios.post(`https://43.204.38.243:3001/api/getQuotationData`,
+    axios.post(`http://43.204.38.243:3001/api/getQuotationData`,
       {
         quotationId: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType
       }, { headers: headers })
@@ -185,7 +185,7 @@ const ManageQuotation = () => {
     fetchSendList()
   }, [sendListData]);
   useEffect(() => {
-    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 4,

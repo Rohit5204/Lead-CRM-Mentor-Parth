@@ -70,7 +70,7 @@ const ManageEmailMessage = () => {
     }
     //get method
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getEmailTemplate?_id=0`,
+        axios.get(`http://43.204.38.243:3001/api/getEmailTemplate?_id=0`,
             { headers: headers }).then((response) => {
                 setEmailData(response.data.data);
             });
@@ -81,7 +81,7 @@ const ManageEmailMessage = () => {
     const [myOptions, setMyOptions] = useState(null);
 
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=emailcategorymaster`,
+        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCategoryData(current => [...current, res.data.data[i].emailCategory]);
@@ -105,7 +105,7 @@ const ManageEmailMessage = () => {
             recordStatus: 1
         }
         console.log({ AddEmail })
-        await axios.post('https://43.204.38.243:3001/api/emailTemplateUpsert', AddEmail,
+        await axios.post('http://43.204.38.243:3001/api/emailTemplateUpsert', AddEmail,
             { headers: headers });
 
     }

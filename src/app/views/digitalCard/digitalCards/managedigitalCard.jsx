@@ -50,7 +50,7 @@ const ManageDigitalCard = () => {
         "userId": userId
     }
     const getEmpDigitalCard = () => {
-        axios.post(`https://43.204.38.243:3001/api/getDigitalCard`, { _id: 0 },
+        axios.post(`http://43.204.38.243:3001/api/getDigitalCard`, { _id: 0 },
             { headers: headers })
             .then((response) => {
                 setEmpApi(response.data.data);

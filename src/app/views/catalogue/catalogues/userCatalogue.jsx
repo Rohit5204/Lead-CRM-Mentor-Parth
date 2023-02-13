@@ -89,7 +89,7 @@ const UserCatalogue = () => {
     ];
     const [searchBox, setSearchBox] = useState('')
     const getCatalogueData = async () => {
-        await axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0, searchKey: searchBox, },
+        await axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0, searchKey: searchBox, },
             { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);

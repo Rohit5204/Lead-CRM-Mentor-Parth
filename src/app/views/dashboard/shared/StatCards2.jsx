@@ -32,7 +32,7 @@ const StatCards2 = (showData) => {
       "roleCode": roleCode,
       "userId": userId
     }
-    axios.post(`https://43.204.38.243:3001/api/getDashboardData`, {
+    axios.post(`http://43.204.38.243:3001/api/getDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -52,7 +52,7 @@ const StatCards2 = (showData) => {
   //   const source = CancelToken.source();
   //   const items = localStorage.getItem('accessToken');
   //   if (!showData) {
-  //     axios.post(`https://43.204.38.243:3001/api/getDashboardData`, {
+  //     axios.post(`http://43.204.38.243:3001/api/getDashboardData`, {
   //       opType: showData.showData.opType,
   //       fromDate: showData.showData.fromDate,
   //       toDate: showData.showData.toDate,

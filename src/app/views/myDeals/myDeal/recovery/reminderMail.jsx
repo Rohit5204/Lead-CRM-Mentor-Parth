@@ -28,7 +28,7 @@ const ReminderMail = ({ theClientMail, handleDialog }) => {
             emailId: clientEmail,
             emailTemplateId: 3
         }
-        axios.post('https://43.204.38.243:3001/api/sendReminderMail', mailBody, {
+        axios.post('http://43.204.38.243:3001/api/sendReminderMail', mailBody, {
             headers: headers
         })
     }

@@ -77,7 +77,7 @@ const CompletedInvoiceList = () => {
     const [onType, setOnType] = useState('')
     const [searchBox, setSearchBox] = useState('')
     useEffect(() => {
-        axios.post(`https://43.204.38.243:3001/api/getInvoiceData`,
+        axios.post(`http://43.204.38.243:3001/api/getInvoiceData`,
             { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);

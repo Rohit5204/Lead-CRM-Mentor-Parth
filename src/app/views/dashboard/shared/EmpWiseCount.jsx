@@ -28,7 +28,7 @@ const EmpWiseCount = () => {
             "roleCode": roleCode,
             "userId": userId
         }
-        axios.get(`https://43.204.38.243:3001/api/getRolewiseClosedCount`, {
+        axios.get(`http://43.204.38.243:3001/api/getRolewiseClosedCount`, {
             headers: {
                 "x-access-token": items,
                 "roleCode": roleCode,

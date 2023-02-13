@@ -14,7 +14,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
     const [id1, setId1] = useState([]);
     const [myOptions, setMyOptions] = useState(null);
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getEmailTemplate?_id=0`,
+        axios.get(`http://43.204.38.243:3001/api/getEmailTemplate?_id=0`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setEmailData(current => [...current, res.data.data[i].emailSubject]);
@@ -54,7 +54,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
         // console.log({ data: data1, file: selectedFile })
-        await axios.post('https://43.204.38.243:3001/api/sendInvoiceMail',
+        await axios.post('http://43.204.38.243:3001/api/sendInvoiceMail',
             formData, {
             headers: headers
         })

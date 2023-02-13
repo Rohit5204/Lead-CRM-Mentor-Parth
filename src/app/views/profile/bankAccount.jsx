@@ -37,7 +37,7 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
         }
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3000/api/updateCompanyAccounts`, UpdateData,
+        axios.post(`http://43.204.38.243:3001/api/updateCompanyAccounts`, UpdateData,
             { headers: headers }).then(() => useEffect);
         handleDialog();
     };

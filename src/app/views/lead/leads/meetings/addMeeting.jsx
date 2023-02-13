@@ -44,7 +44,7 @@ const ManageMettings = () => {
 
     const getData = () => {
         // let abc = null
-        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`,
             {
                 leadId: leadId, userId: 0, statusId: 0, searchKey: "",
                 locationkey: "", platformId: 0, opType: ""
@@ -61,7 +61,7 @@ const ManageMettings = () => {
     }
     const postData = () => {
         // console.log({ MeetingData })
-        axios.post(`https://43.204.38.243:3001/api/saveLeadMeetings`, MeetingData,
+        axios.post(`http://43.204.38.243:3001/api/saveLeadMeetings`, MeetingData,
             { headers: headers });
     };
     const blankForm = () => {

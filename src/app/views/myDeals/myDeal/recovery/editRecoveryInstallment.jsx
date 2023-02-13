@@ -49,7 +49,7 @@ const EditRecoveryInstallment = () => {
     const updateInstallment = (e) => {
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`https://43.204.38.243:3001/api/updateProductInstalment`,
+        axios.post(`http://43.204.38.243:3001/api/updateProductInstalment`,
             UpdateData, { headers: headers }).then(() => useEffect);
         changePage();
     };

@@ -47,7 +47,7 @@ const ManageFollowups = () => {
         getData1()
     }, [APIData456]);
     const getData1 = () => {
-        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
             leadId: leadId, userId: 0, statusId: 0, searchKey: "",
             locationkey: "", platformId: 0, opType: ""
         },
@@ -63,7 +63,7 @@ const ManageFollowups = () => {
     }
     const postData = () => {
         // console.log({ followUpData })
-        axios.post(`https://43.204.38.243:3001/api/saveLeadFollowups`, followUpData,
+        axios.post(`http://43.204.38.243:3001/api/saveLeadFollowups`, followUpData,
             { headers: headers });
     };
     const blankForm = () => {

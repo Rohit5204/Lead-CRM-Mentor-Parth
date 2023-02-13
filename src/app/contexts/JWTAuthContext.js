@@ -89,7 +89,7 @@ const AuthContext = createContext({
   ...initialState,
   method: 'JWT',
   login: () => Promise.resolve(),
-  logout: () => { },
+  logout: () => {},
   register: () => Promise.resolve(),
 });
 // Login For Dashboard 08/11/2022 Rohit
@@ -99,11 +99,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userName, password) => {
     // http://43.204.38.243:3000/api/userLogin
-    const response = await axios.post('https://43.204.38.243:3001/api/userLogin', {
+    const response = await axios.post('http://43.204.38.243:3001/api/userLogin', {
       userName,
       password,
     });
-    const { message, accessToken, roleName, user, roleCode, userId, branchName, branchId } = response.data;
+    const { message, accessToken, roleName, user, roleCode, userId, branchName, branchId } =
+      response.data;
     setSession(accessToken, roleName, userName, roleCode, userId, branchName, branchId);
     dispatch({
       type: 'LOGIN',

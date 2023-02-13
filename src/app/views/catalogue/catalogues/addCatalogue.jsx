@@ -38,7 +38,7 @@ const AddCatalogue = () => {
     "userId": userId
   }
   useEffect(() => {
-    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
+    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
       { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setAssignTo(current => [...current, res.data.data[i].name]);
@@ -55,7 +55,7 @@ const AddCatalogue = () => {
         catdurationid = id1[i - 1]
       }
     }
-    axios.post('https://43.204.38.243:3001/api/upsertCatalogue',
+    axios.post('http://43.204.38.243:3001/api/upsertCatalogue',
       {
         catId: 0,
         catType: catType,

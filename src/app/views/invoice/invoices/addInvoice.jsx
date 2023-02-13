@@ -241,7 +241,7 @@ const AddInvoice = () => {
     const [leadID1, setLeadID1] = useState('')
     const [leadID2, setLeadId2] = useState([])
     const getLeadByID = () => {
-        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`,
+        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`,
             {
                 leadId: leadID1,
                 userId: 0,
@@ -259,8 +259,8 @@ const AddInvoice = () => {
     const getCompanyData = () => {
         axios
             .post(
-                `https://43.204.38.243:3000/api/getCompanyMaster`,
-                { id: 4 },
+                `http://43.204.38.243:3001/api/getCompanyMaster`,
+                { id: 0 },
                 { headers: headers }
             )
             .then((response) => {
@@ -271,7 +271,7 @@ const AddInvoice = () => {
     const pending = total - initalPayment;
     useEffect(() => {
         getCompanyData()
-        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
             leadId: 0, userId: 0, statusId: 0, searchKey: "",
             locationkey: "", platformId: 0, opType: ""
         },
@@ -281,7 +281,7 @@ const AddInvoice = () => {
                     setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
                 }
             });
-        axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+        axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -336,7 +336,7 @@ const AddInvoice = () => {
             invoiceType: invoiceType
         }
         console.log({ AddInvoice });
-        axios.post('https://43.204.38.243:3001/api/saveInvoice', AddInvoice,
+        axios.post('http://43.204.38.243:3001/api/saveInvoice', AddInvoice,
             { headers: headers }
         );
     };

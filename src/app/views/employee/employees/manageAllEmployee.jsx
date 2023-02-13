@@ -60,7 +60,7 @@ const ManageAllEmployee = () => {
     }
     //get method
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((response) => {
                 setUserData(response.data.data);
             });

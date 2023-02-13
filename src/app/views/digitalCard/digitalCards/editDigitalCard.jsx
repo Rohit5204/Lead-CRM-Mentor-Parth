@@ -94,7 +94,7 @@ const EditFormCard = () => {
     }
     const postData = () => {
         console.log(userCard);
-        axios.post('https://43.204.38.243:3001/api/digitalCardUpsert', userCard,
+        axios.post('http://43.204.38.243:3001/api/digitalCardUpsert', userCard,
             { headers: headers }
         );
     };

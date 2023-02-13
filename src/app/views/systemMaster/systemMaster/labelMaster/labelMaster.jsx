@@ -50,7 +50,7 @@ const LabelMaster = () => {
 
     useEffect(() => {
         axios
-            .get(`https://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`,
+            .get(`http://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -63,7 +63,7 @@ const LabelMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`https://43.204.38.243:3001/api/mastersUpsert`, {
+            .post(`http://43.204.38.243:3001/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -76,7 +76,7 @@ const LabelMaster = () => {
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('https://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
             id: i.id,
             masterName: 'label',
             inputText: i.platformName,

@@ -24,7 +24,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
     }
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
+        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setStatusName(current => [...current, res.data.data[i].name]);
                 setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -34,7 +34,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
 
 
     const getFetchLeadData = () => {
-        axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
             leadId: 0,
             userId: 0,
             statusId: 0,
@@ -77,7 +77,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
         };
         e.preventDefault();
         console.log(UpdateUser)
-        axios.post(`https://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
+        axios.post(`http://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
             { headers: headers });
         getFetchLeadData()
         handleDialog()

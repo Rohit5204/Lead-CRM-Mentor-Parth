@@ -104,8 +104,8 @@ const ViewQuotation = ({ theViewQuotation }) => {
     }
     const getCatalogueData = () => {
         axios.post(
-            `https://43.204.38.243:3000/api/getCompanyMaster`,
-            { id: 4 },
+            `http://43.204.38.243:3001/api/getCompanyMaster`,
+            { id: 0 },
             { headers: headers }
         )
             .then((response) => {
@@ -143,7 +143,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                         <Form className='mt-1 ml-1 mr-1'>
                             <Row>
                                 <Col>
-                                    <h5 className='text-center'>INVOICE</h5>
+                                    <h5 className='text-center'>Quotation</h5>
                                 </Col>
                             </Row>
                             <Row>

@@ -74,30 +74,30 @@ const LeadForm = () => {
   }
 
   const getAllLeadData = () => {
-    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
+    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`https://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
+    axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
+    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
+    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`https://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
+    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -189,7 +189,7 @@ const LeadForm = () => {
       excelData[i].createdBy = 1;
     }
     // console.log(excelData);
-    axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`, excelData,
+    axios.post(`http://43.204.38.243:3001/api/saveLeadGenerationData`, excelData,
       { headers: headers });
     changePage();
   };
@@ -234,7 +234,7 @@ const LeadForm = () => {
   //Add data in the table
   const [APIData, setAPIData] = useState([]);
   const getFetchLeadData = () => {
-    axios.post(`https://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,
@@ -291,7 +291,7 @@ const LeadForm = () => {
       expectedAmount: expectedAmount
     }
     console.log({ AddLead })
-    axios.post(`https://43.204.38.243:3001/api/saveLeadGenerationData`,
+    axios.post(`http://43.204.38.243:3001/api/saveLeadGenerationData`,
       [AddLead], { headers: headers });
   };
 

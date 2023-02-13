@@ -68,7 +68,7 @@ const ManageRecovery = () => {
     const [endDate, setendDate] = useState(lastdate)
     //get method
     const fetchRecovery = () => {
-        axios.post(`https://43.204.38.243:3001/api/getPendingInstalments`, {
+        axios.post(`http://43.204.38.243:3001/api/getPendingInstalments`, {
             fromDate: startDate,
             toDate: endDate,
             userId: 1

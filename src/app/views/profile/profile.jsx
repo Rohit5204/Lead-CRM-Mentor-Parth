@@ -60,7 +60,7 @@ function ManageProfile() {
         }
     }
     const getAccountsData = () => {
-        axios.post(`https://43.204.38.243:3000/api/getCompanyMaster`, { id: 1 },
+        axios.post(`http://43.204.38.243:3001/api/getCompanyMaster`, { id: 1 },
             { headers: headers })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
@@ -85,7 +85,7 @@ function ManageProfile() {
         createdBy: 1
     }
     const postData = () => {
-        axios.post('https://43.204.38.243:3000/api/updateCompanyMaster', userCard,
+        axios.post('http://43.204.38.243:3001/api/updateCompanyMaster', userCard,
             { headers: headers }
         );
     };
