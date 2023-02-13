@@ -226,25 +226,25 @@ const EditUser = () => {
             </Col>
             <Col>
               <Form.Label>Interested In</Form.Label>
-              <FormControl>
-                <Autocomplete
-                  style={{ width: 580 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions1}
-                  options={intrestedIn}
-                  onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Interested Catalogue"
-                      size="small"
-                    />
-                  )}
-                />
-              </FormControl>
+
+              <Autocomplete
+                style={{ width: '100%' }}
+                freeSolo
+                autoComplete
+                autoHighlight
+                value={myOptions1}
+                options={intrestedIn}
+                onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select the Interested Catalogue"
+                    size="small"
+                  />
+                )}
+              />
+
             </Col>
           </Row>
           <Row className="mt-1">
@@ -290,25 +290,25 @@ const EditUser = () => {
               placeholder="Select the Source"
             /> */}
               <Form.Label>Source(Platform Name)</Form.Label>
-              <FormControl>
-                <Autocomplete
-                  style={{ width: 580 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions2}
-                  options={platformName}
-                  onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Platform Name"
-                      size="small"
-                    />
-                  )}
-                />
-              </FormControl>
+
+              <Autocomplete
+                style={{ width: '100%' }}
+                freeSolo
+                autoComplete
+                autoHighlight
+                value={myOptions2}
+                options={platformName}
+                onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select the Platform Name"
+                    size="small"
+                  />
+                )}
+              />
+
             </Col>
           </Row>
           <Row>
@@ -327,27 +327,27 @@ const EditUser = () => {
               // value={assignedUser}
               placeholder="Select the Staff Member"
             /> */}
-              <FormControl>
-                <Form.Label>Assigned To</Form.Label>
-                <Autocomplete
-                  style={{ width: 580 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={assignTo}
-                  value={myOptions3}
-                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
 
-                      variant="outlined"
-                      label="Select the Employee to Assign"
-                      size="small"
-                    />
-                  )}
-                />
-              </FormControl>
+              <Form.Label>Assigned To</Form.Label>
+              <Autocomplete
+                style={{ width: '100%' }}
+                freeSolo
+                autoComplete
+                autoHighlight
+                options={assignTo}
+                value={myOptions3}
+                onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+
+                    variant="outlined"
+                    label="Select the Employee to Assign"
+                    size="small"
+                  />
+                )}
+              />
+
             </Col>
           </Row>
 
@@ -362,34 +362,35 @@ const EditUser = () => {
             </Col>
             <Col xs={6}>
               <Form.Label>Status</Form.Label>
-              <FormControl>
-                <Autocomplete
-                  style={{ width: 580 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions4}
-                  options={statusName}
-                  onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Status"
-                      size="small"
-                    />
-                  )}
-                />
-              </FormControl>
+
+              <Autocomplete
+                style={{ width: '100%' }}
+                freeSolo
+                autoComplete
+                autoHighlight
+                value={myOptions4}
+                options={statusName}
+                onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select the Status"
+                    size="small"
+                  />
+                )}
+              />
+
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <FormControl sx={{ m: 0, minWidth: 580 }} size="small" className="mt-1">
+              <FormControl sx={{ m: 0, width: '100%' }} size="small" className="mt-1">
                 <Form.Label>Country</Form.Label>
                 <Select
+
                   value={countryName}
-                  label="Country"
+                  label="."
                   onChange={(e) => setCountryName(e.target.value)}
                 >
                   <MenuItem value="s">Select the Country</MenuItem>
@@ -402,25 +403,25 @@ const EditUser = () => {
             </Col>
             <Col xs={6}>
               <Form.Label>Label</Form.Label>
-              <FormControl>
-                <Autocomplete
-                  style={{ width: 580 }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={labelName}
-                  value={myOptions5}
-                  onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Label"
-                      size="small"
-                    />
-                  )}
-                />
-              </FormControl>
+
+              <Autocomplete
+                style={{ width: '100%' }}
+                freeSolo
+                autoComplete
+                autoHighlight
+                options={labelName}
+                value={myOptions5}
+                onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select the Label"
+                    size="small"
+                  />
+                )}
+              />
+
             </Col>
           </Row>
         </Form>

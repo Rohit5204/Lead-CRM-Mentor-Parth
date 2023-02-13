@@ -160,11 +160,11 @@ const AddEmployee = () => {
 
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postData();
-        // changePage();
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     postData();
+    //     // changePage();
+    // };
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -174,6 +174,21 @@ const AddEmployee = () => {
     };
     const branchName = window.localStorage.getItem('branchName');
     const managerName = window.localStorage.getItem('userName');
+
+    const [validated, setValidated] = useState(false);
+    const handleSubmit1 = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            // alert("Please Provide appropriate Data")
+        }
+        else if (form.checkValidity() != false) {
+            postData();
+            changePage();
+        }
+        setValidated(true);
+    };
     return (
         <Container>
             <Box className="breadcrumb">
@@ -184,285 +199,243 @@ const AddEmployee = () => {
                     ]}
                 />
             </Box>
-            <Row>
-                <Col>
-                    <SimpleCard title="Fill Employee Detail's">
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setfirstName(e.target.value)}
-                                    value={firstName}
-                                    placeholder="Enter the First Name"
-                                />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setlastName(e.target.value)}
-                                    value={lastName}
-                                    placeholder="Enter the Last Name"
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Mobile Number</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>phone</Icon>
-                                    </InputGroup.Text>
+            <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+                <Row>
+                    <Col>
+                        <SimpleCard title="Fill Employee Detail's">
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>First Name</Form.Label>
                                     <Form.Control
                                         required
-                                        onChange={(e) => setmobileNo(e.target.value)}
-                                        value={mobileNo}
-                                        placeholder="Enter the Mobile Number"
-                                    /></InputGroup>
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Alternate Mobile</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>phone</Icon>
-                                    </InputGroup.Text>
+                                        onChange={(e) => setfirstName(e.target.value)}
+                                        value={firstName}
+                                        placeholder="Enter the First Name"
+                                    /><Form.Control.Feedback type="invalid">
+                                        First Name is Required
+                                    </Form.Control.Feedback>
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Last Name</Form.Label>
                                     <Form.Control
                                         required
-                                        onChange={(e) => setalternateMobileNo(e.target.value)}
-                                        value={alternateMobileNo}
-                                        placeholder="Enter the Alternate Number"
-                                    /></InputGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Email</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>email</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        required
-                                        onChange={(e) => setemail(e.target.value)}
-                                        value={email}
-                                        placeholder="Enter the personal Email Id"
-                                    />
-                                </InputGroup>
-                            </Col>
+                                        onChange={(e) => setlastName(e.target.value)}
+                                        value={lastName}
+                                        placeholder="Enter the Last Name"
+                                    /><Form.Control.Feedback type="invalid">
+                                        Last Name is Required
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>Mobile Number</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>phone</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            onChange={(e) => setmobileNo(e.target.value)}
+                                            value={mobileNo}
+                                            placeholder="Enter the Mobile Number"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Mobile Number is Required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Alternate Mobile</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>phone</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            onChange={(e) => setalternateMobileNo(e.target.value)}
+                                            value={alternateMobileNo}
+                                            placeholder="Enter the Alternate Number"
+                                        /></InputGroup>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>Email</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>email</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            type='email'
+                                            required
+                                            onChange={(e) => setemail(e.target.value)}
+                                            value={email}
+                                            placeholder="Enter the personal Email Id"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Email is Required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                                {(function () {
+                                    if (roleCode == "ADMIN") {
+                                        return <>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Role</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={roleTo}
+                                                    value={myOptions3}
+                                                    onChange={(e) => {
+                                                        setMyOptions3(e.currentTarget.innerHTML);
+                                                        if (e.currentTarget.innerHTML == "Branch Manager") {
+                                                            setShowForm(true);
+                                                            setShowForm1(false);
+                                                            setShowForm2(false);
+                                                        }
+                                                        else if (e.currentTarget.innerHTML == "Team Lead") {
+                                                            setShowForm(false);
+                                                            setShowForm1(true);
+                                                            setShowForm2(false);
+                                                        }
+                                                        else if (e.currentTarget.innerHTML == "Employee") {
+                                                            setShowForm(false);
+                                                            setShowForm1(false);
+                                                            setShowForm2(true);
+                                                        }
+                                                        else {
+                                                            setShowForm(false);
+                                                            setShowForm1(false);
+                                                            setShowForm2(false);
+                                                        }
+                                                    }}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            required
+                                                            variant="outlined"
+                                                            label="Select the Calalogue Duration"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+
+                                            </Col>
+                                        </>;
+                                    }
+                                    else {
+                                        return <>
+                                            <Col md="6">
+                                                <Form.Label>Branch Name</Form.Label>
+                                                <Form.Control
+                                                    disabled
+                                                    required
+                                                    value={branchName}
+                                                    placeholder="Enter the Branch Name"
+                                                />
+                                            </Col>
+                                            <Col md="6">
+                                                <Form.Label>Branch Manager</Form.Label>
+                                                <Form.Control
+                                                    disabled
+                                                    required
+                                                    // onChange={(e) => setemail(e.target.value)}
+                                                    value={managerName}
+                                                    placeholder="Enter the Branch Manager"
+                                                />
+                                            </Col>
+                                            <Col xs={6}>
+                                                <FormControl sx={{ m: 0, minWidth: 550 }} size="small" >
+
+                                                    <InputGroup>
+                                                        <Form.Label>Role</Form.Label>
+                                                    </InputGroup>
+                                                    <Select
+                                                        value={myOptions3}
+                                                        label="r"
+                                                        onChange={(e) => setMyOptions3(e.target.value)}
+                                                    >
+                                                        <MenuItem value={3}>Employee</MenuItem>
+                                                        <MenuItem value={4}>Team Lead</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Col>
+
+                                        </>
+                                    }
+                                })()}
+
+                            </Row>
                             {(function () {
-                                if (roleCode == "ADMIN") {
+                                if (myOptions3 == 4) {
                                     return <>
-                                        <Col md="6">
-                                            <InputGroup>
-                                                <Form.Label>Role</Form.Label>
-                                            </InputGroup>
-                                            <Autocomplete
-                                                freeSolo
-                                                autoComplete
-                                                autoHighlight
-                                                options={roleTo}
-                                                value={myOptions3}
-                                                onChange={(e) => {
-                                                    setMyOptions3(e.currentTarget.innerHTML);
-                                                    if (e.currentTarget.innerHTML == "Branch Manager") {
-                                                        setShowForm(true);
-                                                        setShowForm1(false);
-                                                        setShowForm2(false);
-                                                    }
-                                                    else if (e.currentTarget.innerHTML == "Team Lead") {
-                                                        setShowForm(false);
-                                                        setShowForm1(true);
-                                                        setShowForm2(false);
-                                                    }
-                                                    else if (e.currentTarget.innerHTML == "Employee") {
-                                                        setShowForm(false);
-                                                        setShowForm1(false);
-                                                        setShowForm2(true);
-                                                    }
-                                                    else {
-                                                        setShowForm(false);
-                                                        setShowForm1(false);
-                                                        setShowForm2(false);
-                                                    }
-                                                }}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
+                                        <Row>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Team Leader</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={userTLData}
+                                                    value={myOptions6}
+                                                    onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
 
-                                                        variant="outlined"
-                                                        label="Select the Calalogue Duration"
-                                                        size="small"
-                                                    />
-                                                )}
-                                            />
-
-                                        </Col>
+                                                            variant="outlined"
+                                                            label="Select the Team Leader"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+                                            </Col>
+                                        </Row>
                                     </>;
                                 }
                                 else {
                                     return <>
-                                        <Col md="6">
-                                            <Form.Label>Branch Name</Form.Label>
-                                            <Form.Control
-                                                disabled
-                                                required
-                                                value={branchName}
-                                                placeholder="Enter the Branch Name"
-                                            />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Branch Manager</Form.Label>
-                                            <Form.Control
-                                                disabled
-                                                required
-                                                // onChange={(e) => setemail(e.target.value)}
-                                                value={managerName}
-                                                placeholder="Enter the Branch Manager"
-                                            />
-                                        </Col>
-                                        <Col xs={6}>
-                                            <FormControl sx={{ m: 0, minWidth: 550 }} size="small" >
-
-                                                <InputGroup>
-                                                    <Form.Label>Role</Form.Label>
-                                                </InputGroup>
-                                                <Select
-                                                    value={myOptions3}
-                                                    label="r"
-                                                    onChange={(e) => setMyOptions3(e.target.value)}
-                                                >
-                                                    <MenuItem value={3}>Employee</MenuItem>
-                                                    <MenuItem value={4}>Team Lead</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Col>
-
                                     </>
                                 }
                             })()}
-
-                        </Row>
-                        {(function () {
-                            if (myOptions3 == 4) {
-                                return <>
+                            {
+                                showForm ? (
                                     <Row>
                                         <Col md="6">
                                             <InputGroup>
-                                                <Form.Label>Team Leader</Form.Label>
+                                                <Form.Label>Branch</Form.Label>
                                             </InputGroup>
                                             <Autocomplete
                                                 freeSolo
                                                 autoComplete
                                                 autoHighlight
-                                                options={userTLData}
-                                                value={myOptions6}
-                                                onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
+                                                options={officeTo}
+                                                value={myOptions4}
+                                                onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
                                                 renderInput={(params) => (
                                                     <TextField
                                                         {...params}
 
                                                         variant="outlined"
-                                                        label="Select the Team Leader"
+                                                        label="Select the Branch Name"
                                                         size="small"
                                                     />
                                                 )}
                                             />
                                         </Col>
                                     </Row>
-                                </>;
+
+                                ) : (
+                                    ""
+                                )
                             }
-                            else {
-                                return <>
-                                </>
-                            }
-                        })()}
-                        {
-                            showForm ? (
-                                <Row>
-                                    <Col md="6">
-                                        <InputGroup>
-                                            <Form.Label>Branch</Form.Label>
-                                        </InputGroup>
-                                        <Autocomplete
-                                            freeSolo
-                                            autoComplete
-                                            autoHighlight
-                                            options={officeTo}
-                                            value={myOptions4}
-                                            onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-
-                                                    variant="outlined"
-                                                    label="Select the Branch Name"
-                                                    size="small"
-                                                />
-                                            )}
-                                        />
-                                    </Col>
-                                </Row>
-
-                            ) : (
-                                ""
-                            )
-                        }
-                        {
-                            showForm1 ? (
-                                <Row>
-                                    <Col md="6">
-                                        <InputGroup>
-                                            <Form.Label>Branch</Form.Label>
-                                        </InputGroup>
-                                        <Autocomplete
-                                            freeSolo
-                                            autoComplete
-                                            autoHighlight
-                                            options={officeTo}
-                                            value={myOptions4}
-                                            onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-
-                                                    variant="outlined"
-                                                    label="Select the Branch Name"
-                                                    size="small"
-                                                />
-                                            )}
-                                        />
-                                    </Col>
-                                    <Col md="6">
-                                        <InputGroup>
-                                            <Form.Label>Branch Manager</Form.Label>
-                                        </InputGroup>
-                                        <Autocomplete
-                                            freeSolo
-                                            autoComplete
-                                            autoHighlight
-                                            options={userData}
-                                            value={myOptions5}
-                                            onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-
-                                                    variant="outlined"
-                                                    label="Select the Branch Manager"
-                                                    size="small"
-                                                />
-                                            )}
-                                        />
-                                    </Col>
-                                </Row>
-                            ) : (
-                                ""
-                            )
-                        }
-                        {
-                            showForm2 ? (
-                                <>
+                            {
+                                showForm1 ? (
                                     <Row>
                                         <Col md="6">
                                             <InputGroup>
@@ -509,80 +482,138 @@ const AddEmployee = () => {
                                             />
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col md="6">
-                                            <InputGroup>
-                                                <Form.Label>Team Leader</Form.Label>
-                                            </InputGroup>
-                                            <Autocomplete
-                                                freeSolo
-                                                autoComplete
-                                                autoHighlight
-                                                options={userTLData}
-                                                value={myOptions6}
-                                                onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
+                                ) : (
+                                    ""
+                                )
+                            }
+                            {
+                                showForm2 ? (
+                                    <>
+                                        <Row>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Branch</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={officeTo}
+                                                    value={myOptions4}
+                                                    onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
 
-                                                        variant="outlined"
-                                                        label="Select the Team Leader"
-                                                        size="small"
-                                                    />
-                                                )}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </>
-                            ) : (
-                                ""
-                            )
-                        }
+                                                            variant="outlined"
+                                                            label="Select the Branch Name"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+                                            </Col>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Branch Manager</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={userData}
+                                                    value={myOptions5}
+                                                    onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+
+                                                            variant="outlined"
+                                                            label="Select the Branch Manager"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Team Leader</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={userTLData}
+                                                    value={myOptions6}
+                                                    onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+
+                                                            variant="outlined"
+                                                            label="Select the Team Leader"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </>
+                                ) : (
+                                    ""
+                                )
+                            }
 
 
-                        <br />
-                        <h6 style={{ color: 'red' }}>User Credential's </h6>
-                        <Row>
-                            <Col>
-                                <Form.Label>User Name </Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>person</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        required
-                                        onChange={(e) => setuserName(e.target.value)}
-                                        value={userName}
-                                        placeholder="Enter the User Name"
-                                    />
-                                </InputGroup>
-                            </Col>
-                            <Col>
+                            <br />
+                            <h6 style={{ color: 'red' }}>User Credential's </h6>
+                            <Row>
+                                <Col>
+                                    <Form.Label>User Name </Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>person</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            onChange={(e) => setuserName(e.target.value)}
+                                            value={userName}
+                                            placeholder="Enter the User Name"
+                                        /><Form.Control.Feedback type="invalid">
+                                            User Name is Required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                                <Col>
 
-                                <FormControl sx={{ width: "100%" }} variant="outlined" >
-                                    <Form.Label>Password </Form.Label>
-                                    <OutlinedInput
-                                        size="small"
-                                        id="outlined-adornment-password"
-                                        onChange={(e) => setpassword(e.target.value)}
-                                        value={password}
-                                        type={showPassword ? 'text' : 'password'}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        label="h"
-                                    />
-                                </FormControl>
-                                {/* <InputGroup>
+                                    <FormControl sx={{ width: "100%" }} variant="outlined" >
+                                        <Form.Label>Password </Form.Label>
+                                        <OutlinedInput
+                                            required
+                                            size="small"
+                                            id="outlined-adornment-password"
+                                            onChange={(e) => setpassword(e.target.value)}
+                                            value={password}
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="h"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Password is Required
+                                        </Form.Control.Feedback>
+                                    </FormControl>
+                                    {/* <InputGroup>
                                     <InputGroup.Text id="basic-addon1">
                                         <Icon>password</Icon>
                                     </InputGroup.Text>
@@ -593,24 +624,25 @@ const AddEmployee = () => {
                                         value={password}
                                         placeholder="Enter the Password"
                                     /></InputGroup> */}
-                            </Col>
-                        </Row>
-                    </SimpleCard>
-                </Col>
-            </Row>
-            <Div className="mt-2">
-                <Row>
-                    <Col>
-                        <Button variant="secondary" onClick={changePage}>
-                            Cancel
-                        </Button>
-                        &nbsp;
-                        <button type="button" className="btn btn-success" onClick={handleSubmit}>
-                            Save
-                        </button>
+                                </Col>
+                            </Row>
+                        </SimpleCard>
                     </Col>
                 </Row>
-            </Div>
+                <Div className="mt-2">
+                    <Row>
+                        <Col>
+                            <Button variant="secondary" onClick={changePage}>
+                                Cancel
+                            </Button>
+                            &nbsp;
+                            <button type="submit" className="btn btn-success">
+                                Save
+                            </button>
+                        </Col>
+                    </Row>
+                </Div>
+            </Form>
         </Container >
     );
 };

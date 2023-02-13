@@ -53,11 +53,11 @@ const LeadForm = () => {
   const [status, setStatusName] = useState([]);
   const [assignTo, setAssignTo] = useState([]);
 
-  const [myOptions1, setMyOptions1] = useState("");
-  const [myOptions2, setMyOptions2] = useState("");
-  const [myOptions3, setMyOptions3] = useState("");
-  const [myOptions4, setMyOptions4] = useState("");
-  const [myOptions5, setMyOptions5] = useState("");
+  const [myOptions1, setMyOptions1] = useState(null);
+  const [myOptions2, setMyOptions2] = useState(null);
+  const [myOptions3, setMyOptions3] = useState(null);
+  const [myOptions4, setMyOptions4] = useState("Lead");
+  const [myOptions5, setMyOptions5] = useState("Warm");
 
   const [id1, setId1] = useState([]);
   const [id2, setId2] = useState([]);
@@ -295,12 +295,27 @@ const LeadForm = () => {
       [AddLead], { headers: headers });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    postData();
-    blankForm();
-    getFetchLeadData();
-    changePage();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   postData();
+  //   blankForm();
+  //   getFetchLeadData();
+  //   changePage();
+  // };
+
+  const [validated, setValidated] = useState(false);
+  const handleSubmit1 = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      // alert("Please Provide appropriate Data")
+    }
+    else if (form.checkValidity() != false) {
+      postData();
+      changePage();
+    }
+    setValidated(true);
   };
   return (
     <Container>
@@ -419,24 +434,29 @@ const LeadForm = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Row>
-        <Col xs={12} md={6}>
-          <SimpleCard title="Fill Lead Details">
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Lead Name&nbsp; </h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>person</Icon>
-                  </InputGroup.Text>
-                  <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    placeholder="Enter the Lead Name"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            {/* <Row>
+      <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+        <Row>
+          <Col xs={12} md={6}>
+            <SimpleCard title="Fill Lead Details">
+              <Row>
+                <Col>
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Lead Name&nbsp; </h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>person</Icon>
+                    </InputGroup.Text>
+                    <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
+                      required
+                      placeholder="Enter the Lead Name"
+                    /> <Form.Control.Feedback type="invalid">
+                      Lead Name is Required
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Col>
+              </Row>
+              {/* <Row>
               <Col>
                 <InputGroup className="mb-2">
                   <h6 className="mt-1">Client&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
@@ -451,299 +471,302 @@ const LeadForm = () => {
 
               </Col>
             </Row> */}
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>phone</Icon>
-                  </InputGroup.Text>
-                  <Form.Control
-                    onChange={(e) => setMobileNo(e.target.value)}
-                    value={mobileNo}
-                    placeholder="Customer Mobile Number"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Mobile 2&nbsp;&nbsp;  &nbsp; </h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>phone</Icon>
-                  </InputGroup.Text>
-                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
-                    onChange={(e) => setAlternateMobile(e.target.value)}
-                    value={alternateMobile}
-                    placeholder="Customer Alternate Mobile Numbe"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>email</Icon>
-                  </InputGroup.Text>
-                  <Form.Control
-                    onChange={(e) => setEmailId(e.target.value)}
-                    value={emailId}
-                    placeholder="Customer Email"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row className="mt-1">
-              <Col>
-                <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
+              <Row>
+                <Col>
                   <InputGroup className="mb-2">
-                    <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</h6>
+                    <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
                     <InputGroup.Text id="basic-addon1">
-                      <Icon>house</Icon>
+                      <Icon>phone</Icon>
                     </InputGroup.Text>
                     <Form.Control
-                      as="textarea"
-                      rows={1}
-                      onChange={(e) => setStreetName(e.target.value)}
-                      value={streetName}
-                      placeholder="Street"
+                      required
+                      onChange={(e) => setMobileNo(e.target.value)}
+                      value={mobileNo}
+                      placeholder="Customer Mobile Number"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Primary Mobile Number is Required
+                    </Form.Control.Feedback></InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>email</Icon>
+                    </InputGroup.Text>
+                    <Form.Control
+                      required
+                      type='email'
+                      onChange={(e) => setEmailId(e.target.value)}
+                      value={emailId}
+                      placeholder="Customer Email"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Email is Required
+                    </Form.Control.Feedback></InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Mobile 2&nbsp;&nbsp;  &nbsp; </h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>phone</Icon>
+                    </InputGroup.Text>
+                    <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
+                      onChange={(e) => setAlternateMobile(e.target.value)}
+                      value={alternateMobile}
+                      placeholder="Customer Alternate Mobile Numbe"
                     /></InputGroup>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
+                </Col>
+              </Row>
+              <Row className="mt-1">
+                <Col>
+                  <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
+                    <InputGroup className="mb-2">
+                      <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</h6>
+                      <InputGroup.Text id="basic-addon1">
+                        <Icon>house</Icon>
+                      </InputGroup.Text>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        onChange={(e) => setStreetName(e.target.value)}
+                        value={streetName}
+                        placeholder="Street"
+                      /></InputGroup>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
 
-                {/* <Form.Label>City Name</Form.Label> */}
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>village</Icon>
-                  </InputGroup.Text>
-                  <Form.Control
-                    onChange={(e) => setCityName(e.target.value)}
-                    value={cityName}
-                    placeholder="Enter The City"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {/* <Form.Label>State Name</Form.Label> */}
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>village</Icon>
-                  </InputGroup.Text>
-                  <Form.Control
-                    onChange={(e) => setStateName(e.target.value)}
-                    value={stateName}
-                    placeholder="Enter Sate Name"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Zip Code&nbsp;  &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>subway</Icon>
-                  </InputGroup.Text>
-                  {/* <Form.Label>Pin Code</Form.Label> */}
-                  <Form.Control
-                    onChange={(e) => setZipCode(e.target.value)}
-                    value={zipCode}
-                    placeholder="Enter Zip Code"
-                  /></InputGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>₹</Icon>
-                  </InputGroup.Text>
-                  <Form.Control
-                    onChange={(e) => setExpectedAmount(e.target.value)}
-                    value={expectedAmount}
-                    placeholder="Client Expected Amount"
-                  /></InputGroup>
-              </Col>
-            </Row>
-          </SimpleCard>
-        </Col>
-        <br />
-        <Col xs={12} md={6}>
-          <SimpleCard>
-            <Row>
-              <Col xs={6}>
+                  {/* <Form.Label>City Name</Form.Label> */}
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>village</Icon>
+                    </InputGroup.Text>
+                    <Form.Control
+                      onChange={(e) => setCityName(e.target.value)}
+                      value={cityName}
+                      placeholder="Enter The City"
+                    /></InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {/* <Form.Label>State Name</Form.Label> */}
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>village</Icon>
+                    </InputGroup.Text>
+                    <Form.Control
+                      onChange={(e) => setStateName(e.target.value)}
+                      value={stateName}
+                      placeholder="Enter Sate Name"
+                    /></InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Zip Code&nbsp;  &nbsp;</h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>subway</Icon>
+                    </InputGroup.Text>
+                    {/* <Form.Label>Pin Code</Form.Label> */}
+                    <Form.Control
+                      onChange={(e) => setZipCode(e.target.value)}
+                      value={zipCode}
+                      placeholder="Enter Zip Code"
+                    /></InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <InputGroup className="mb-2">
+                    <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                    <InputGroup.Text id="basic-addon1">
+                      <Icon>₹</Icon>
+                    </InputGroup.Text>
+                    <Form.Control
+                      onChange={(e) => setExpectedAmount(e.target.value)}
+                      value={expectedAmount}
+                      placeholder="Client Expected Amount"
+                    /></InputGroup>
+                </Col>
+              </Row>
+            </SimpleCard>
+          </Col>
+          <br />
+          <Col xs={12} md={6}>
+            <SimpleCard>
+              <Row>
+                <Col xs={6}>
+                  <InputGroup>
+                    <Form.Label className="mt-1">Country</Form.Label>
+                  </InputGroup>
+                  <Select
+                    size='small'
+                    style={{ width: '210%' }}
+                    value={countryName}
+                    label="Country"
+                    onChange={(e) => setCountryName(e.target.value)}
+                  >
+                    <MenuItem value="s">Select the Country</MenuItem>
+                    <MenuItem value="India">INDIA</MenuItem>
+                    <MenuItem value="Dubai">Dubai</MenuItem>
+                    <MenuItem value="USA">USA</MenuItem>
+                    <MenuItem value="London">London</MenuItem>
+                    <MenuItem value="Italy">Italy</MenuItem>
+                    <MenuItem value="China">China</MenuItem>
+                    <MenuItem value="Russia">RUSSIA</MenuItem>
+                    <MenuItem value="Australia">Australia</MenuItem>
+                  </Select>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {/* <Form.Label>Interested In</Form.Label> */}
+                  <InputGroup>
+                    <Form.Label className="mt-1">Interested In</Form.Label>
+                  </InputGroup>
+                  <Autocomplete
+                    style={{ minWidth: '100%' }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    value={myOptions1}
+                    options={intrestedIn}
+                    onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select the Interested Catalogue"
+                        size="small"
+                      />
+                    )}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col className="mt-1">
+                  <Form.Label>Source(Platform Name)</Form.Label>
 
+                  <Autocomplete
+                    style={{ minWidth: '100%' }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    value={myOptions2}
+                    options={platformName}
+                    onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select the Platform Name"
+                        size="small"
+                      />
+                    )}
+                  />
 
-                <InputGroup>
-                  <Form.Label className="mt-1">Country</Form.Label>
-                </InputGroup>
-                <Select
-                  size='small'
-                  style={{ width: '210%' }}
-                  value={countryName}
-                  label="Country"
-                  onChange={(e) => setCountryName(e.target.value)}
-                >
-                  <MenuItem value="s">Select the Country</MenuItem>
-                  <MenuItem value="India">INDIA</MenuItem>
-                  <MenuItem value="Dubai">Dubai</MenuItem>
-                  <MenuItem value="USA">USA</MenuItem>
-                  <MenuItem value="London">London</MenuItem>
-                  <MenuItem value="Italy">Italy</MenuItem>
-                  <MenuItem value="China">China</MenuItem>
-                  <MenuItem value="Russia">RUSSIA</MenuItem>
-                  <MenuItem value="Australia">Australia</MenuItem>
-                </Select>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="mt-1">
 
+                  <Form.Label>Assigned To</Form.Label>
+                  <Autocomplete
+                    style={{ minWidth: '100%' }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    options={assignTo}
+                    value={myOptions3}
+                    onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select the Employee to Assign"
+                        size="small"
+                      />
+                    )}
+                  />
 
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Label>Status</Form.Label>
 
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {/* <Form.Label>Interested In</Form.Label> */}
-                <InputGroup>
-                  <Form.Label className="mt-1">Interested In</Form.Label>
-                </InputGroup>
+                  <Autocomplete
+                    style={{ minWidth: '100%' }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    value={myOptions4}
+                    options={status}
+                    onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select the Status"
+                        size="small"
+                      />
+                    )}
+                  />
 
-                <Autocomplete
-                  style={{ minWidth: '100%' }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions1}
-                  options={intrestedIn}
-                  onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Interested Catalogue"
-                      size="small"
-                    />
-                  )}
-                />
+                </Col>
+              </Row>
+              <Row>
+                <Col >
+                  <Form.Label>Label</Form.Label>
 
-              </Col>
-            </Row>
-            <Row>
-              <Col className="mt-1">
-                <Form.Label>Source(Platform Name)</Form.Label>
+                  <Autocomplete
+                    style={{ minWidth: '100%' }}
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    options={labelName}
+                    value={myOptions5}
+                    onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select the Label"
+                        size="small"
+                      />
+                    )}
+                  />
 
-                <Autocomplete
-                  style={{ minWidth: '100%' }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions2}
-                  options={platformName}
-                  onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Platform Name"
-                      size="small"
-                    />
-                  )}
-                />
-
-              </Col>
-            </Row>
-            <Row>
-              <Col className="mt-1">
-
-                <Form.Label>Assigned To</Form.Label>
-                <Autocomplete
-                  style={{ minWidth: '100%' }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={assignTo}
-                  value={myOptions3}
-                  onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Employee to Assign"
-                      size="small"
-                    />
-                  )}
-                />
-
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Label>Status</Form.Label>
-
-                <Autocomplete
-                  style={{ minWidth: '100%' }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  value={myOptions4}
-                  options={status}
-                  onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Status"
-                      size="small"
-                    />
-                  )}
-                />
-
-              </Col>
-            </Row>
-            <Row>
-              <Col >
-                <Form.Label>Label</Form.Label>
-
-                <Autocomplete
-                  style={{ minWidth: '100%' }}
-                  freeSolo
-                  autoComplete
-                  autoHighlight
-                  options={labelName}
-                  value={myOptions5}
-                  onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Select the Label"
-                      size="small"
-                    />
-                  )}
-                />
-
-              </Col>
-            </Row>
-          </SimpleCard>
-        </Col>
-      </Row>
-      <Div className="mt-2">
-        <Row>
-          <Col>
-            <Button variant="secondary" onClick={changePage}>
-              Cancel
-            </Button>
-            &nbsp;
-            <Button variant="success" onClick={handleSubmit}>
-              Save
-            </Button>
+                </Col>
+              </Row>
+            </SimpleCard>
           </Col>
         </Row>
-      </Div>
+        <Div className="mt-2">
+          <Row>
+            <Col>
+              <button className="btn btn-secondary" type='button' onClick={changePage}>
+                Cancel
+              </button>
+              &nbsp;
+              <button type='submit' className="btn btn-success">
+                Save
+              </button>
+            </Col>
+          </Row>
+        </Div>
+      </Form>
     </Container >
   );
 };

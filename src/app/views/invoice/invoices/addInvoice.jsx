@@ -344,19 +344,34 @@ const AddInvoice = () => {
     const changePage = () => {
         navigate('/invoices/ManageInvoiceList');
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postData();
-        changePage()
-        // alert('Lead Successfully Added');
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     postData();
+    //     changePage()
+    //     // alert('Lead Successfully Added');
+    // };
+    const [validated, setValidated] = useState(false);
+    const handleSubmit1 = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            // alert("Please Provide appropriate Data")
+        }
+        else if (form.checkValidity() != false) {
+            postData();
+            changePage();
+        }
+        setValidated(true);
     };
     return (
         <Container>
             <Card style={{ width: '100%', background: '#C3CFC9' }}>
-                <Row>
-                    <Col md="9">
-                        <SimpleCard title="New Invoice">
-                            <Form>
+                <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+                    <Row>
+                        <Col md="9">
+                            <SimpleCard title="New Invoice">
+
                                 <Row className="mt-2">
                                     <Col></Col>
                                     <Col className="col-sm-12">
@@ -384,13 +399,16 @@ const AddInvoice = () => {
                                         <Form.Label>Lead Id:</Form.Label>
                                         <InputGroup className="mb-3">
                                             <Form.Control
+                                                required
                                                 value={leadID1}
                                                 onChange={(event) => setLeadID1(event.target.value)}
                                                 placeholder="Enter the Invoice Number"
                                             />
                                             <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
                                                 Fetch Lead
-                                            </Button>
+                                            </Button><Form.Control.Feedback type="invalid">
+                                                Lead Id is Required
+                                            </Form.Control.Feedback>
                                         </InputGroup>
                                     </Col>
                                     <Col>
@@ -530,7 +548,9 @@ const AddInvoice = () => {
                                                 id="customerName"
                                                 value={customerName}
                                                 onChange={(event) => setCustomerName(event.target.value)}
-                                            />
+                                            /><Form.Control.Feedback type="invalid">
+                                                Client Name is Required
+                                            </Form.Control.Feedback>
                                         </Col>
                                         <Col>
                                             <Form.Label>Pan Number:</Form.Label>
@@ -543,7 +563,9 @@ const AddInvoice = () => {
                                                 id="panNo"
                                                 value={panNo}
                                                 onChange={(event) => setPanNo(event.target.value)}
-                                            />
+                                            /><Form.Control.Feedback type="invalid">
+                                                Client Pan is Required
+                                            </Form.Control.Feedback>
                                         </Col>
                                     </Row>
                                     <Row className="mt-1">
@@ -558,7 +580,9 @@ const AddInvoice = () => {
                                                 id="clientEmail"
                                                 value={clientEmail}
                                                 onChange={(event) => setClientEmail(event.target.value)}
-                                            />
+                                            /><Form.Control.Feedback type="invalid">
+                                                Client Email is Required
+                                            </Form.Control.Feedback>
                                         </Col>
                                         <Col>
                                             <Form.Label>Customer Contact No:</Form.Label>
@@ -571,7 +595,9 @@ const AddInvoice = () => {
                                                 id="clientContact"
                                                 value={clientContact}
                                                 onChange={(event) => setClientContact(event.target.value)}
-                                            />
+                                            /><Form.Control.Feedback type="invalid">
+                                                Client Mobile Number is Required
+                                            </Form.Control.Feedback>
                                         </Col>
                                     </Row>
                                     <Row className="mt-1">
@@ -579,12 +605,15 @@ const AddInvoice = () => {
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Address</Form.Label>
                                                 <Form.Control
+                                                    required
                                                     as="textarea"
                                                     rows={3}
                                                     onChange={(event) => setClientAddress(event.target.value)}
                                                     value={clientAddress}
                                                     placeholder="Customer Address"
-                                                />
+                                                /><Form.Control.Feedback type="invalid">
+                                                    Address is Required
+                                                </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -592,7 +621,6 @@ const AddInvoice = () => {
                                         <Col md="6">
                                             <Form.Label>Customer GST NO:</Form.Label>
                                             <Form.Control
-                                                required
                                                 className="flex-1"
                                                 placeholder="Enter GST Number"
                                                 type="text"
@@ -768,170 +796,171 @@ const AddInvoice = () => {
                                         </Col>
                                     </Row>
                                 </div>
-                            </Form>
-                        </SimpleCard>
-                    </Col>
-                    <Col>
-                        <Card.Body>
-                            <Button variant="primary" onClick={reviewInvoiceHandler}>
-                                Preview
-                            </Button>&nbsp;
-                            <button type="button" onClick={handleSubmit} className="btn btn-success">
-                                ADD Invoice
-                            </button>
-                            <hr />
-                            <Row>
-                                <Col>
-                                    <Form.Label>Tax rate:</Form.Label>
-                                    <InputGroup className="mb-3">
-                                        <Form.Control
-                                            required
-                                            type="number"
-                                            name="tax"
-                                            id="tax"
-                                            min="5"
-                                            step="1"
-                                            placeholder="Tax Rate"
-                                            value={tax}
-                                            onChange={(event) => setTax(event.target.value)}
-                                        />
-                                        <InputGroup.Text>%</InputGroup.Text>
-                                    </InputGroup>
-                                    <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm"></span>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Form.Label>Discount rate:</Form.Label>
-                                    <InputGroup className="mb-3">
-                                        <Form.Control
-                                            required
-                                            type="number"
-                                            name="tax"
-                                            id="tax"
-                                            // min="5"
-                                            // step="1"
-                                            placeholder="Discount Rate"
-                                            value={discount}
-                                            onChange={(event) => setDiscount(event.target.value)}
-                                        />
-                                        <InputGroup.Text>%</InputGroup.Text>
-                                    </InputGroup>
-                                </Col>
-                            </Row>
 
-                            <Row className="ml-1">
-                                <button type="button" onClick={() => handleShow()} className="btn btn-success">
-                                    Add Installments
+                            </SimpleCard>
+                        </Col>
+                        <Col>
+                            <Card.Body>
+                                <Button variant="primary" onClick={reviewInvoiceHandler}>
+                                    Preview
+                                </Button>&nbsp;
+                                <button type="submit" className="btn btn-success">
+                                    ADD Invoice
                                 </button>
-                            </Row>
-                            <Modal
-                                show={show}
-                                onHide={handleClose}
-                                backdrop="static"
-                                keyboard={false}
-                                aria-labelledby="example-modal-sizes-title-lg"
-                                size="lg"
-                                centered
-                            >
-                                <Modal.Header>
-                                    <Modal.Title>Create EMI Installemnt</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <Row>
-                                        <Col>
-                                            <Form.Label style={{ color: 'red' }}>
-                                                Note :- Installment Will be In 3,6,9 Months EMI
-                                            </Form.Label>
-                                            <br />
-                                            <Form.Label>Number of Installment:</Form.Label>
-                                            <InputGroup className="mb-3">
-                                                <Form.Control
-                                                    readOnly
-                                                    value={Object.keys(installments).length}
-                                                //onChange={(event) => setDiscount(event.target.value)}
-                                                />
-                                                {/* <InputGroup.Text>%</InputGroup.Text> */}
-                                            </InputGroup>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                <Form.Label>Inital Payment</Form.Label>
-                                                <Form.Control
-                                                    onChange={(event) => setInitalPayment(event.target.value)}
-                                                    value={initalPayment}
-                                                    placeholder="Inital Payment"
-                                                />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col>
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                <Form.Label>Pending Amount</Form.Label>
-                                                <Form.Control readOnly value={pending} />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col md="3" className="mt-4">
-                                            <button
-                                                type="button"
-                                                onClick={addInstallment}
-                                                className="btn btn-success mt-1"
-                                            >
-                                                Add New Installments
-                                            </button>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <StyledTable>
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell align="center">Installment No</TableCell>
-                                                        <TableCell align="center">Date</TableCell>
-                                                        <TableCell align="center">Amount</TableCell>
-                                                        <TableCell align="center">Action</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {installments.map((item) => (
-                                                        <InvoiceEMI
-                                                            key={item.instalmentNumber}
-                                                            // id={item.instalmentNumber}
-                                                            instalmentNumber={item.instalmentNumber}
-                                                            instalmentDate={item.instalmentDate}
-                                                            instalmentAmount={item.instalmentAmount}
-                                                            onDeleteItem={deleteInstallment}
-                                                            onEdtiItem={editInstallment}
-                                                        />
-                                                    ))}
-                                                </TableBody>
-                                            </StyledTable>
-                                        </Col>
-                                    </Row>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-error"
-                                        style={{ marginTop: 5 + 'px' }}
-                                        onClick={handleClose}
-                                    >
-                                        Cancel
+                                <hr />
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Tax rate:</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <Form.Control
+                                                required
+                                                type="number"
+                                                name="tax"
+                                                id="tax"
+                                                min="5"
+                                                step="1"
+                                                placeholder="Tax Rate"
+                                                value={tax}
+                                                onChange={(event) => setTax(event.target.value)}
+                                            />
+                                            <InputGroup.Text>%</InputGroup.Text>
+                                        </InputGroup>
+                                        <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm"></span>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Discount rate:</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <Form.Control
+                                                required
+                                                type="number"
+                                                name="tax"
+                                                id="tax"
+                                                // min="5"
+                                                // step="1"
+                                                placeholder="Discount Rate"
+                                                value={discount}
+                                                onChange={(event) => setDiscount(event.target.value)}
+                                            />
+                                            <InputGroup.Text>%</InputGroup.Text>
+                                        </InputGroup>
+                                    </Col>
+                                </Row>
+
+                                <Row className="ml-1">
+                                    <button type="button" onClick={() => handleShow()} className="btn btn-success">
+                                        Add Installments
                                     </button>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-success"
-                                        style={{ marginTop: 5 + 'px' }}
-                                        onClick={handleClose}
-                                    >
-                                        ADD
-                                    </button>
-                                </Modal.Footer>
-                            </Modal>
-                        </Card.Body>
-                    </Col>
-                </Row>
+                                </Row>
+                                <Modal
+                                    show={show}
+                                    onHide={handleClose}
+                                    backdrop="static"
+                                    keyboard={false}
+                                    aria-labelledby="example-modal-sizes-title-lg"
+                                    size="lg"
+                                    centered
+                                >
+                                    <Modal.Header>
+                                        <Modal.Title>Create EMI Installemnt</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Row>
+                                            <Col>
+                                                <Form.Label style={{ color: 'red' }}>
+                                                    Note :- Installment Will be In 3,6,9 Months EMI
+                                                </Form.Label>
+                                                <br />
+                                                <Form.Label>Number of Installment:</Form.Label>
+                                                <InputGroup className="mb-3">
+                                                    <Form.Control
+                                                        readOnly
+                                                        value={Object.keys(installments).length}
+                                                    //onChange={(event) => setDiscount(event.target.value)}
+                                                    />
+                                                    {/* <InputGroup.Text>%</InputGroup.Text> */}
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                    <Form.Label>Inital Payment</Form.Label>
+                                                    <Form.Control
+                                                        onChange={(event) => setInitalPayment(event.target.value)}
+                                                        value={initalPayment}
+                                                        placeholder="Inital Payment"
+                                                    />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col>
+                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                    <Form.Label>Pending Amount</Form.Label>
+                                                    <Form.Control readOnly value={pending} />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md="3" className="mt-4">
+                                                <button
+                                                    type="button"
+                                                    onClick={addInstallment}
+                                                    className="btn btn-success mt-1"
+                                                >
+                                                    Add New Installments
+                                                </button>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <StyledTable>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell align="center">Installment No</TableCell>
+                                                            <TableCell align="center">Date</TableCell>
+                                                            <TableCell align="center">Amount</TableCell>
+                                                            <TableCell align="center">Action</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {installments.map((item) => (
+                                                            <InvoiceEMI
+                                                                key={item.instalmentNumber}
+                                                                // id={item.instalmentNumber}
+                                                                instalmentNumber={item.instalmentNumber}
+                                                                instalmentDate={item.instalmentDate}
+                                                                instalmentAmount={item.instalmentAmount}
+                                                                onDeleteItem={deleteInstallment}
+                                                                onEdtiItem={editInstallment}
+                                                            />
+                                                        ))}
+                                                    </TableBody>
+                                                </StyledTable>
+                                            </Col>
+                                        </Row>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-error"
+                                            style={{ marginTop: 5 + 'px' }}
+                                            onClick={handleClose}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-success"
+                                            style={{ marginTop: 5 + 'px' }}
+                                            onClick={handleClose}
+                                        >
+                                            ADD
+                                        </button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </Card.Body>
+                        </Col>
+                    </Row>
+                </Form>
             </Card>
 
             <ReviewInvoice

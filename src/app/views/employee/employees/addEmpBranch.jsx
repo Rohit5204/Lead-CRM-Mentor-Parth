@@ -124,11 +124,11 @@ const AddEmpBranch = () => {
             });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postData();
-        changePage();
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     postData();
+    //     changePage();
+    // };
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -136,20 +136,20 @@ const AddEmpBranch = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    // const [validated, setValidated] = useState(false);
-    // const handleSubmit1 = (event) => {
-    //     const form = event.currentTarget;
-    //     if (form.checkValidity() === false) {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //         // alert("Please Provide appropriate Data")
-    //     }
-    //     else if (form.checkValidity() != false) {
-    //         postData();
-    //         changePage();
-    //     }
-    //     setValidated(true);
-    // };
+    const [validated, setValidated] = useState(false);
+    const handleSubmit1 = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            // alert("Please Provide appropriate Data")
+        }
+        else if (form.checkValidity() != false) {
+            postData();
+            changePage();
+        }
+        setValidated(true);
+    };
     return (
         <Container>
             <Box className="breadcrumb">
@@ -160,214 +160,218 @@ const AddEmpBranch = () => {
                     ]}
                 />
             </Box>
-            {/* <Form noValidate validated={validated} onSubmit={handleSubmit1}> */}
-            <Row>
-                <Col>
-                    <SimpleCard title="Fill Employee Detail's">
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setfirstName(e.target.value)}
-                                    value={firstName}
-                                    placeholder="Enter the First Name"
-                                /><Form.Control.Feedback type="invalid">
-                                    First Name is Required
-                                </Form.Control.Feedback>
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control
-                                    required
-                                    onChange={(e) => setlastName(e.target.value)}
-                                    value={lastName}
-                                    placeholder="Enter the Last Name"
-                                /><Form.Control.Feedback type="invalid">
-                                    Last Name is Required
-                                </Form.Control.Feedback>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Mobile Number</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>phone</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        required
-                                        onChange={(e) => setmobileNo(e.target.value)}
-                                        value={mobileNo}
-                                        placeholder="Enter the Mobile Number"
-                                    /><Form.Control.Feedback type="invalid">
-                                        Mobile Number is Required
-                                    </Form.Control.Feedback></InputGroup>
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Alternate Mobile</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>phone</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        onChange={(e) => setalternateMobileNo(e.target.value)}
-                                        value={alternateMobileNo}
-                                        placeholder="Enter the Alternate Number"
-                                    /></InputGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Email</Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>email</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        required
-                                        type='email'
-                                        onChange={(e) => setemail(e.target.value)}
-                                        value={email}
-                                        placeholder="Enter the personal Email Id"
-                                    /><Form.Control.Feedback type="invalid">
-                                        Email is Required
-                                    </Form.Control.Feedback>
-                                </InputGroup>
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Branch Name</Form.Label>
-                                <Form.Control
-                                    disabled
-                                    required
-                                    value={branchName}
-                                    placeholder="Enter the Branch Name"
-                                />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Branch Manager</Form.Label>
-                                <Form.Control
-                                    disabled
-                                    required
-                                    value={managerName}
-                                    placeholder="Enter the Branch Manager"
-                                />
-                            </Col>
-                            <Col xs={6}>
-                                <FormControl sx={{ m: 0, width: '100%' }} size="small" >
-
-                                    <InputGroup>
-                                        <Form.Label>Role</Form.Label>
-                                    </InputGroup>
-                                    <Select
-                                        value={myOptions3}
-                                        label="r"
-                                        onChange={(e) => setMyOptions3(e.target.value)}
-                                    >
-                                        <MenuItem value={3}>Team Lead</MenuItem>
-                                        <MenuItem value={4}>Employee</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Col>
-
-
-                        </Row>
-                        {(function () {
-                            if (myOptions3 == 4) {
-                                return <>
-                                    <Row>
-                                        <Col md="6">
-                                            <InputGroup>
-                                                <Form.Label>Team Leader</Form.Label>
-                                            </InputGroup>
-                                            <Autocomplete
-                                                freeSolo
-                                                autoComplete
-                                                autoHighlight
-                                                options={userTLData}
-                                                value={myOptions6}
-                                                onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-
-                                                        variant="outlined"
-                                                        label="Select the Team Leader"
-                                                        size="small"
-                                                    />
-                                                )}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </>;
-                            }
-                            else {
-                                return <>
-                                </>
-                            }
-                        })()}
-                        <br />
-                        <h6 style={{ color: 'red' }}>User Credential's </h6>
-                        <Row>
-                            <Col>
-                                <Form.Label>User Name </Form.Label>
-                                <InputGroup>
-                                    <InputGroup.Text id="basic-addon1">
-                                        <Icon>person</Icon>
-                                    </InputGroup.Text>
-                                    <Form.Control
-                                        required
-                                        onChange={(e) => setuserName(e.target.value)}
-                                        value={userName}
-                                        placeholder="Enter the User Name"
-                                    />
-                                </InputGroup>
-                            </Col>
-                            <Col>
-
-                                <FormControl sx={{ width: "100%" }} variant="outlined" >
-                                    <Form.Label>Password </Form.Label>
-                                    <OutlinedInput
-                                        size="small"
-                                        id="outlined-adornment-password"
-                                        onChange={(e) => setpassword(e.target.value)}
-                                        value={password}
-                                        type={showPassword ? 'text' : 'password'}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        label="h"
-                                    />
-                                </FormControl>
-
-                            </Col>
-                        </Row>
-                    </SimpleCard>
-                </Col>
-            </Row>
-            <Div className="mt-2">
+            <Form noValidate validated={validated} onSubmit={handleSubmit1}>
                 <Row>
                     <Col>
-                        <Button variant="secondary" onClick={changePage}>
-                            Cancel
-                        </Button>
-                        &nbsp;
-                        <button type="button" className="btn btn-success" onClick={handleSubmit}>
-                            Save
-                        </button>
+                        <SimpleCard title="Fill Employee Detail's">
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control
+                                        required
+                                        onChange={(e) => setfirstName(e.target.value)}
+                                        value={firstName}
+                                        placeholder="Enter the First Name"
+                                    /><Form.Control.Feedback type="invalid">
+                                        First Name is Required
+                                    </Form.Control.Feedback>
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control
+                                        required
+                                        onChange={(e) => setlastName(e.target.value)}
+                                        value={lastName}
+                                        placeholder="Enter the Last Name"
+                                    /><Form.Control.Feedback type="invalid">
+                                        Last Name is Required
+                                    </Form.Control.Feedback>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>Mobile Number</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>phone</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            onChange={(e) => setmobileNo(e.target.value)}
+                                            value={mobileNo}
+                                            placeholder="Enter the Mobile Number"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Mobile Number is Required
+                                        </Form.Control.Feedback></InputGroup>
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Alternate Mobile</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>phone</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            onChange={(e) => setalternateMobileNo(e.target.value)}
+                                            value={alternateMobileNo}
+                                            placeholder="Enter the Alternate Number"
+                                        /></InputGroup>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="6">
+                                    <Form.Label>Email</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>email</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            type='email'
+                                            onChange={(e) => setemail(e.target.value)}
+                                            value={email}
+                                            placeholder="Enter the personal Email Id"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Email is Required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Branch Name</Form.Label>
+                                    <Form.Control
+                                        disabled
+                                        required
+                                        value={branchName}
+                                        placeholder="Enter the Branch Name"
+                                    />
+                                </Col>
+                                <Col md="6">
+                                    <Form.Label>Branch Manager</Form.Label>
+                                    <Form.Control
+                                        disabled
+                                        required
+                                        value={managerName}
+                                        placeholder="Enter the Branch Manager"
+                                    />
+                                </Col>
+                                <Col xs={6}>
+                                    <FormControl sx={{ m: 0, width: '100%' }} size="small" >
+                                        <InputGroup>
+                                            <Form.Label>Role</Form.Label>
+                                        </InputGroup>
+                                        <Select
+                                            required
+                                            value={myOptions3}
+                                            label="r"
+                                            onChange={(e) => setMyOptions3(e.target.value)}
+                                        >
+                                            <MenuItem value={3}>Team Lead</MenuItem>
+                                            <MenuItem value={4}>Employee</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Col>
+
+
+                            </Row>
+                            {(function () {
+                                if (myOptions3 == 4) {
+                                    return <>
+                                        <Row>
+                                            <Col md="6">
+                                                <InputGroup>
+                                                    <Form.Label>Team Leader</Form.Label>
+                                                </InputGroup>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    autoComplete
+                                                    autoHighlight
+                                                    options={userTLData}
+                                                    value={myOptions6}
+                                                    onChange={(e) => setMyOptions6(e.currentTarget.innerHTML)}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+
+                                                            variant="outlined"
+                                                            label="Select the Team Leader"
+                                                            size="small"
+                                                        />
+                                                    )}
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </>;
+                                }
+                                else {
+                                    return <>
+                                    </>
+                                }
+                            })()}
+                            <br />
+                            <h6 style={{ color: 'red' }}>User Credential's </h6>
+                            <Row>
+                                <Col>
+                                    <Form.Label>User Name </Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">
+                                            <Icon>person</Icon>
+                                        </InputGroup.Text>
+                                        <Form.Control
+                                            required
+                                            onChange={(e) => setuserName(e.target.value)}
+                                            value={userName}
+                                            placeholder="Enter the User Name"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Username is Required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Col>
+                                <Col>
+
+                                    <FormControl sx={{ width: "100%" }} variant="outlined" >
+                                        <Form.Label>Password </Form.Label>
+                                        <OutlinedInput
+                                            size="small"
+                                            id="outlined-adornment-password"
+                                            onChange={(e) => setpassword(e.target.value)}
+                                            value={password}
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="h"
+                                        /><Form.Control.Feedback type="invalid">
+                                            Password is Required
+                                        </Form.Control.Feedback>
+                                    </FormControl>
+
+                                </Col>
+                            </Row>
+                        </SimpleCard>
                     </Col>
                 </Row>
-            </Div>
-            {/* </Form> */}
+                <Div className="mt-2">
+                    <Row>
+                        <Col>
+                            <Button variant="secondary" onClick={changePage}>
+                                Cancel
+                            </Button>
+                            &nbsp;
+                            <button type="submit" className="btn btn-success">
+                                Save
+                            </button>
+                        </Col>
+                    </Row>
+                </Div>
+            </Form>
         </Container >
     );
 };

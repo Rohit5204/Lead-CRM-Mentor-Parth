@@ -82,7 +82,7 @@ const AddCatalogue = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      alert("Please Provide appropriate Data")
+      // alert("Please Provide appropriate Data")
     }
     else if (form.checkValidity() != false) {
       postData();
