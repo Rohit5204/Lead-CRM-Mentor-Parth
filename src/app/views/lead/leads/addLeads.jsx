@@ -567,7 +567,7 @@ const LeadForm = () => {
                     <Form.Control
                       onChange={(e) => setStateName(e.target.value)}
                       value={stateName}
-                      placeholder="Enter Sate Name"
+                      placeholder="Enter State Name"
                     /></InputGroup>
                 </Col>
               </Row>

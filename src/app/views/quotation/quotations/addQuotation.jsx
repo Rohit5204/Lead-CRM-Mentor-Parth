@@ -959,9 +959,13 @@ const AddQuotation = () => {
           companyAddress,
           companyContact,
           installments,
+          panNo,
+          clientGstNo,
+
           // initalPayment,
           // pending,
           // emiAmount,
+          catalogueid,
           companyGstNo,
           companyStateName,
           clientEmail,

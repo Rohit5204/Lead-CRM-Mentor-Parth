@@ -2,6 +2,8 @@ import { styled } from '@mui/system';
 import { Button, Row, Col, Modal, Form } from 'react-bootstrap';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 import {
   autocompleteClasses,
   Box,
@@ -96,13 +98,36 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
             pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
           }
           // Output / Save
-          pdf.save(`invoice-${invoiceInfo.invoiceNumber}.pdf`);
+          pdf.save(`invoice-${invoiceInfo.customerName}.pdf`);
         };
       })
       .catch((error) => {
         console.error('oops, something went wrong!', error);
       });
   };
+  const [APIData, setAPIData] = useState([]);
+  const token = localStorage.getItem('accessToken');
+  const roleCode = localStorage.getItem('roleCode');
+  const userId = localStorage.getItem('userId');
+  const headers = {
+    "x-access-token": token,
+    "roleCode": roleCode,
+    "userId": userId
+  }
+  const getCatalogueData = () => {
+    axios.post(
+      `http://43.204.38.243:3001/api/getCompanyMaster`,
+      { id: 0 },
+      { headers: headers }
+    )
+      .then((response) => {
+        console.log(response)
+        setAPIData(response.data.data[0]);
+      });
+  };
+  useEffect(() => {
+    getCatalogueData();
+  }, []);
   return (
     <div>
       <Modal
@@ -144,129 +169,85 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                 <div className="p-4">
                   <Row>
                     <Col>
-                      <img
-                        sizes="12px"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhVskpYXfF31NyGSjgoPfjnS6qH8TY8wWftKfux4&s"
-                      ></img>
+                      <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
                     </Col>
                     <Col></Col>
-                    <Col md="2">
-                      <h5 className="text-center text-lg font-bold text-gray-900">
-                        LEAD CRM Project
+                    <Col className='mt-4'>
+                      <h5 style={{ "color": "MidnightBlue" }}>
+                        {APIData.name}
                       </h5>
-                      <span>IT Compnay Business Park</span>
+                      <span>{APIData.address}</span>
                       <br />
-                      <span>Thane-West, Mumbai-456398</span>
+                      <span>{APIData.stateName}-{APIData.pincode} </span>
                       <br />
-                      <span>Company Reg. No :-896522147</span>
+                      <span>Company Reg. No :- {APIData.gstNo}</span>
+                      {/* <br />
+                        <span className="font-bold">GST No: {theViewInvoice.gstNo}</span> */}
+                      {/* <br /> */}
+                      {/* <span className="font-bold">State: {theViewInvoice.companyStateName}</span> */}
                       <br />
-                      <span className="font-bold">GST No: {invoiceInfo.companyGstNo}</span>
-                      <br />
-                      <span className="font-bold">State: {invoiceInfo.companyStateName}</span>
-                      <br />
-                      <span className="font-bold">Email: {invoiceInfo.companyEmail}</span>
+                      <span className="font-bold">Email :- {APIData.email}</span>
                     </Col>
-                    <Col></Col>
+
                   </Row>
+
                   <br />
-                  <Row>
-                    <Col></Col>
-                    <Col md="12">
-                      <h5 className="text-center text-lg font-bold text-gray-900">INVOICE</h5>
-                    </Col>
-                  </Row>
-                  <hr />
+                  <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                    <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-left'>
+                      <tr>
+                        <th> Billing Information</th>
+                        <th> Invoice Detail's</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      <tr>
+                        <td width="60%" className='text-left'> <span>Name   &nbsp;&nbsp;&nbsp;:   {invoiceInfo.customerName}</span>
+                          <br />
+                          <span className="font-bold"> GST NO  &nbsp;:   {invoiceInfo.clientGstNo}</span>
+                          <br />
+                          <span className="font-bold"> PAN No  &nbsp;:   {invoiceInfo.panNo}</span>
+                          <br />
+                          <span className="font-bold"> Contact &nbsp;&nbsp;:   {invoiceInfo.clientContact}</span>
+                          <br />
+                          <span className="font-bold"> Email &nbsp;&nbsp;&nbsp;&nbsp;  :   {invoiceInfo.clientEmail}</span></td>
+                        <td className='text-left'>
+                          <span> Quotation No  :    </span>
+                          <b style={{ "color": "MidnightBlue" }}>{invoiceInfo.quotationNumber}</b>
+                          <br />
+                          <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {new Date(invoiceInfo.invoiceDate).toLocaleDateString('en-GB')}</span>
+                          <br />
+                          <span className="font-bold"> Generated By  : {invoiceInfo.cashierName}</span>
+                          <br />
+                          <span className="font-bold"> Refrence No. & Date:</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span> Address   :   {invoiceInfo.clientAddress}</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h5 className='text-center'> PRODUCT INFORMATION </h5>
                   <div className="mt-6">
-                    <Row>
-                      {/* <Col>
-                      <b>
-                        <span className="font-bold">From:</span>
-                      </b>
 
-                      <span>&nbsp;{invoiceInfo.cashierName}</span>
-                      <br />
-                      <span>Address: {invoiceInfo.companyAddress}</span>
-
-                      <br />
-                      <span className="font-bold">GST NO: {invoiceInfo.companyGstNo}</span>
-                      <br />
-                      <span className="font-bold">State: {invoiceInfo.companyStateName}</span>
-                      <br />
-                      <span className="font-bold">Email: {invoiceInfo.companyEmail}</span>
-                    </Col> */}
-                      <Col>
-                        <b>
-                          <span className="font-bold">Customer Info</span>
-                        </b>
-                        <br />
-                        <span>Name:{invoiceInfo.customerName}</span>
-                        <br />
-
-                        <span>Address:{invoiceInfo.clientAddress}</span>
-                        <br />
-                        <span className="font-bold">GST NO: {invoiceInfo.clientGstNo}</span>
-                        <br />
-                        <span className="font-bold">PAN No: {invoiceInfo.panNo}</span>
-                        <br />
-                        <span className="font-bold">Contact: {invoiceInfo.clientContact}</span>
-                        <br />
-                        <span className="font-bold">Email: {invoiceInfo.clientEmail}</span>
-                      </Col>
-                      <Col></Col>
-                      <Col>
-                        <b>
-                          <span className="font-bold">Invoice Details:</span>
-                        </b>
-                        <br />
-                        <span>Invoice No:- {invoiceInfo.invoiceNumber}</span>
-                        <br />
-                        <span className="font-bold">Date: {invoiceInfo.invoiceDate}</span>
-                        <br />
-                        <span className="font-bold">Generated By: {invoiceInfo.cashierName}</span>
-                        <br />
-                        <span className="font-bold">Refrence No. & Date:</span>
-                        <br />
-                      </Col>
-                    </Row>
-                    <br />
-                    <br />
-                    <br />
-                    <Row className="mt-2">
-                      <Col></Col>
-                      <Col md="auto">
-                        <h4 style={{ color: 'green' }}>Product Invoice List</h4>
-                      </Col>
-                      <Col></Col>
-                    </Row>
-                    <Row>
-                      <StyledTable
-                        style={{ borderWidth: '1px', borderColor: '#aaaaaa', borderStyle: 'solid' }}
-                      >
-                        <TableHead>
-                          <TableRow>
-                            <TableCell align="center">Product Name</TableCell>
-                            <TableCell align="center">Quatity</TableCell>
-                            <TableCell align="center">Unit Price</TableCell>
-                            <TableCell align="center">Total Price</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {items.map((item) => (
-                            <tr key={item.id}>
-                              <td className="min-w-[50px] text-center">{item.name}</td>
-                              <td className="min-w-[50px] text-center">{item.qty}</td>
-                              <td className="min-w-[80px] text-center">
-                                ₹{Number(item.price).toFixed(2)}
-                              </td>
-                              <td className="min-w-[90px] text-center">
-                                ₹{Number(item.price * item.qty).toFixed(2)}
-                              </td>
-                            </tr>
-                          ))}
-                        </TableBody>
-                      </StyledTable>
-                    </Row>
-                    <br></br>
+                    <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                      <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-center'>
+                        <tr>
+                          <th>Product Name</th>
+                          <th>Unit Price</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      {/* {APIData.map((quotation, index) => { */}
+                      <tbody className='text-center'>
+                        <tr>
+                          {/* <td>{theViewQuotation.gsCatalogueId}</td> */}
+                          <td>{invoiceInfo.catalogueid}</td>
+                          <td>{invoiceInfo.subtotal}</td>
+                          <td>{invoiceInfo.total}</td>
+                        </tr>
+                      </tbody>
+                      {/* })} */}
+                    </table>
                     <br />
                     <Row>
                       <Col></Col>
@@ -309,7 +290,7 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                       </Col>
                     </Row>
                     <Row>
-                      <Col>
+                      {/* <Col>
                         {Object.keys(invoiceInfo.installments).length > 0 ? (
                           <StyledTable
                             style={{
@@ -358,8 +339,8 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                         ) : (
                           <div></div>
                         )}
-                      </Col>
-
+                      </Col> */}
+                      <Col></Col>
                       <Col></Col>
                       <Col>
                         <hr />
