@@ -66,16 +66,20 @@ const AddCatalogue = () => {
         actionBy: 1,
         durationId: catdurationid
       }, { headers: headers }
-    );
+    ).then((res) => {
+      alert(res.data.message)
+    }).catch(error => {
+      alert(error.response.data.message)
+    });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // postData();
-  //   blankForm();
-  //   // changePage();
-  //   // alert('Catalogue Successfully Created');
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postData();
+    blankForm();
+    // changePage();
+    // alert('Catalogue Successfully Created');
+  };
   const [validated, setValidated] = useState(false);
   const handleSubmit1 = (event) => {
     const form = event.currentTarget;
@@ -100,7 +104,7 @@ const AddCatalogue = () => {
           ]}
         />
       </Box>
-      <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row>
           <Col>
             <SimpleCard title="Fill Catalogue Detail's">

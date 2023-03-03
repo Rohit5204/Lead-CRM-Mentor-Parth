@@ -3,6 +3,7 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import "./sample.css";
+import { Link } from 'react-router-dom';
 import { Box, } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -75,7 +76,9 @@ const SampleDigitalCardPreview = () => {
                             </div>
                         </div>
                     </Card>
-                    <button style={{ marginLeft: "200px" }} type="button" className="btn btn-success mt-1">Option 1</button>
+                    <Link to='/digitalCards/addCard'>
+                        <button style={{ marginLeft: "200px" }} type="button" className="btn btn-success mt-1">Option 1</button>
+                    </Link>
                 </Col>
                 <Col md="6" >
                     <Card className="testimonial-card" >
@@ -121,7 +124,9 @@ const SampleDigitalCardPreview = () => {
                             </div>
                         </div>
                     </Card>
-                    <button style={{ marginLeft: "200px" }} type="button" className="btn btn-success mt-1">Option 2</button>
+                    <Link to='/digitalCards/addCard'>
+                        <button style={{ marginLeft: "200px" }} type="button" className="btn btn-success mt-1">Option 2</button>
+                    </Link>
                 </Col>
             </Row>
 

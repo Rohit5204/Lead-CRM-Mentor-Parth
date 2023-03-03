@@ -118,7 +118,7 @@ const AddFormCard = () => {
                 />
             </Box>
             <Row>
-                <Col>
+                <Col md="12">
                     {/* <button onClick={downloadImage} type="button" className="btn btn-success">Download</button> */}
                     <div style={{ position: "static", marginLeft: "227px", top: "110px", marginTop: "-10px" }}>
                         <Card className="testimonial-card">
@@ -245,25 +245,25 @@ const AddFormCard = () => {
                                 <InputGroup>
                                     <Form.Label className="mt-1">Options</Form.Label>
                                 </InputGroup>
-                                <FormControl>
-                                    <Autocomplete
-                                        style={{ width: 470 }}
-                                        freeSolo
-                                        autoComplete
-                                        autoHighlight
-                                        value={cardOptions}
-                                        options={nameOption}
-                                        onChange={(e) => saveCard(e.currentTarget.innerHTML)}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                label="Select the Interested Catalogue"
-                                                size="small"
-                                            />
-                                        )}
-                                    />
-                                </FormControl>
+
+                                <Autocomplete
+                                    style={{ width: "100%" }}
+                                    freeSolo
+                                    autoComplete
+                                    autoHighlight
+                                    value={cardOptions}
+                                    options={nameOption}
+                                    onChange={(e) => saveCard(e.currentTarget.innerHTML)}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            variant="outlined"
+                                            label="Select the Interested Catalogue"
+                                            size="small"
+                                        />
+                                    )}
+                                />
+
 
                             </Col>
 

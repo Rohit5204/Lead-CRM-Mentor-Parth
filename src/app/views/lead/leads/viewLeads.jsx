@@ -28,9 +28,7 @@ const ViewLead = () => {
                 <Form.Label>Lead Sr No</Form.Label>
                 <Form.Control
                   disabled
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.leadId}
-                  // value={location.state.leadId}
                   placeholder="Lead Number"
                 />
               </Col>
@@ -38,7 +36,6 @@ const ViewLead = () => {
                 <Form.Label> Lead Name</Form.Label>
                 <Form.Control
                   disabled
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.name}
                   placeholder="Enter Lead Name"
                 />
@@ -47,7 +44,6 @@ const ViewLead = () => {
                 <Form.Label> Expected Amount</Form.Label>
                 <Form.Control
                   disabled
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.expectedAmount}
                 />
               </Col>
@@ -67,7 +63,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter Customer Mobile No."
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.mobileNo}
                 />
               </Col>
@@ -76,7 +71,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter Email Id"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.emailId}
                 />
               </Col>
@@ -87,7 +81,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter Lead Source"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.platformName}
                 />
               </Col>
@@ -96,7 +89,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Interested In"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.intrestedIn}
                 />
               </Col>
@@ -105,7 +97,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Assign Employee"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.assignedUser}
                 />
               </Col>
@@ -116,7 +107,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter the Address"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.streetName}
                 />
               </Col>
@@ -127,7 +117,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter the Pin Code"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.zipCode}
                 />
               </Col>
@@ -136,7 +125,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Enter the City"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.cityName}
                 />
               </Col>
@@ -145,7 +133,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Mention the State"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.stateName}
                 />
               </Col>
@@ -156,7 +143,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Mention the Country"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.countryName}
                 />
               </Col>
@@ -165,7 +151,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Mention the Status"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.statusName}
                 />
               </Col>
@@ -174,7 +159,6 @@ const ViewLead = () => {
                 <Form.Control
                   disabled
                   placeholder="Mention the Label"
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={location.state.labelName}
                 />
               </Col>
@@ -184,7 +168,6 @@ const ViewLead = () => {
                 <Form.Label>Created Date</Form.Label>
                 <Form.Control
                   disabled
-                  //onChange={(e) => setRemarks(e.target.value)}
                   defaultValue={new Date(location.state.createdDate).toLocaleDateString('en-GB')}
                 />
               </Col>
@@ -232,15 +215,6 @@ const ViewLead = () => {
                 </button>
               </Col>
             </Row>
-            {/* <Div className="mt-2">
-              <Row>
-                <Col>
-                  <Button variant="primary" onClick={changePage}>
-                    Back
-                  </Button>
-                </Col>
-              </Row>
-            </Div> */}
           </Tab>
         </Tabs>
       </SimpleCard>

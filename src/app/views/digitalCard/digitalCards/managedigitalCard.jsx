@@ -3,7 +3,8 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Form, Row, Col, InputGroup } from 'react-bootstrap';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Form, Row, Col, InputGroup, Modal } from 'react-bootstrap';
 import {
     Box,
     Icon,
@@ -12,10 +13,10 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    Chip,
     TableRow,
 } from '@mui/material';
 
+import ViewCardDetails from './viewDigital';
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -35,11 +36,6 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const ManageDigitalCard = () => {
-    // const [showCardPreview, setShowCardPreview] = useState(false);
-
-    // const showCard = () => {
-    //     setShowCardPreview(!showCardPreview);
-    // };
     const [empAPI, setEmpApi] = useState([])
     const items = localStorage.getItem('accessToken');
     const roleCode = localStorage.getItem('roleCode');
@@ -48,6 +44,16 @@ const ManageDigitalCard = () => {
         "x-access-token": items,
         "roleCode": roleCode,
         "userId": userId
+    }
+    const [showForm, setShowForm] = useState(false);
+    const [obj, setObj] = useState(null)
+
+    const handleShow = (subscriber) => {
+        setObj(subscriber);
+        setShowForm(true);
+    };
+    const handleClose = () => {
+        setShowForm(false);
     }
     const getEmpDigitalCard = () => {
         axios.post(`http://43.204.38.243:3001/api/getDigitalCard`, { _id: 0 },
@@ -95,51 +101,6 @@ const ManageDigitalCard = () => {
                         </Col>
                     </Row>
                 </Box>
-                {/* {showCardPreview && (
-                    <Box> */}
-                {/* <Row> */}
-                {/* <Col>
-                                <div className='card-wrapper'>
-                                    <div className='card'>
-                                        <div className='card-front'>
-                                            <div className='left'>
-                                                <img src="/assets/images/payment-card/boostock-logo.jpg" alt="logo" />
-                                            </div>
-                                            <div className='right'>
-                                                <div className='person right-content'>
-                                                    <i><PersonIcon /></i>
-                                                    <div>
-                                                        <h4>Rohit Jaiswal</h4>
-                                                        <p>Full Stack Developer</p>
-                                                    </div>
-                                                </div>
-                                                <div className='phone right-content'>
-                                                    <i><PhoneIcon /> </i>
-                                                    <div>
-                                                        <p>+91-7558227432,+91-8862002278</p>
-
-                                                    </div>
-                                                </div>
-                                                <div className='email right-content'>
-                                                    <i><EmailIcon /> </i>
-                                                    <div>
-                                                        <p> rohit.mentorp@gmail.com</p>
-                                                    </div>
-                                                </div>
-                                                <div className='address right-content'>
-                                                    <i><HomeIcon /> </i>
-                                                    <div>
-                                                        <p> Nashik Road Nashik</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col> */}
-                {/* </Row> */}
-                {/* </Box>
-                    )} */}
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
                     <h4>Digital Card Table List</h4>
@@ -162,10 +123,10 @@ const ManageDigitalCard = () => {
                                         <TableCell align="center">{empCard.name}</TableCell>
                                         <TableCell align="center">{new Date(empCard.dob).toLocaleDateString('en-GB')}</TableCell>
                                         <TableCell align="center">{empCard.mobileNo1}</TableCell>
-                                        <TableCell align="center">{empCard.email}                                      </TableCell>
+                                        <TableCell align="center">{empCard.email}</TableCell>
                                         <TableCell align="center">
                                             {/* <Link to="/leads/viewLeads" state={empCard}> */}
-                                            <IconButton>
+                                            <IconButton onClick={handleShow}>
                                                 <Icon color="red">visibility</Icon>
                                             </IconButton>
                                             {/* </Link> */}
@@ -185,6 +146,26 @@ const ManageDigitalCard = () => {
                     </StyledTable>
                 </Box>
             </Box>
+            <Modal
+                show={showForm}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>View Employee Card Detail's</Modal.Title>
+                    <IconButton type="button" onClick={handleClose}>
+                        <ClearIcon />
+                    </IconButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <ViewCardDetails></ViewCardDetails>
+                </Modal.Body>
+
+            </Modal>
         </Container>
     );
 };
