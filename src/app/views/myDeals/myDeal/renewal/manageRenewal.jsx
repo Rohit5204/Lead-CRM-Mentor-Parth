@@ -17,6 +17,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -52,7 +53,7 @@ const Renewal = () => {
     }
     //get method
     useEffect(() => {
-        axios.post(`http://43.204.38.243:3001/api/getRenewalInstalments`,
+        axios.post(BASE_URL + `/api/getRenewalInstalments`,
             { "userId": 1 }, { headers: headers }).then((response) => {
                 setRenewData(response.data.data);
             });

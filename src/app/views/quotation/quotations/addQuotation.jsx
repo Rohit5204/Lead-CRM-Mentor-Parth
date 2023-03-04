@@ -22,6 +22,7 @@ import {
   TableRow,
 } from '@mui/material';
 import { resetWarningCache } from 'prop-types';
+import { BASE_URL } from 'app/utils/constant';
 
 // const date = new Date();
 // const today = date.toLocaleDateString('en-GB', {
@@ -235,7 +236,7 @@ const AddQuotation = () => {
   }
   const [leadID2, setLeadId2] = useState([])
   const getLeadByID = () => {
-    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`,
+    axios.post(BASE_URL + `/api/getFilteredLeadData`,
       {
         leadId: leadID1, userId: 0, statusId: 0, searchKey: "",
         locationkey: "", platformId: 0, opType: ""
@@ -245,7 +246,7 @@ const AddQuotation = () => {
       });
   }
   const getFetchData = () => {
-    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0, userId: 0, statusId: 0, searchKey: "",
       locationkey: "", platformId: 0, opType: ""
     },
@@ -255,7 +256,7 @@ const AddQuotation = () => {
           setId2(current => [...current, res.data.data[i].leadId, res.data.data[i].name])
         }
       });
-    axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+    axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0 },
       { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -267,8 +268,8 @@ const AddQuotation = () => {
   const [compnayData, setCompanyData] = useState([])
   const getCompanyData = () => {
     axios
-      .post(
-        `http://43.204.38.243:3001/api/getCompanyMaster`,
+      .post(BASE_URL +
+        `/api/getCompanyMaster`,
         { id: 0 },
         { headers: headers }
       )
@@ -324,7 +325,7 @@ const AddQuotation = () => {
       instalments: installments
     }
     console.log({ AddQuotation });
-    axios.post('http://43.204.38.243:3001/api/saveQuotation', AddQuotation,
+    axios.post(BASE_URL + '/api/saveQuotation', AddQuotation,
       { headers: headers }
     );
   };

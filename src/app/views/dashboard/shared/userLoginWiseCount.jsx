@@ -6,6 +6,7 @@ import { Small } from 'app/components/Typography';
 import "./statusCard.css";
 
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import { BASE_URL } from 'app/utils/constant';
 
 
 
@@ -28,7 +29,7 @@ const UserWiseCount = () => {
             "roleCode": roleCode,
             "userId": userId
         }
-        axios.get(`http://43.204.38.243:3001/api/getRolewiseClosedCount`, {
+        axios.get(BASE_URL + `/api/getRolewiseClosedCount`, {
             headers: {
                 "x-access-token": items,
                 "roleCode": roleCode,

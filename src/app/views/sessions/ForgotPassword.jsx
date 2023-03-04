@@ -2,6 +2,7 @@ import { Box, Button, Card, Grid, styled, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const FlexBox = styled(Box)(() => ({
   display: 'flex',
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
 
 
   const getResetPasswordMail = () => {
-    axios.get(`http://43.204.38.243:3001/api/resetUserPassword?userEmail=` + email)
+    axios.get(BASE_URL + `/api/resetUserPassword?userEmail=` + email)
       .then(() => {
         console.log("Password Reset Succefully.Please Check You Email");
       });

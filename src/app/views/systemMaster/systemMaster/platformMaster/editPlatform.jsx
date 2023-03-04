@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, Select } from '@mui/material';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -46,7 +47,7 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
     }
     console.log({ UpdatePlatform });
     e.preventDefault();
-    axios.post(`http://43.204.38.243:3001/api/mastersUpsert`, UpdatePlatform, { headers: headers })
+    axios.post(BASE_URL + `/api/mastersUpsert`, UpdatePlatform, { headers: headers })
       .then(() => useEffect);
     setInputText('');
     setplatformIcon('');

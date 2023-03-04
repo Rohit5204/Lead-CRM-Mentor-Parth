@@ -14,6 +14,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const StyledTable = styled(Table)(() => ({
     whiteSpace: 'pre',
@@ -49,7 +50,7 @@ const StatusMaster = () => {
 
     useEffect(() => {
         axios
-            .get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`,
+            .get(BASE_URL + `/api/getMasterData?masterName=statusmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -62,7 +63,7 @@ const StatusMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://43.204.38.243:3001/api/mastersUpsert`, {
+            .post(BASE_URL + `/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -75,7 +76,7 @@ const StatusMaster = () => {
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post(BASE_URL + '/api/mastersUpsert', {
             id: i.id,
             masterName: 'status',
             inputText: i.platformName,

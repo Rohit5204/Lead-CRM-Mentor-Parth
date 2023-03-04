@@ -7,6 +7,7 @@ import axios from 'axios';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { format } from 'date-fns'
+import { BASE_URL } from 'app/utils/constant';
 
 const StyledTable = styled(Table)(() => ({
     whiteSpace: 'pre',
@@ -101,8 +102,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
         "userId": userId
     }
     const getCatalogueData = () => {
-        axios.post(
-            `http://43.204.38.243:3001/api/getCompanyMaster`,
+        axios.post(BASE_URL +
+            `/api/getCompanyMaster`,
             { id: 0 },
             { headers: headers }
         )

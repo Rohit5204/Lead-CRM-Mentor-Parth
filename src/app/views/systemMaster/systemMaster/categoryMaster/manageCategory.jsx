@@ -14,6 +14,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 
 const StyledTable = styled(Table)(() => ({
@@ -49,7 +50,7 @@ const CategoryMaster = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=emailcategorymaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers })
             .then((response) => {
                 setBranchData(response.data.data);
@@ -62,7 +63,7 @@ const CategoryMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://43.204.38.243:3001/api/mastersUpsert`, {
+            .post(BASE_URL + `/api/mastersUpsert`, {
                 id: 0,
                 masterName: masterName,
                 inputText: inputText,
@@ -75,7 +76,7 @@ const CategoryMaster = () => {
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post(BASE_URL + '/api/mastersUpsert', {
             id: i.id,
             masterName: 'Branch',
             inputText: i.platformName,

@@ -21,6 +21,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 
 const StyledTable = styled(Table)(() => ({
@@ -108,7 +109,7 @@ const PlatformMaster = () => {
     }
     useEffect(() => {
         axios
-            .get(`http://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`,
+            .get(BASE_URL + `/api/getMasterData?masterName=platformmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);
@@ -121,14 +122,14 @@ const PlatformMaster = () => {
             inputText: inputText,
         });
         axios
-            .post(`http://43.204.38.243:3001/api/mastersUpsert`, PlatformPayload,
+            .post(BASE_URL + `/api/mastersUpsert`, PlatformPayload,
                 { headers: headers })
             .then(() => useEffect);
     };
 
     const deleteData = (e, i) => {
         console.log(i);
-        axios.post('http://43.204.38.243:3001/api/mastersUpsert', {
+        axios.post(BASE_URL + '/api/mastersUpsert', {
             id: i.id,
             masterName: 'platform',
             inputText: i.platformName,

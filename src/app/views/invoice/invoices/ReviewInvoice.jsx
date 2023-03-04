@@ -15,6 +15,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 const StyledTable = styled(Table)(() => ({
   whiteSpace: 'pre',
   '& thead': {
@@ -115,8 +116,8 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
     "userId": userId
   }
   const getCatalogueData = () => {
-    axios.post(
-      `http://43.204.38.243:3001/api/getCompanyMaster`,
+    axios.post(BASE_URL +
+      `/api/getCompanyMaster`,
       { id: 0 },
       { headers: headers }
     )

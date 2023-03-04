@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, Select } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from 'app/utils/constant';
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -49,7 +50,7 @@ const EditRecoveryInstallment = () => {
     const updateInstallment = (e) => {
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`http://43.204.38.243:3001/api/updateProductInstalment`,
+        axios.post(BASE_URL + `/api/updateProductInstalment`,
             UpdateData, { headers: headers }).then(() => useEffect);
         changePage();
     };

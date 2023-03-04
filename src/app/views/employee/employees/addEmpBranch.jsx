@@ -19,6 +19,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from 'app/utils/constant';
 
 const AddEmpBranch = () => {
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ const AddEmpBranch = () => {
 
 
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 2) {
@@ -67,7 +68,7 @@ const AddEmpBranch = () => {
                     }
                 }
             });
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 3) {
@@ -110,31 +111,26 @@ const AddEmpBranch = () => {
             branchManagerId: managerId
         }
         console.log({ AddUser })
-        await axios.post('http://43.204.38.243:3001/api/userMasterUpsert', AddUser,
-            { headers: headers }).catch((error) => { // error is handled in catch block
-                if (error.response) { // status code out of the range of 2xx
-                    // setErrorMessage(error.response.data.message);
-                    alert(error.response.data.message)
-                    console.log("Status :" + error.response.status);
-                } else if (error.request) { // The request was made but no response was received
-                    console.log(error.request);
-                } else {// Error on setting up the request
-                    console.log('Error', error.message);
-                }
+        await axios.post(BASE_URL + '/api/userMasterUpsert', AddUser,
+            { headers: headers }).then((res) => {
+                alert(res.data.message)
+            }).catch(error => {
+                alert(error.response.data.message)
             });
     };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     postData();
-    //     changePage();
-    // };
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        postData();
+        // changePage();
+        // alert('Catalogue Successfully Created');
     };
     const [validated, setValidated] = useState(false);
     const handleSubmit1 = (event) => {
@@ -160,7 +156,7 @@ const AddEmpBranch = () => {
                     ]}
                 />
             </Box>
-            <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row>
                     <Col>
                         <SimpleCard title="Fill Employee Detail's">

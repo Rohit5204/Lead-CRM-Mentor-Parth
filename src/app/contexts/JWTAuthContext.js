@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios.js';
 import { MatxLoading } from 'app/components';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from 'app/utils/constant';
 
 const initialState = {
   isAuthenticated: false,
@@ -89,7 +90,7 @@ const AuthContext = createContext({
   ...initialState,
   method: 'JWT',
   login: () => Promise.resolve(),
-  logout: () => {},
+  logout: () => { },
   register: () => Promise.resolve(),
 });
 // Login For Dashboard 08/11/2022 Rohit
@@ -99,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userName, password) => {
     // http://43.204.38.243:3000/api/userLogin
-    const response = await axios.post('http://43.204.38.243:3001/api/userLogin', {
+    const response = await axios.post(BASE_URL + '/api/userLogin', {
       userName,
       password,
     });

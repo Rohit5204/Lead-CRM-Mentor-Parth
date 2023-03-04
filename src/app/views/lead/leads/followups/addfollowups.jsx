@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
+import { BASE_URL } from "app/utils/constant";
 
 const Div = styled('div')(({ theme }) => ({
     margin: '0px 0px 0px 441px',
@@ -47,7 +48,7 @@ const ManageFollowups = () => {
         getData1()
     }, [APIData456]);
     const getData1 = () => {
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: leadId, userId: 0, statusId: 0, searchKey: "",
             locationkey: "", platformId: 0, opType: ""
         },
@@ -63,7 +64,7 @@ const ManageFollowups = () => {
     }
     const postData = () => {
         // console.log({ followUpData })
-        axios.post(`http://43.204.38.243:3001/api/saveLeadFollowups`, followUpData,
+        axios.post(BASE_URL + `/api/saveLeadFollowups`, followUpData,
             { headers: headers });
     };
     const blankForm = () => {

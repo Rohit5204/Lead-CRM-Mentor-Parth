@@ -15,6 +15,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -51,7 +52,7 @@ const ManageDeals = () => {
     }
     //get method
     const getFetchLeadData = () => {
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: 0,
             userId: 0,
             statusId: 0,

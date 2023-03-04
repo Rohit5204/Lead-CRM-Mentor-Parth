@@ -4,6 +4,7 @@ import { Row, Col, Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SimpleCard } from "app/components";
+import { BASE_URL } from "app/utils/constant";
 
 const Div = styled('div')(({ theme }) => ({
     margin: '0px 0px 0px 441px',
@@ -44,7 +45,7 @@ const ManageMettings = () => {
 
     const getData = () => {
         // let abc = null
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`,
+        axios.post(BASE_URL + `/api/getFilteredLeadData`,
             {
                 leadId: leadId, userId: 0, statusId: 0, searchKey: "",
                 locationkey: "", platformId: 0, opType: ""
@@ -61,7 +62,7 @@ const ManageMettings = () => {
     }
     const postData = () => {
         // console.log({ MeetingData })
-        axios.post(`http://43.204.38.243:3001/api/saveLeadMeetings`, MeetingData,
+        axios.post(BASE_URL + `/api/saveLeadMeetings`, MeetingData,
             { headers: headers });
     };
     const blankForm = () => {

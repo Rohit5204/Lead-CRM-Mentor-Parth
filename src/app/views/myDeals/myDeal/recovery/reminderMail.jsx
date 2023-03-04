@@ -1,3 +1,4 @@
+import { BASE_URL } from "app/utils/constant";
 import axios from "axios";
 import React, { useState } from "react";
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
@@ -28,7 +29,7 @@ const ReminderMail = ({ theClientMail, handleDialog }) => {
             emailId: clientEmail,
             emailTemplateId: 3
         }
-        axios.post('http://43.204.38.243:3001/api/sendReminderMail', mailBody, {
+        axios.post(BASE_URL + '/api/sendReminderMail', mailBody, {
             headers: headers
         })
     }

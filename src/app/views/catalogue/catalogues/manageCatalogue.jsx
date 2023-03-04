@@ -17,6 +17,7 @@ import {
   Chip,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -89,7 +90,7 @@ const ManageCatalogue = () => {
   ];
   const [searchBox, setSearchBox] = useState('')
   const getCatalogueData = async () => {
-    await axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0, searchKey: searchBox, },
+    await axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0, searchKey: searchBox, },
       { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);

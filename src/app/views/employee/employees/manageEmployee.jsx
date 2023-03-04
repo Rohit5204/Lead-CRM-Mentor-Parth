@@ -15,6 +15,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -60,7 +61,7 @@ const ManageEmployee = () => {
   }
   //get method
   useEffect(() => {
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+    axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
       { headers: headers }).then((response) => {
         setUserData(response.data.data);
       });

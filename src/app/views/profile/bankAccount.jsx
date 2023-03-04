@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 
 const Div = styled('div')(() => ({
@@ -37,7 +38,7 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
         }
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`http://43.204.38.243:3001/api/updateCompanyAccounts`, UpdateData,
+        axios.post(BASE_URL + `/api/updateCompanyAccounts`, UpdateData,
             { headers: headers }).then(() => useEffect);
         handleDialog();
     };

@@ -8,6 +8,7 @@ import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import { format } from 'date-fns'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { BASE_URL } from 'app/utils/constant';
 
 const StyledTable = styled(Table)(() => ({
     whiteSpace: 'pre',
@@ -103,8 +104,8 @@ const ViewQuotation = ({ theViewQuotation }) => {
         "userId": userId
     }
     const getCatalogueData = () => {
-        axios.post(
-            `http://43.204.38.243:3001/api/getCompanyMaster`,
+        axios.post(BASE_URL +
+            `/api/getCompanyMaster`,
             { id: 0 },
             { headers: headers }
         )

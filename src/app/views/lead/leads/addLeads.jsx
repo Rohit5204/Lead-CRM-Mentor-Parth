@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { EXCEL_FILE_BASE64 } from './constant'
 import FileSaver from 'file-saver';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -74,30 +75,30 @@ const LeadForm = () => {
   }
 
   const getAllLeadData = () => {
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
+    axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -189,8 +190,12 @@ const LeadForm = () => {
       excelData[i].createdBy = 1;
     }
     // console.log(excelData);
-    axios.post(`http://43.204.38.243:3001/api/saveLeadGenerationData`, excelData,
-      { headers: headers });
+    axios.post(BASE_URL + `/api/saveLeadGenerationData`, excelData,
+      { headers: headers }).then((res) => {
+        alert(res.data.message)
+      }).catch(error => {
+        alert(error.response.data.message)
+      });
     changePage();
   };
 
@@ -234,7 +239,7 @@ const LeadForm = () => {
   //Add data in the table
   const [APIData, setAPIData] = useState([]);
   const getFetchLeadData = () => {
-    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,
@@ -291,8 +296,14 @@ const LeadForm = () => {
       expectedAmount: expectedAmount
     }
     console.log({ AddLead })
-    axios.post(`http://43.204.38.243:3001/api/saveLeadGenerationData`,
-      [AddLead], { headers: headers });
+    axios.post(BASE_URL + `/api/saveLeadGenerationData`,
+      [AddLead], { headers: headers }).then((res) => {
+        alert(res.data.message)
+        changePage();
+      }).catch(error => {
+        alert(error.response.data.message)
+      });
+
   };
 
   // const handleSubmit = (e) => {
@@ -316,6 +327,12 @@ const LeadForm = () => {
       changePage();
     }
     setValidated(true);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postData();
+    blankForm();
+    // alert('Catalogue Successfully Created');
   };
   return (
     <Container>
@@ -434,7 +451,7 @@ const LeadForm = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Form noValidate validated={validated} onSubmit={handleSubmit1}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row>
           <Col xs={12} md={6}>
             <SimpleCard title="Fill Lead Details">

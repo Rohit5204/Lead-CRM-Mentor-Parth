@@ -18,6 +18,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -77,7 +78,7 @@ const CompletedInvoiceList = () => {
     const [onType, setOnType] = useState('')
     const [searchBox, setSearchBox] = useState('')
     useEffect(() => {
-        axios.post(`http://43.204.38.243:3001/api/getInvoiceData`,
+        axios.post(BASE_URL + `/api/getInvoiceData`,
             { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);

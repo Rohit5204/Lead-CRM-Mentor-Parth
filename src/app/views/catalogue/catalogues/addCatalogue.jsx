@@ -5,6 +5,7 @@ import { Box, MenuItem, Autocomplete, TextField, FormControl, Select } from '@mu
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from 'app/utils/constant';
 
 
 const AddCatalogue = () => {
@@ -38,7 +39,7 @@ const AddCatalogue = () => {
     "userId": userId
   }
   useEffect(() => {
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
+    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
       { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setAssignTo(current => [...current, res.data.data[i].name]);
@@ -55,7 +56,7 @@ const AddCatalogue = () => {
         catdurationid = id1[i - 1]
       }
     }
-    axios.post('http://43.204.38.243:3001/api/upsertCatalogue',
+    axios.post(BASE_URL + '/api/upsertCatalogue',
       {
         catId: 0,
         catType: catType,
@@ -68,6 +69,7 @@ const AddCatalogue = () => {
       }, { headers: headers }
     ).then((res) => {
       alert(res.data.message)
+      changePage();
     }).catch(error => {
       alert(error.response.data.message)
     });
@@ -77,7 +79,6 @@ const AddCatalogue = () => {
     e.preventDefault();
     postData();
     blankForm();
-    // changePage();
     // alert('Catalogue Successfully Created');
   };
   const [validated, setValidated] = useState(false);

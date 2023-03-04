@@ -11,6 +11,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import { BASE_URL } from 'app/utils/constant';
 
 
 
@@ -32,7 +33,7 @@ const StatCards2 = (showData) => {
       "roleCode": roleCode,
       "userId": userId
     }
-    axios.post(`http://43.204.38.243:3001/api/getDashboardData`, {
+    axios.post(BASE_URL + `/api/getDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -52,7 +53,7 @@ const StatCards2 = (showData) => {
   //   const source = CancelToken.source();
   //   const items = localStorage.getItem('accessToken');
   //   if (!showData) {
-  //     axios.post(`http://43.204.38.243:3001/api/getDashboardData`, {
+  //     axios.post(BASE_URL+`/api/getDashboardData`, {
   //       opType: showData.showData.opType,
   //       fromDate: showData.showData.fromDate,
   //       toDate: showData.showData.toDate,

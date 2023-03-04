@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Form, Container, Modal, Row, Col } from "react-bootstrap";
 import EditPlatformAccount from './bankAccount';
+import { BASE_URL } from 'app/utils/constant';
 
 const StyledTable = styled(Table)(() => ({
     whiteSpace: 'pre',
@@ -60,7 +61,7 @@ function ManageProfile() {
         }
     }
     const getAccountsData = () => {
-        axios.post(`http://43.204.38.243:3001/api/getCompanyMaster`, { id: 1 },
+        axios.post(BASE_URL + `/api/getCompanyMaster`, { id: 1 },
             { headers: headers })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {
@@ -85,7 +86,7 @@ function ManageProfile() {
         createdBy: 1
     }
     const postData = () => {
-        axios.post('http://43.204.38.243:3001/api/updateCompanyMaster', userCard,
+        axios.post(BASE_URL + '/api/updateCompanyMaster', userCard,
             { headers: headers }
         );
     };

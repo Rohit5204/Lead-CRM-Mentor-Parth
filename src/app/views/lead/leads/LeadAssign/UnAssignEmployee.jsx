@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, Select, TextField, Autocomplete } from '@mu
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -37,7 +38,7 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
     }
     useEffect(() => {
 
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
+        axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
                 setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
@@ -74,7 +75,7 @@ const UnAssignEmployee = ({ theUnAssignData }) => {
         };
         console.log({ UpdateUser });
         e.preventDefault();
-        axios.post(`http://43.204.38.243:3001/api/updateLeadData`, UpdateUser, { headers: headers })
+        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser, { headers: headers })
             .then(() => useEffect);
     };
 

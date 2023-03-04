@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 
 const Div = styled('div')(() => ({
@@ -38,7 +39,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
         updatedBy: 1
     };
     const getFetchLeadData = () => {
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: 0,
             userId: 0,
             statusId: 0,
@@ -54,7 +55,7 @@ const EditEMI = ({ theEditEMI, handleDialog }) => {
     const updateInstallment = (e) => {
         // console.log({ UpdateData });
         e.preventDefault();
-        axios.post(`http://43.204.38.243:3001/api/updateProductInstalment`,
+        axios.post(BASE_URL + `/api/updateProductInstalment`,
             UpdateData, { headers: headers }).then(() => useEffect);
         getFetchLeadData();
         handleDialog();

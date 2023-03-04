@@ -24,6 +24,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -122,7 +123,7 @@ const ManageInvoiceList = () => {
   const [searchBox, setSearchBox] = useState('')
 
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getInvoiceData`,
+    axios.post(BASE_URL + `/api/getInvoiceData`,
       { invoiceid: 0, empId: 0, statusId: 1, searchKey: searchBox, opType: onType },
       { headers: headers })
       .then((response) => {
@@ -132,7 +133,7 @@ const ManageInvoiceList = () => {
 
   const [sendInvoiceList, setSendInvoiceList] = useState([])
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getInvoiceData`,
+    axios.post(BASE_URL + `/api/getInvoiceData`,
       { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
       .then((response) => {
         setSendInvoiceList(response.data.data);
@@ -141,7 +142,7 @@ const ManageInvoiceList = () => {
 
   const [invoiceStatusData, setInvoiceStatusData] = useState([])
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 5,

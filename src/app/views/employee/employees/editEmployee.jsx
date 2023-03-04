@@ -5,6 +5,7 @@ import { Box, Icon, FormControl, Select, MenuItem, Autocomplete, TextField } fro
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from 'app/utils/constant';
 
 const EditEmployee = () => {
     const location = useLocation();
@@ -53,14 +54,14 @@ const EditEmployee = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=rolemaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=rolemaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setRoleTo(current => [...current, res.data.data[i].roleName]);
                     setId1(current => [...current, res.data.data[i].id, res.data.data[i].roleName])
                 }
             });
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=branchmaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=branchmaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setOfficeTo(current => [...current, res.data.data[i].branchName]);
@@ -70,7 +71,7 @@ const EditEmployee = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 2) {
@@ -81,7 +82,7 @@ const EditEmployee = () => {
                     }
                 }
             });
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     if (res.data.data[i].roleId == 3) {
@@ -112,7 +113,7 @@ const EditEmployee = () => {
     //Update data in the table
     const UpdateData = () => {
         console.log({ UpdateUser })
-        axios.post('http://43.204.38.243:3001/api/userMasterUpsert', UpdateUser, { headers: headers });
+        axios.post(BASE_URL + '/api/userMasterUpsert', UpdateUser, { headers: headers });
     };
 
     const handleSubmit = (e) => {

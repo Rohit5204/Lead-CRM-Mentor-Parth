@@ -22,6 +22,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from "app/utils/constant";
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -81,7 +82,7 @@ const UpdateInstallments = () => {
     };
 
     const getInstallmentsData = () => {
-        axios.post(`http://43.204.38.243:3001/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0, statusId: 0 },
+        axios.post(BASE_URL + `/api/getInvoiceData`, { invoiceid: invoiceId, empId: 0, statusId: 0 },
             { headers: headers })
             .then((response) => {
                 for (var i = 0; i < response.data.data.length; i++) {

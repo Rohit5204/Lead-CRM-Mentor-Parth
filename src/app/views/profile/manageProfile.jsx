@@ -14,6 +14,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -47,8 +48,8 @@ const ManageAllProfile = () => {
   }
   const getCatalogueData = () => {
     axios
-      .post(
-        `http://43.204.38.243:3001/api/getCompanyMaster`,
+      .post(BASE_URL +
+        `/api/getCompanyMaster`,
         { id: 0 },
         { headers: headers }
       )

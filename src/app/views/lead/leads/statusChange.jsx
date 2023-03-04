@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from 'react-bootstrap';
 import { Autocomplete, TextField, FormControl } from '@mui/material';
+import { BASE_URL } from "app/utils/constant";
 
 const StatusChange = ({ theStatusChange, handleDialog }) => {
     const [leadId] = useState(theStatusChange.leadId);
@@ -24,7 +25,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
     }
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
+        axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setStatusName(current => [...current, res.data.data[i].name]);
                 setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -34,7 +35,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
 
 
     const getFetchLeadData = () => {
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: 0,
             userId: 0,
             statusId: 0,
@@ -77,7 +78,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
         };
         // e.preventDefault();
         console.log(UpdateUser)
-        axios.post(`http://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
+        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser,
             { headers: headers });
         // getFetchLeadData()
         handleDialog()
@@ -97,7 +98,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
         createdBy: 1
     };
     const postData = () => {
-        axios.post(`http://43.204.38.243:3001/api/saveLeadFollowups`, followUpData,
+        axios.post(BASE_URL + `/api/saveLeadFollowups`, followUpData,
             { headers: headers });
     };
     const blankForm = () => {
@@ -129,7 +130,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
     };
 
     const postData1 = () => {
-        axios.post(`http://43.204.38.243:3001/api/saveLeadMeetings`, MeetingData,
+        axios.post(BASE_URL + `/api/saveLeadMeetings`, MeetingData,
             { headers: headers });
     };
     const blankForm1 = () => {

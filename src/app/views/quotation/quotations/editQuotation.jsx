@@ -15,6 +15,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const EditQuotation = () => {
     const [selected, setSelected] = useState('');
@@ -64,14 +65,14 @@ const EditQuotation = () => {
         "userId": userId
     }
     useEffect(() => {
-        axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: 0, userId: 0, statusId: 0,
         }, { headers: headers }).then((res) => {
             for (var i = 0; i < res.data.data.length; i++) {
                 setLeadData(current => [...current, res.data.data[i].name]);
             }
         });
-        axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0 },
+        axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0 },
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCatalogueData(current => [...current, res.data.data[i].gsName]);
@@ -142,7 +143,7 @@ const EditQuotation = () => {
     //Add data in the table
     const postData = () => {
         console.log({ addQuotation });
-        axios.post(`http://43.204.38.243:3001/api/saveQuotation`, addQuotation);
+        axios.post(BASE_URL + `/api/saveQuotation`, addQuotation);
     };
 
     const handleSubmit = (e) => {

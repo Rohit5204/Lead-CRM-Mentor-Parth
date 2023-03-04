@@ -25,7 +25,7 @@ export const navigations = [
   },
   { label: 'QUOTATIONS', type: 'label' },
   { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
-  
+
   // {
   //   name: 'Quotation List',
   //   icon: 'work',
@@ -35,7 +35,7 @@ export const navigations = [
   //     { name: 'Send List', path: '/quotations/completedQuotationList', iconText: 'C' },
   //   ],
   // },
-  
+
   { label: 'INVOICE', type: 'label' },
   { name: 'Invoice List', path: '/invoices/ManageInvoiceList', icon: 'receipt' },
   // {
@@ -47,7 +47,7 @@ export const navigations = [
   //     { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
   //   ],
   // },
-  { label: 'MY DEALS', type: 'label' },  
+  { label: 'MY DEALS', type: 'label' },
   {
     name: 'Deals',
     icon: 'security',

@@ -6,6 +6,7 @@ import { Breadcrumb } from 'app/components';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -61,30 +62,30 @@ const EditUser = () => {
   }
   useEffect(() => {
 
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
       }
     });
-    axios.post(`http://43.204.38.243:3001/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
+    axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setIntrestedIn(current => [...current, res.data.data[i].gsName]);
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setPlatformName(current => [...current, res.data.data[i].platformName]);
         setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setLabelName(current => [...current, res.data.data[i].name]);
         setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
       }
     });
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setStatusName(current => [...current, res.data.data[i].name]);
         setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
@@ -94,7 +95,7 @@ const EditUser = () => {
 
   const [APIData, setAPIData] = useState([]);
   const getFetchLeadData = () => {
-    axios.post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+    axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
       statusId: 0,
@@ -153,7 +154,7 @@ const EditUser = () => {
     };
     console.log({ UpdateUser });
     e.preventDefault();
-    axios.post(`http://43.204.38.243:3001/api/updateLeadData`, UpdateUser,
+    axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser,
       { headers: headers });
     getFetchLeadData()
     changePage()

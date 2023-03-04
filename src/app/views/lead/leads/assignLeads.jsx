@@ -25,6 +25,7 @@ import {
   Autocomplete,
   TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -122,7 +123,7 @@ const AssignLead = () => {
   const [locationkey, setLocationkey] = useState('')
   useEffect(() => {
     axios
-      .post(`http://43.204.38.243:3001/api/getFilteredLeadData`, {
+      .post(BASE_URL + `/api/getFilteredLeadData`, {
         leadId: 0,
         userId: 0,
         statusId: 0,
@@ -137,7 +138,7 @@ const AssignLead = () => {
   }, [APIData])
 
   useEffect(() => {
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
+    axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.data.length; i++) {
         setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
         setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
@@ -164,7 +165,7 @@ const AssignLead = () => {
       userId: assignedid
     };
     e.preventDefault();
-    axios.post(`http://43.204.38.243:3001/api/assignBulkLeads`,
+    axios.post(BASE_URL + `/api/assignBulkLeads`,
       bulkAssign, { headers: headers })
       .then(() => useEffect);
     blankForm();
@@ -174,7 +175,7 @@ const AssignLead = () => {
     const leadByEmp = {
       selectedDate: selectedDate
     }
-    axios.post(`http://43.204.38.243:3001/api/getLeadsByEmployee`,
+    axios.post(BASE_URL + `/api/getLeadsByEmployee`,
       leadByEmp, { headers: headers })
       .then((response) => {
         setAPIDataEmp(response.data.data);
@@ -192,7 +193,7 @@ const AssignLead = () => {
       transferRemarks: remark,
       transferDate: transferDate,
     }
-    axios.post(`http://43.204.38.243:3001/api/transferLeads`,
+    axios.post(BASE_URL + `/api/transferLeads`,
       emp, { headers: headers })
       .then((response) => {
         setAPIDataEmp(response.data.data);

@@ -18,6 +18,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -103,7 +104,7 @@ const CompletedManageQuotation = () => {
     ];
     //get method  http://35.89.6.16:4002/api
     useEffect(() => {
-        axios.post(`http://43.204.38.243:3001/api/getQuotationData`,
+        axios.post(BASE_URL + `/api/getQuotationData`,
             { quotationId: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
             .then((response) => {
                 setAPIData(response.data.data);

@@ -5,6 +5,7 @@ import axios from 'axios';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Col, Row, Form, InputGroup } from 'react-bootstrap';
 import { Small } from 'app/components/Typography';
+import { BASE_URL } from 'app/utils/constant';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -51,7 +52,7 @@ const StatCards = (showData) => {
     "userId": userId
   }
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getAdvancedDashboardData`, {
+    axios.post(BASE_URL + `/api/getAdvancedDashboardData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -63,7 +64,7 @@ const StatCards = (showData) => {
   }, [totalPipeline]);
 
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getDashboardTotalLeadData`, {
+    axios.post(BASE_URL + `/api/getDashboardTotalLeadData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -75,7 +76,7 @@ const StatCards = (showData) => {
   }, [totalLead]);
 
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getDashboardOrderGainData`, {
+    axios.post(BASE_URL + `/api/getDashboardOrderGainData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,
@@ -86,7 +87,7 @@ const StatCards = (showData) => {
       });
   }, [totalGain]);
   useEffect(() => {
-    axios.post(`http://43.204.38.243:3001/api/getDashboardOrderLossData`, {
+    axios.post(BASE_URL + `/api/getDashboardOrderLossData`, {
       opType: showData.showData.opType,
       fromDate: showData.showData.fromDate,
       toDate: showData.showData.toDate,

@@ -12,6 +12,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
+import { BASE_URL } from 'app/utils/constant';
 
 const StatusWiseCard = (showData) => {
     const { palette } = useTheme();
@@ -26,7 +27,7 @@ const StatusWiseCard = (showData) => {
         "userId": userId
     }
     useEffect(() => {
-        axios.post(`http://43.204.38.243:3001/api/getLeadStatusCount`, {
+        axios.post(BASE_URL + `/api/getLeadStatusCount`, {
             opType: showData.showData.opType,
             fromDate: showData.showData.fromDate,
             toDate: showData.showData.toDate,

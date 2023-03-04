@@ -5,6 +5,7 @@ import { Box, MenuItem, FormControl, Select, Autocomplete, TextField, } from '@m
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -32,7 +33,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
   const [myOptions3, setMyOptions3] = useState(theEditCatalogue.durationName);
 
   useEffect(() => {
-    axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=durationmaster`,
+    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
       { headers: headers }).then((res) => {
         for (var i = 0; i < res.data.data.length; i++) {
           setAssignTo(current => [...current, res.data.data[i].name]);
@@ -67,7 +68,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
       actionBy: 1,
       durationId: catdurationid
     };
-    axios.post(`http://43.204.38.243:3001/api/upsertCatalogue`, UpdateCatalogue,
+    axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue,
       { headers: headers }).then(() => useEffect);
     handleDialog();
   };

@@ -18,6 +18,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -68,7 +69,7 @@ const ManageRecovery = () => {
     const [endDate, setendDate] = useState(lastdate)
     //get method
     const fetchRecovery = () => {
-        axios.post(`http://43.204.38.243:3001/api/getPendingInstalments`, {
+        axios.post(BASE_URL + `/api/getPendingInstalments`, {
             fromDate: startDate,
             toDate: endDate,
             userId: 1
