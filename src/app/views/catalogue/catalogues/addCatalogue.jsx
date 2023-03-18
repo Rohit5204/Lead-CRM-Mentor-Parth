@@ -111,7 +111,7 @@ const AddCatalogue = () => {
             <SimpleCard title="Fill Catalogue Detail's">
               <Row>
                 <Col md="6">
-                  <FormControl sx={{ m: 0, minWidth: '100%' }} size="small" className="mt-1">
+                  <FormControl sx={{ m: 0, width: '100%' }} size="small" className="mt-1">
                     <Form.Label>Type</Form.Label>
                     <Select required value={catType}
                       label="."
@@ -142,7 +142,7 @@ const AddCatalogue = () => {
                     <Form.Label className="mt-1">Duration</Form.Label>
                   </InputGroup>
                   <Autocomplete
-                    style={{ minWidth: '100%' }}
+                    style={{ width: '100%' }}
                     freeSolo
                     autoComplete
                     autoHighlight

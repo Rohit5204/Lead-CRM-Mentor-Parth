@@ -110,13 +110,12 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
                         )}
                     />
                 </Col>
-
             </Row>
             <Row>
                 <Col>
                     <Form.Label>Select Invoice</Form.Label>
                     <br />
-                    <input type="file" name="file" onChange={changeHandler} />
+                    <input type="file" name="file" value={JSON.parse(localStorage.getItem('Document'))} onChange={changeHandler} />
                 </Col>
             </Row>
 

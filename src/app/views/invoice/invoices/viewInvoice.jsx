@@ -43,7 +43,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                     const pdf = new jsPDF({
                         orientation: 'portrait',
                         unit: 'in',
-                        format: [5.5, 8.5],
+                        format: [5.5, 7.5],
                     });
 
                     // Define reused data
@@ -86,6 +86,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                     }
                     // Output / Save
                     pdf.save(`invoice-${theViewInvoice.billTo}.pdf`);
+                    localStorage.setItem("Document", JSON.stringify(pdf))
                 };
             })
             .catch((error) => {
@@ -330,7 +331,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 <div>
                                     <h5 style={{ "color": "MidnightBlue" }}>Remarks</h5>
                                     <Row>
-                                        <Col> <span style={{ "color": "red" }}>{remarks}</span></Col>
+                                        <Col > <p style={{ "color": "red" }}>Budgeting: It is important to have a budget in place to manage your finances effectively.<br></br> A budget can help you track your expenses and ensure that you are spending within your means.</p>
+                                        </Col>
                                     </Row>
                                 </div>
                             ) : (

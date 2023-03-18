@@ -14,6 +14,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import StatusChange from './statusChange';
 import FollowupStatusChange from './followupStatus';
 import MettingStatusChange from './meetingStatusChange';
+import LeadStatus from './leadStatus';
 import {
   Box,
   Icon,
@@ -142,6 +143,16 @@ const ManageLead = () => {
     setSatusForm(true);
   };
   const handleClose = () => { setSatusForm(false); }
+
+  const [leadStatus, setLeadStatus] = useState(null);
+  const [showLeadSatus, setLeadSatus] = useState(false);
+
+  const handleShowLead = (subscriber) => {
+    setLeadStatus(subscriber);
+    setLeadSatus(true);
+  };
+  const handleCloseLead = () => { setLeadSatus(false); }
+
   useEffect(() => {
     getFetchLeadData()
   }, [APIData]);
@@ -402,6 +413,9 @@ const ManageLead = () => {
                                     <Icon color="success">edit</Icon>
                                   </IconButton>
                                 </Link>
+                                <IconButton onClick={() => handleShowLead(subscriber)}>
+                                  <Icon color="primary">share</Icon>
+                                </IconButton>
                               </>
                             }
                           })()}
@@ -922,6 +936,27 @@ const ManageLead = () => {
             </StyledTable>
           </Box>
         </TabPanel>
+
+        <Modal
+          show={showLeadSatus}
+          onHide={handleCloseLead}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+
+        >
+          <Modal.Header>
+            <Modal.Title>Share Company Detail's</Modal.Title>
+            <IconButton type="button" onClick={handleCloseLead}>
+              <ClearIcon />
+            </IconButton>
+          </Modal.Header>
+          <Modal.Body>
+            <LeadStatus theLeadStatus={leadStatus} handleDialog={handleCloseLead}></LeadStatus>
+          </Modal.Body>
+        </Modal>
+
         <Modal
           show={showSatusForm}
           onHide={handleClose}

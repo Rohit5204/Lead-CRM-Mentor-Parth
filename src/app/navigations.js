@@ -1,7 +1,6 @@
 export const navigations = [
   { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
-  // { name: 'Employee Dashboard', path: '/dashboard/employeeDashboard', icon: 'dashboard' },
-  // { label: 'PAGES', type: 'label' },
+
   { label: 'LEADS', type: 'label' },
   {
     name: 'Lead',
@@ -10,19 +9,9 @@ export const navigations = [
       { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
       { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
-      { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
-      { name: 'User Master', iconText: '404', path: '/employees/manageAllEmployee' },
     ],
   },
-  { label: 'Catalogue', type: 'label' },
-  {
-    name: 'Catalogue List',
-    icon: 'menu',
-    children: [
-      { name: 'Manage Catalogue', path: '/catalogues/manageCatalogue', iconText: 'B' },
-      { name: 'Add Catalogue', path: '/catalogues/addCatalogue', iconText: 'A' },
-    ],
-  },
+
   { label: 'QUOTATIONS', type: 'label' },
   { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
 
@@ -63,35 +52,25 @@ export const navigations = [
     icon: 'email',
     path: '/manageEmailMessage',
   },
+
   { label: 'Digital Card', type: 'label' },
   {
     name: 'Digital Card',
-    icon: 'sd_card',
+    icon: 'sd_card', path: '/digitalCards'
+
+  },
+
+  { label: 'Setting', type: 'label' },
+  {
+    name: 'Setting',
+    icon: 'settings_applications',
     children: [
-      { name: 'Manage Card', iconText: 'SI', path: '/digitalCards' },
-      { name: 'Add Card', iconText: 'SI', path: '/digitalCards/addCard' },
+      { name: 'System Master', iconText: 'SM', path: '/manageSystemMaster' },
+      { name: 'User Master', iconText: 'EM', path: '/employees/manageAllEmployee' },
+      { name: 'Catalogue', iconText: 'CM', path: '/catalogues/manageCatalogue' },
     ],
   },
 
-  // { label: 'EMAIL', type: 'label' },
-  // {
-  //   name: 'Email',
-  //   icon: 'security',
-  //   children: [
-  //     { name: 'Send Mail', iconText: 'SI', path: '/session/signup' },
-  //     { name: 'Email Catalog', iconText: 'SI', path: '/session/signup' },
-  //   ],
-  // },
-  // { label: 'REPORTS', type: 'label' },
-  // {
-  //   name: 'Report',
-  //   icon: 'security',
-  //   children: [
-  //     { name: 'Employee Wise', iconText: 'SI', path: '/session/signup' },
-  //     { name: 'Duration Wise', iconText: 'SI', path: '/session/signup' },
-  //     { name: 'Product Service Wise', iconText: 'SI', path: '/session/signup' },
-  //   ],
-  // },
   // {
   //   name: 'Session/Auth',
   //   icon: 'security',

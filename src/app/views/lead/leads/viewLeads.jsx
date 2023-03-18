@@ -173,32 +173,32 @@ const ViewLead = () => {
               </Col>
 
             </Row>
-            <Div className="mt-2">
-              <Row>
-                <Col>
-                  <Button variant="secondary" onClick={changePage}>
-                    Back
-                  </Button>&nbsp;
-                  {(function () {
-                    if (roleName == "Employee") {
 
-                      return <>
-                      </>
-                    }
-                    else {
-                      return <>
-                        <Link to="/leads/editLead" state={location.state}>
-                          <Button variant="success">
-                            Edit
-                          </Button>
-                        </Link>
-                      </>
-                    }
-                  })()}
+            <Row>
+              <Col className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={changePage}>
+                  Back
+                </Button>&nbsp;
+                {(function () {
+                  if (roleName == "Employee") {
 
-                </Col>
-              </Row>
-            </Div>
+                    return <>
+                    </>
+                  }
+                  else {
+                    return <>
+                      <Link to="/leads/editLead" state={location.state}>
+                        <Button variant="success">
+                          Edit
+                        </Button>
+                      </Link>
+                    </>
+                  }
+                })()}
+
+              </Col>
+            </Row>
+
           </Tab>
 
           <Tab eventKey="followups" title="FollowUp">

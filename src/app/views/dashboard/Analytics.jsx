@@ -228,7 +228,7 @@ const Analytics = () => {
                     <TabPanel value={value} index={3}>
                       <EmpWiseCount />
                     </TabPanel>
-                  </>;
+                  </>
                 }
                 else {
                   return <>
@@ -237,7 +237,6 @@ const Analytics = () => {
                         <Tab label="Total Lead" {...a11yProps(0)} />
                         <Tab label="Label Wise" {...a11yProps(1)} />
                         <Tab label="Status Wise" {...a11yProps(2)} />
-
                       </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
@@ -253,8 +252,6 @@ const Analytics = () => {
                 }
               })()}
 
-
-
             </SimpleCard>
             <br></br>
             <Grid container spacing={0}>
@@ -264,7 +261,7 @@ const Analytics = () => {
                 </SimpleCard>
               </Grid>
             </Grid>
-            <br />
+            {/* <br />
             <Grid container spacing={0}>
               <Grid item lg={12} md={8} sm={12} xs={12}>
                 <SimpleCard title="Lead Wise Chart">
@@ -280,7 +277,6 @@ const Analytics = () => {
                     color={[palette.error.dark, palette.warning.main, palette.success.main]}
                   /></SimpleCard>
                 <br></br>
-                {/* <RowCards /> */}
               </Grid>
               <Grid item lg={4} md={4} sm={12} xs={12}>
                 <Card sx={{ px: 3, py: 2, mb: 3 }}>
@@ -293,7 +289,7 @@ const Analytics = () => {
                   />
                 </Card>
               </Grid>
-            </Grid>
+            </Grid> */}
             {/* <Campaigns /> */}
           </>
         ) : (<>

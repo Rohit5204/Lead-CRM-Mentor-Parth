@@ -75,6 +75,9 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  const changePage = () => {
+    handleDialog()
+  }
   return (
     <Container>
       {/* <SimpleCard title="Update Catalogue Detail's"> */}
@@ -89,7 +92,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
             />
           </Col>
           <Col md="6">
-            <FormControl sx={{ m: 0, minWidth: 330 }} size="small" >
+            <FormControl sx={{ m: 0, width: '100%' }} size="small" >
               <Form.Label>Type</Form.Label>
               <Select value={gsType} label="Type" onChange={(e) => setGsType(e.target.value)}>
                 <MenuItem value="">Select the Type</MenuItem>
@@ -109,7 +112,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
             />
           </Col>
           <Col md="6">
-            <FormControl sx={{ m: 0, minWidth: 330 }} size="small" >
+            <FormControl sx={{ m: 0, width: '100%' }} size="small" >
               <Form.Label>Status</Form.Label>
               <Select value={catStatus} label="Type" onChange={(e) => setCatStatus(e.target.value)}>
                 <MenuItem value="">Select the Type</MenuItem>
@@ -126,7 +129,7 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
               <Form.Label className="mt-1">Duration</Form.Label>
             </InputGroup>
             <Autocomplete
-              style={{ width: 700 }}
+              style={{ width: '100%' }}
               freeSolo
               autoComplete
               autoHighlight
@@ -162,7 +165,15 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col className="d-flex justify-content-end">
+            <button
+              type="submit"
+              className="btn btn-secondary"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={changePage}
+            >Cancel
+            </button>
+            &nbsp;
             <button
               type="submit"
               className="btn btn-success"

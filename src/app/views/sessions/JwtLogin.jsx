@@ -11,22 +11,25 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Form, } from 'react-bootstrap';
+import FinanceHead from '../../assets/FinanceHead.png'
+import FinanceStock from '../../assets/FinanceStock.png'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
 const JustifyBox = styled(FlexBox)(() => ({ justifyContent: 'center' }));
 
 const ContentBox = styled(Box)(() => ({
-  height: '100%',
+  height: '50%',
   padding: '24px',
   position: 'relative',
   background: 'rgba(0, 0, 0, 0.01)',
+  backgroundColor: 'white'
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
   // background: '#6876b0',
-  backgroundImage: "url('/assets/images/backgroundLogo.jpg')",
+  backgroundImage: "url('/assets/images/FinanceStock.png')",
   minHeight: '100% !important',
   '& .card': {
     maxWidth: 500,
@@ -82,42 +85,55 @@ const JwtLogin = () => {
   // const handleChange = () => {
 
   // }
-  return (
-    <JWTRoot>
-      <Card className="card">
-        <Grid container>
-          <Grid item sm={6} xs={12}>
-            <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }} className="ml-5">
-              <img src="/assets/images/crmloginlogo.png" width="100%" alt="" />
-            </JustifyBox>
-          </Grid>
-        </Grid>
-        <Grid item sm={6} xs={12}>
-          <ContentBox>
-            <Formik
-              // onSubmit={handleFormSubmit}
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-            >
-              {/* {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => ( */}
-              <form >
-                <Form.Label>Username </Form.Label>
-                <TextField
-                  fullWidth
-                  size="small"
-                  type="text"
-                  name="userName"
-                  label="."
-                  variant="outlined"
-                  // onBlur={handleBlur}
-                  value={userlogin}
-                  onChange={(e) => setuserlogin(e.target.value)}
-                  // helperText={touched.userName && errors.userName}
-                  // error={Boolean(errors.userName && touched.userName)}
-                  sx={{ mb: 1 }}
-                />
 
-                {/* <TextField
+  return (
+    <>
+      {/* #1F6599 */}
+      <div style={{ backgroundColor: '#187BB7', width: '100%', height: '100%' }}>
+        <Container>
+
+          <Row>
+            <Col md={7} style={{ alignItems: 'baseline' }}>
+              <img src={FinanceStock} alt="" style={{ marginLeft: '-225px', marginTop: '50px' }} width='622px' />
+            </Col>
+            <Col md={5} style={{ marginTop: '80px' }}>
+
+              <b ><Form.Label style={{ fontSize: '38px', color: 'white' }}>Get Ready </Form.Label>
+                < Form.Label style={{ fontSize: '38px', color: 'white' }}>To Manage Leads</Form.Label>
+                <Form.Label style={{ fontSize: '38px', color: 'white' }}>Smarter, Better & Faster</Form.Label></b>
+
+              <Formik
+                // onSubmit={handleFormSubmit}
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+              >
+                {/* {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => ( */}
+                <form >
+                  <br />
+                  <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Username </Form.Label>
+                  <TextField
+                    fullWidth
+                    width={'100px'}
+                    size="large"
+                    type="text"
+                    name="userName"
+                    label="."
+                    variant="outlined"
+                    InputProps={{
+                      style: {
+                        borderRadius: 20, // or any other value you like
+                        backgroundColor: 'white'
+                      },
+                    }}
+                    // onBlur={handleBlur}
+                    value={userlogin}
+                    onChange={(e) => setuserlogin(e.target.value)}
+                    // helperText={touched.userName && errors.userName}
+                    // error={Boolean(errors.userName && touched.userName)}
+                    sx={{ mb: 1 }}
+                  />
+
+                  {/* <TextField
                   fullWidth
                   size="small"
                   name="password"
@@ -131,80 +147,125 @@ const JwtLogin = () => {
                   // error={Boolean(errors.password && touched.password)}
                   sx={{ mb: 1.5 }}
                 /> */}
-                <FormControl sx={{ mb: 1, width: "100%" }} variant="outlined" >
-                  <Form.Label>Password </Form.Label>
-                  <OutlinedInput
-                    size="small"
-                    id="outlined-adornment-password"
-                    onChange={(e) => setuserpassword(e.target.value)}
-                    value={passwordlogin}
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="h"
-                  />
-                </FormControl>
+                  <FormControl sx={{ mb: 1, width: "100%" }} variant="outlined" >
+                    <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Password </Form.Label>
+                    {/* <OutlinedInput
+                      size="large"
+                      id="outlined-adornment-password"
+                      onChange={(e) => setuserpassword(e.target.value)}
+                      value={passwordlogin}
+                      inputProps={{
+                        style: {
+                          borderRadius: 20,
+                        },
+                      }}
+                      type={showPassword ? 'text' : 'password'}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="h"
+                    /> */}
+                    <TextField
+                      fullWidth
+                      width={'100px'}
+                      size="large"
+                      name="password"
+                      type={showPassword ? 'text' : 'password'}
+                      label="."
+                      variant="outlined"
+                      InputProps={{
+                        endAdornment: (
 
-                <FlexBox justifyContent="space-between">
-                  <FlexBox gap={1}>
-                    <Checkbox
-                      size="small"
-                      name="remember"
-                      // onChange={handleChange}
-                      // checked={values.remember}
-                      sx={{ padding: 0 }}
+                          <InputAdornment position="end">
+                            <IconButton
+                              style={{ color: '#187BB7' }}
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                        style: {
+                          borderRadius: 20, // or any other value you like
+                          backgroundColor: 'white'
+                        }
+                      }}
+
+
+                      // onBlur={handleBlur}
+                      onChange={(e) => setuserpassword(e.target.value)}
+                      value={passwordlogin}
+                      // helperText={touched.userName && errors.userName}
+                      // error={Boolean(errors.userName && touched.userName)}
+                      sx={{ mb: 1 }}
                     />
+                  </FormControl>
 
-                    <Paragraph>Remember Me</Paragraph>
+                  <FlexBox justifyContent="space-between" style={{ marginTop: '25px' }}>
+                    <FlexBox gap={1}>
+                      <Checkbox
+                        size="small"
+                        name="remember"
+                        style={{ color: 'white' }}
+                        // onChange={handleChange}
+                        // checked={values.remember}
+                        sx={{ padding: 0 }}
+                      />
+
+                      <Paragraph style={{ fontSize: '15px', color: 'white', fontFamily: 'sans-serif' }}>Remember Me</Paragraph>
+                    </FlexBox>
+
+                    <NavLink
+                      to="/session/forgot-password"
+                      style={{ fontSize: '15px', color: 'white', fontFamily: 'sans-serif' }}
+                    >
+                      Forgot password?
+                    </NavLink>
                   </FlexBox>
 
-                  <NavLink
-                    to="/session/forgot-password"
-                    style={{ color: theme.palette.primary.main }}
+                  <LoadingButton
+                    type="submit"
+                    loading={loading}
+                    onClick={handleFormSubmit}
+                    style={{ width: "455px", borderRadius: 20, fontFamily: 'sans-serif' }}
+                    variant="contained" sx={{ color: 'secondary', bgcolor: '#EF3139', my: 5 }}
                   >
-                    Forgot password?
-                  </NavLink>
-                </FlexBox>
+                    Login
+                  </LoadingButton>
+                </form>
+              </Formik>
+            </Col>
+          </Row>
+        </Container>
+        <br>
+        </br>
+        <br>
+        </br><br>
+        </br>
+        <br>
+        </br>
+        <br>
+        </br>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <img src={FinanceHead} alt="" width='18%' />
+          </Col>
+        </Row>
+      </div>
 
-                <LoadingButton
-                  style={{ marginLeft: "180px" }}
-                  type="submit"
-                  color="primary"
-                  loading={loading}
-                  onClick={handleFormSubmit}
-                  variant="contained"
-                  sx={{ my: 2 }}
-                >
-                  Login
-                </LoadingButton>
-
-                {/* <Paragraph>
-                      Don't have an account?
-                      <NavLink
-                        to="/session/signup"
-                        style={{ color: theme.palette.primary.main, marginLeft: 5 }}
-                      >
-                        Register
-                      </NavLink>
-                    </Paragraph> */}
-              </form>
-              {/* )} */}
-            </Formik>
-          </ContentBox>
-
-        </Grid>
-      </Card>
-    </JWTRoot>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import ClearIcon from '@mui/icons-material/Clear';
 import EditCatalogue from './editCatalogue';
 import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
@@ -18,6 +19,7 @@ import {
   TableRow,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
+import StatusCatalogue from './StatusCatalogue';
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -51,6 +53,16 @@ const ManageCatalogue = () => {
   const changePage = () => {
     navigate('/catalogues/addCatalogue');
   };
+
+  const [obj2, setObj2] = useState(null);
+  const [updateStatus, setUpdateStatus] = useState(false)
+  //Dialog Form
+
+  const handleShowStatus = (cat) => {
+    setObj2(cat)
+    setUpdateStatus(true);
+  };
+  const handleCloseStatus = () => setUpdateStatus(false);
 
   //get method
   const items = localStorage.getItem('accessToken');
@@ -95,6 +107,9 @@ const ManageCatalogue = () => {
       .then((response) => {
         setAPIData(response.data.data);
       });
+  }
+  const handleUpdateStatus = () => {
+
   }
   useEffect(() => {
     getCatalogueData()
@@ -157,10 +172,10 @@ const ManageCatalogue = () => {
                     <TableCell align="center">{catalogue.durationName}</TableCell>
                     <TableCell align="center">
                       {catalogue.status == 0 ? (
-                        <> <Chip label="Inactive" color="warning" /></>
+                        <> <Chip label="Inactive" color="warning" onClick={() => handleShowStatus(catalogue)} /></>
                       ) :
                         (
-                          <> <Chip label="Active" color="success" /></>
+                          <> <Chip label="Active" color="success" onClick={() => handleShowStatus(catalogue)} /></>
                         )
                       }
                     </TableCell>
@@ -198,20 +213,33 @@ const ManageCatalogue = () => {
         >
           <Modal.Header>
             <Modal.Title>Update Catalogue</Modal.Title>
+            <IconButton type="button" onClick={handleClose}>
+              <ClearIcon />
+            </IconButton>
           </Modal.Header>
           <Modal.Body>
             <EditCatalogue theEditCatalogue={obj1} handleDialog={handleClose} />
           </Modal.Body>
-          <Modal.Footer>
-            <button
-              type="submit"
-              className="btn btn-error"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleClose}
-            >
-              Cancel
-            </button>
-          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={updateStatus}
+          onHide={handleCloseStatus}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title>Update Catalogue Status</Modal.Title>
+            <IconButton type="button" onClick={handleCloseStatus}>
+              <ClearIcon />
+            </IconButton>
+          </Modal.Header>
+          <Modal.Body>
+            <StatusCatalogue theStatusCatalogue={obj2} handleDialogStatus={handleCloseStatus}></StatusCatalogue>
+          </Modal.Body>
         </Modal>
       </Box>
     </Container>

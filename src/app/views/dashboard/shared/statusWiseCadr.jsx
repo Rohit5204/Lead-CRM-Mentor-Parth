@@ -50,35 +50,27 @@ const StatusWiseCard = (showData) => {
         <WifiCalling3Icon style={{ fontSize: "65px" }}></WifiCalling3Icon>
     ]
     return (
-        <div>
-            <div>
-                <div id="root">
-                    <div className="container" >
-                        <div className="row align-items-stretch">
-                            {statusWiseData.map((item, index) => (
-                                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
-                                    <div className="wrap">
-                                        <Row>
-                                            <Col md="4">
-                                                <div style={{ color: '#7499e5' }}>
-                                                    {iconOption[index]}
-                                                </div>
-                                            </Col>
-                                            <Col style={{ marginLeft: "12px" }}>
-                                                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
-                                                    {item.statusName}
-                                                </h4>
-                                                <span className="hind-font caption-10 c-dashboardInfo__count">{item.count}</span>
-                                            </Col>
-
-                                        </Row>
-                                    </div>
+        <div className="row align-items-stretch">
+            {statusWiseData.map((item, index) => (
+                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
+                    <div className="wrap">
+                        <Row>
+                            <Col md="4">
+                                <div style={{ color: '#7499e5' }}>
+                                    {iconOption[index]}
                                 </div>
-                            ))}
-                        </div>
+                            </Col>
+                            <Col style={{ marginLeft: "12px" }}>
+                                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+                                    {item.statusName}
+                                </h4>
+                                <span className="hind-font caption-10 c-dashboardInfo__count">{item.count}</span>
+                            </Col>
+
+                        </Row>
                     </div>
                 </div>
-            </div>
+            ))}
         </div>
     );
 };

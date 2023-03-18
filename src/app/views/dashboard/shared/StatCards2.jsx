@@ -97,41 +97,33 @@ const StatCards2 = (showData) => {
     <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
   ]
   return (
-    <div>
-      <div>
-        <div id="root">
-          <div className="container">
-            <div className="row align-items-stretch">
-              {APIData123.map((item, index) => (
-                // if (item.platformName != "") {
-                //   return (
-                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index} >
-                  <div className="wrap">
-                    <Row className='mb-1'>
-                      <Col md="4">
-                        <div style={{ color: '#7499e5' }}>
-                          {/* {iconOption[index]} */}
-                          <img key={index} src={listOfImages[index].url} height={80} width={80} style={{ marginTop: '-15px' }} ></img>
-                        </div>
-                      </Col>
-                      <Col style={{ marginLeft: "12px" }}>
-                        <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
-                          {item.platformName}
-                        </h4>
-                        <span className="hind-font ">{item.count}</span>
-                      </Col>
-
-                    </Row>
-                  </div>
+    <div className="row align-items-stretch">
+      {APIData123.map((item, index) => (
+        // if (item.platformName != "") {
+        //   return (
+        <div className="c-dashboardInfo col-lg-3 col-md-6" key={index} >
+          <div className="wrap">
+            <Row className='mb-1'>
+              <Col md="4">
+                <div style={{ color: '#7499e5' }}>
+                  {/* {iconOption[index]} */}
+                  <img key={index} src={listOfImages[index].url} height={80} width={80} style={{ marginTop: '-15px' }} ></img>
                 </div>
-                // )}
-              )
-              )}
-            </div>
+              </Col>
+              <Col style={{ marginLeft: "12px" }}>
+                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
+                  {item.platformName}
+                </h4>
+                <span className="hind-font ">{item.count}</span>
+              </Col>
+
+            </Row>
           </div>
         </div>
-      </div>
-    </div >
+        // )}
+      )
+      )}
+    </div>
 
   );
 };

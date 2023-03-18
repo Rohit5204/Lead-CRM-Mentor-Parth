@@ -413,7 +413,7 @@ const AddInvoice = () => {
                                         </InputGroup>
                                     </Col>
                                     <Col>
-                                        <FormControl sx={{ m: 0, minWidth: 350 }} size="small" className="mt-1">
+                                        <FormControl sx={{ m: 0, width: "100%" }} size="small" className="mt-1">
                                             <InputGroup>
                                                 <Form.Label className="mt-1">Invoice Type</Form.Label>
                                             </InputGroup>

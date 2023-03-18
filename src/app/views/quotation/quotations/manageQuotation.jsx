@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import CompletedManageQuotation from './completedQuotationList';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
 import ViewQuotation from './viewQuotation';
@@ -314,10 +315,14 @@ const ManageQuotation = () => {
                           <TableCell align="center">
                             <Link to="/quotations/viewQuotationLead" state={subscriber}>
                               <IconButton>
-                                <Icon color="red">visibility</Icon>
+                                <Icon style={{ color: '#3939FF' }}>visibility</Icon>
                               </IconButton>
                             </Link>
-
+                            <Link to="/quotations/addQuotation" state={subscriber}>
+                              <IconButton>
+                                <NoteAddIcon style={{ color: 'green' }}></NoteAddIcon>
+                              </IconButton>
+                            </Link>
                           </TableCell>
                         </TableRow>
                       );

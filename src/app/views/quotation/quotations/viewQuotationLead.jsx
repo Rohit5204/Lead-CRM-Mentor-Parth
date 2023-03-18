@@ -182,15 +182,15 @@ const ViewLeadQuotation = () => {
                     </Col>
 
                 </Row>
-                <Div className="mt-2">
-                    <Row>
-                        <Col>
-                            <Button variant="secondary" onClick={changePage}>
-                                Back
-                            </Button>&nbsp;
-                        </Col>
-                    </Row>
-                </Div>
+
+                <Row>
+                    <Col className="d-flex justify-content-center">
+                        <Button variant="secondary" onClick={changePage}>
+                            Back
+                        </Button>&nbsp;
+                    </Col>
+                </Row>
+
 
             </SimpleCard>
         </Container>
