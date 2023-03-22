@@ -194,19 +194,8 @@ const AssignMaster = () => {
                                 <Modal.Title>Update Assign Master</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <EditAssign theEditAssign={obj1} />
+                                <EditAssign theEditAssign={obj1} handleClose={handleClose} />
                             </Modal.Body>
-                            <Modal.Footer>
-                                <button
-                                    type="submit"
-                                    className="btn btn-error"
-                                    style={{ marginTop: 5 + 'px' }}
-                                    onClick={handleClose}
-                                >
-                                    Cancel
-                                </button>
-
-                            </Modal.Footer>
                         </Modal>
                     </SimpleCard>
                 </Col>

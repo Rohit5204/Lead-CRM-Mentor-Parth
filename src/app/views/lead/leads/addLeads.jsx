@@ -344,7 +344,7 @@ const LeadForm = () => {
       <Row className='mb-1'>
         <Col>
           <button type="submit" className="btn btn-success" onClick={showImport}>
-            Import Lead
+            Import
           </button>
         </Col>
       </Row>
@@ -770,19 +770,18 @@ const LeadForm = () => {
             </SimpleCard>
           </Col>
         </Row>
-        <Div className="mt-2">
-          <Row>
-            <Col>
-              <button className="btn btn-secondary" type='button' onClick={changePage}>
-                Cancel
-              </button>
-              &nbsp;
-              <button type='submit' className="btn btn-success">
-                Save
-              </button>
-            </Col>
-          </Row>
-        </Div>
+        <br />
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <button className="btn btn-secondary" type='button' onClick={changePage}>
+              Cancel
+            </button>
+            &nbsp;
+            <button type='submit' className="btn btn-success">
+              Save
+            </button>
+          </Col>
+        </Row>
       </Form>
     </Container >
   );

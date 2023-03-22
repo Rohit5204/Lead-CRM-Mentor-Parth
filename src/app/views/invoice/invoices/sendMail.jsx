@@ -14,6 +14,28 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
     const [emailData, setEmailData] = useState([]);
     const [id1, setId1] = useState([]);
     const [myOptions, setMyOptions] = useState(null);
+
+
+    const abc = () => {
+        const fileInput = document.querySelector('input[type="file"]')
+        const blobPdf = new Blob([localStorage.getItem('invoiceDocument')], {
+            type
+                :
+                "application/pdf"
+        })
+        const file = new File([blobPdf], 'invoice.pdf',
+            {
+                type
+                    :
+                    "application/pdf"
+            })
+        const dataTransfer = new DataTransfer()
+        dataTransfer.items.add(file)
+        fileInput.files = dataTransfer.files
+        console.log(file)
+        setSelectedFile(file)
+    }
+
     useEffect(() => {
         axios.get(BASE_URL + `/api/getEmailTemplate?_id=0`,
             { headers: headers }).then((res) => {
@@ -22,6 +44,7 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
                     setId1(current => [...current, res.data.data[i].id, res.data.data[i].emailSubject])
                 }
             });
+        abc()
     }, []);
     var catdurationid
     for (var i = 0; i < id1.length; i++) {
@@ -54,13 +77,17 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
         // for (var pair of formData.entries()) {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
-        // console.log({ data: data1, file: selectedFile })
+        console.log({ data: data1, file: selectedFile })
+
         await axios.post(BASE_URL + '/api/sendInvoiceMail',
             formData, {
             headers: headers
         })
         handleDialog();
     };
+    const changePage = () => {
+        handleDialog();
+    }
     return (
         <div>
             <Row>
@@ -115,18 +142,25 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
                 <Col>
                     <Form.Label>Select Invoice</Form.Label>
                     <br />
-                    <input type="file" name="file" value={JSON.parse(localStorage.getItem('Document'))} onChange={changeHandler} />
+                    <input type="file" name="file" onChange={changeHandler} />
                 </Col>
             </Row>
-
-            <div>
-                <button type="submit"
-                    className="btn btn-success"
-                    style={{ margin: 5 + 'px' }}
-                    onClick={handleSubmission}>Send
-                </button>
-            </div>
-        </div>
+            <br />
+            <Row>
+                <Col className="d-flex justify-content-end">
+                    <button type="button"
+                        className="btn btn-secondary"
+                        style={{ margin: 5 + 'px' }}
+                        onClick={changePage}>Cancel
+                    </button>&nbsp;
+                    <button type="submit"
+                        className="btn btn-success"
+                        style={{ margin: 5 + 'px' }}
+                        onClick={handleSubmission}>Send
+                    </button>
+                </Col>
+            </Row>
+        </div >
     )
 };
 

@@ -1,62 +1,24 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, IconButton, TextField, FormControl } from '@mui/material';
-import { Box, styled, useTheme } from '@mui/system';
-import { Paragraph } from 'app/components/Typography';
+import { Grid, IconButton, TextField, } from '@mui/material';
+import { Box, useTheme } from '@mui/system';
 import useAuth from 'app/hooks/useAuth';
-import { Formik } from 'formik';
-import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import React, { useState } from 'react';
+import Paper from '@mui/material/Paper';
+import { NavLink } from 'react-router-dom';
+
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FinanceHead from '../../assets/FinanceHead.png'
-import FinanceStock from '../../assets/FinanceStock.png'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Form } from 'react-bootstrap';
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
-const JustifyBox = styled(FlexBox)(() => ({ justifyContent: 'center' }));
-
-const ContentBox = styled(Box)(() => ({
-  height: '50%',
-  padding: '24px',
-  position: 'relative',
-  background: 'rgba(0, 0, 0, 0.01)',
-  backgroundColor: 'white'
-}));
-
-const JWTRoot = styled(JustifyBox)(() => ({
-  // background: '#6876b0',
-  backgroundImage: "url('/assets/images/FinanceStock.png')",
-  minHeight: '100% !important',
-  '& .card': {
-    maxWidth: 500,
-    minHeight: 400,
-    margin: '1rem',
-    display: 'flex',
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-}));
-
-// inital login credentials
-const initialValues = {
-  userName: '',
-  password: '',
-  remember: true,
-};
-
-// form field validation schema
-const validationSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(6, 'Password must be 6 character length')
-    .required('Password is required!'),
-  userName: Yup.string()
-    .min(3, 'User Name must be 3 character length')
-    .required('User Name is required!'),
-});
+const theme = createTheme();
 
 const JwtLogin = () => {
   const theme = useTheme();
@@ -81,189 +43,143 @@ const JwtLogin = () => {
     } catch (e) {
       setLoading(false);
     }
+  }; const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
   };
-  // const handleChange = () => {
-
-  // }
 
   return (
     <>
-      {/* #1F6599 */}
-      <div style={{ backgroundColor: '#187BB7', width: '100%', height: '100%' }}>
-        <Container>
+      <ThemeProvider theme={theme}>
+        <Grid container component="main" sx={{ height: '100vh' }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage: 'url(/assets/images/FinanceStock.png)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) =>
+                t.palette.mode === 'green' ? '#187BB7' : '#187BB7',
+              backgroundSize: '80%',
+              backgroundPosition: 'center',
+            }}
+          />
+          {/* component={Paper} */}
+          <Grid item xs={12} sm={8} md={5} elevation={6} square style={{ backgroundColor: '#187BB7' }}>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
 
-          <Row>
-            <Col md={7} style={{ alignItems: 'baseline' }}>
-              <img src={FinanceStock} alt="" style={{ marginLeft: '-225px', marginTop: '50px' }} width='622px' />
-            </Col>
-            <Col md={5} style={{ marginTop: '80px' }}>
-
-              <b ><Form.Label style={{ fontSize: '38px', color: 'white' }}>Get Ready </Form.Label>
-                < Form.Label style={{ fontSize: '38px', color: 'white' }}>To Manage Leads</Form.Label>
-                <Form.Label style={{ fontSize: '38px', color: 'white' }}>Smarter, Better & Faster</Form.Label></b>
-
-              <Formik
-                // onSubmit={handleFormSubmit}
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-              >
-                {/* {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => ( */}
-                <form >
-                  <br />
-                  <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Username </Form.Label>
-                  <TextField
-                    fullWidth
-                    width={'100px'}
-                    size="large"
-                    type="text"
-                    name="userName"
-                    label="."
-                    variant="outlined"
-                    InputProps={{
-                      style: {
-                        borderRadius: 20, // or any other value you like
-                        backgroundColor: 'white'
-                      },
-                    }}
-                    // onBlur={handleBlur}
-                    value={userlogin}
-                    onChange={(e) => setuserlogin(e.target.value)}
-                    // helperText={touched.userName && errors.userName}
-                    // error={Boolean(errors.userName && touched.userName)}
-                    sx={{ mb: 1 }}
-                  />
-
-                  {/* <TextField
+              {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography> */}
+              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <b style={{ alignItems: 'left' }}>
+                  <Form.Label style={{ fontSize: '30px', color: 'white' }}>Get Ready </Form.Label><br></br>
+                  <Form.Label style={{ fontSize: '30px', color: 'white' }}>To Manage Leads</Form.Label><br></br>
+                  <Form.Label style={{ fontSize: '30px', color: 'white' }}>Smarter, Better & Faster</Form.Label><br></br><br></br>
+                </b>
+                <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif', marginTop: '2px' }}>UserName </Form.Label>
+                <TextField
+                  margin="normal"
+                  required
                   fullWidth
-                  size="small"
+                  id="email"
+                  label="."
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={userlogin}
+                  onChange={(e) => setuserlogin(e.target.value)}
+                  InputProps={{
+                    style: {
+                      borderRadius: 20,
+                      backgroundColor: 'white'
+                    },
+                  }}
+                />
+                <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Password </Form.Label>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
                   name="password"
-                  type="password"
-                  label="Password"
-                  variant="outlined"
-                  // onBlur={handleBlur}
-                  value={passwordlogin}
+                  label="."
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
                   onChange={(e) => setuserpassword(e.target.value)}
-                  // helperText={touched.password && errors.password}
-                  // error={Boolean(errors.password && touched.password)}
-                  sx={{ mb: 1.5 }}
-                /> */}
-                  <FormControl sx={{ mb: 1, width: "100%" }} variant="outlined" >
-                    <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Password </Form.Label>
-                    {/* <OutlinedInput
-                      size="large"
-                      id="outlined-adornment-password"
-                      onChange={(e) => setuserpassword(e.target.value)}
-                      value={passwordlogin}
-                      inputProps={{
-                        style: {
-                          borderRadius: 20,
-                        },
-                      }}
-                      type={showPassword ? 'text' : 'password'}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="h"
-                    /> */}
-                    <TextField
-                      fullWidth
-                      width={'100px'}
-                      size="large"
-                      name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      label="."
-                      variant="outlined"
-                      InputProps={{
-                        endAdornment: (
+                  value={passwordlogin}
+                  InputProps={{
+                    endAdornment: (
 
-                          <InputAdornment position="end">
-                            <IconButton
-                              style={{ color: '#187BB7' }}
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                        style: {
-                          borderRadius: 20, // or any other value you like
-                          backgroundColor: 'white'
-                        }
-                      }}
+                      <InputAdornment position="end">
+                        <IconButton
+                          style={{ color: '#187BB7' }}
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    style: {
+                      borderRadius: 20,
+                      backgroundColor: 'white'
+                    }
+                  }}
+                />
 
 
-                      // onBlur={handleBlur}
-                      onChange={(e) => setuserpassword(e.target.value)}
-                      value={passwordlogin}
-                      // helperText={touched.userName && errors.userName}
-                      // error={Boolean(errors.userName && touched.userName)}
-                      sx={{ mb: 1 }}
-                    />
-                  </FormControl>
-
-                  <FlexBox justifyContent="space-between" style={{ marginTop: '25px' }}>
-                    <FlexBox gap={1}>
-                      <Checkbox
-                        size="small"
-                        name="remember"
-                        style={{ color: 'white' }}
-                        // onChange={handleChange}
-                        // checked={values.remember}
-                        sx={{ padding: 0 }}
-                      />
-
-                      <Paragraph style={{ fontSize: '15px', color: 'white', fontFamily: 'sans-serif' }}>Remember Me</Paragraph>
-                    </FlexBox>
-
+                <Grid container style={{ marginTop: '5px' }}>
+                  <Grid item xs>
                     <NavLink
                       to="/session/forgot-password"
                       style={{ fontSize: '15px', color: 'white', fontFamily: 'sans-serif' }}
                     >
                       Forgot password?
                     </NavLink>
-                  </FlexBox>
+                  </Grid>
+                  <Grid item>
 
-                  <LoadingButton
-                    type="submit"
-                    loading={loading}
-                    onClick={handleFormSubmit}
-                    style={{ width: "455px", borderRadius: 20, fontFamily: 'sans-serif' }}
-                    variant="contained" sx={{ color: 'secondary', bgcolor: '#EF3139', my: 5 }}
-                  >
-                    Login
-                  </LoadingButton>
-                </form>
-              </Formik>
-            </Col>
-          </Row>
-        </Container>
-        <br>
-        </br>
-        <br>
-        </br><br>
-        </br>
-        <br>
-        </br>
-        <br>
-        </br>
-        <Row>
-          <Col className="d-flex justify-content-center">
-            <img src={FinanceHead} alt="" width='18%' />
-          </Col>
-        </Row>
-      </div>
+                  </Grid>
+                </Grid>
+                <LoadingButton
+                  type="submit"
+                  loading={loading}
+                  onClick={handleFormSubmit}
+                  style={{ width: "100%", borderRadius: 20, fontFamily: 'sans-serif' }}
+                  variant="contained" sx={{ color: 'secondary', bgcolor: '#EF3139', my: 5 }}
+                >
+                  Login
+                </LoadingButton>
+                <div className="d-flex justify-content-center ">
+                  <img src={FinanceHead} alt="" width='45%' />
+                </div>
+
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
 
     </>
   );

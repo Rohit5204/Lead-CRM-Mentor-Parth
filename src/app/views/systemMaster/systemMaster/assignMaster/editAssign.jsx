@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditAssign = ({ theEditAssign }) => {
+const EditAssign = ({ theEditAssign, handleClose }) => {
     console.log(theEditAssign)
     const [id, setId] = useState(theEditAssign.id);
     const [masterName, setMasterName] = useState('Assign');
@@ -50,6 +50,9 @@ const EditAssign = ({ theEditAssign }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+    const changePage = () => {
+        handleClose()
+    }
     return (
         <Container>
             {/* <SimpleCard title="Update Catalogue Detail's"> */}
@@ -73,8 +76,18 @@ const EditAssign = ({ theEditAssign }) => {
                         />
                     </Col>
                 </Row>
+                <br />
                 <Row>
-                    <Col>
+                    <Col className="d-flex justify-content-end">
+                        <button
+                            type="submit"
+                            className="btn btn-error"
+                            style={{ marginTop: 5 + 'px' }}
+                            onClick={changePage}
+                        >
+                            Cancel
+                        </button>
+                        &nbsp;
                         <button
                             type="submit"
                             className="btn btn-success"

@@ -354,19 +354,19 @@ const AddEmpBranch = () => {
                         </SimpleCard>
                     </Col>
                 </Row>
-                <Div className="mt-2">
-                    <Row>
-                        <Col>
-                            <Button variant="secondary" onClick={changePage}>
-                                Cancel
-                            </Button>
-                            &nbsp;
-                            <button type="submit" className="btn btn-success">
-                                Save
-                            </button>
-                        </Col>
-                    </Row>
-                </Div>
+                <br />
+                <Row>
+                    <Col className="d-flex justify-content-center">
+                        <Button variant="secondary" onClick={changePage}>
+                            Cancel
+                        </Button>
+                        &nbsp;
+                        <button type="submit" className="btn btn-success">
+                            Save
+                        </button>
+                    </Col>
+                </Row>
+
             </Form>
         </Container >
     );

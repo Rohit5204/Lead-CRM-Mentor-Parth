@@ -191,22 +191,22 @@ const AddCatalogue = () => {
             </SimpleCard>
           </Col>
         </Row>
-        <Div className="mt-2">
-          <Row>
-            <Col>
-              <Button variant="secondary" onClick={changePage}>
-                Cancel
-              </Button>
-              &nbsp;
-              {/* <Button variant="primary" onClick={handleSubmit}>
+        <br />
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <Button variant="secondary" onClick={changePage}>
+              Cancel
+            </Button>
+            &nbsp;
+            {/* <Button variant="primary" onClick={handleSubmit}>
               Save
             </Button> */}
-              <button type="submit" className="btn btn-success" >
-                Save
-              </button>
-            </Col>
-          </Row>
-        </Div>
+            <button type="submit" className="btn btn-success" >
+              Save
+            </button>
+          </Col>
+        </Row>
+
       </Form>
     </Container>
   );

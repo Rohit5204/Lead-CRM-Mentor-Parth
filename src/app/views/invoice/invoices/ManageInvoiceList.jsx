@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import ClearIcon from '@mui/icons-material/Clear';
 import SendInvoiceMail from "./sendMail";
 import UpdateInstallments from './updateInstallments';
@@ -124,7 +125,7 @@ const ManageInvoiceList = () => {
 
   useEffect(() => {
     axios.post(BASE_URL + `/api/getInvoiceData`,
-      { invoiceid: 0, empId: 0, statusId: 1, searchKey: searchBox, opType: onType },
+      { invoiceid: 0, empId: 0, statusId: 0, searchKey: searchBox, opType: onType },
       { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);
@@ -212,7 +213,7 @@ const ManageInvoiceList = () => {
             </Col>
             <Col md="2" className='mt-4'>
               <button type="button" className="btn btn-success mt-2" onClick={changePage}>
-                ADD Invoice
+                ADD
               </button>
             </Col>
           </Row>
@@ -270,10 +271,14 @@ const ManageInvoiceList = () => {
                           <TableCell align="center">
                             <Link to="/invoices/viewLeadData" state={subscriber}>
                               <IconButton>
-                                <Icon color="red">visibility</Icon>
+                                <Icon color="warning">visibility</Icon>
                               </IconButton>
                             </Link>
-
+                            <Link to="/invoices/addLeadInvoice" state={subscriber}>
+                              <IconButton>
+                                <NoteAddIcon color="success"></NoteAddIcon>
+                              </IconButton>
+                            </Link>
                           </TableCell>
                         </TableRow>
                       );
@@ -418,16 +423,6 @@ const ManageInvoiceList = () => {
           <Modal.Body>
             <SendInvoiceMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendInvoiceMail>
           </Modal.Body>
-          <Modal.Footer>
-            <button
-              type="submit"
-              className="btn btn-error"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleCloseMail}
-            >
-              Cancel
-            </button>
-          </Modal.Footer>
         </Modal>
         <Modal
           show={show}

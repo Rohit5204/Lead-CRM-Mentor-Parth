@@ -54,6 +54,9 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
     setplatformColor('');
     handleDialog();
   };
+  const changePage = () => {
+    handleDialog();
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -122,8 +125,18 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
           </Col>
 
         </Row> */}
+        <br />
         <Row className='mt-2'>
-          <Col>
+          <Col className="d-flex justify-content-end">
+            <button
+              type="submit"
+              className="btn btn-error"
+              style={{ marginTop: 5 + 'px' }}
+              onClick={changePage}
+            >
+              Cancel
+            </button>
+            &nbsp;
             <button
               type="submit"
               className="btn btn-success"

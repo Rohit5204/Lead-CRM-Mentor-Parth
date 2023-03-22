@@ -16,7 +16,7 @@ const ViewLeadInvoice = () => {
         <Container>
             <SimpleCard title="Lead Management">
                 <Row>
-                    <Col>
+                    <Col >
                         <Form.Label>Lead Sr No</Form.Label>
                         <Form.Control
                             disabled
@@ -35,23 +35,16 @@ const ViewLeadInvoice = () => {
                             placeholder="Enter Lead Name"
                         />
                     </Col>
+
+
+                </Row>
+                <Row>
                     <Col>
                         <Form.Label> Expected Amount</Form.Label>
                         <Form.Control
                             disabled
                             //onChange={(e) => setRemarks(e.target.value)}
                             defaultValue={location.state.expectedAmount}
-                        />
-                    </Col>
-
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Label> Client Name</Form.Label>
-                        <Form.Control
-                            placeholder="Enter Customer Name"
-                            disabled
-                            value={location.state.clientName}
                         />
                     </Col>
                     <Col>
@@ -182,15 +175,15 @@ const ViewLeadInvoice = () => {
                     </Col>
 
                 </Row>
-                <Div className="mt-2">
-                    <Row>
-                        <Col>
-                            <Button variant="secondary" onClick={changePage}>
-                                Back
-                            </Button>&nbsp;
-                        </Col>
-                    </Row>
-                </Div>
+                <br />
+                <Row>
+                    <Col className="d-flex justify-content-center">
+                        <Button variant="secondary" onClick={changePage}>
+                            Back
+                        </Button>&nbsp;
+                    </Col>
+                </Row>
+
 
             </SimpleCard>
         </Container>

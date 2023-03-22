@@ -129,7 +129,7 @@ const ManageEmailMessage = () => {
                     <Col>
                         <InputGroup className="mb-3">
                             <button type="submit" className="btn btn-success" onClick={handleShow}>
-                                New Template
+                                Email
                             </button>
                             &nbsp;
                             <Form.Control
@@ -269,16 +269,6 @@ const ManageEmailMessage = () => {
                 <Modal.Body>
                     <EditEmail theEditEmail={obj1} handleDialog={handleClose1} />
                 </Modal.Body>
-                <Modal.Footer>
-                    <button
-                        type="submit"
-                        className="btn btn-error"
-                        style={{ marginTop: 5 + 'px' }}
-                        onClick={handleClose1}
-                    >
-                        Cancel
-                    </button>
-                </Modal.Footer>
             </Modal>
         </Container>
     );

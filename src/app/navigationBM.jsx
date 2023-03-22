@@ -11,11 +11,10 @@ export const navigationBM = [
             { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
             { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
             // { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
-            { name: 'User Master', iconText: '404', path: '/employees/manageEmployee' },
+
         ],
     },
-    { label: 'Catalogue', type: 'label' },
-    { name: 'Catalogue List', path: '/catalogues/manageCatalogue', icon: 'work' },
+
 
     { label: 'QUOTATIONS', type: 'label' },
     { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
@@ -56,6 +55,16 @@ export const navigationBM = [
         name: 'Email',
         icon: 'email',
         path: '/manageEmailMessage',
+    },
+    { label: 'Setting', type: 'label' },
+    {
+        name: 'Setting',
+        icon: 'settings_applications',
+        children: [
+            // { name: 'System Master', iconText: 'SM', path: '/manageSystemMaster' },
+            { name: 'User Master', iconText: 'Emp', path: '/employees/manageEmployee' },
+            { name: 'Catalogue List', iconText: 'Cat', path: '/catalogues/manageCatalogue' },
+        ],
     },
     // { label: 'Digital Card', type: 'label' },
     // {

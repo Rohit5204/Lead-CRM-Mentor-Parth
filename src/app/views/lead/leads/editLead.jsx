@@ -427,19 +427,19 @@ const EditUser = () => {
           </Row>
         </Form>
       </Box>
-      <Div className="mt-2">
-        <Row>
-          <Col>
-            <Button variant="secondary" onClick={changePage}>
-              Cancel
-            </Button>
-            &nbsp;
-            <Button variant="success" onClick={updateLead}>
-              Update
-            </Button>
-          </Col>
-        </Row>
-      </Div>
+      <br />
+      <Row>
+        <Col className="d-flex justify-content-center">
+          <Button variant="secondary" onClick={changePage}>
+            Cancel
+          </Button>
+          &nbsp;
+          <Button variant="success" onClick={updateLead}>
+            Update
+          </Button>
+        </Col>
+      </Row>
+
     </Container>
   );
 };

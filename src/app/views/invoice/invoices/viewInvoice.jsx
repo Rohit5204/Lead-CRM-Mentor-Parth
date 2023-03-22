@@ -82,11 +82,13 @@ const ViewInvoice = ({ theViewInvoice }) => {
                         if (page) pdf.addPage();
 
                         const imgData = pageCanvas.toDataURL(`image/${imageType}`, 1);
+                        //console.log(imgData)
                         pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
+                        // console.log(pdf)
                     }
                     // Output / Save
                     pdf.save(`invoice-${theViewInvoice.billTo}.pdf`);
-                    localStorage.setItem("Document", JSON.stringify(pdf))
+                    localStorage.setItem('invoiceDocument', pdf.output('blob'))
                 };
             })
             .catch((error) => {
@@ -160,13 +162,9 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     </h5>
                                     <span>{APIData.address}</span>
                                     <br />
-                                    <span>{APIData.stateName}-{APIData.pincode} </span>
+                                    <span>{APIData.stateName} - {APIData.pincode} </span>
                                     <br />
-                                    <span>Company Reg. No :- {APIData.gstNo}</span>
-                                    {/* <br />
-                        <span className="font-bold">GST No: {theViewInvoice.gstNo}</span> */}
-                                    {/* <br /> */}
-                                    {/* <span className="font-bold">State: {theViewInvoice.companyStateName}</span> */}
+                                    <span>Contact No :- {APIData.contactNo}</span>
                                     <br />
                                     <span className="font-bold">Email :- {APIData.email}</span>
                                 </Col>
@@ -204,7 +202,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <tr>
                                         <td><span> Address   :   {theViewInvoice.clientAddress}</span></td>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                         <td>
                                             <span> Bank Details  :  {APIData.bankName}</span><br />
                                             <span> Account No   :  {APIData.accountNo}</span><br />
@@ -215,7 +213,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                             <span> No. of EMI  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {Object.keys(installments).length}</span><br />
                                             <span> Initial Payment   :   {theViewInvoice.initialPayment}</span><br />
                                         </td>
-                                    </tr>
+                                    </tr> */}
                                 </tbody>
                             </table>
                             <h5 className='text-center'> PRODUCT INFORMATION </h5>
@@ -228,17 +226,17 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                         <th> Total </th>
                                     </tr>
                                 </thead>
-                                {/* {APIData.map((quotation, index) => { */}
+
                                 <tbody className='text-center'>
                                     <tr>
-                                        {/* <td>{theViewInvoice.gsCatalogueId}</td> */}
+
                                         <td> {theViewInvoice.gsName} </td>
                                         <td>{theViewInvoice.duration}</td>
                                         <td>{theViewInvoice.amount}</td>
                                         <td>{subtotal}</td>
                                     </tr>
                                 </tbody>
-                                {/* })} */}
+
                             </table>
                             <Row>
                                 <Col md="8">
@@ -331,7 +329,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 <div>
                                     <h5 style={{ "color": "MidnightBlue" }}>Remarks</h5>
                                     <Row>
-                                        <Col > <p style={{ "color": "red" }}>Budgeting: It is important to have a budget in place to manage your finances effectively.<br></br> A budget can help you track your expenses and ensure that you are spending within your means.</p>
+                                        <Col md={12}>
+                                            <p>{remarks}</p>
                                         </Col>
                                     </Row>
                                 </div>
@@ -345,9 +344,9 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     </Col>
                                 </Row>
                                 <Row className='ml-2'>
-                                    <p>
-                                        We agree the terms and conditions which is mentioned in companywebsite.com
-                                    </p>
+                                    <label>
+                                        We agree the terms and conditions which is mentioned in www.boostock.in
+                                    </label>
                                 </Row>
                             </div>
                         </Form>

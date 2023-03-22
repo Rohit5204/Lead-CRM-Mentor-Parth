@@ -315,7 +315,7 @@ const ManageQuotation = () => {
                           <TableCell align="center">
                             <Link to="/quotations/viewQuotationLead" state={subscriber}>
                               <IconButton>
-                                <Icon style={{ color: '#3939FF' }}>visibility</Icon>
+                                <Icon style={{ color: 'orange' }}>visibility</Icon>
                               </IconButton>
                             </Link>
                             <Link to="/quotations/addQuotation" state={subscriber}>

@@ -456,19 +456,19 @@ const EditEmployee = () => {
                     </SimpleCard>
                 </Col>
             </Row>
-            <Div className="mt-2">
-                <Row>
-                    <Col>
-                        <Button variant="secondary" onClick={changePage}>
-                            Cancel
-                        </Button>
-                        &nbsp;
-                        <button type="button" className="btn btn-success" onClick={handleSubmit}>
-                            Update
-                        </button>
-                    </Col>
-                </Row>
-            </Div>
+            <br />
+            <Row>
+                <Col className="d-flex justify-content-center">
+                    <Button variant="secondary" onClick={changePage}>
+                        Cancel
+                    </Button>
+                    &nbsp;
+                    <button type="button" className="btn btn-success" onClick={handleSubmit}>
+                        Update
+                    </button>
+                </Col>
+            </Row>
+
         </Container >
     );
 };

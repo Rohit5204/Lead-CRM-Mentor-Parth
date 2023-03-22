@@ -76,6 +76,9 @@ const EditEmail = ({ theEditEmail, handleDialog }) => {
         handleDialog()
 
     }
+    const changePage = () => {
+        handleDialog()
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         editData();
@@ -131,9 +134,17 @@ const EditEmail = ({ theEditEmail, handleDialog }) => {
                         />
                     </Col>
                 </Row>
+                <br />
                 <Row>
-                    <Col>
-
+                    <Col className="d-flex justify-content-end">
+                        <button
+                            type="submit"
+                            className="btn btn-error"
+                            style={{ marginTop: 5 + 'px' }}
+                            onClick={changePage}
+                        >
+                            Cancel
+                        </button>&nbsp;
                         <button
                             type="submit"
                             className="btn btn-success"

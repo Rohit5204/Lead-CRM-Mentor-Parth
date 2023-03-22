@@ -153,9 +153,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
         handleDialog()
     };
     const whatsapp = () => {
-        let url = `https://web.whatsapp.com/send?phone=${mobileNo}&text=Hey,%0a
-        Greetings from BOOSTOCK INFO !!!%0a
-        Thanks for showing your interest in ${theLeadStatus.intrestedI}.&app_absent=0`;
+        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.alternateMobile}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
 
         window.open(url);
     }

@@ -4,10 +4,10 @@ export const navigationEmp = [
   // { label: 'PAGES', type: 'label' },
   { label: 'LEADS', type: 'label' },
   { name: 'View All Leads', path: '/leads/manageLeads', icon: 'send' },
-  
+
   { label: 'Catalogue', type: 'label' },
   { name: 'Catalogue List', path: '/catalogues/userCatalogue', icon: 'work' },
-  
+
   { label: 'QUOTATIONS', type: 'label' },
   { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
 

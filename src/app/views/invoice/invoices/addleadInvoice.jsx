@@ -10,11 +10,11 @@ import ReviewInvoice from 'app/views/invoice/invoices/ReviewInvoice';
 import incrementString from 'app/views/invoice/helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import {
     Box,
-    Icon,
+    Tooltip,
     Autocomplete,
     TextField,
     FormControl,
@@ -58,24 +58,26 @@ const StyledTable = styled(Table)(() => ({
     },
 }));
 
-const AddInvoice = () => {
+const AddLeadInvoice = () => {
+    const location = useLocation();
+    // console.log(location.state)
     const [isOpen, setIsOpen] = useState(false);
     const [discount, setDiscount] = useState(0);
     const [tax, setTax] = useState(18);
     const [invoiceDate, setInvoiceDate] = useState(defaultValue);
     const [quotationNumber, setQuotationNumber] = useState(1201);
-    const [cashierName, setCashierName] = useState('');
+    const [cashierName, setCashierName] = useState(location.state.createdUser);
     const [companyEmail, setCompanyEmail] = useState('');
     const [companyContact, setCompanyContact] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
     const [companyGstNo, setCompanyGstNo] = useState('');
     const [companyStateName, setCompanyStateName] = useState('');
-    const [customerName, setCustomerName] = useState('');
+    const [customerName, setCustomerName] = useState(location.state.name);
     const [panNo, setPanNo] = useState('');
     const [gsQuantity, setGsQuantity] = useState(1);
-    const [clientEmail, setClientEmail] = useState('');
-    const [clientContact, setClientContact] = useState('');
-    const [clientAddress, setClientAddress] = useState('');
+    const [clientEmail, setClientEmail] = useState(location.state.emailId);
+    const [clientContact, setClientContact] = useState(location.state.mobileNo);
+    const [clientAddress, setClientAddress] = useState(location.state.streetName);
     const [clientGstNo, setClientGstNo] = useState('');
     const [initalPayment, setInitalPayment] = useState(0);
     const [pendingPayment, setPendingPayment] = useState(0);
@@ -310,8 +312,8 @@ const AddInvoice = () => {
         }
 
 
-        const AddInvoice = {
-            leadId: leadID1,
+        const AddLeadInvoice = {
+            leadId: location.state.leadId,
             invoiceDate: invoiceDate,
             comapnyAddress: compnayData.address,
             companyEmail: compnayData.email,
@@ -337,8 +339,8 @@ const AddInvoice = () => {
             instalments: installments,
             invoiceType: invoiceType
         }
-        console.log({ AddInvoice });
-        axios.post(BASE_URL + '/api/saveInvoice', AddInvoice,
+        console.log({ AddLeadInvoice });
+        axios.post(BASE_URL + '/api/saveInvoice', AddLeadInvoice,
             { headers: headers }
         );
     };
@@ -373,7 +375,6 @@ const AddInvoice = () => {
                     <Row>
                         <Col md="9">
                             <SimpleCard>
-
                                 <Row className="mt-2">
                                     <Col className="col-sm-3"></Col>
                                     <Col className="col-sm-7">
@@ -381,9 +382,11 @@ const AddInvoice = () => {
                                     </Col>
                                     <Col></Col>
                                     <Col>
-                                        <IconButton>
-                                            <KeyboardReturnIcon onClick={changePage}></KeyboardReturnIcon>
-                                        </IconButton>
+                                        <Tooltip title="Go Back" placement="top">
+                                            <IconButton>
+                                                <KeyboardReturnIcon onClick={changePage}></KeyboardReturnIcon>
+                                            </IconButton>
+                                        </Tooltip>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -407,14 +410,13 @@ const AddInvoice = () => {
                                         <Form.Label>Lead Id:</Form.Label>
                                         <InputGroup className="mb-3">
                                             <Form.Control
+                                                disabled
                                                 required
-                                                value={leadID1}
+                                                value={location.state.leadId}
                                                 onChange={(event) => setLeadID1(event.target.value)}
                                                 placeholder="Enter the Invoice Number"
                                             />
-                                            <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
-                                                Fetch Lead
-                                            </Button><Form.Control.Feedback type="invalid">
+                                            <Form.Control.Feedback type="invalid">
                                                 Lead Id is Required
                                             </Form.Control.Feedback>
                                         </InputGroup>
@@ -437,34 +439,7 @@ const AddInvoice = () => {
                                         </FormControl>
                                     </Col>
                                 </Row>
-                                <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-                                    <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
-                                        <TableRow>
-                                            <TableCell align="center">Lead ID</TableCell>
-                                            {/* <TableCell align="justify">Date</TableCell> */}
-                                            <TableCell align="center">Lead Name</TableCell>
-                                            <TableCell align="center">Platform Name</TableCell>
-                                            <TableCell align="center">Label</TableCell>
-
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {leadID2.map((data, index) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell align="center">{data.leadId}</TableCell>
-                                                    {/* <TableCell align="justify">{quotation.createdDate}</TableCell> */}
-                                                    <TableCell align="center">{data.name}</TableCell>
-                                                    <TableCell align="center">{data.platformName}</TableCell>
-                                                    <TableCell align="center">{data.labelName}</TableCell>
-
-                                                </TableRow>
-                                            );
-                                        })}
-
-                                    </TableBody>
-                                </StyledTable>
                                 <div className="mt-2">
                                     <b>
                                         <h6 style={{ color: 'green' }}>Company Detail's</h6>
@@ -810,7 +785,7 @@ const AddInvoice = () => {
                         <Col>
                             <Card.Body>
                                 <button style={{ textAlign: 'center' }} type="button" onClick={() => handleShow()} className="btn btn-success">
-                                    Installments
+                                    Add Installments
                                 </button>
 
                                 <hr />
@@ -987,7 +962,6 @@ const AddInvoice = () => {
                     installments,
                     // initalPayment,
                     // pending,
-                    myOptions6,
                     // emiAmount,
                     companyGstNo,
                     companyStateName,
@@ -1025,4 +999,4 @@ const AddInvoice = () => {
     );
 };
 
-export default AddInvoice;
+export default AddLeadInvoice;
