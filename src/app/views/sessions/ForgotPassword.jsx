@@ -19,8 +19,10 @@ const ContentBox = styled(Box)(({ theme }) => ({
 }));
 
 const ForgotPasswordRoot = styled(JustifyBox)(() => ({
-  background: '#1A2038',
-  minHeight: '100vh !important',
+  height: '100%',
+  backgroundImage: 'url(/assets/images/back-reset.jpg)',
+  // background: '#187BB7',
+  backgroundSize: 'cover',
   '& .card': {
     maxWidth: 800,
     margin: '1rem',
@@ -67,7 +69,7 @@ const ForgotPassword = () => {
         <Grid container>
           <Grid item xs={12}>
             <JustifyBox p={4}>
-              <img width="300" src="/assets/images/illustrations/dreamer.svg" alt="" />
+              <img width="300" src="/assets/images/reset-password.png" alt="" />
             </JustifyBox>
 
             <ContentBox>
