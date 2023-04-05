@@ -138,8 +138,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                     }}
                 >
                     <div className=" paddingTop: '180px' my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
-                        <div className="p-2"></div>
-                        <Form className='mt-1 ml-1 mr-1'>
+
+                        <Form className='ml-1 mr-1'>
                             <Row>
                                 <Col>
                                     <h5 className='text-center'>INVOICE</h5>
@@ -156,7 +156,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     ></img> */}
                                     <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
                                 </Col>
-                                <Col className='mt-4'>
+                                <Col className='mt-2'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
                                         {APIData.name}
                                     </h5>
@@ -199,21 +199,10 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                             <span className="font-bold"> Refrence No. & Date :</span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td><span> Address   :   {theViewInvoice.clientAddress}</span></td>
-                                    </tr>
                                     {/* <tr>
-                                        <td>
-                                            <span> Bank Details  :  {APIData.bankName}</span><br />
-                                            <span> Account No   :  {APIData.accountNo}</span><br />
-                                            <span> IFSC Code   &nbsp;&nbsp;:  {APIData.ifsc}</span>
-                                        </td>
-                                        <td>
-                                            <span> Payment Mode   :   {APIData.paymentTransferType}</span><br />
-                                            <span> No. of EMI  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {Object.keys(installments).length}</span><br />
-                                            <span> Initial Payment   :   {theViewInvoice.initialPayment}</span><br />
-                                        </td>
+                                        <td><span> Address   :   {theViewInvoice.clientAddress}</span></td>
                                     </tr> */}
+
                                 </tbody>
                             </table>
                             <h5 className='text-center'> PRODUCT INFORMATION </h5>
@@ -240,6 +229,10 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             </table>
                             <Row>
                                 <Col md="8">
+                                    {/* <b><Form.Label> Inital Payment :</Form.Label></b>
+                                    <Form.Label style={{ color: 'green' }} className="ml-2">
+                                        ₹ 45,000
+                                    </Form.Label> */}
                                 </Col>
                                 <Col>
                                     <b><Form.Label> Subtotal :</Form.Label></b>
@@ -279,7 +272,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     </Form.Label>
                                 </Col>
                             </Row>
-                            <br />
+
                             {/* hide amd show condition */}
                             {Object.keys(installments).length > 0 ? (
                                 <div>
@@ -305,7 +298,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                         <tr >
                                             <th>Sr.No</th>
                                             <th>Amount</th>
-                                            <th>Date</th>
+                                            <th>Due Date
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody >
@@ -314,7 +308,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                                 <tr key={index}>
                                                     <td>{emi.instalmentNumber} </td>
                                                     <td>{emi.instalmentAmount}</td>
-                                                    <td>{new Date(emi.instalmentDate).toLocaleDateString('en-GB')} </td>
+                                                    {/* <td>{new Date(emi.instalmentDate).toLocaleDateString('en-GB')} </td> */}
+                                                    <td>Pending</td>
 
                                                 </tr>
                                             );

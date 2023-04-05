@@ -833,11 +833,11 @@ const AddLeadInvoice = () => {
                                     <button className="btn" style={{ backgroundColor: '#27445C', color: 'white' }} onClick={reviewInvoiceHandler}>
                                         Preview
                                     </button>&nbsp;
-                                    <button type="submit" className="btn" style={{ backgroundColor: '#FFAA33', color: 'white' }}>
+                                    {/* <button type="submit" className="btn" style={{ backgroundColor: '#FFAA33', color: 'white' }}>
                                         Draft
-                                    </button>&nbsp;
+                                    </button>&nbsp; */}
                                     <button type="submit" className="btn btn-success" >
-                                        Send
+                                        Draft Invoice
                                     </button>
                                 </Row>
                                 <Modal

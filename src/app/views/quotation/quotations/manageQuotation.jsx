@@ -257,7 +257,7 @@ const ManageQuotation = () => {
             </Col>
             <Col md="2" className='mt-4'>
               <button type="button" className="btn btn-success mt-2" onClick={changePage}>
-                ADD Quotation
+                ADD
               </button>
             </Col>
           </Row>
@@ -318,9 +318,9 @@ const ManageQuotation = () => {
                                 <Icon style={{ color: 'orange' }}>visibility</Icon>
                               </IconButton>
                             </Link>
-                            <Link to="/quotations/addQuotation" state={subscriber}>
+                            <Link to="/quotations/addleadQuotation" state={subscriber}>
                               <IconButton>
-                                <NoteAddIcon style={{ color: 'green' }}></NoteAddIcon>
+                                <NoteAddIcon color="success"></NoteAddIcon>
                               </IconButton>
                             </Link>
                           </TableCell>
@@ -479,16 +479,7 @@ const ManageQuotation = () => {
           <Modal.Body>
             <SendQuotationMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendQuotationMail>
           </Modal.Body>
-          <Modal.Footer>
-            <button
-              type="submit"
-              className="btn btn-error"
-              style={{ marginTop: 5 + 'px' }}
-              onClick={handleCloseMail}
-            >
-              Cancel
-            </button>
-          </Modal.Footer>
+
         </Modal>
         <Modal
           show={show}

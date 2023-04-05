@@ -125,7 +125,7 @@ const ManageInvoiceList = () => {
 
   useEffect(() => {
     axios.post(BASE_URL + `/api/getInvoiceData`,
-      { invoiceid: 0, empId: 0, statusId: 0, searchKey: searchBox, opType: onType },
+      { invoiceid: 0, empId: 0, statusId: 1, searchKey: searchBox, opType: onType },
       { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);

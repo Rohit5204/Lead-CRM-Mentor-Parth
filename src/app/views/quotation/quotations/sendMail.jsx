@@ -65,6 +65,9 @@ const SendQuotationMail = ({ theClientMail, handleDialog }) => {
         })
         handleDialog();
     };
+    const changeDialog = () => {
+        handleDialog()
+    }
     return (
         <div>
             <Row>
@@ -123,14 +126,17 @@ const SendQuotationMail = ({ theClientMail, handleDialog }) => {
                 </Col>
             </Row>
             <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-                {/* <button type="submit"
-                    className="btn btn-secondary"
-                // style={{ margin: 5 + 'px' }}
-                >Cancel
-                </button>&nbsp; */}
+                <button
+                    type="submit"
+                    className="btn btn-error"
+                    style={{ marginTop: 5 + 'px' }}
+                    onClick={changeDialog}
+                >
+                    Cancel
+                </button>
                 <button type="submit"
                     className="btn btn-success"
-                    // style={{ margin: 5 + 'px' }}
+                    style={{ margin: 5 + 'px' }}
                     onClick={handleSubmission}>Send
                 </button>
             </div>

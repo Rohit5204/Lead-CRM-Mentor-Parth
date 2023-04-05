@@ -166,7 +166,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                     <br />
                                     <span>{APIData.stateName}-{APIData.pincode} </span>
                                     <br />
-                                    <span>Company Reg. No :- {APIData.gstNo}</span>
+                                    <span>Contact :- {APIData.gstNo}</span>
                                     {/* <br />
                         <span className="font-bold">GST No: {theViewInvoice.gstNo}</span> */}
                                     {/* <br /> */}

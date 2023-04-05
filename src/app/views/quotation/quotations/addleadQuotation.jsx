@@ -2,24 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { uid } from 'uid';
 import { styled } from '@mui/system';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import InvoiceItem from 'app/views/invoice/invoices/InvoiceItem';
-import InvoiceModal from 'app/views/invoice/invoices/InvoiceModal';
-import InvoiceEMI from 'app/views/invoice/invoices/invoiceEMI';
 import ReviewInvoice from 'app/views/invoice/invoices/ReviewInvoice';
 import incrementString from 'app/views/invoice/helpers/incrementString';
 import { Form, Row, Col, Button, InputGroup, Card, Modal } from 'react-bootstrap';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import QuotationEMI from './quotationItems';
 import axios from 'axios';
 import {
     Box,
-    Icon,
+    MenuItem,
     Autocomplete,
     TextField,
     FormControl,
-    IconButton,
-    MenuItem,
     Select,
     Table,
     TableBody,
@@ -27,6 +21,7 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import { resetWarningCache } from 'prop-types';
 import { BASE_URL } from 'app/utils/constant';
 
 // const date = new Date();
@@ -58,30 +53,29 @@ const StyledTable = styled(Table)(() => ({
     },
 }));
 
-const AddInvoice = () => {
+const AddLeadQuotation = () => {
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [discount, setDiscount] = useState(0);
     const [tax, setTax] = useState(18);
     const [invoiceDate, setInvoiceDate] = useState(defaultValue);
     const [quotationNumber, setQuotationNumber] = useState(1201);
-    const [cashierName, setCashierName] = useState('');
-    const [companyEmail, setCompanyEmail] = useState('');
+    const [cashierName, setCashierName] = useState(location.state.createdUser);
+    const [companyEmail, setCompanyEmail] = useState();
     const [companyContact, setCompanyContact] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
     const [companyGstNo, setCompanyGstNo] = useState('');
     const [companyStateName, setCompanyStateName] = useState('');
-    const [customerName, setCustomerName] = useState('');
+    const [customerName, setCustomerName] = useState(location.state.name);
     const [panNo, setPanNo] = useState('');
     const [gsQuantity, setGsQuantity] = useState(1);
-    const [clientEmail, setClientEmail] = useState('');
-    const [clientContact, setClientContact] = useState('');
-    const [clientAddress, setClientAddress] = useState('');
+    const [clientEmail, setClientEmail] = useState(location.state.emailId);
+    const [clientContact, setClientContact] = useState(location.state.mobileNo);
+    const [clientAddress, setClientAddress] = useState(location.state.streetName);
     const [clientGstNo, setClientGstNo] = useState('');
-    const [initalPayment, setInitalPayment] = useState(0);
-    const [pendingPayment, setPendingPayment] = useState(0);
+    // const [initalPayment, setInitalPayment] = useState(0);
     const [remarks, setRemarks] = useState('');
     const [installments, setInstallments] = useState([]);
-    const [invoiceType, setInvoiceType] = useState('s')
     const [items, setItems] = useState([
         {
             id: uid(6),
@@ -156,7 +150,7 @@ const AddInvoice = () => {
 
         const newItems = items.map((items) => {
             for (const key in items) {
-                if (key === editedItem.name && items.id === editedItem.id) {
+                if (key === editedItem.name && items.instalmentNumber === editedItem.id) {
                     items[key] = editedItem.value;
                 }
             }
@@ -193,7 +187,7 @@ const AddInvoice = () => {
     // const taxRate = (tax * subtotal) / 100;
     // const discountRate = (discount * subtotal) / 100;
     // const total = subtotal - discountRate + taxRate;
-
+    // const pending = total - initalPayment;
     // const emiAmount = pending / Object.keys(installments).length;
 
     const [leadData, setLeadData] = useState([]);
@@ -208,6 +202,8 @@ const AddInvoice = () => {
     const [subtotal, setsubtotal] = useState(0);
     const [discountRate, setdiscountRate] = useState(0);
     const [total, settotal] = useState(0);
+    const [leadID1, setLeadID1] = useState('')
+    const [aPIDataForLead, setAPIDataForLead] = useState([]);
 
 
     const token = localStorage.getItem('accessToken');
@@ -218,6 +214,7 @@ const AddInvoice = () => {
         "roleCode": roleCode,
         "userId": userId
     }
+
     // Fetching the Catalogue Name & Price
     const getPrice = (value) => {
         setMyOptions6(value)
@@ -235,44 +232,21 @@ const AddInvoice = () => {
                 setTaxRate((tax * amtQty / 100))
                 setdiscountRate((discount * amtQty) / 100)
                 settotal(amtQty - off + amtTax)
-                const pendingAMT = (amtQty - off + amtTax)
-                setPendingPayment((amtQty - off + amtTax) - initalPayment)
             }
         }
     }
-    const [leadID1, setLeadID1] = useState('')
     const [leadID2, setLeadId2] = useState([])
     const getLeadByID = () => {
         axios.post(BASE_URL + `/api/getFilteredLeadData`,
             {
-                leadId: leadID1,
-                userId: 0,
-                statusId: 0,
-                searchKey: "",
-                locationkey: "",
-                platformId: 0,
-                opType: ""
+                leadId: leadID1, userId: 0, statusId: 0, searchKey: "",
+                locationkey: "", platformId: 0, opType: ""
             }, { headers: headers }).
             then((res) => {
                 setLeadId2(res.data.data)
             });
     }
-    const [compnayData, setCompanyData] = useState([])
-    const getCompanyData = () => {
-        axios
-            .post(BASE_URL +
-                `/api/getCompanyMaster`,
-                { id: 0 },
-                { headers: headers }
-            )
-            .then((response) => {
-                console.log(response)
-                setCompanyData(response.data.data[0]);
-            });
-    }
-    const pending = total - initalPayment;
-    useEffect(() => {
-        getCompanyData()
+    const getFetchData = () => {
         axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: 0, userId: 0, statusId: 0, searchKey: "",
             locationkey: "", platformId: 0, opType: ""
@@ -291,6 +265,22 @@ const AddInvoice = () => {
                     setProductPrice(current => [...current, res.data.data[i].id, res.data.data[i].gsName, res.data.data[i].gsPrice])
                 }
             });
+    }
+    const [compnayData, setCompanyData] = useState([])
+    const getCompanyData = () => {
+        axios
+            .post(BASE_URL +
+                `/api/getCompanyMaster`,
+                { id: 0 },
+                { headers: headers }
+            )
+            .then((response) => {
+                setCompanyData(response.data.data[0]);
+            });
+    }
+    useEffect(() => {
+        getFetchData()
+        getCompanyData()
     }, []);
 
     var leadid, catalogueid
@@ -310,9 +300,10 @@ const AddInvoice = () => {
         }
 
 
-        const AddInvoice = {
+        const AddLeadQuotation = {
             leadId: leadID1,
-            invoiceDate: invoiceDate,
+            quotationNumber: quotationNumber,
+            quotationDate: invoiceDate,
             comapnyAddress: compnayData.address,
             companyEmail: compnayData.email,
             companyContact: compnayData.contactNo,
@@ -328,29 +319,27 @@ const AddInvoice = () => {
             gstNo: clientGstNo,
             gst: tax,
             remarks: remarks,
-            bankDetails: "SBI BANK",
+            bankDetails: "test",
             isDraft: 1,
             createdBy: 1,
             clientPan: panNo,
-            initialPayment: initalPayment,
-            pendingPayment: pending,
-            instalments: installments,
-            invoiceType: invoiceType
+            instalments: installments
         }
-        console.log({ AddInvoice });
-        axios.post(BASE_URL + '/api/saveInvoice', AddInvoice,
+        console.log({ AddLeadQuotation });
+        axios.post(BASE_URL + '/api/saveQuotation', AddLeadQuotation,
             { headers: headers }
         );
     };
     const navigate = useNavigate();
     const changePage = () => {
-        navigate('/invoices/ManageInvoiceList');
+        navigate('/quotations/manageQuotation');
     };
     // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     postData();
-    //     changePage()
-    //     // alert('Lead Successfully Added');
+    //   e.preventDefault();
+    //   postData();
+    //   changePage();
+    //   // blankForm();
+    //   // alert('Lead Successfully Added');
     // };
     const [validated, setValidated] = useState(false);
     const handleSubmit1 = (event) => {
@@ -372,99 +361,59 @@ const AddInvoice = () => {
                 <Form noValidate validated={validated} onSubmit={handleSubmit1}>
                     <Row>
                         <Col md="9">
-                            <SimpleCard>
+                            <SimpleCard title="New Quotation">
 
                                 <Row className="mt-2">
-                                    <Col className="col-sm-3"></Col>
-                                    <Col className="col-sm-7">
-                                        <h4 className="text-center  font-bold">Invoice</h4>
-                                    </Col>
                                     <Col></Col>
-                                    <Col>
-                                        <IconButton>
-                                            <KeyboardReturnIcon onClick={changePage}></KeyboardReturnIcon>
-                                        </IconButton>
+                                    <Col className="col-sm-12">
+                                        <h4 className="text-center  font-bold">QUOTATION</h4>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col>
-                                        <Form.Label>Date:</Form.Label>
-                                        <InputGroup className="mb-2">
-                                            <Form.Control
-                                                id="dateRequired"
-                                                type="date"
-                                                disabled
-                                                name="dateRequired"
-                                                value={invoiceDate}
-                                                onChange={(event) => setInvoiceDate(event.target.value)}
-                                            /> <InputGroup.Text id="basic-addon1">
-                                                <CalendarMonthIcon />
-                                            </InputGroup.Text></InputGroup>
-                                    </Col>
-                                </Row>
-                                <Row>
+                                    {/* <Col>
+                    <Form.Label>Quotation Number:</Form.Label>
+                    <Form.Control
+                      disabled
+                      value={quotationNumber}
+                      onChange={(event) => setQuotationNumber(event.target.value)}
+                      placeholder="Enter the Invoice Number"
+                    />
+                  </Col> */}
                                     <Col>
                                         <Form.Label>Lead Id:</Form.Label>
                                         <InputGroup className="mb-3">
                                             <Form.Control
+                                                disabled
                                                 required
-                                                value={leadID1}
+                                                value={location.state.leadId}
                                                 onChange={(event) => setLeadID1(event.target.value)}
                                                 placeholder="Enter the Invoice Number"
                                             />
-                                            <Button variant="success" id="button-addon2" onClick={() => getLeadByID()}>
-                                                Fetch Lead
-                                            </Button><Form.Control.Feedback type="invalid">
+                                            <Form.Control.Feedback type="invalid">
                                                 Lead Id is Required
                                             </Form.Control.Feedback>
                                         </InputGroup>
                                     </Col>
                                     <Col>
-                                        <FormControl sx={{ m: 0, width: "100%" }} size="small" className="mt-1">
-                                            <InputGroup>
-                                                <Form.Label className="mt-1">Invoice Type</Form.Label>
-                                            </InputGroup>
-                                            <Select
-                                                value={invoiceType}
-                                                label="."
-                                                onChange={(e) => setInvoiceType(e.target.value)}
-                                            >
-                                                <MenuItem value="s">Select the Type</MenuItem>
-                                                <MenuItem value="Regular">Regular</MenuItem>
-                                                <MenuItem value="Renewal">Renewal</MenuItem>
-                                                <MenuItem value="Recovery">Recovery</MenuItem>
-                                            </Select>
-                                        </FormControl>
+                                        <Form.Label>Date:</Form.Label>
+                                        {/* <Form.Control
+                      type="date"
+                      // onChange={(e) => setQuotationDate(e.target.value)}
+                      value={today}
+                    /> */}
+                                        <Form.Control
+                                            id="dateRequired"
+                                            type="date"
+                                            name="dateRequired"
+                                            value={invoiceDate}
+                                            onChange={(event) => setInvoiceDate(event.target.value)}
+                                        />
                                     </Col>
+
+
                                 </Row>
-                                <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
-                                    <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
 
-                                        <TableRow>
-                                            <TableCell align="center">Lead ID</TableCell>
-                                            {/* <TableCell align="justify">Date</TableCell> */}
-                                            <TableCell align="center">Lead Name</TableCell>
-                                            <TableCell align="center">Platform Name</TableCell>
-                                            <TableCell align="center">Label</TableCell>
 
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {leadID2.map((data, index) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell align="center">{data.leadId}</TableCell>
-                                                    {/* <TableCell align="justify">{quotation.createdDate}</TableCell> */}
-                                                    <TableCell align="center">{data.name}</TableCell>
-                                                    <TableCell align="center">{data.platformName}</TableCell>
-                                                    <TableCell align="center">{data.labelName}</TableCell>
-
-                                                </TableRow>
-                                            );
-                                        })}
-
-                                    </TableBody>
-                                </StyledTable>
                                 <div className="mt-2">
                                     <b>
                                         <h6 style={{ color: 'green' }}>Company Detail's</h6>
@@ -556,7 +505,7 @@ const AddInvoice = () => {
                                                 id="customerName"
                                                 value={customerName}
                                                 onChange={(event) => setCustomerName(event.target.value)}
-                                            /><Form.Control.Feedback type="invalid">
+                                            /> <Form.Control.Feedback type="invalid">
                                                 Client Name is Required
                                             </Form.Control.Feedback>
                                         </Col>
@@ -620,7 +569,7 @@ const AddInvoice = () => {
                                                     value={clientAddress}
                                                     placeholder="Customer Address"
                                                 /><Form.Control.Feedback type="invalid">
-                                                    Address is Required
+                                                    Client Address is Required
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
@@ -638,6 +587,7 @@ const AddInvoice = () => {
                                                 onChange={(event) => setClientGstNo(event.target.value)}
                                             />
                                         </Col>
+
                                     </Row>
                                     <br />
                                     <Row>
@@ -650,34 +600,34 @@ const AddInvoice = () => {
                                         {/* Table Section */}
                                         <Row>
                                             <Col></Col>
-                                            <Col className="text-center col-sm-12">
-                                                <h4 style={{ color: 'green' }}>Product Invoice List</h4>
+                                            <Col className="col-sm-12 text-center">
+                                                <h4 style={{ color: 'green' }}>Product Quotation List</h4>
                                             </Col>
                                             {/* <Col>
-                                                <Col className="col-sm-1">
-                                                    <button
-                                                        type="button"
-                                                        onClick={addItemHandler}
-                                                        className="btn btn-success"
-                                                    >
-                                                        Add Items
-                                                    </button>
-                                                </Col>
-                                            </Col> */}
+                        <Col className="col-sm-1">
+                          <button
+                            type="button"
+                            onClick={addItemHandler}
+                            className="btn btn-success"
+                          >
+                            Add Items
+                          </button>
+                        </Col>
+                      </Col> */}
                                         </Row>
                                         <Row>
                                             {/* <Col>
-                                                <Form.Label className='mr-5'>Quantity</Form.Label>
-                                                <Form.Control
-                                                    style={{ width: 180 }}
-                                                    type='number'
-                                                    min='1'
-                                                    max='1000'
-                                                    onChange={(event) => setGsQuantity(event.target.value)}
-                                                    value={gsQuantity}
-                                                    placeholder="Customer Address"
-                                                />
-                                            </Col> */}
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control
+                          // style={{ width: 180 }}
+                          type='number'
+                          min='1'
+                          max='1000'
+                          onChange={(event) => setGsQuantity(event.target.value)}
+                          value={gsQuantity}
+                          placeholder="Product/Service Quantity"
+                        />
+                      </Col> */}
                                             <Col md="6">
                                                 <Form.Label>Select the Catalogue</Form.Label><br />
                                                 <FormControl>
@@ -704,36 +654,37 @@ const AddInvoice = () => {
                                                 <Form.Label className='mr-5'>Price</Form.Label>
                                                 <Form.Control
                                                     disabled
+                                                    // style={{ width: 180 }}
                                                     onChange={(e) => console.log(e)}
                                                     value={listamt}
-                                                    placeholder="Customer Address"
+                                                    placeholder="Product/Service Price"
                                                 />
                                             </Col>
                                         </Row>
                                         {/* <StyledTable>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell align="center">Product Name</TableCell>
-                                                    <TableCell align="center">Quantity</TableCell>
-                                                    <TableCell align="center">Unit Price</TableCell>
-                                                    <TableCell align="center">Action</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {items.map((item) => (
-                                                    <InvoiceItem
-                                                        align="justify"
-                                                        key={item.id}
-                                                        id={item.id}
-                                                        name={item.name}
-                                                        qty={item.qty}
-                                                        price={item.price}
-                                                        onDeleteItem={deleteItemHandler}
-                                                        onEdtiItem={edtiItemHandler}
-                                                    />
-                                                ))}
-                                            </TableBody>
-                                        </StyledTable> */}
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Product Name</TableCell>
+                          <TableCell align="center">Quantity</TableCell>
+                          <TableCell align="center">Unit Price</TableCell>
+                          <TableCell align="center">Action</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {items.map((item) => (
+                          <InvoiceItem
+                            align="justify"
+                            key={item.id}
+                            id={item.id}
+                            name={item.name}
+                            qty={item.qty}
+                            price={item.price}
+                            onDeleteItem={deleteItemHandler}
+                            onEdtiItem={edtiItemHandler}
+                          />
+                        ))}
+                      </TableBody>
+                    </StyledTable> */}
                                     </Box>
                                     <br />
                                     <br />
@@ -809,10 +760,9 @@ const AddInvoice = () => {
                         </Col>
                         <Col>
                             <Card.Body>
-                                <button style={{ textAlign: 'center' }} type="button" onClick={() => handleShow()} className="btn btn-success">
-                                    Installments
+                                <button type="button" onClick={() => handleShow()} className="btn btn-success">
+                                    Add Installments
                                 </button>
-
                                 <hr />
                                 <Row>
                                     <Col>
@@ -858,11 +808,11 @@ const AddInvoice = () => {
                                     <button className="btn" style={{ backgroundColor: '#27445C', color: 'white' }} onClick={reviewInvoiceHandler}>
                                         Preview
                                     </button>&nbsp;
-                                    {/* <button type="submit" className="btn" style={{ backgroundColor: '#FFAA33', color: 'white' }}>
-                                        Draft
-                                    </button>&nbsp; */}
-                                    <button type="submit" className="btn btn-success" >
-                                        Draft Invoice
+                                    {/* <button type="button" className="btn btn-primary" onClick={reviewInvoiceHandler}>
+                    Preview
+                  </button>&nbsp; */}
+                                    <button type="submit" className="btn btn-success">
+                                        Draft Quotation
                                     </button>
                                 </Row>
                                 <Modal
@@ -896,22 +846,22 @@ const AddInvoice = () => {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col>
-                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                    <Form.Label>Inital Payment</Form.Label>
-                                                    <Form.Control
-                                                        onChange={(event) => setInitalPayment(event.target.value)}
-                                                        value={initalPayment}
-                                                        placeholder="Inital Payment"
-                                                    />
-                                                </Form.Group>
-                                            </Col>
-                                            <Col>
-                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                    <Form.Label>Pending Amount</Form.Label>
-                                                    <Form.Control readOnly value={pending} />
-                                                </Form.Group>
-                                            </Col>
+                                            {/* <Col>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Inital Payment</Form.Label>
+                        <Form.Control
+                          onChange={(event) => setInitalPayment(event.target.value)}
+                          value={initalPayment}
+                          placeholder="Inital Payment"
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Pending Amount</Form.Label>
+                        <Form.Control readOnly value={pending} />
+                      </Form.Group>
+                    </Col> */}
                                             <Col md="3" className="mt-4">
                                                 <button
                                                     type="button"
@@ -935,7 +885,7 @@ const AddInvoice = () => {
                                                     </TableHead>
                                                     <TableBody>
                                                         {installments.map((item) => (
-                                                            <InvoiceEMI
+                                                            <QuotationEMI
                                                                 key={item.instalmentNumber}
                                                                 // id={item.instalmentNumber}
                                                                 instalmentNumber={item.instalmentNumber}
@@ -985,10 +935,13 @@ const AddInvoice = () => {
                     companyAddress,
                     companyContact,
                     installments,
+                    panNo,
+                    clientGstNo,
+
                     // initalPayment,
                     // pending,
-                    myOptions6,
                     // emiAmount,
+                    catalogueid,
                     companyGstNo,
                     companyStateName,
                     clientEmail,
@@ -1021,8 +974,8 @@ const AddInvoice = () => {
           items={items}
           onAddNextInvoice={addNextInvoiceHandler}
         /> */}
-        </Container>
+        </Container >
     );
 };
 
-export default AddInvoice;
+export default AddLeadQuotation;

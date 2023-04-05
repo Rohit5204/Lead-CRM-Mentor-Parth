@@ -788,11 +788,8 @@ const AddQuotation = () => {
             </Col>
             <Col>
               <Card.Body>
-                <button type="button" className="btn btn-primary" onClick={reviewInvoiceHandler}>
-                  Preview
-                </button>&nbsp;
-                <button type="submit" className="btn btn-success">
-                  Add Quotation
+                <button type="button" onClick={() => handleShow()} className="btn btn-success">
+                  Add Installments
                 </button>
                 <hr />
                 <Row>
@@ -836,8 +833,14 @@ const AddQuotation = () => {
                 </Row>
 
                 <Row className="ml-1">
-                  <button type="button" onClick={() => handleShow()} className="btn btn-success">
-                    Add Installments
+                  <button className="btn" style={{ backgroundColor: '#27445C', color: 'white' }} onClick={reviewInvoiceHandler}>
+                    Preview
+                  </button>&nbsp;
+                  {/* <button type="button" className="btn btn-primary" onClick={reviewInvoiceHandler}>
+                    Preview
+                  </button>&nbsp; */}
+                  <button type="submit" className="btn btn-success">
+                    Draft Quotation
                   </button>
                 </Row>
                 <Modal
