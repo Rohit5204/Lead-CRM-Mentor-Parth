@@ -93,8 +93,8 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
         followUpDate: followUpDate,
         followUpTme: followUpTme,
         remarks: remark,
-        nextFollowUpDate: "",
-        nextFollowUpTme: "",
+        nextFollowUpDate: followUpDate,
+        nextFollowUpTme: followUpTme,
         createdBy: 1
     };
     const postData = () => {

@@ -10,10 +10,6 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
 import { BASE_URL } from "app/utils/constant";
 
-const Div = styled('div')(({ theme }) => ({
-    margin: '0px 0px 0px 441px',
-}));
-
 const ManageFollowups = () => {
     const location = useLocation();
     const token = localStorage.getItem('accessToken');
@@ -35,15 +31,7 @@ const ManageFollowups = () => {
     const [remarks, setRemarks] = useState("");
 
     // Payload for Followup Lead
-    const followUpData = {
-        leadId: leadId,
-        followUpDate: followUpDate,
-        followUpTme: followUpTme,
-        remarks: remarks,
-        nextFollowUpDate: "",
-        nextFollowUpTme: "",
-        createdBy: 1
-    };
+
     useEffect(() => {
         getData1()
     }, [APIData456]);
@@ -63,6 +51,15 @@ const ManageFollowups = () => {
             });
     }
     const postData = () => {
+        const followUpData = {
+            leadId: leadId,
+            followUpDate: followUpDate,
+            followUpTme: followUpTme,
+            remarks: remarks,
+            nextFollowUpDate: followUpDate,
+            nextFollowUpTme: followUpTme,
+            createdBy: 1
+        };
         // console.log({ followUpData })
         axios.post(BASE_URL + `/api/saveLeadFollowups`, followUpData,
             { headers: headers });
