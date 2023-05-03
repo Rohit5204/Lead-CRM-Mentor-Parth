@@ -107,7 +107,7 @@ const StatCards = (showData) => {
             <ContentBox>
               <Icon className="icon">group</Icon>
               <Box ml="12px">
-                <Small>Total Pipeline</Small>
+                <Small>Open Leads</Small>
                 <Heading>{item.leadCount}</Heading>
                 <Heading>₹ {item.amount}</Heading>
               </Box>
@@ -127,7 +127,7 @@ const StatCards = (showData) => {
             <ContentBox>
               <Icon className="icon">send</Icon>
               <Box ml="12px">
-                <Small>Total Lead</Small>
+                <Small>Opportunity</Small>
                 <Heading>{item.leadCount}</Heading>
                 <Heading>₹ {item.amount}</Heading>
               </Box>
@@ -148,7 +148,7 @@ const StatCards = (showData) => {
               <Icon className="icon">attach_money</Icon>
 
               <Box ml="12px">
-                <Small>Order Gain</Small>
+                <Small>Closed Lead</Small>
                 <Heading>{item.leadCount}</Heading>
                 <Heading>₹ {item.amount}</Heading>
               </Box>
@@ -169,7 +169,7 @@ const StatCards = (showData) => {
             <ContentBox>
               <Icon className="icon">arrow_downward</Icon>
               <Box ml="12px">
-                <Small>Order Loss</Small>
+                <Small>Drop Lead</Small>
                 <Heading>{item.leadCount}</Heading>
                 <Heading>₹ {item.amount}</Heading>
               </Box>

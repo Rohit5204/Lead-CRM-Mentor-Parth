@@ -823,8 +823,8 @@ const AddInvoice = () => {
                                                 type="number"
                                                 name="tax"
                                                 id="tax"
-                                                min="5"
-                                                step="1"
+                                                // min="5"
+                                                // step="1"
                                                 placeholder="Tax Rate"
                                                 value={tax}
                                                 onChange={(event) => setTax(event.target.value)}

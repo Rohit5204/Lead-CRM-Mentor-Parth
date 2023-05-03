@@ -154,7 +154,7 @@ const LeadForm = () => {
   // add data in the table from Import
   const postData1 = () => {
     for (var i = 0; i < excelData.length; i++) {
-      if (excelData[i].platformName == "Facebook" || excelData[i].platformName == "FB") {
+      if (excelData[i].platformName == "Facebook" || excelData[i].platformName == "FB" || excelData[i].platformName == "facebook") {
         excelData[i].sourceId = 1;
       }
       else if (excelData[i].platformName == "Whatsapp") {
@@ -189,7 +189,7 @@ const LeadForm = () => {
       excelData[i].label = 1;       //Label
       excelData[i].createdBy = 1;
     }
-    // console.log(excelData);
+    console.log(excelData);
     axios.post(BASE_URL + `/api/saveLeadGenerationData`, excelData,
       { headers: headers }).then((res) => {
         alert(res.data.message)
@@ -416,14 +416,10 @@ const LeadForm = () => {
                         <th scope="col">Lead Name</th>
                         <th scope="col">Mobile No</th>
                         <th scope="col">Email Id</th>
-                        <th scope="col">Street</th>
                         <th scope="col">City</th>
                         <th scope="col">State</th>
-                        <th scope="col">Pin Code</th>
-                        <th scope="col">Country</th>
                         <th scope="col">Intersted In</th>
                         <th scope="col">Platform Name</th>
-                        <th scope="col">Alternate No</th>
                         <th scope="col">Expected Amount</th>
                         <th scope="col"></th>
                       </tr>
@@ -452,27 +448,80 @@ const LeadForm = () => {
         </Modal.Footer>
       </Modal>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <SimpleCard title="Fill Lead Details">
+          <Row>
+            <Col>
+              <InputGroup className="mb-2">
+                <h6 className="mt-1">Lead Name&nbsp; </h6>
+                <InputGroup.Text id="basic-addon1">
+                  <Icon>person</Icon>
+                </InputGroup.Text>
+                <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  required
+                  placeholder="Enter the Lead Name"
+                /> <Form.Control.Feedback type="invalid">
+                  Lead Name is Required
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Col>
+            <Col>
+              <InputGroup className="mb-2">
+                <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                <InputGroup.Text id="basic-addon1">
+                  <Icon>phone</Icon>
+                </InputGroup.Text>
+                <Form.Control
+                  required
+                  onChange={(e) => setMobileNo(e.target.value)}
+                  value={mobileNo}
+                  placeholder="Customer Mobile Number"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Primary Mobile Number is Required
+                </Form.Control.Feedback></InputGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <InputGroup className="mb-2">
+                <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                <InputGroup.Text id="basic-addon1">
+                  <Icon>email</Icon>
+                </InputGroup.Text>
+                <Form.Control
+                  required
+                  type='email'
+                  onChange={(e) => setEmailId(e.target.value)}
+                  value={emailId}
+                  placeholder="Customer Email"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Email is Required
+                </Form.Control.Feedback></InputGroup>
+            </Col>
+            <Col>
+              <InputGroup className="mb-2">
+                <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+                <InputGroup.Text id="basic-addon1">
+                  <Icon>₹</Icon>
+                </InputGroup.Text>
+                <Form.Control
+                  onChange={(e) => setExpectedAmount(e.target.value)}
+                  value={expectedAmount}
+                  placeholder="Client Expected Amount"
+                /></InputGroup>
+            </Col>
+          </Row>
+
+        </SimpleCard>
+        <br />
         <Row>
           <Col xs={12} md={6}>
             <SimpleCard title="Fill Lead Details">
-              <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Lead Name&nbsp; </h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>person</Icon>
-                    </InputGroup.Text>
-                    <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
-                      onChange={(e) => setName(e.target.value)}
-                      value={name}
-                      required
-                      placeholder="Enter the Lead Name"
-                    /> <Form.Control.Feedback type="invalid">
-                      Lead Name is Required
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-              </Row>
+
               {/* <Row>
               <Col>
                 <InputGroup className="mb-2">
@@ -488,43 +537,8 @@ const LeadForm = () => {
 
               </Col>
             </Row> */}
-              <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>phone</Icon>
-                    </InputGroup.Text>
-                    <Form.Control
-                      required
-                      onChange={(e) => setMobileNo(e.target.value)}
-                      value={mobileNo}
-                      placeholder="Customer Mobile Number"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Primary Mobile Number is Required
-                    </Form.Control.Feedback></InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>email</Icon>
-                    </InputGroup.Text>
-                    <Form.Control
-                      required
-                      type='email'
-                      onChange={(e) => setEmailId(e.target.value)}
-                      value={emailId}
-                      placeholder="Customer Email"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Email is Required
-                    </Form.Control.Feedback></InputGroup>
-                </Col>
-              </Row>
+
+
               <Row>
                 <Col>
                   <InputGroup className="mb-2">
@@ -604,25 +618,6 @@ const LeadForm = () => {
                 </Col>
               </Row>
               <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>₹</Icon>
-                    </InputGroup.Text>
-                    <Form.Control
-                      onChange={(e) => setExpectedAmount(e.target.value)}
-                      value={expectedAmount}
-                      placeholder="Client Expected Amount"
-                    /></InputGroup>
-                </Col>
-              </Row>
-            </SimpleCard>
-          </Col>
-          <br />
-          <Col xs={12} md={6}>
-            <SimpleCard>
-              <Row>
                 <Col xs={6}>
                   <InputGroup>
                     <Form.Label className="mt-1">Country</Form.Label>
@@ -695,6 +690,12 @@ const LeadForm = () => {
 
                 </Col>
               </Row>
+            </SimpleCard>
+          </Col>
+          <br />
+          <Col xs={12} md={6}>
+            <SimpleCard>
+
               <Row>
                 <Col className="mt-1">
 

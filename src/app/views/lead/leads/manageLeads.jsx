@@ -155,7 +155,7 @@ const ManageLead = () => {
 
   useEffect(() => {
     getFetchLeadData()
-  }, [APIData]);
+  }, []);
   const roleName = window.localStorage.getItem('roleName');
 
   const [obj2, setObj2] = useState(null);

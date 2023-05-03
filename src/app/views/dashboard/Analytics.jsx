@@ -20,6 +20,7 @@ import StatusWiseCard from './shared/statusWiseCadr';
 import UserWiseCount from './shared/userLoginWiseCount';
 import TLWiseCount from './shared/TeamLeadCount';
 import EmpWiseCount from './shared/EmpWiseCount';
+import TopEmpDetail from './shared/TopEmpDetail';
 
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -166,10 +167,14 @@ const Analytics = () => {
                         <Tab label="Label Wise" {...a11yProps(1)} />
                         <Tab label="Status Wise" {...a11yProps(2)} />
                         <Tab label="Branch Wise" {...a11yProps(3)} />
+                        <Tab label="Top 3 Employee" {...a11yProps(4)} />
                       </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                      <StatCards showData={dashboard} />
+                      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5'>
+                        <StatCards showData={dashboard} />
+                      </div>
+
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                       <LabelWiseCount showData={dashboard} />
@@ -180,7 +185,10 @@ const Analytics = () => {
                     <TabPanel value={value} index={3}>
                       <UserWiseCount />
                     </TabPanel>
-                  </>;
+                    <TabPanel value={value} index={4}>
+                      <TopEmpDetail></TopEmpDetail>
+                    </TabPanel>
+                  </>
                 }
                 else if (roleName == "Branch Manager") {
                   return <>
@@ -204,7 +212,7 @@ const Analytics = () => {
                     <TabPanel value={value} index={3}>
                       <TLWiseCount />
                     </TabPanel>
-                  </>;
+                  </>
                 }
                 else if (roleName == "Team Lead") {
                   return <>
@@ -296,8 +304,9 @@ const Analytics = () => {
           <EmployeeDashboard />
         </>)}
       </ContentBox>
-    </Fragment>
+    </Fragment >
   );
 };
+
 
 export default Analytics;

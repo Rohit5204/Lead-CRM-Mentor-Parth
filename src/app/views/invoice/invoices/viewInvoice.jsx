@@ -179,7 +179,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 </thead>
                                 <tbody >
                                     <tr>
-                                        <td width="60%" className='text-left'> <span> Name   &nbsp;&nbsp;&nbsp;:   {theViewInvoice.billTo}</span>
+                                        <td width="60%" className='text-left'> <span> Name   &nbsp;&nbsp;&nbsp;:   Gurunandan Ratanakr Masurkar</span>
                                             <br />
                                             <span className="font-bold"> GST NO  &nbsp;&nbsp;:   {theViewInvoice.gstNo}</span>
                                             <br />
@@ -187,10 +187,11 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                             <br />
                                             <span className="font-bold"> Contact &nbsp;&nbsp;&nbsp;:   {theViewInvoice.clientContact}</span>
                                             <br />
-                                            <span className="font-bold"> Email  &nbsp;&nbsp;&nbsp;&nbsp;  :   {theViewInvoice.clientEmail}</span></td>
+                                            <span className="font-bold"> Email  &nbsp;&nbsp;&nbsp;&nbsp;  :   {theViewInvoice.clientEmail}</span>
+                                        </td>
                                         <td className='text-left'>
                                             <span> Invoice No  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:    </span>
-                                            <b style={{ "color": "MidnightBlue" }}>{theViewInvoice.invoiceNumber}</b>
+                                            <b style={{ "color": "MidnightBlue" }}> 00052018</b>
                                             <br />
                                             <span className="font-bold"> Date    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   {new Date(theViewInvoice.createdDate).toLocaleDateString('en-GB')}</span>
                                             <br />

@@ -52,7 +52,7 @@ const StatusWiseCard = (showData) => {
     return (
         <div className="row align-items-stretch">
             {statusWiseData.map((item, index) => (
-                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index}>
+                <div className="c-dashboardInfo col-lg-3 col-md-6" key={index} style={{ borderRadius: "5px" }}>
                     <div className="wrap">
                         <Row>
                             <Col md="4">
@@ -64,7 +64,7 @@ const StatusWiseCard = (showData) => {
                                 <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
                                     {item.statusName}
                                 </h4>
-                                <span className="hind-font caption-10 c-dashboardInfo__count">{item.count}</span>
+                                <span className="hind-font caption-8 c-dashboardInfo__count">{item.count}</span>
                             </Col>
 
                         </Row>
