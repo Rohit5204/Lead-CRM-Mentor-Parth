@@ -164,10 +164,10 @@ const Analytics = () => {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
-                        <Tab label="Label Wise" {...a11yProps(1)} />
-                        <Tab label="Status Wise" {...a11yProps(2)} />
-                        <Tab label="Branch Wise" {...a11yProps(3)} />
-                        <Tab label="Top 3 Employee" {...a11yProps(4)} />
+                        {/* <Tab label="Label Wise" {...a11yProps(1)} /> */}
+                        <Tab label="Status Wise" {...a11yProps(1)} />
+                        <Tab label="Branch Wise" {...a11yProps(2)} />
+                        <Tab label="Top 3 Employee" {...a11yProps(3)} />
                       </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
@@ -176,22 +176,23 @@ const Analytics = () => {
                       </div>
 
                     </TabPanel>
-                    <TabPanel value={value} index={1}>
+                    {/* <TabPanel value={value} index={1}>
                       <LabelWiseCount showData={dashboard} />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
+                    </TabPanel> */}
+                    <TabPanel value={value} index={1}>
                       <StatusWiseCard showData={dashboard} />
                     </TabPanel>
-                    <TabPanel value={value} index={3}>
+                    <TabPanel value={value} index={2}>
                       <UserWiseCount />
                     </TabPanel>
-                    <TabPanel value={value} index={4}>
+                    <TabPanel value={value} index={3}>
                       <TopEmpDetail></TopEmpDetail>
                     </TabPanel>
                   </>
                 }
                 else if (roleName == "Branch Manager") {
                   return <>
+                    <TopEmpDetail></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
@@ -216,6 +217,7 @@ const Analytics = () => {
                 }
                 else if (roleName == "Team Lead") {
                   return <>
+                    <TopEmpDetail></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
@@ -240,6 +242,7 @@ const Analytics = () => {
                 }
                 else {
                   return <>
+                    <TopEmpDetail></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />

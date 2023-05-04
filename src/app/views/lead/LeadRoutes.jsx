@@ -7,6 +7,7 @@ const EditLead = Loadable(lazy(() => import('./leads/editLead')));
 const ManageLead = Loadable(lazy(() => import('./leads/manageLeads')));
 const ViewLead = Loadable(lazy(() => import('./leads/viewLeads')));
 const AssignLeads = Loadable(lazy(() => import('./leads/assignLeads')));
+const TransactionLeads = Loadable(lazy(() => import('./leads/transaction/addTransaction')));
 
 const leadRoutes = [
   { path: '/leads/addLeads', element: <LeadForm /> },
@@ -14,6 +15,7 @@ const leadRoutes = [
   { path: '/leads/viewLeads', element: <ViewLead /> },
   { path: '/leads/manageLeads', element: <ManageLead /> },
   { path: '/leads/assignLeads', element: <AssignLeads /> },
+  { path: '/leads/transaction/addTransaction', element: <TransactionLeads /> },
 ];
 
 export default leadRoutes;

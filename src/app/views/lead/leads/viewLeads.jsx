@@ -50,14 +50,14 @@ const ViewLead = () => {
 
             </Row>
             <Row>
-              <Col>
+              {/* <Col>
                 <Form.Label> Client Name</Form.Label>
                 <Form.Control
                   placeholder="Enter Customer Name"
                   disabled
                   value={location.state.clientName}
                 />
-              </Col>
+              </Col> */}
               <Col>
                 <Form.Label>Mobile Number</Form.Label>
                 <Form.Control
@@ -72,6 +72,13 @@ const ViewLead = () => {
                   disabled
                   placeholder="Enter Email Id"
                   defaultValue={location.state.emailId}
+                />
+              </Col>
+              <Col>
+                <Form.Label>Created Date</Form.Label>
+                <Form.Control
+                  disabled
+                  defaultValue={new Date(location.state.createdDate).toLocaleDateString('en-GB')}
                 />
               </Col>
             </Row>
@@ -163,16 +170,7 @@ const ViewLead = () => {
                 />
               </Col>
             </Row>
-            <Row>
-              <Col md="4">
-                <Form.Label>Created Date</Form.Label>
-                <Form.Control
-                  disabled
-                  defaultValue={new Date(location.state.createdDate).toLocaleDateString('en-GB')}
-                />
-              </Col>
 
-            </Row>
 
             <Row>
               <Col className="d-flex justify-content-center">

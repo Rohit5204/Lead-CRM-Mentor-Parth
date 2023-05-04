@@ -337,11 +337,12 @@ const LeadForm = () => {
   return (
     <Container>
       <Box className="breadcrumb">
+
         <Breadcrumb
           routeSegments={[{ name: 'Manage Lead', path: '/leads/manageLeads' }, { name: 'Add Lead Page' }]}
         />
       </Box>
-      <Row className='mb-1'>
+      <Row>
         <Col>
           <button type="submit" className="btn btn-success" onClick={showImport}>
             Import
@@ -448,7 +449,7 @@ const LeadForm = () => {
         </Modal.Footer>
       </Modal>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <SimpleCard title="Fill Lead Details">
+        <SimpleCard title="Compulsory Details">
           <Row>
             <Col>
               <InputGroup className="mb-2">
@@ -519,112 +520,27 @@ const LeadForm = () => {
         </SimpleCard>
         <br />
         <Row>
-          <Col xs={12} md={6}>
-            <SimpleCard title="Fill Lead Details">
+          <Col xs={12} md={12}>
+            <SimpleCard >
+              <Row>
+                <Col md="6">
+                  {/* <InputGroup className="mb-2"> */}
+                  <Form.Label>Mobile 2&nbsp;&nbsp;  &nbsp; </Form.Label>
 
-              {/* <Row>
-              <Col>
-                <InputGroup className="mb-2">
-                  <h6 className="mt-1">Client&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp; </h6>
-                  <InputGroup.Text id="basic-addon1">
-                    <Icon>person</Icon>
-                  </InputGroup.Text>
                   <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
-                    onChange={(e) => setClientName(e.target.value)}
-                    value={clientName}
-                    placeholder="Enter the Client Name"
-                  /></InputGroup>
+                    onChange={(e) => setAlternateMobile(e.target.value)}
+                    value={alternateMobile}
+                    placeholder="Customer Alternate Mobile Numbe"
+                  />
 
-              </Col>
-            </Row> */}
-
-
-              <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Mobile 2&nbsp;&nbsp;  &nbsp; </h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>phone</Icon>
-                    </InputGroup.Text>
-                    <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
-                      onChange={(e) => setAlternateMobile(e.target.value)}
-                      value={alternateMobile}
-                      placeholder="Customer Alternate Mobile Numbe"
-                    /></InputGroup>
                 </Col>
-              </Row>
-              <Row className="mt-1">
-                <Col>
-                  <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
-                    <InputGroup className="mb-2">
-                      <h6 className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</h6>
-                      <InputGroup.Text id="basic-addon1">
-                        <Icon>house</Icon>
-                      </InputGroup.Text>
-                      <Form.Control
-                        as="textarea"
-                        rows={1}
-                        onChange={(e) => setStreetName(e.target.value)}
-                        value={streetName}
-                        placeholder="Street"
-                      /></InputGroup>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-
-                  {/* <Form.Label>City Name</Form.Label> */}
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>village</Icon>
-                    </InputGroup.Text>
-                    <Form.Control
-                      onChange={(e) => setCityName(e.target.value)}
-                      value={cityName}
-                      placeholder="Enter The City"
-                    /></InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  {/* <Form.Label>State Name</Form.Label> */}
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>village</Icon>
-                    </InputGroup.Text>
-                    <Form.Control
-                      onChange={(e) => setStateName(e.target.value)}
-                      value={stateName}
-                      placeholder="Enter State Name"
-                    /></InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <InputGroup className="mb-2">
-                    <h6 className="mt-1">Zip Code&nbsp;  &nbsp;</h6>
-                    <InputGroup.Text id="basic-addon1">
-                      <Icon>subway</Icon>
-                    </InputGroup.Text>
-                    {/* <Form.Label>Pin Code</Form.Label> */}
-                    <Form.Control
-                      onChange={(e) => setZipCode(e.target.value)}
-                      value={zipCode}
-                      placeholder="Enter Zip Code"
-                    /></InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6}>
+                <Col xs={6} md={6}>
                   <InputGroup>
-                    <Form.Label className="mt-1">Country</Form.Label>
+                    <Form.Label >Country</Form.Label>
                   </InputGroup>
                   <Select
                     size='small'
-                    style={{ width: '210%' }}
+                    style={{ width: '100%' }}
                     value={countryName}
                     label="Country"
                     onChange={(e) => setCountryName(e.target.value)}
@@ -641,7 +557,20 @@ const LeadForm = () => {
                   </Select>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-1">
+                <Col md="6">
+
+                  <Form.Label className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</Form.Label>
+
+                  <Form.Control
+                    as="textarea"
+                    rows={1}
+                    onChange={(e) => setStreetName(e.target.value)}
+                    value={streetName}
+                    placeholder="Street"
+                  />
+
+                </Col>
                 <Col>
                   {/* <Form.Label>Interested In</Form.Label> */}
                   <InputGroup>
@@ -667,6 +596,18 @@ const LeadForm = () => {
                 </Col>
               </Row>
               <Row>
+                <Col md={6}>
+
+                  {/* <Form.Label>City Name</Form.Label> */}
+
+                  <Form.Label className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</Form.Label >
+
+                  <Form.Control
+                    onChange={(e) => setCityName(e.target.value)}
+                    value={cityName}
+                    placeholder="Enter The City"
+                  />
+                </Col>
                 <Col className="mt-1">
                   <Form.Label>Source(Platform Name)</Form.Label>
 
@@ -690,13 +631,18 @@ const LeadForm = () => {
 
                 </Col>
               </Row>
-            </SimpleCard>
-          </Col>
-          <br />
-          <Col xs={12} md={6}>
-            <SimpleCard>
-
               <Row>
+                <Col md={6}>
+                  {/* <Form.Label>State Name</Form.Label> */}
+
+                  <Form.Label className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</Form.Label >
+
+                  <Form.Control
+                    onChange={(e) => setStateName(e.target.value)}
+                    value={stateName}
+                    placeholder="Enter State Name"
+                  />
+                </Col>
                 <Col className="mt-1">
 
                   <Form.Label>Assigned To</Form.Label>
@@ -721,6 +667,17 @@ const LeadForm = () => {
                 </Col>
               </Row>
               <Row>
+                <Col md={6}>
+
+                  <Form.Label className="mt-1">Zip Code&nbsp;  &nbsp;</Form.Label >
+
+                  {/* <Form.Label>Pin Code</Form.Label> */}
+                  <Form.Control
+                    onChange={(e) => setZipCode(e.target.value)}
+                    value={zipCode}
+                    placeholder="Enter Zip Code"
+                  />
+                </Col>
                 <Col>
                   <Form.Label>Status</Form.Label>
 
@@ -744,7 +701,8 @@ const LeadForm = () => {
 
                 </Col>
               </Row>
-              <Row>
+
+              {/* <Row>
                 <Col >
                   <Form.Label>Label</Form.Label>
 
@@ -767,9 +725,11 @@ const LeadForm = () => {
                   />
 
                 </Col>
-              </Row>
+              </Row> */}
             </SimpleCard>
           </Col>
+
+
         </Row>
         <br />
         <Row>

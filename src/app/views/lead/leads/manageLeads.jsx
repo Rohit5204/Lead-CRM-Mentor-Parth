@@ -8,9 +8,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import PhoneIcon from '@mui/icons-material/Phone';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PropTypes from 'prop-types';
-import { DataGrid } from '@mui/x-data-grid';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import StatusChange from './statusChange';
 import FollowupStatusChange from './followupStatus';
 import MettingStatusChange from './meetingStatusChange';
@@ -350,8 +350,9 @@ const ManageLead = () => {
             <Tab label="Ringing" {...a11yProps(3)} />
             <Tab label="Quotation" {...a11yProps(4)} />
             <Tab label="Invoice" {...a11yProps(5)} />
-            <Tab label="Drop" {...a11yProps(6)} />
-            <Tab label="Closed" {...a11yProps(7)} />
+            <Tab label="Closed" {...a11yProps(6)} />
+            <Tab label="Drop" {...a11yProps(7)} />
+
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -410,11 +411,11 @@ const ManageLead = () => {
                                 </Link>
                                 <Link to="/leads/editLead" state={subscriber}>
                                   <IconButton>
-                                    <Icon color="success">edit</Icon>
+                                    <Icon>edit</Icon>
                                   </IconButton>
                                 </Link>
                                 <IconButton onClick={() => handleShowLead(subscriber)}>
-                                  <Icon color="primary">share</Icon>
+                                  <WhatsAppIcon />
                                 </IconButton>
                               </>
                             }
@@ -782,6 +783,11 @@ const ManageLead = () => {
                                     <Icon color="success">edit</Icon>
                                   </IconButton>
                                 </Link>
+                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                  <IconButton>
+                                    <CurrencyRupeeIcon color='primary' />
+                                  </IconButton>
+                                </Link>
                               </>
                             }
                           })()}
@@ -811,7 +817,7 @@ const ManageLead = () => {
               </TableHead>
               <TableBody>
                 {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Drop") {
+                  if (subscriber.statusName == "Closed") {
                     return (
                       <TableRow key={index}>
                         <TableCell align="center">{subscriber.leadId}</TableCell>
@@ -821,8 +827,8 @@ const ManageLead = () => {
                         <TableCell align="center">{subscriber.intrestedIn}</TableCell>
                         <TableCell align="center">
                           {(function () {
-                            if (subscriber.statusName == "Drop") {
-                              return <Chip label="Drop" color="error" onClick={(e) => handleShow(subscriber)} />;
+                            if (subscriber.statusName == "Closed") {
+                              return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
                             }
                             else {
                               return <Chip label="Not Listed" color="error" />
@@ -851,6 +857,11 @@ const ManageLead = () => {
                                 <Link to="/leads/editLead" state={subscriber}>
                                   <IconButton>
                                     <Icon color="success">edit</Icon>
+                                  </IconButton>
+                                </Link>
+                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                  <IconButton>
+                                    <CurrencyRupeeIcon color='primary' />
                                   </IconButton>
                                 </Link>
                               </>
@@ -882,7 +893,7 @@ const ManageLead = () => {
               </TableHead>
               <TableBody>
                 {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Closed") {
+                  if (subscriber.statusName == "Drop") {
                     return (
                       <TableRow key={index}>
                         <TableCell align="center">{subscriber.leadId}</TableCell>
@@ -892,8 +903,8 @@ const ManageLead = () => {
                         <TableCell align="center">{subscriber.intrestedIn}</TableCell>
                         <TableCell align="center">
                           {(function () {
-                            if (subscriber.statusName == "Closed") {
-                              return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
+                            if (subscriber.statusName == "Drop") {
+                              return <Chip label="Drop" color="error" onClick={(e) => handleShow(subscriber)} />;
                             }
                             else {
                               return <Chip label="Not Listed" color="error" />
