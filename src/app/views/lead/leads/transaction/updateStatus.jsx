@@ -16,7 +16,7 @@ const Container = styled('div')(({ theme }) => ({
         [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
     },
 }));
-const UpdateTransactionLead = ({ theUpdateLead }) => {
+const UpdateTransactionLead = ({ theUpdateLead, handleDialog }) => {
 
     const [APIData, setAPIData] = useState([])
 
@@ -29,6 +29,7 @@ const UpdateTransactionLead = ({ theUpdateLead }) => {
         "userId": userId
     }
 
+    const [id, setID] = useState(theUpdateLead.id)
     const [tranDate, setTranDate] = useState(theUpdateLead.tranDate)
     const [amount, setAmount] = useState(theUpdateLead.amount)
     const [remark, setRemark] = useState(theUpdateLead.remark)
@@ -41,18 +42,16 @@ const UpdateTransactionLead = ({ theUpdateLead }) => {
 
     const updateTransaction = () => {
         const transData = {
-            // leadId: leadId,
-            tranDate: tranDate,
+            id: id,
             amount: amount,
             remarks: remark,
-            createdBy: 1,
-            isapproved: 1,
-            recordStatus: 0
+            isapproved: 0,
+            updatedBy: 1
         };
-        // console.log({ followUpData })
-        // axios.post(BASE_URL + `/api/saveLeadTransaction`, transData,
-        //     { headers: headers });
+        axios.post(BASE_URL + `/api/updateLeadTransaction`, transData,
+            { headers: headers });
         blankData()
+        handleDialog()
     }
 
 
@@ -63,9 +62,6 @@ const UpdateTransactionLead = ({ theUpdateLead }) => {
 
     return (
         <>
-
-
-
             <Row>
                 <Col>
                     <Form.Label>Transaction Date</Form.Label>

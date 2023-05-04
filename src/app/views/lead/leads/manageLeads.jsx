@@ -768,6 +768,11 @@ const ManageLead = () => {
                                   <Icon color="red">visibility</Icon>
                                 </IconButton>
                               </Link>
+                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                  <IconButton>
+                                    <CurrencyRupeeIcon color='primary' />
+                                  </IconButton>
+                                </Link>
 
                               </>
                             }

@@ -18,6 +18,10 @@ const Container = styled('div')(({ theme }) => ({
     },
 }));
 const TransactionLeads = () => {
+    const today = new Date();
+    const numberOfDaysToAdd = 0;
+    const date = today.setDate(today.getDate() + numberOfDaysToAdd);
+    const defaultValue = new Date(date).toISOString().split('T')[0];
     const location = useLocation();
     const [APIData, setAPIData] = useState([])
 
@@ -33,6 +37,14 @@ const TransactionLeads = () => {
     const [tranDate, setTranDate] = useState()
     const [amount, setAmount] = useState()
     const [remark, setRemark] = useState()
+
+    const [obj2, setObj2] = useState(null);
+    const [show, setShow] = useState(false);
+    const handleShow = (follow) => {
+        setObj2(follow);
+        setShow(true);
+    };
+    const handleClose = () => { setShow(false); }
 
     const blankData = () => {
         setTranDate('')
@@ -56,10 +68,9 @@ const TransactionLeads = () => {
         blankData()
     }
 
-
     useEffect(() => {
         getLeadData()
-    }, [APIData]);
+    }, [show]);
 
 
     const getLeadData = () => {
@@ -81,15 +92,7 @@ const TransactionLeads = () => {
     const changePage = () => {
         navigate('/leads/manageLeads');
     };
-
-
-    const [obj2, setObj2] = useState(null);
-    const [show, setShow] = useState(false);
-    const handleShow = (follow) => {
-        setObj2(follow);
-        setShow(true);
-    };
-    const handleClose = () => { setShow(false); }
+    const roleName = window.localStorage.getItem('roleName');
     return (
         <>
             <Container>
@@ -128,7 +131,7 @@ const TransactionLeads = () => {
                                 type="date"
                                 placeholder="Enter any Remarks"
                                 onChange={(e) => setTranDate(e.target.value)}
-                                value={tranDate}
+                                value={defaultValue}
                             />
                         </Col>
                         <Col>
@@ -190,10 +193,18 @@ const TransactionLeads = () => {
 
                                             <td>{follow.remark}</td>
                                             <td>
-                                                {follow.isapproved == 1 ? (<>
-                                                    <Chip label="Waiting" color="warning" onClick={() => handleShow(follow)}></Chip></>) : (<>
-                                                        <Chip label="Approved" color="success"></Chip></>
-                                                )}
+                                                {roleName == "Employee" ? (<>
+                                                    {follow.isapproved == 1 ? (<>
+                                                        <Chip label="Waiting" color="warning"></Chip></>) : (<>
+                                                            <Chip label="Approved" color="success"></Chip></>
+                                                    )}
+                                                </>) : (<>
+                                                    {follow.isapproved == 1 ? (<>
+                                                        <Chip label="Waiting" color="warning" onClick={() => handleShow(follow)}></Chip></>) : (<>
+                                                            <Chip label="Approved" color="success"></Chip></>
+                                                    )}
+                                                </>)}
+
                                             </td>
                                         </tr>
                                     </tbody>
