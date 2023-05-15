@@ -1,40 +1,10 @@
-import { styled } from '@mui/system';
-import { Breadcrumb, SimpleCard } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Data } from 'app/components/Data';
-import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
-import { Box, Autocomplete, TextField } from '@mui/material';
-import { MenuItem, FormControl, Select, Icon } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import * as XLSX from 'xlsx';
-import { EXCEL_FILE_BASE64 } from './constant'
-import FileSaver from 'file-saver';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
+import { Icon } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
 
-const Container = styled('div')(({ theme }) => ({
-  margin: '30px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
-  '& .breadcrumb': {
-    marginBottom: '30px',
-    [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
-  },
-}));
-
-const Div = styled('div')(({ theme }) => ({
-  margin: '0px 0px 0px 441px',
-}));
-
-const LeadForm = () => {
-  const navigate = useNavigate();
-  const changePage = () => {
-    navigate('/leads/manageLeads');
-  };
-  const [show1, setShow1] = useState(false);
-
-  // Import Dailog
-  const closeImport = () => setShow1(false);
-  const showImport = () => setShow1(true);
+const LeadForm = ({ handleDialog }) => {
 
   const [name, setName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -46,7 +16,7 @@ const LeadForm = () => {
   const [cityName, setCityName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [countryName, setCountryName] = useState('India');
-  const [expectedAmount, setExpectedAmount] = useState('');
+  const [expectedAmount, setExpectedAmount] = useState(10000);
 
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
@@ -108,117 +78,6 @@ const LeadForm = () => {
   useEffect(() => {
     getAllLeadData()
   }, []);
-  // on change states
-  const [excelFile, setExcelFile] = useState(null);
-  const [excelFileError, setExcelFileError] = useState(null);
-
-  // submit
-  const [excelData, setExcelData] = useState(null);
-  // it will contain array of objects
-
-  // handle File
-  const fileType = ['application/vnd.ms-excel'];
-  const handleFile = (e) => {
-    let selectedFile = e.target.files[0];
-    if (selectedFile) {
-      // console.log(selectedFile.type);
-      if (selectedFile && fileType.includes(selectedFile.type)) {
-        let reader = new FileReader();
-        reader.readAsArrayBuffer(selectedFile);
-        reader.onload = (e) => {
-          setExcelFileError(null);
-          setExcelFile(e.target.result);
-        };
-      } else {
-        setExcelFileError('Please select only excel file types');
-        setExcelFile(null);
-      }
-    } else {
-      console.log('plz select your file');
-    }
-  };
-
-  // submit function
-  const handleSubmitFile = (e) => {
-    e.preventDefault();
-    if (excelFile !== null) {
-      const workbook = XLSX.read(excelFile, { type: 'buffer' });
-      const worksheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[worksheetName];
-      const data = XLSX.utils.sheet_to_json(worksheet);
-      setExcelData(data);
-    } else {
-      setExcelData(null);
-    }
-  };
-  // add data in the table from Import
-  const postData1 = () => {
-    for (var i = 0; i < excelData.length; i++) {
-      if (excelData[i].platformName == "Facebook" || excelData[i].platformName == "FB" || excelData[i].platformName == "facebook") {
-        excelData[i].sourceId = 1;
-      }
-      else if (excelData[i].platformName == "Whatsapp") {
-        excelData[i].sourceId = 2;
-      }
-      else if (excelData[i].platformName == "Indiamart") {
-        excelData[i].sourceId = 3;
-      }
-      else if (excelData[i].platformName == "Justdial") {
-        excelData[i].sourceId = 4;
-      }
-      else if (excelData[i].platformName == "99acress") {
-        excelData[i].sourceId = 5;
-      }
-      else if (excelData[i].platformName == "magikbrics") {
-        excelData[i].sourceId = 6;
-      }
-      else if (excelData[i].platformName == "Instagram") {
-        excelData[i].sourceId = 7;
-      }
-      else if (excelData[i].platformName == "Google Ads") {
-        excelData[i].sourceId = 8;
-      }
-      else if (excelData[i].platformName == "" || null) {
-        excelData[i].sourceId = 1;
-      }
-      else {
-        excelData[i].sourceId = 1
-      }
-      excelData[i].status = 1
-      excelData[i].assignId = null;
-      excelData[i].label = 1;       //Label
-      excelData[i].createdBy = 1;
-    }
-    console.log(excelData);
-    axios.post(BASE_URL + `/api/saveLeadGenerationData`, excelData,
-      { headers: headers }).then((res) => {
-        alert(res.data.message)
-      }).catch(error => {
-        alert(error.response.data.message)
-      });
-    changePage();
-  };
-
-
-  const handleDownload = () => {
-    let sliceSize = 1024;
-    let byteCharacters = atob(EXCEL_FILE_BASE64);
-    let bytesLength = byteCharacters.length;
-    let slicesCount = Math.ceil(bytesLength / sliceSize);
-    let byteArrays = new Array(slicesCount);
-    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-      let begin = sliceIndex * sliceSize;
-      let end = Math.min(begin + sliceSize, bytesLength);
-      let bytes = new Array(end - begin);
-      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
-        bytes[i] = byteCharacters[offset].charCodeAt(0);
-      }
-      byteArrays[sliceIndex] = new Uint8Array(bytes);
-    }
-    FileSaver.saveAs(new Blob(byteArrays, { type: "application/vnd.ms-excel" }),
-      "multiple-Lead-ADD.xls"
-    );
-  };
 
   //empty the form Text
   const blankForm = () => {
@@ -237,22 +96,6 @@ const LeadForm = () => {
     setMyOptions5('')
   };
   //Add data in the table
-  const [APIData, setAPIData] = useState([]);
-  const getFetchLeadData = () => {
-    axios.post(BASE_URL + `/api/getFilteredLeadData`, {
-      leadId: 0,
-      userId: 0,
-      statusId: 0,
-      searchKey: "",
-      locationkey: "",
-      platformId: 0,
-      opType: ""
-    }, { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
-      .then((response) => {
-        setAPIData(response.data.data);
-      });
-  }
-
   const postData = () => {
     var assignedid, platformid, labelid, statusid;
     for (var i = 0; i < id1.length; i++) {
@@ -299,441 +142,98 @@ const LeadForm = () => {
     axios.post(BASE_URL + `/api/saveLeadGenerationData`,
       [AddLead], { headers: headers }).then((res) => {
         alert(res.data.message)
-        changePage();
+        handleDialog();
       }).catch(error => {
         alert(error.response.data.message)
       });
 
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   postData();
-  //   blankForm();
-  //   getFetchLeadData();
-  //   changePage();
-  // };
-
-  const [validated, setValidated] = useState(false);
-  const handleSubmit1 = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      // alert("Please Provide appropriate Data")
-    }
-    else if (form.checkValidity() != false) {
-      postData();
-      changePage();
-    }
-    setValidated(true);
-  };
+  const changePage = () => {
+    handleDialog()
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     postData();
-    blankForm();
-    // alert('Catalogue Successfully Created');
   };
   return (
-    <Container>
-      <Box className="breadcrumb">
+    <>
+      <Form onSubmit={handleSubmit}>
 
-        <Breadcrumb
-          routeSegments={[{ name: 'Manage Lead', path: '/leads/manageLeads' }, { name: 'Add Lead Page' }]}
-        />
-      </Box>
-      <Row>
-        <Col>
-          <button type="submit" className="btn btn-success" onClick={showImport}>
-            Import
-          </button>
-        </Col>
-      </Row>
-      <Modal
-        backdrop="static"
-        keyboard={false}
-        show={show1}
-        onHide={closeImport}
-        animation={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header>
-          <Modal.Title>Upload Excel File</Modal.Title>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={{ marginTop: 5 + 'px' }}
-            onClick={handleDownload}>
-            Download Sample File
-          </button>
-        </Modal.Header>
-        <Modal.Body>
-          {/* upload file section */}
-          <div className="form">
-            <form
-              className="form-group"
-              width="1200px"
-              autoComplete="off"
-              onSubmit={handleSubmitFile}
-            >
-              <Row>
-                <Col lg="10">
-                  <input
-                    type="file"
-                    className="form-control"
-                    onChange={handleFile}
-                    required
-                  ></input>
-                  {excelFileError && (
-                    <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
-                      {excelFileError}
-                    </div>
-                  )}
-                </Col>
-                <Col>
-                  <button
-                    type="submit"
-                    className="btn btn-success"
-                    style={{ marginTop: 5 + 'px' }}
-                  >
-                    Submit
-                  </button>
-                </Col>
-              </Row>
-            </form>
-          </div>
-          {/* view file section */}
-          <div>
-            <h5>View Excel file</h5>
-            <div className="viewer">
-              {excelData === null && <>No file selected</>}
-              {excelData !== null && (
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Lead Name</th>
-                        <th scope="col">Mobile No</th>
-                        <th scope="col">Email Id</th>
-                        <th scope="col">City</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Intersted In</th>
-                        <th scope="col">Platform Name</th>
-                        <th scope="col">Expected Amount</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <Data excelData={excelData} />
-                    </tbody>
-                  </table>
-                  <button
-                    type="submit"
-                    className="btn btn-success"
-                    style={{ marginTop: 5 + 'px' }}
-                    onClick={postData1}
-                  >
-                    Add Lead
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeImport}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <SimpleCard title="Compulsory Details">
-          <Row>
-            <Col>
-              <InputGroup className="mb-2">
-                <h6 className="mt-1">Lead Name&nbsp; </h6>
-                <InputGroup.Text id="basic-addon1">
-                  <Icon>person</Icon>
-                </InputGroup.Text>
-                <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
-                  required
-                  placeholder="Enter the Lead Name"
-                /> <Form.Control.Feedback type="invalid">
-                  Lead Name is Required
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Col>
-            <Col>
-              <InputGroup className="mb-2">
-                <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                <InputGroup.Text id="basic-addon1">
-                  <Icon>phone</Icon>
-                </InputGroup.Text>
-                <Form.Control
-                  required
-                  onChange={(e) => setMobileNo(e.target.value)}
-                  value={mobileNo}
-                  placeholder="Customer Mobile Number"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Primary Mobile Number is Required
-                </Form.Control.Feedback></InputGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <InputGroup className="mb-2">
-                <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                <InputGroup.Text id="basic-addon1">
-                  <Icon>email</Icon>
-                </InputGroup.Text>
-                <Form.Control
-                  required
-                  type='email'
-                  onChange={(e) => setEmailId(e.target.value)}
-                  value={emailId}
-                  placeholder="Customer Email"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Email is Required
-                </Form.Control.Feedback></InputGroup>
-            </Col>
-            <Col>
-              <InputGroup className="mb-2">
-                <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
-                <InputGroup.Text id="basic-addon1">
-                  <Icon>₹</Icon>
-                </InputGroup.Text>
-                <Form.Control
-                  onChange={(e) => setExpectedAmount(e.target.value)}
-                  value={expectedAmount}
-                  placeholder="Client Expected Amount"
-                /></InputGroup>
-            </Col>
-          </Row>
-
-        </SimpleCard>
-        <br />
         <Row>
-          <Col xs={12} md={12}>
-            <SimpleCard >
-              <Row>
-                <Col md="6">
-                  {/* <InputGroup className="mb-2"> */}
-                  <Form.Label>Mobile 2&nbsp;&nbsp;  &nbsp; </Form.Label>
+          <Col>
+            <h6 className="mt-1">Lead Name&nbsp; </h6>
+            <InputGroup className="mb-2">
 
-                  <Form.Control height={2} sx={{ m: 0, minWidth: 100 }}
-                    onChange={(e) => setAlternateMobile(e.target.value)}
-                    value={alternateMobile}
-                    placeholder="Customer Alternate Mobile Numbe"
-                  />
-
-                </Col>
-                <Col xs={6} md={6}>
-                  <InputGroup>
-                    <Form.Label >Country</Form.Label>
-                  </InputGroup>
-                  <Select
-                    size='small'
-                    style={{ width: '100%' }}
-                    value={countryName}
-                    label="Country"
-                    onChange={(e) => setCountryName(e.target.value)}
-                  >
-                    <MenuItem value="s">Select the Country</MenuItem>
-                    <MenuItem value="India">INDIA</MenuItem>
-                    <MenuItem value="Dubai">Dubai</MenuItem>
-                    <MenuItem value="USA">USA</MenuItem>
-                    <MenuItem value="London">London</MenuItem>
-                    <MenuItem value="Italy">Italy</MenuItem>
-                    <MenuItem value="China">China</MenuItem>
-                    <MenuItem value="Russia">RUSSIA</MenuItem>
-                    <MenuItem value="Australia">Australia</MenuItem>
-                  </Select>
-                </Col>
-              </Row>
-              <Row className="mt-1">
-                <Col md="6">
-
-                  <Form.Label className="mt-1">Street&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;</Form.Label>
-
-                  <Form.Control
-                    as="textarea"
-                    rows={1}
-                    onChange={(e) => setStreetName(e.target.value)}
-                    value={streetName}
-                    placeholder="Street"
-                  />
-
-                </Col>
-                <Col>
-                  {/* <Form.Label>Interested In</Form.Label> */}
-                  <InputGroup>
-                    <Form.Label className="mt-1">Interested In</Form.Label>
-                  </InputGroup>
-                  <Autocomplete
-                    style={{ minWidth: '100%' }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions1}
-                    options={intrestedIn}
-                    onChange={(e) => setMyOptions1(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Interested Catalogue"
-                        size="small"
-                      />
-                    )}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-
-                  {/* <Form.Label>City Name</Form.Label> */}
-
-                  <Form.Label className="mt-1">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</Form.Label >
-
-                  <Form.Control
-                    onChange={(e) => setCityName(e.target.value)}
-                    value={cityName}
-                    placeholder="Enter The City"
-                  />
-                </Col>
-                <Col className="mt-1">
-                  <Form.Label>Source(Platform Name)</Form.Label>
-
-                  <Autocomplete
-                    style={{ minWidth: '100%' }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions2}
-                    options={platformName}
-                    onChange={(e) => setMyOptions2(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Platform Name"
-                        size="small"
-                      />
-                    )}
-                  />
-
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  {/* <Form.Label>State Name</Form.Label> */}
-
-                  <Form.Label className="mt-1">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</Form.Label >
-
-                  <Form.Control
-                    onChange={(e) => setStateName(e.target.value)}
-                    value={stateName}
-                    placeholder="Enter State Name"
-                  />
-                </Col>
-                <Col className="mt-1">
-
-                  <Form.Label>Assigned To</Form.Label>
-                  <Autocomplete
-                    style={{ minWidth: '100%' }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    options={assignTo}
-                    value={myOptions3}
-                    onChange={(e) => setMyOptions3(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Employee to Assign"
-                        size="small"
-                      />
-                    )}
-                  />
-
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-
-                  <Form.Label className="mt-1">Zip Code&nbsp;  &nbsp;</Form.Label >
-
-                  {/* <Form.Label>Pin Code</Form.Label> */}
-                  <Form.Control
-                    onChange={(e) => setZipCode(e.target.value)}
-                    value={zipCode}
-                    placeholder="Enter Zip Code"
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Status</Form.Label>
-
-                  <Autocomplete
-                    style={{ minWidth: '100%' }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    value={myOptions4}
-                    options={status}
-                    onChange={(e) => setMyOptions4(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Status"
-                        size="small"
-                      />
-                    )}
-                  />
-
-                </Col>
-              </Row>
-
-              {/* <Row>
-                <Col >
-                  <Form.Label>Label</Form.Label>
-
-                  <Autocomplete
-                    style={{ minWidth: '100%' }}
-                    freeSolo
-                    autoComplete
-                    autoHighlight
-                    options={labelName}
-                    value={myOptions5}
-                    onChange={(e) => setMyOptions5(e.currentTarget.innerHTML)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select the Label"
-                        size="small"
-                      />
-                    )}
-                  />
-
-                </Col>
-              </Row> */}
-            </SimpleCard>
+              <InputGroup.Text id="basic-addon1">
+                <Icon>person</Icon>
+              </InputGroup.Text>
+              <Form.Control height={2} sx={{ m: 0, minWidth: 110 }}
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+                placeholder="Enter the Lead Name"
+              /> <Form.Control.Feedback type="invalid">
+                Lead Name is Required
+              </Form.Control.Feedback>
+            </InputGroup>
           </Col>
+          <Col>
+            <h6 className="mt-1">Mobile 1&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+            <InputGroup className="mb-2">
 
-
+              <InputGroup.Text id="basic-addon1">
+                <Icon>phone</Icon>
+              </InputGroup.Text>
+              <Form.Control
+                required
+                onChange={(e) => setMobileNo(e.target.value)}
+                value={mobileNo}
+                placeholder="Customer Mobile Number"
+              />
+              <Form.Control.Feedback type="invalid">
+                Primary Mobile Number is Required
+              </Form.Control.Feedback></InputGroup>
+          </Col>
         </Row>
+
+        <Row>
+          <Col>
+            <h6 className="mt-1">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+            <InputGroup className="mb-2">
+
+              <InputGroup.Text id="basic-addon1">
+                <Icon>email</Icon>
+              </InputGroup.Text>
+              <Form.Control
+                required
+                type='email'
+                onChange={(e) => setEmailId(e.target.value)}
+                value={emailId}
+                placeholder="Customer Email"
+              />
+              <Form.Control.Feedback type="invalid">
+                Email is Required
+              </Form.Control.Feedback></InputGroup>
+          </Col>
+          <Col>
+            <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+            <InputGroup className="mb-2">
+
+              <InputGroup.Text id="basic-addon1">
+                <Icon>₹</Icon>
+              </InputGroup.Text>
+              <Form.Control
+                onChange={(e) => setExpectedAmount(e.target.value)}
+                value={expectedAmount}
+                placeholder="Client Expected Amount"
+              /></InputGroup>
+          </Col>
+        </Row>
+
+
         <br />
         <Row>
-          <Col className="d-flex justify-content-center">
+          <Col className="d-flex justify-content-end">
             <button className="btn btn-secondary" type='button' onClick={changePage}>
               Cancel
             </button>
@@ -744,7 +244,7 @@ const LeadForm = () => {
           </Col>
         </Row>
       </Form>
-    </Container >
+    </ >
   );
 };
 

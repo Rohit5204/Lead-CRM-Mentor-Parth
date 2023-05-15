@@ -2,7 +2,6 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Box,
@@ -14,6 +13,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Button,
+  Grid,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
 
@@ -78,25 +79,26 @@ const ManageEmployee = () => {
             ]}
           />
         </Box>
-        <Box>
-          <Row>
-            <Col md="5">
-              <InputGroup className="mb-3">
-                <button type="submit" className="btn btn-success" onClick={changePage}>
-                  ADD
-                </button>
-                &nbsp;
-                {/* <Form.Control
-                  placeholder="Search Box"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                /> */}
-              </InputGroup>
-            </Col>
-            <Col>
-              <h4>Employee Login </h4></Col>
-          </Row>
-        </Box>
+        <Grid container spacing={4}>
+
+          <Grid item xs={12} md={10}>
+            <h4 style={{ textAlign: 'center', marginLeft: '5px' }}>Manage Employee Login </h4>
+          </Grid>
+          <Grid item xs={12} md={2}>
+            <div className="d-flex justify-content-end">
+              <Button
+                id="demo-customized-button"
+                size='large'
+
+                variant="contained"
+                disableElevation
+                onClick={changePage}>
+                ADD
+              </Button>
+            </div>
+          </Grid>
+
+        </Grid>
         <Box className="text-center" width="100%" overflow="auto">
           {/* Table Section */}
 

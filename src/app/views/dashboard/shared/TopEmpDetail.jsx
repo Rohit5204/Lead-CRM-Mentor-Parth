@@ -1,70 +1,140 @@
-import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme, IconButton } from '@mui/material';
+import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme, IconButton, Tooltip } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Row, Col } from 'react-bootstrap'
-import { Small } from 'app/components/Typography';
+import { makeStyles } from '@mui/styles';
 import "./statusCard.css";
-import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import SendIcon from '@mui/icons-material/Send';
-import DescriptionIcon from '@mui/icons-material/Description';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
+
 import { BASE_URL } from 'app/utils/constant';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
+import { SimpleCard } from 'app/components';
+const StyledCard = styled(Card)(({ theme }) => ({
+    // display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    background: theme.palette.background.paper,
+    // [theme.breakpoints.down('sm')]: { padding: '16px !important' },
+}));
+
+const ContentBox = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: '10px !important',
+    '& small': { color: theme.palette.text.secondary, fontSize: '16px' },
+    '& .icon': { opacity: 0.6, fontSize: '44px', color: '#1e55c7' },
+}));
+
+const Heading = styled('h6')(({ theme }) => ({
+    margin: 0,
+    marginTop: '4px',
+    fontSize: '14px',
+    fontWeight: '500',
+    // color: theme.palette.primary.main,
+}));
+
+
+
 
 const TopEmpDetail = (showData) => {
+    const useStyles = makeStyles({
+        root: {
+            transition: "transform 0.15s ease-in-out",
+            "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+        },
+    });
+
+    const classes = useStyles()
     const [statusWiseData, setStatusWiseData] = useState([]);
 
     useEffect(() => {
         axios.get(BASE_URL + `/api/getTopEmp`)
             .then((response) => {
-                console.log(response)
                 setStatusWiseData(response.data.data);
             });
     }, [statusWiseData]);
 
     const rank = ["Rank 1", "Rank 2", "Rank 3"]
+
+    const user = localStorage.getItem('userName')
+
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+    const [totalGain, setTotalGain] = useState([]);
+
+    useEffect(() => {
+        axios.post(BASE_URL + `/api/getDashboardOrderGainData`, {
+            opType: showData.showData.opType,
+            fromDate: showData.showData.fromDate,
+            toDate: showData.showData.toDate,
+            empId: 0
+        }, { headers: headers })
+            .then((response) => {
+                setTotalGain(response.data.data);
+            });
+    }, [totalGain]);
     return (
-        <div className="row align-items-stretch">
-            {statusWiseData.map((item, index) => (
+        <Grid container spacing={4} sx={{ mb: '24px' }}>
+            {totalGain.map((item, index) => (
+                <Grid item xs={12} md={3} key={index}>
 
-                <div className="card" style={{ borderRadius: '15px' }}>
-                    <div className="card-body p-4">
-                        <div className="d-flex text-black">
-                            <div className="flex-shrink-0">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                    alt="Generic placeholder image" className="img-fluid"
-                                    style={{ borderRadius: '10px', width: '120px' }}
-                                />
-                            </div>
-                            <div className="flex-grow-1 ms-3 ml-5">
-                                <h5 className="mb-1">{item.firstName} {item.lastName}</h5>
-                                <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>{rank[index]}</p>
-                                <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                    style={{ backgroundColor: '#efefef' }}
-                                >
-                                    <div>
-                                        <p className="small text-muted mb-1">Total Lead</p>
-                                        <p className="mb-0">{item.total_lead_count}</p>
-                                    </div>
-                                    <div className="px-3">
-                                        <p className="small text-muted mb-1">Total Amount</p>
-                                        <p className="mb-0">₹ {item.total_amount}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                    <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                        <ContentBox>
+                            <Grid container spacing={4}>
+                                <Grid item xs={8} md={7}>
+                                    <Box>
+                                        <div className="flex-grow-1 ms-3">
+                                            <h5 className="mb-1">{user} </h5>
+                                            <p className="small text-muted mb-1">Total Lead</p>
+                                            <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
+                                        </div>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3} md={4}>
+                                    <img src="/assets/images/Male 1.png" alt="" style={{ borderRadius: '10px', width: '105px', marginLeft: '-35px' }} />
+                                </Grid>
+                            </Grid>
+                        </ContentBox>
+                        <Box style={{ backgroundColor: '#10c469' }}>
+                            <Heading style={{ padding: '10px', color: 'white' }}>Total Amount  ₹  {item.amount}</Heading>
+                        </Box>
+                    </StyledCard>
+                </Grid>
             ))}
-        </div>
+            {statusWiseData.map((item, index) => (
+                <Grid item xs={12} md={3} key={index}>
+
+                    <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                        <ContentBox>
+                            <Grid container spacing={4}>
+                                <Grid item xs={8} md={7}>
+                                    <Box>
+                                        <div className="flex-grow-1 ms-3">
+                                            <h5 className="mb-1">{item.firstName} {item.lastName}</h5>
+                                            <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>{rank[index]}</p>
+                                            <p className="small text-muted mb-1">Total Lead</p>
+                                            <p className="mb-0" style={{ fontSize: '24px' }}>{item.total_lead_count}</p>
+                                        </div>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3} md={4}>
+                                    <img src="/assets/images/male c 1.png" alt="" style={{ borderRadius: '10px', width: '120px', marginLeft: '-35px' }} />
+                                </Grid>
+                            </Grid>
+                        </ContentBox>
+                        <Box style={{ backgroundColor: '#188ae2' }}>
+                            <Heading style={{ padding: '10px', color: 'white' }}>Total Amount  ₹  {item.total_amount}</Heading>
+                        </Box>
+                        {/* <FilterAltIcon></FilterAltIcon> */}
+                    </StyledCard>
+                </Grid>
+            ))}
+        </Grid>
+
     );
 };
 export default TopEmpDetail;

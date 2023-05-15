@@ -87,6 +87,7 @@ const ManageRecovery = () => {
                 <Box className="breadcrumb">
                     <Breadcrumb
                         routeSegments={[
+                            { name: 'Dashboard', path: '/dashboard/default' },
                             { name: 'Recovery List', path: '/myDeal/recovery/manageRecovery' },
                             { name: 'Installment Recovery' },
                         ]}

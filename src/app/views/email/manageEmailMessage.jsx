@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Row, Modal, Col, InputGroup } from 'react-bootstrap';
-import { MenuItem, TextField, Autocomplete } from '@mui/material';
+import { Button, TextField, Autocomplete, Grid } from '@mui/material';
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
 import {
@@ -16,6 +16,7 @@ import {
     TableRow,
 } from '@mui/material';
 import EditEmail from './editEmail';
+import { BASE_URL } from 'app/utils/constant';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -70,7 +71,7 @@ const ManageEmailMessage = () => {
     }
     //get method
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getEmailTemplate?_id=0`,
+        axios.get(BASE_URL + `/api/getEmailTemplate?_id=0`,
             { headers: headers }).then((response) => {
                 setEmailData(response.data.data);
             });
@@ -80,8 +81,28 @@ const ManageEmailMessage = () => {
     const [idData, setIdData] = useState([]);
     const [myOptions, setMyOptions] = useState(null);
 
+    // const connection = () => {
+    //     // Connect to the WebSocket server
+    //     const socket = new WebSocket('ws://localhost:8080');
+
+    //     socket.addEventListener('open', () => {
+    //         console.log('WebSocket connection established');
+
+    //         // Send a message to the server
+    //         socket.send('Hello, server!');
+    //     });
+
+    //     socket.addEventListener('message', (event) => {
+    //         console.log('Message received from server:', event.data);
+    //     });
+
+    //     socket.addEventListener('close', () => {
+    //         console.log('WebSocket connection closed');
+    //     });
+    // }
+
     useEffect(() => {
-        axios.get(`http://43.204.38.243:3001/api/getMasterData?masterName=emailcategorymaster`,
+        axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.data.length; i++) {
                     setCategoryData(current => [...current, res.data.data[i].emailCategory]);
@@ -105,7 +126,7 @@ const ManageEmailMessage = () => {
             recordStatus: 1
         }
         console.log({ AddEmail })
-        await axios.post('http://43.204.38.243:3001/api/emailTemplateUpsert', AddEmail,
+        await axios.post(BASE_URL + '/api/emailTemplateUpsert', AddEmail,
             { headers: headers });
 
     }
@@ -124,23 +145,33 @@ const ManageEmailMessage = () => {
                     ]}
                 />
             </Box>
-            <Box>
-                <Row>
-                    <Col>
-                        <InputGroup className="mb-3">
-                            <button type="submit" className="btn btn-success" onClick={handleShow}>
-                                Email
-                            </button>
-                            &nbsp;
-                            <Form.Control
-                                placeholder="Search Box"
-                                aria-label="Recipient's username"
-                                aria-describedby="basic-addon2"
-                            />
-                        </InputGroup>
-                    </Col>
-                </Row>
-            </Box>
+            <Grid container spacing={4}>
+
+                <Grid item xs={12} md={12}>
+                    <InputGroup className="mb-3">
+
+
+                        <Form.Control
+                            placeholder="Search Box"
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                        />&nbsp;
+                        <Button
+                            id="demo-customized-button"
+                            size='small'
+
+                            variant="contained"
+                            disableElevation
+                            onClick={handleShow}
+
+                        >
+                            Email
+                        </Button>
+
+                    </InputGroup>
+                </Grid>
+
+            </Grid>
             <Box className="text-center" width="100%" overflow="auto">
                 {/* Table Section */}
                 <h4>Email Templates</h4>

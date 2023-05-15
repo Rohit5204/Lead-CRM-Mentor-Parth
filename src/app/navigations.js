@@ -6,9 +6,10 @@ export const navigations = [
     name: 'Lead',
     icon: 'send',
     children: [
-      { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
-      { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
-      { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
+      { name: 'Manage Leads', iconText: 'ML', path: '/leads/manageLeads' },
+      // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+      { name: 'Assign Leads', iconText: 'AL', path: '/leads/assignLeads' },
+      { name: 'Profit/Loss Trader', iconText: 'PL', path: '/leads/manageTrader' },
     ],
   },
 
@@ -53,12 +54,12 @@ export const navigations = [
     path: '/manageEmailMessage',
   },
 
-  { label: 'Digital Card', type: 'label' },
-  {
-    name: 'Digital Card',
-    icon: 'sd_card', path: '/digitalCards'
+  // { label: 'Digital Card', type: 'label' },
+  // {
+  //   name: 'Digital Card',
+  //   icon: 'sd_card', path: '/digitalCards'
 
-  },
+  // },
 
   { label: 'Setting', type: 'label' },
   {

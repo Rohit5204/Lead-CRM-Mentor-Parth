@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Chip, IconButton } from "@mui/material";
+import { Button, Chip, IconButton } from "@mui/material";
 import { BASE_URL } from "app/utils/constant";
 import axios from "axios";
 import React from "react";
@@ -34,7 +34,7 @@ const TransactionLeads = () => {
         "userId": userId
     }
     const [leadId, setLeadId] = useState(location.state.leadId)
-    const [tranDate, setTranDate] = useState()
+    const [tranDate, setTranDate] = useState(defaultValue)
     const [amount, setAmount] = useState()
     const [remark, setRemark] = useState()
 
@@ -45,6 +45,12 @@ const TransactionLeads = () => {
         setShow(true);
     };
     const handleClose = () => { setShow(false); }
+
+    const [show1, setShow1] = useState(false);
+    const handleShow1 = () => {
+        setShow1(true);
+    };
+    const handleClose1 = () => { setShow1(false); }
 
     const blankData = () => {
         setTranDate('')
@@ -66,11 +72,12 @@ const TransactionLeads = () => {
         axios.post(BASE_URL + `/api/saveLeadTransaction`, transData,
             { headers: headers });
         blankData()
+        handleClose1()
     }
 
     useEffect(() => {
         getLeadData()
-    }, [show]);
+    }, [show, show1]);
 
 
     const getLeadData = () => {
@@ -98,82 +105,16 @@ const TransactionLeads = () => {
             <Container>
                 <div>
                     <h5>Lead Transaction Record</h5>
-                    <br />
-                    <Row>
-                        <Col>
-                            <Form.Label>Lead ID</Form.Label>
-                            <Form.Control
-                                disabled
-                                type="number"
-                                placeholder="Enter Lead Id"
-                                value={leadId}
-                            // onChange={(e) => setFollowUpDate(e.target.value)}
-                            // value={followUpDate}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Label>Lead Name</Form.Label>
-                            <br />
-                            <Form.Control
-                                disabled
-                                type="text"
-                                placeholder="Enter Lead Name"
-                                value={location.state.name}
-                            // value={followUpTme}
-                            // onChange={(e) => setFollowUpTime(e.target.value)}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Transaction Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Enter any Remarks"
-                                onChange={(e) => setTranDate(e.target.value)}
-                                value={defaultValue}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Label>Transaction Amount</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter the Amount"
-                                onChange={(e) => setAmount(e.target.value)}
-                                value={amount}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Remarks</Form.Label>
-                            <Form.Control
-                                placeholder="Enter any Remarks"
-                                onChange={(e) => setRemark(e.target.value)}
-                                value={remark}
-                            />
-                        </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                        <Col className="d-flex justify-content-center">
-                            <button className="btn btn-secondary" type='button' onClick={changePage}>
-                                Cancel
-                            </button>
-                            &nbsp;
-                            <button type='button' className="btn btn-success" onClick={postTransaction}>
-                                Save
-                            </button>
-                        </Col>
-                    </Row>
+
+
 
 
                     {/* {JSON.stringify(APIData456)} */}
-                    <Row className="mt-5">
+                    <Row className="mt-2">
                         <Col> <h5 className='text-center'>Transaction Detail's</h5></Col>
-
-
-                        <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
+                        <button type='button' className="btn btn-success" onClick={handleShow1}>ADD</button>
+                        <br />
+                        <table className="table table-striped table-bordered mt-4" style={{ 'borderRadius': '2px' }}>
                             <thead style={{ "color": "MidnightBlue" }} className='text-center'>
                                 <tr>
                                     <th>Sr No.</th>
@@ -235,6 +176,93 @@ const TransactionLeads = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <UpdateTransactionLead theUpdateLead={obj2} handleDialog={handleClose}></UpdateTransactionLead>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={show1}
+                onHide={handleClose1}
+                backdrop="static"
+                keyboard={false}
+                size="md"
+                centered
+                aria-labelledby="contained-modal-title-vcenter"
+
+            >
+                <Modal.Header>
+                    <Modal.Title>Add Transaction Record</Modal.Title>
+                    <IconButton type="button" onClick={handleClose1}>
+                        <ClearIcon />
+                    </IconButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col>
+                            <Form.Label>Lead ID</Form.Label>
+                            <Form.Control
+                                disabled
+                                type="number"
+                                placeholder="Enter Lead Id"
+                                value={leadId}
+                            // onChange={(e) => setFollowUpDate(e.target.value)}
+                            // value={followUpDate}
+                            />
+                        </Col>
+                        <Col>
+                            <Form.Label>Lead Name</Form.Label>
+                            <br />
+                            <Form.Control
+                                disabled
+                                type="text"
+                                placeholder="Enter Lead Name"
+                                value={location.state.name}
+                            // value={followUpTme}
+                            // onChange={(e) => setFollowUpTime(e.target.value)}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Label>Transaction Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                placeholder="Enter any Remarks"
+                                onChange={(e) => setTranDate(e.target.value)}
+                                value={tranDate}
+                            />
+                        </Col>
+                        <Col>
+                            <Form.Label>Transaction Amount</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter the Amount"
+                                onChange={(e) => setAmount(e.target.value)}
+                                value={amount}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Label>Remarks</Form.Label>
+                            <Form.Control
+                                placeholder="Enter any Remarks"
+                                onChange={(e) => setRemark(e.target.value)}
+                                value={remark}
+                            />
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col className="d-flex justify-content-end">
+                            <button className="btn btn-secondary" type='button' onClick={changePage}>
+                                Cancel
+                            </button>
+                            &nbsp;
+                            <button type='button' className="btn btn-success" onClick={postTransaction}>
+                                Save
+                            </button>
+                        </Col>
+                    </Row>
                 </Modal.Body>
             </Modal>
         </>

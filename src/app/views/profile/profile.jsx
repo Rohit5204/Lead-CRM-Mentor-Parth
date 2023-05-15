@@ -54,7 +54,7 @@ function ManageProfile() {
         setObj1(catalogue);
         setShow(true);
     };
-    const [logo, setLogo] = useState('/assets/images/illustrations/boostock-info-04.svg')
+    const [logo, setLogo] = useState('/assets/images/illustrations/new-boostock-logo.png')
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setLogo(URL.createObjectURL(event.target.files[0]));
@@ -140,7 +140,7 @@ function ManageProfile() {
                         <Row>
                             <Col md="3">
                                 <div className="text-center">
-                                    <img src={logo} sizes="20px" width="200" alt="preview image" className="avatar img-circle img-thumbnail" />
+                                    <img src={logo} sizes="20px" width="230" alt="preview image" className="avatar img-circle img-thumbnail" />
 
                                     <button type="button" className="btn-warning" onChange={onImageChange}>
                                         Change Logo

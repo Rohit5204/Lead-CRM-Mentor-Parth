@@ -1,4 +1,4 @@
-import { styled } from '@mui/system';
+import { styled, alpha } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -16,9 +16,13 @@ import PropTypes from 'prop-types';
 import ViewInvoice from './viewInvoice';
 import {
   Box,
+  Button,
+  Menu,
   Chip,
+  Grid,
   Icon,
   IconButton,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -26,7 +30,49 @@ import {
   TableRow,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0',
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+  },
+}));
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -78,6 +124,16 @@ function a11yProps(index) {
 
 
 const ManageInvoiceList = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorEl(null);
+  };
+
   const [value, setValue] = useState(0);
 
   const handleCChange = (event, newValue) => {
@@ -96,6 +152,7 @@ const ManageInvoiceList = () => {
   const [obj1, setObj1] = useState(null);
   const [sendMailObj, setSendMailObj] = useState(null);
   const [APIData, setAPIData] = useState([]);
+  const [sendInvoiceList, setSendInvoiceList] = useState([])
 
   const [show, setShow] = useState(false);
   const [showMail, setShowMail] = useState(false);
@@ -123,23 +180,29 @@ const ManageInvoiceList = () => {
   const [onType, setOnType] = useState('')
   const [searchBox, setSearchBox] = useState('')
 
-  useEffect(() => {
+  const getInvoiceDraft = () => {
     axios.post(BASE_URL + `/api/getInvoiceData`,
       { invoiceid: 0, empId: 0, statusId: 1, searchKey: searchBox, opType: onType },
       { headers: headers })
       .then((response) => {
         setAPIData(response.data.data);
       });
-  }, []);
+  }
 
-  const [sendInvoiceList, setSendInvoiceList] = useState([])
   useEffect(() => {
+    getInvoiceDraft()
+  }, [APIData]);
+
+  const sendInvoiceListData = () => {
     axios.post(BASE_URL + `/api/getInvoiceData`,
       { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
       .then((response) => {
         setSendInvoiceList(response.data.data);
       });
-  }, []);
+  }
+  useEffect(() => {
+    sendInvoiceListData()
+  }, [sendInvoiceList]);
 
   const [invoiceStatusData, setInvoiceStatusData] = useState([])
   useEffect(() => {
@@ -155,7 +218,8 @@ const ManageInvoiceList = () => {
       .then((response) => {
         setInvoiceStatusData(response.data.data);
       });
-  }, []);
+  }, [invoiceStatusData]);
+
   const [obj2, setObj2] = useState(null);
   const [showSatusForm, setSatusForm] = useState(false);
   const handleShowStatus = (subscriber) => {
@@ -165,59 +229,101 @@ const ManageInvoiceList = () => {
   const handleCloseStatus = () => {
     setSatusForm(false);
   }
+  const [count, setCount] = useState({})
+
+  const getMasterCount = () => {
+    axios.get(BASE_URL + `/api/getStageCount`,
+      { headers: headers })
+      .then((response) => {
+        setCount(response.data);
+      });
+  }
+
+  useEffect(() => {
+    getMasterCount()
+  }, []);
   return (
     <Container>
       <Box>
-        <Box>
-          <Row>
-            <Col md="4">
-              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-              <br></br>
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('DEFAULT')}>
-                ALL
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTDAY')}>
-                Last Day
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTWEEK')}>
-                Last Week
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTMONTH')}>
-                Last Month
-              </button>
-            </Col>
-            <Col md="6">
-              <Form.Label htmlFor="basic-url">Search Box</Form.Label>
-              <InputGroup className="mb-3">
+        <Box className="breadcrumb">
 
-                <Form.Control
-                  placeholder="Search By Invoive Number, Client Name, Product Name, Mobile Number & Amount"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                  value={searchBox}
-                  onChange={(e) => setSearchBox(e.target.value)}
-                />&nbsp;
-
-              </InputGroup>
-            </Col>
-            <Col md="2" className='mt-4'>
-              <button type="button" className="btn btn-success mt-2" onClick={changePage}>
-                ADD
-              </button>
-            </Col>
-          </Row>
+          <Breadcrumb
+            routeSegments={[{ name: 'Dashboard', path: '/dashboard/default' }, { name: 'Invoice', path: '/invoices/ManageInvoiceList' }, { name: 'Manage Invoice List' }]}
+          />
         </Box>
+
+        <Grid container spacing={4} sx={{ mb: '24px' }}>
+
+          <Grid item xs={12} md={9} >
+            <Form.Label htmlFor="basic-url">Search Box</Form.Label>
+            <br></br>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search By Invoice Number, Client Name, Product Name, Mobile Number & Amount"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={searchBox}
+                onChange={(e) => setSearchBox(e.target.value)}
+              />
+            </InputGroup>
+          </Grid>
+          <Grid item xs={12} md={3} style={{ marginTop: '30px' }}>
+
+            <Button
+              id="demo-customized-button"
+              size='large'
+              aria-controls={open ? 'demo-customized-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+            >
+              Apply Filter
+            </Button>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose5}
+            >
+              <MenuItem
+                onClick={() => { setOnType('DEFAULT'); handleClose5() }} disableRipple>
+                DEFAULT
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTDAY'); handleClose5() }} disableRipple>
+                LASTDAY
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTWEEK'); handleClose5() }} disableRipple>
+                LASTWEEK
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTMONTH'); handleClose5() }} disableRipple>
+                LASTMONTH
+              </MenuItem>
+            </StyledMenu>
+            &nbsp;
+            <Button
+              id="demo-customized-button"
+              size='large'
+              color="success"
+              variant="contained"
+              disableElevation
+              onClick={changePage}
+            >
+              Invoice
+            </Button>
+
+          </Grid>
+        </Grid>
+
+
         <Container className="my-2">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
@@ -229,8 +335,8 @@ const ManageInvoiceList = () => {
             // aria-label="scrollable auto tabs example"
             >
               <Tab label="Request For Invoice" {...a11yProps(0)} />
-              <Tab label="Draft Invoice" {...a11yProps(1)} />
-              <Tab label="Send Invoice" {...a11yProps(2)} />
+              <Tab label={"Draft Invoice" + " [" + (count.draftInvoice ? count.draftInvoice[0].draft_invoice : 0) + "]"} {...a11yProps(1)} />
+              <Tab label={"Send Invoice" + " [" + (count.sentInvoice ? count.sentInvoice[0].sent_invoice : 0) + "]"} {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>

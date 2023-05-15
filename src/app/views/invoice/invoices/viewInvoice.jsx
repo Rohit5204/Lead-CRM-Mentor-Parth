@@ -154,7 +154,8 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     // src="https://boostock.in/img/boostock-info-04.png"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img> */}
-                                    <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
+
+                                    <img width="140" src="/assets/images/illustrations/new-boostock-logo.png" alt="" />
                                 </Col>
                                 <Col className='mt-2'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
@@ -169,7 +170,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <span className="font-bold">Email :- {APIData.email}</span>
                                 </Col>
                             </Row>
-
+                            <br />
                             <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
                                 <thead style={{ borderLeft: '1px solid red', "color": "MidnightBlue", borderRight: '1px solid red' }} className='text-left'>
                                     <tr>

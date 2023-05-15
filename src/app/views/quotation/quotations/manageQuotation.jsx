@@ -1,12 +1,11 @@
-import { styled } from '@mui/system';
+import { styled, alpha } from '@mui/system';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid } from '@mui/x-data-grid';
 import CompletedManageQuotation from './completedQuotationList';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Modal, InputGroup } from 'react-bootstrap';
+import { Form, Modal, InputGroup } from 'react-bootstrap';
 import ViewQuotation from './viewQuotation';
 import SendQuotationMail from './sendMail';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -18,9 +17,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Box,
+  Button,
   Chip,
+  Grid,
+  Menu,
   Icon,
   IconButton,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -28,6 +31,49 @@ import {
   TableRow,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0',
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+  },
+}));
 
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -79,6 +125,16 @@ function a11yProps(index) {
 }
 
 const ManageQuotation = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorEl(null);
+  };
+
   const navigate = useNavigate();
   const changePage = () => {
     navigate('/quotations/addQuotation');
@@ -209,59 +265,99 @@ const ManageQuotation = () => {
   const handleCloseStatus = () => {
     setSatusForm(false);
   }
+  const [count, setCount] = useState({})
+
+  const getMasterCount = () => {
+    axios.get(BASE_URL + `/api/getStageCount`,
+      { headers: headers })
+      .then((response) => {
+        setCount(response.data);
+      });
+  }
+
+  useEffect(() => {
+    getMasterCount()
+  }, []);
   return (
     <Container>
       <Box>
-        <Box>
-          <Row>
-            <Col md="4">
-              <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-              <br></br>
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('DEFAULT')}>
-                ALL
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTDAY')}>
-                Last Day
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTWEEK')}>
-                Last Week
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-outline-primary"
-                value={onType}
-                onClick={() => setOnType('LASTMONTH')}>
-                Last Month
-              </button>
-            </Col>
-            <Col md="6">
-              <Form.Label htmlFor="basic-url">Search Box</Form.Label>
-              <InputGroup className="mb-3">
+        <Box className="breadcrumb">
 
-                <Form.Control
-                  placeholder="Search By Quotation Number, Client Name, Product Name, Mobile Number & Amount"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                  value={searchBox}
-                  onChange={(e) => setSearchBox(e.target.value)}
-                />&nbsp;
-
-              </InputGroup>
-            </Col>
-            <Col md="2" className='mt-4'>
-              <button type="button" className="btn btn-success mt-2" onClick={changePage}>
-                ADD
-              </button>
-            </Col>
-          </Row>
+          <Breadcrumb
+            routeSegments={[{ name: 'Dashboard', path: '/dashboard/default' }, { name: 'Quotation', path: '/quotations/manageQuotation' }, { name: 'Manage Quoation List' }]}
+          />
         </Box>
+
+        <Grid container spacing={4} sx={{ mb: '24px' }}>
+
+          <Grid item xs={12} md={9} >
+            <Form.Label htmlFor="basic-url">Search Box</Form.Label>
+            <br></br>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search By Quotation Number, Client Name, Product Name, Mobile Number & Amount"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={searchBox}
+                onChange={(e) => setSearchBox(e.target.value)}
+              />
+            </InputGroup>
+          </Grid>
+          <Grid item xs={12} md={3} style={{ marginTop: '30px' }}>
+
+            <Button
+              id="demo-customized-button"
+              size='large'
+              aria-controls={open ? 'demo-customized-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+            >
+              Apply Filter
+            </Button>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose5}
+            >
+              <MenuItem
+                onClick={() => { setOnType('DEFAULT'); fetchAllLead(); handleClose5() }} disableRipple>
+                DEFAULT
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTDAY'); fetchAllLead(); handleClose5() }} disableRipple>
+                LASTDAY
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTWEEK'); fetchAllLead(); handleClose5() }} disableRipple>
+                LASTWEEK
+              </MenuItem>
+              <MenuItem
+                onClick={() => { setOnType('LASTMONTH'); fetchAllLead(); handleClose5() }} disableRipple>
+                LASTMONTH
+              </MenuItem>
+            </StyledMenu>
+            &nbsp;
+            <Button
+              id="demo-customized-button"
+              size='large'
+              color="success"
+              variant="contained"
+              disableElevation
+              onClick={changePage}
+            >
+              Quotation
+            </Button>
+
+          </Grid>
+        </Grid>
         <Container className="my-2">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
@@ -273,8 +369,8 @@ const ManageQuotation = () => {
             // aria-label="scrollable auto tabs example"
             >
               <Tab label="Request For Quotation" {...a11yProps(0)} />
-              <Tab label="Draft Quotation" {...a11yProps(1)} />
-              <Tab label="Send Quotation" {...a11yProps(2)} />
+              <Tab label={"Draft Quotation" + " [" + (count.draftQuotation ? count.draftQuotation[0].draft_quotation : 0) + "]"} {...a11yProps(1)} />
+              <Tab label={"Send Quotation" + " [" + (count.sentQuotation ? count.sentQuotation[0].sent_quotation : 0) + "]"} {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -294,7 +390,7 @@ const ManageQuotation = () => {
                 </TableHead>
                 <TableBody>
                   {QuotationStatusData.map((subscriber, index) => {
-                    if (subscriber.statusName == "Quotation") {
+                    if (subscriber.statusName == "AT (Quotation)") {
                       return (
                         <TableRow key={index}>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
@@ -304,7 +400,7 @@ const ManageQuotation = () => {
                           <TableCell align="center">{subscriber.intrestedIn}</TableCell>
                           <TableCell align="center">
                             {(function () {
-                              if (subscriber.statusName == "Quotation") {
+                              if (subscriber.statusName == "AT (Quotation)") {
                                 return <Chip label="Quotation" color="primary" onClick={(e) => handleShowStatus(subscriber)} />;
                               }
                               else {

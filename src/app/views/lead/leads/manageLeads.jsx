@@ -1,12 +1,11 @@
-import { SimpleCard } from 'app/components';
-import { styled } from '@mui/system';
+import { SimpleCard, Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ClearIcon from '@mui/icons-material/Clear';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import { Form, Row, Col, Button, Modal, InputGroup } from 'react-bootstrap';
+import { Form, Modal, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PropTypes from 'prop-types';
@@ -22,11 +21,61 @@ import {
   Table,
   TableBody,
   Chip,
+  Button,
   TableCell,
   TableHead,
   TableRow,
+  MenuItem,
+  Grid,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
+import { styled, alpha } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
+import ImportLead from './importLead';
+import LeadForm from './addLeads';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0',
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+  },
+}));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,6 +110,29 @@ function a11yProps(index) {
 }
 
 const ManageLead = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorEl(null);
+  };
+
+  // Add Form Dailog
+  const [showAdd, setShowAdd] = useState(false);
+
+  const closeAdd = () => setShowAdd(false);
+  const openAdd = () => setShowAdd(true);
+
+
+  // Import Dailog
+  const [show1, setShow1] = useState(false);
+
+  const closeImport = () => setShow1(false);
+  const showImport = () => setShow1(true);
+
   const [showForm, setShowForm] = useState(false);
   const showForm1 = () => {
     setShowForm(!showForm);
@@ -153,9 +225,7 @@ const ManageLead = () => {
   };
   const handleCloseLead = () => { setLeadSatus(false); }
 
-  useEffect(() => {
-    getFetchLeadData()
-  }, []);
+
   const roleName = window.localStorage.getItem('roleName');
 
   const [obj2, setObj2] = useState(null);
@@ -175,259 +245,221 @@ const ManageLead = () => {
   };
   const closeMetting = () => { setShowMeetingForm(false); }
 
+  const [abc, setABC] = useState({})
+  const getMasterCount = () => {
+    axios.get(BASE_URL + `/api/getManageLeadCount`,
+      { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
+      .then((response) => {
+        setABC(response.data);
+      });
+  }
+  useEffect(() => {
+    getMasterCount()
+    getFetchLeadData()
+  }, [APIData]);
+
   return (
-    <SimpleCard title="Lead Management">
-      <Row>
-        <Col md="4">
-          <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-          <br></br>
-          <button type="button" className="btn btn-outline-primary"
-            value={onType}
-            onClick={() => setOnType('DEFAULT')}>
-            ALL
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-outline-primary"
-            value={onType}
-            onClick={() => setOnType('LASTDAY')}>
-            Last Day
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-outline-primary"
-            value={onType}
-            onClick={() => setOnType('LASTWEEK')}>
-            Last Week
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-outline-primary"
-            value={onType}
-            onClick={() => setOnType('LASTMONTH')}>
-            Last Month
-          </button>
+    <>
+      <SimpleCard>
+        <Box className="breadcrumb">
 
-        </Col>
-        <Col md="4">
-          <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
-          <br></br>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Search By Lead ID, Name, Mobile Number"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              value={searchBox}
-              onChange={(e) => setSearchBox(e.target.value)}
-            />
-          </InputGroup>
-        </Col>
-        <Col md="4">
-          <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
-          <br></br>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Search By Street, City, State, Country"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              value={locationkey}
-              onChange={(e) => setLocationkey(e.target.value)}
-            />
-          </InputGroup>
-        </Col>
-      </Row>
-
-      {/* {showForm && (
-        <form>
-          <Row>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Search By Client Name</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter Lead Name"
-                />
-              </div>
-            </Col>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Search By Mobile Number</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Search By Mobile Number"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Search By City</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Search By City"
-                />
-              </div>
-            </Col>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Select State</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Select State"
-                />
-              </div>
-            </Col>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Search By Country</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Search By Country"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Select Assign To</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Select Assign To"
-                />
-              </div>
-            </Col>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Select Generated By</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Select Generated By"
-                />
-              </div>
-            </Col>
-            <Col>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Select Monitor By</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Select Monitor By"
-                />
-              </div>
-            </Col>
-          </Row>
-        </form>
-      )} */}
-
-      <Container className="my-2">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleCChange}
-            variant="fullWidth"
-            aria-label="basic tabs example"
-            scrollButtons="auto"
-          // aria-label="scrollable auto tabs example"
-          >
-            <Tab label="Lead" {...a11yProps(0)} />
-            <Tab label="Followup" {...a11yProps(1)} />
-            <Tab label="Meeting" {...a11yProps(2)} />
-            <Tab label="Ringing" {...a11yProps(3)} />
-            <Tab label="Quotation" {...a11yProps(4)} />
-            <Tab label="Invoice" {...a11yProps(5)} />
-            <Tab label="Closed" {...a11yProps(6)} />
-            <Tab label="Drop" {...a11yProps(7)} />
-
-          </Tabs>
+          <Breadcrumb
+            routeSegments={[{ name: 'Dashboard', path: '/dashboard/default' }, { name: 'Manage Leads' }]}
+          />
         </Box>
-        <TabPanel value={value} index={0}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Lead") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Lead") {
-                              return <Chip label="Lead" color="warning" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+        <Grid container spacing={4} sx={{ mb: '24px' }}>
+
+          <Grid item xs={12} md={4} >
+            <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
+            <br></br>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search By Lead ID, Name, Mobile Number"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={searchBox}
+                onChange={(e) => setSearchBox(e.target.value)}
+              />
+            </InputGroup>
+          </Grid>
+          <Grid item xs={12} md={4} >
+            <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
+            <br></br>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search By Street, City, State, Country"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={locationkey}
+                onChange={(e) => setLocationkey(e.target.value)}
+              />
+            </InputGroup>
+          </Grid>
+          <Grid item xs={12} md={4} style={{ marginTop: '30px' }}>
+            <div className="d-flex justify-content-end">
+              <Button
+                id="demo-customized-button"
+                size='small'
+                aria-controls={open ? 'demo-customized-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleClick}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                Apply Filter
+              </Button>
+              <StyledMenu
+                id="demo-customized-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'demo-customized-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose5}
+              >
+                <MenuItem
+                  onClick={() => { setOnType('DEFAULT'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  DEFAULT
+                </MenuItem>
+                <MenuItem
+                  onClick={() => { setOnType('LASTDAY'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  LASTDAY
+                </MenuItem>
+                <MenuItem
+                  onClick={() => { setOnType('LASTWEEK'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  LASTWEEK
+                </MenuItem>
+                <MenuItem
+                  onClick={() => { setOnType('LASTMONTH'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  LASTMONTH
+                </MenuItem>
+              </StyledMenu>&nbsp;
+              <Button
+                id="demo-customized-button"
+                size='small'
+                color="success"
+                variant="contained"
+                disableElevation
+                onClick={showImport}
+
+              >
+                Import Leads
+              </Button>&nbsp;
+              <Button
+                id="demo-customized-button"
+                size='small'
+                color="success"
+                variant="contained"
+                disableElevation
+                onClick={openAdd}
+              >
+                Add Lead
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Container className="my-2">
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={value}
+              onChange={handleCChange}
+              variant="fullWidth"
+              aria-label="basic tabs example"
+              scrollButtons="auto"
+            // aria-label="scrollable auto tabs example"
+            >
+              <Tab label={"Lead" + " [" + (abc.lead ? abc.lead[0].lead_count : 0) + "]"}{...a11yProps(0)} />
+              <Tab label={"Followup" + " [" + (abc.followup ? abc.followup[0].followup_count : 0) + "]"} {...a11yProps(1)} />
+              <Tab label={"FT (Meeting)" + " [" + (abc.meeting ? abc.meeting[0].meeting_count : 0) + "]"} {...a11yProps(2)} />
+              <Tab label={"Ringing" + " [" + (abc.ringing ? abc.ringing[0].ringing_count : 0) + "]"} {...a11yProps(3)} />
+              <Tab label={"AT (Quotation)" + " [" + (abc.quoation ? abc.quoation[0].quoation : 0) + "]"} {...a11yProps(4)} />
+              <Tab label={"Invoice" + " [" + (abc.invoice ? abc.invoice[0].invoice : 0) + "]"} {...a11yProps(5)} />
+              <Tab label={"Closed (Paid)" + " [" + (abc.closed ? abc.closed[0].closed_lead : 0) + "]"} {...a11yProps(6)} />
+              <Tab label={"Drop" + " [" + (abc.drop ? abc.drop[0].drop_count : 0) + "]"}{...a11yProps(7)} />
+
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "Lead") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "Lead") {
+                                return <Chip label="Lead" color="warning" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
+
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
-                                    <Icon color="red">visibility</Icon>
+                                    <Icon color="primary">visibility</Icon>
+                                  </IconButton>
+                                  <IconButton onClick={() => handleShowLead(subscriber)}>
+                                    <WhatsAppIcon color='success' />
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon>edit</Icon>
+
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="primary">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon>edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <IconButton onClick={() => handleShowLead(subscriber)}>
+                                    <WhatsAppIcon color='success' />
                                   </IconButton>
-                                </Link>
-                                <IconButton onClick={() => handleShowLead(subscriber)}>
-                                  <WhatsAppIcon />
-                                </IconButton>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-            {/* <div style={{ height: 570, width: '100%' }}>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+              {/* <div style={{ height: 570, width: '100%' }}>
               <DataGrid
                 rows={APIData}
                 columns={columns}
@@ -437,606 +469,650 @@ const ManageLead = () => {
               // checkboxSelection
               />
             </div> */}
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "FollowUp") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "FollowUp") {
-                              return <Chip label="FollowUp" color="success" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "FollowUp") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "FollowUp") {
+                                return <Chip label="FollowUp" color="success" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
-
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Meeting") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Meeting") {
-                              return <Chip label="Meeting" color="success" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "FT (Meeting)") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "FT (Meeting)") {
+                                return <Chip label="Meeting" color="success" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Ringing") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Ringing") {
-                              return <Chip label="Ringing" color="warning" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "Ringing") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "Ringing") {
+                                return <Chip label="Ringing" color="warning" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Quotation") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Quotation") {
-                              return <Chip label="Quotation" color="primary" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "AT (Quotation)") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "AT (Quotation)") {
+                                return <Chip label="Quotation" color="primary" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
 
-        <TabPanel value={value} index={5}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Invoice") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Invoice") {
-                              return <Chip label="Invoice" color="primary" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
-                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
-                                  <IconButton>
-                                    <CurrencyRupeeIcon color='primary' />
-                                  </IconButton>
-                                </Link>
+          <TabPanel value={value} index={5}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "Invoice") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "Invoice") {
+                                return <Chip label="Invoice" color="primary" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
-                                  <IconButton>
-                                    <CurrencyRupeeIcon color='primary' />
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Closed") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Closed") {
-                              return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
+                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                    <IconButton>
+                                      <CurrencyRupeeIcon color='primary' />
+                                    </IconButton>
+                                  </Link>
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                    <IconButton>
+                                      <CurrencyRupeeIcon color='primary' />
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={6}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "Closed (Paid)") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "Closed (Paid)") {
+                                return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                                <Link to="/leads/transaction/addTransaction" state={subscriber}>
-                                  <IconButton>
-                                    <CurrencyRupeeIcon color='primary' />
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
-        <TabPanel value={value} index={7}>
-          <Box className="text-center" width="100%" overflow="auto">
-            {/* Table Section */}
-            <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
-              <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
-                <TableRow>
-                  <TableCell align="center">Lead Id</TableCell>
-                  <TableCell align="center">Lead Name</TableCell>
-                  <TableCell align="center">Email</TableCell>
-                  <TableCell align="center">Mobile Number</TableCell>
-                  <TableCell align="center">Intersted In</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {APIData.map((subscriber, index) => {
-                  if (subscriber.statusName == "Drop") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align="center">{subscriber.leadId}</TableCell>
-                        <TableCell align="center">{subscriber.name}</TableCell>
-                        <TableCell align="center">{subscriber.emailId}</TableCell>
-                        <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                        <TableCell align="center">{subscriber.intrestedIn}</TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (subscriber.statusName == "Drop") {
-                              return <Chip label="Drop" color="error" onClick={(e) => handleShow(subscriber)} />;
-                            }
-                            else {
-                              return <Chip label="Not Listed" color="error" />
-                            }
-                          })()}
-                        </TableCell>
-                        <TableCell align="center">
-                          {(function () {
-                            if (roleName == "Employee") {
 
-                              return <><Link to="/leads/viewLeads" state={subscriber}>
-                                <IconButton>
-                                  <Icon color="red">visibility</Icon>
-                                </IconButton>
-                              </Link>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                    <IconButton>
+                                      <CurrencyRupeeIcon color='primary' />
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={7}>
+            <Box className="text-center" width="100%" overflow="auto">
+              {/* Table Section */}
+              <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
+                <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
+                  <TableRow>
+                    <TableCell align="center">Lead Id</TableCell>
+                    <TableCell align="center">Lead Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Mobile Number</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {APIData.map((subscriber, index) => {
+                    if (subscriber.statusName == "Drop") {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center">{subscriber.leadId}</TableCell>
+                          <TableCell align="center">{subscriber.name}</TableCell>
+                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.mobileNo}</TableCell>
+                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (subscriber.statusName == "Drop") {
+                                return <Chip label="Drop" color="error" onClick={(e) => handleShow(subscriber)} />;
+                              }
+                              else {
+                                return <Chip label="Not Listed" color="error" />
+                              }
+                            })()}
+                          </TableCell>
+                          <TableCell align="center">
+                            {(function () {
+                              if (roleName == "Employee") {
 
-                              </>
-                            }
-                            else {
-                              return <>
-                                <Link to="/leads/viewLeads" state={subscriber}>
+                                return <><Link to="/leads/viewLeads" state={subscriber}>
                                   <IconButton>
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                <Link to="/leads/editLead" state={subscriber}>
-                                  <IconButton>
-                                    <Icon color="success">edit</Icon>
-                                  </IconButton>
-                                </Link>
-                              </>
-                            }
-                          })()}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-              </TableBody>
-            </StyledTable>
-          </Box>
-        </TabPanel>
 
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Link to="/leads/viewLeads" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="red">visibility</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                </>
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </StyledTable>
+            </Box>
+          </TabPanel>
+
+          <Modal
+            show={showLeadSatus}
+            onHide={handleCloseLead}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+
+          >
+            <Modal.Header>
+              <Modal.Title>Share Company Detail's</Modal.Title>
+              <IconButton type="button" onClick={handleCloseLead}>
+                <ClearIcon />
+              </IconButton>
+            </Modal.Header>
+            <Modal.Body>
+              <LeadStatus theLeadStatus={leadStatus} handleDialog={handleCloseLead}></LeadStatus>
+            </Modal.Body>
+          </Modal>
+
+          <Modal
+            show={showSatusForm}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title>Change Status</Modal.Title>
+              <IconButton type="button" onClick={handleClose}>
+                <ClearIcon />
+              </IconButton>
+            </Modal.Header>
+            <Modal.Body>
+              <StatusChange theStatusChange={obj1} handleDialog={handleClose}></StatusChange>
+            </Modal.Body>
+
+          </Modal>
+          {/* Followup */}
+          <Modal
+            show={showFollowForm}
+            onHide={closeFollowUp}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title>Change Status</Modal.Title>
+              <IconButton type="button" onClick={closeFollowUp}>
+                <ClearIcon />
+              </IconButton>
+            </Modal.Header>
+            <Modal.Body>
+              <FollowupStatusChange theFollowupStatusChange={obj2} handleDialog={closeFollowUp}></FollowupStatusChange>
+            </Modal.Body>
+
+          </Modal>
+          {/* Meeting */}
+          <Modal
+            show={showMeetingForm}
+            onHide={closeMetting}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title>Change Status</Modal.Title>
+              <IconButton type="button" onClick={closeMetting}>
+                <ClearIcon />
+              </IconButton>
+            </Modal.Header>
+            <Modal.Body>
+              <MettingStatusChange theMettingStatusChange={obj3} handleDialog={closeMetting}></MettingStatusChange>
+            </Modal.Body>
+
+          </Modal>
+        </Container>
+        {/* Import Dialog */}
         <Modal
-          show={showLeadSatus}
-          onHide={handleCloseLead}
           backdrop="static"
           keyboard={false}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-
-        >
-          <Modal.Header>
-            <Modal.Title>Share Company Detail's</Modal.Title>
-            <IconButton type="button" onClick={handleCloseLead}>
-              <ClearIcon />
-            </IconButton>
-          </Modal.Header>
-          <Modal.Body>
-            <LeadStatus theLeadStatus={leadStatus} handleDialog={handleCloseLead}></LeadStatus>
-          </Modal.Body>
-        </Modal>
-
-        <Modal
-          show={showSatusForm}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
+          show={show1}
+          onHide={closeImport}
+          animation={false}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
           <Modal.Header>
-            <Modal.Title>Change Status</Modal.Title>
-            <IconButton type="button" onClick={handleClose}>
+            <Modal.Title>Upload Excel File</Modal.Title>
+            <IconButton type="button" onClick={closeImport}>
               <ClearIcon />
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <StatusChange theStatusChange={obj1} handleDialog={handleClose}></StatusChange>
+            <ImportLead handleDialog={closeImport}></ImportLead>
           </Modal.Body>
-
         </Modal>
-        {/* Followup */}
+        {/* Add Dialog */}
         <Modal
-          show={showFollowForm}
-          onHide={closeFollowUp}
           backdrop="static"
           keyboard={false}
+          show={showAdd}
+          onHide={closeAdd}
+          animation={false}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
           <Modal.Header>
-            <Modal.Title>Change Status</Modal.Title>
-            <IconButton type="button" onClick={closeFollowUp}>
+            <Modal.Title>Add Lead </Modal.Title>
+            <IconButton type="button" onClick={closeAdd}>
               <ClearIcon />
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <FollowupStatusChange theFollowupStatusChange={obj2} handleDialog={closeFollowUp}></FollowupStatusChange>
+            <LeadForm handleDialog={closeAdd}></LeadForm>
           </Modal.Body>
-
         </Modal>
-        {/* Meeting */}
-        <Modal
-          show={showMeetingForm}
-          onHide={closeMetting}
-          backdrop="static"
-          keyboard={false}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <Modal.Title>Change Status</Modal.Title>
-            <IconButton type="button" onClick={closeMetting}>
-              <ClearIcon />
-            </IconButton>
-          </Modal.Header>
-          <Modal.Body>
-            <MettingStatusChange theMettingStatusChange={obj3} handleDialog={closeMetting}></MettingStatusChange>
-          </Modal.Body>
 
-        </Modal>
-      </Container>
-    </SimpleCard >
+      </SimpleCard>
+    </>
   );
 };
 // Custom Style Section

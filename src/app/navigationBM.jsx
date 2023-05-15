@@ -7,10 +7,9 @@ export const navigationBM = [
         name: 'Lead',
         icon: 'send',
         children: [
-            { name: 'View All Leads', iconText: 'SU', path: '/leads/manageLeads' },
-            { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
-            { name: 'Assign Leads', iconText: 'FP', path: '/leads/assignLeads' },
-            // { name: 'System Master', iconText: '404', path: '/manageSystemMaster' },
+            { name: 'Manage Leads', iconText: 'ML', path: '/leads/manageLeads' },
+            { name: 'Assign Leads', iconText: 'AL', path: '/leads/assignLeads' },
+            { name: 'Profit/Loss Trader', iconText: 'PL', path: '/leads/manageTrader' },
 
         ],
     },

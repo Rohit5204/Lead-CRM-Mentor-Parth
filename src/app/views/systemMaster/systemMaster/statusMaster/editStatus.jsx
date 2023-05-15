@@ -51,6 +51,9 @@ const EditStatus = ({ theEditStatus, handleDialog }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+    const changePage = () => {
+        handleDialog()
+    }
     return (
         <Container>
             {/* <SimpleCard title="Update Catalogue Detail's"> */}
@@ -74,8 +77,17 @@ const EditStatus = ({ theEditStatus, handleDialog }) => {
                         />
                     </Col>
                 </Row>
+                <br />
                 <Row>
-                    <Col>
+                    <Col className="d-flex justify-content-end">
+                        <button
+                            type="submit"
+                            className="btn btn-error"
+                            style={{ marginTop: 5 + 'px' }}
+                            onClick={changePage}
+                        >
+                            Cancel
+                        </button>&nbsp;
                         <button
                             type="submit"
                             className="btn btn-success"

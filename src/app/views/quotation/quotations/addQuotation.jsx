@@ -721,10 +721,10 @@ const AddQuotation = () => {
                     <Col></Col>
                     <Col>
                       <b>
-                        <Form.Label>Subtotal:</Form.Label>
+                        <Form.Label>Subtotal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                       </b>
-                      &nbsp;&nbsp;
-                      <Form.Label style={{ color: 'green' }} className="ml-5">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Form.Label style={{ color: 'green' }}>
                         ₹ {subtotal}
                       </Form.Label>
                     </Col>
@@ -734,7 +734,7 @@ const AddQuotation = () => {
                     <Col></Col>
                     <Col>
                       <b>
-                        <Form.Label>Tax Rate({tax || '0'}%):</Form.Label>
+                        <Form.Label>GST ({tax || '0'}%)   &nbsp;&nbsp;&nbsp;&nbsp; :</Form.Label>
                       </b>
 
                       <Form.Label style={{ color: 'green' }} className="ml-4">
@@ -763,10 +763,10 @@ const AddQuotation = () => {
                     <Col>
                       <hr />
                       <b>
-                        <Form.Label>Grand Total:</Form.Label>
+                        <Form.Label>Grand Total &nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                       </b>
-
-                      <Form.Label style={{ color: 'green' }} className="ml-5">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Form.Label style={{ color: 'green' }}>
                         ₹{total % 1 === 0 ? total : total.toFixed(2)}
                       </Form.Label>
                     </Col>
@@ -794,15 +794,13 @@ const AddQuotation = () => {
                 <hr />
                 <Row>
                   <Col>
-                    <Form.Label>Tax rate:</Form.Label>
+                    <Form.Label>GST :</Form.Label>
                     <InputGroup className="mb-3">
                       <Form.Control
                         required
                         type="number"
                         name="tax"
                         id="tax"
-                        min="5"
-                        step="1"
                         placeholder="Tax Rate"
                         value={tax}
                         onChange={(event) => setTax(event.target.value)}

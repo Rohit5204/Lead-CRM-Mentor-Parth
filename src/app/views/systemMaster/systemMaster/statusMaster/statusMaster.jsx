@@ -277,17 +277,7 @@ const StatusMaster = () => {
                 <Modal.Body>
                     <EditStatus theEditStatus={obj1} handleDialog={handleClose} />
                 </Modal.Body>
-                <Modal.Footer>
-                    <button
-                        type="submit"
-                        className="btn btn-error"
-                        style={{ marginTop: 5 + 'px' }}
-                        onClick={handleClose}
-                    >
-                        Cancel
-                    </button>
 
-                </Modal.Footer>
             </Modal>
         </div>
     );

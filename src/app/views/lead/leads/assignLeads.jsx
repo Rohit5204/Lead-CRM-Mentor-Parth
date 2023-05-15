@@ -1,4 +1,5 @@
-import { styled } from '@mui/system';
+import { styled, alpha } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
 import { Breadcrumb } from 'app/components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -24,9 +25,55 @@ import {
   TextField,
   Autocomplete,
   TableRow,
+  Grid,
+  Button,
+  MenuItem,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0',
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+  },
+}));
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -76,6 +123,15 @@ function a11yProps(index) {
   };
 }
 const AssignLead = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorEl(null);
+  };
+
   const today = new Date();
   const numberOfDaysToAdd = 0;
   const date = today.setDate(today.getDate() + numberOfDaysToAdd);
@@ -121,7 +177,8 @@ const AssignLead = () => {
   const [onType, setOnType] = useState('')
   const [searchBox, setSearchBox] = useState('')
   const [locationkey, setLocationkey] = useState('')
-  useEffect(() => {
+
+  const getFetchLeadData = () => {
     axios
       .post(BASE_URL + `/api/getFilteredLeadData`, {
         leadId: 0,
@@ -135,6 +192,9 @@ const AssignLead = () => {
       .then((response) => {
         setAPIData(response.data.data);
       });
+  }
+  useEffect(() => {
+    getFetchLeadData()
   }, [APIData])
 
   useEffect(() => {
@@ -201,6 +261,20 @@ const AssignLead = () => {
     setAssign(false)
   }
 
+  const [count, setCount] = useState({})
+
+  const getMasterCount = () => {
+    axios.get(BASE_URL + `/api/getStageCount`,
+      { headers: headers })
+      .then((response) => {
+        setCount(response.data);
+      });
+  }
+
+  useEffect(() => {
+    getMasterCount()
+  }, []);
+
   return (
     <Container>
       {/* <Box> */}
@@ -212,75 +286,83 @@ const AssignLead = () => {
           ]}
         />
       </Box>
-      <Box>
-        <Row>
-          <Col md="4">
-            <Form.Label htmlFor="basic-url">Apply Filter Search</Form.Label>
-            <br></br>
-            <button type="button" className="btn btn-outline-primary"
-              value={onType}
-              onClick={() => setOnType('DEFAULT')}>
-              ALL
-            </button>
-            &nbsp;
-            <button type="button" className="btn btn-outline-primary"
-              value={onType}
-              onClick={() => setOnType('LASTDAY')}>
-              Last Day
-            </button>
-            &nbsp;
-            <button type="button" className="btn btn-outline-primary"
-              value={onType}
-              onClick={() => setOnType('LASTWEEK')}>
-              Last Week
-            </button>
-            &nbsp;
-            <button type="button" className="btn btn-outline-primary"
-              value={onType}
-              onClick={() => setOnType('LASTMONTH')}>
-              Last Month
-            </button>
+      <Grid container spacing={4} sx={{ mb: '24px' }}>
 
-          </Col>
-          <Col md="4">
-            <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
-            <br></br>
-            <InputGroup className="mb-3">
-              <Form.Control
-                placeholder="Search By Lead ID, Name, Mobile Number"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-                value={searchBox}
-                onChange={(e) => setSearchBox(e.target.value)}
-              />
-            </InputGroup>
-          </Col>
-          <Col md="4">
-            <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
-            <br></br>
-            <InputGroup className="mb-3">
-              <Form.Control
-                placeholder="Search By Street, City, State, Country"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-                value={locationkey}
-                onChange={(e) => setLocationkey(e.target.value)}
-              />
-            </InputGroup>
-          </Col>
-        </Row>
-        <Row>
-          {/* <Col>
-            <LeadCards />
-          </Col> */}
-        </Row>
-      </Box>
+        <Grid item xs={12} md={4} >
+          <Form.Label htmlFor="basic-url">Search Lead</Form.Label>
+          <br></br>
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="Search By Lead ID, Name, Mobile Number"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+              value={searchBox}
+              onChange={(e) => setSearchBox(e.target.value)}
+            />
+          </InputGroup>
+        </Grid>
+        <Grid item xs={12} md={6} >
+          <Form.Label htmlFor="basic-url">Search Advanced Lead</Form.Label>
+          <br></br>
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="Search By Street, City, State, Country"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+              value={locationkey}
+              onChange={(e) => setLocationkey(e.target.value)}
+            />
+          </InputGroup>
+        </Grid>
+        <Grid item xs={12} md={2} style={{ marginTop: '30px' }}>
+          <Button
+            id="demo-customized-button"
+            size='large'
+            aria-controls={open ? 'demo-customized-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            variant="contained"
+            disableElevation
+            onClick={handleClick}
+            endIcon={<KeyboardArrowDownIcon />}
+          >
+            Apply Filter
+          </Button>
+          <StyledMenu
+            id="demo-customized-menu"
+            MenuListProps={{
+              'aria-labelledby': 'demo-customized-button',
+            }}
+            className="d-flex justify-content-end"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose5}
+          >
+            <MenuItem
+              onClick={() => { setOnType('DEFAULT'); getFetchLeadData(); handleClose5() }} disableRipple>
+              DEFAULT
+            </MenuItem>
+            <MenuItem
+              onClick={() => { setOnType('LASTDAY'); getFetchLeadData(); handleClose5() }} disableRipple>
+              LASTDAY
+            </MenuItem>
+            <MenuItem
+              onClick={() => { setOnType('LASTWEEK'); getFetchLeadData(); handleClose5() }} disableRipple>
+              LASTWEEK
+            </MenuItem>
+            <MenuItem
+              onClick={() => { setOnType('LASTMONTH'); getFetchLeadData(); handleClose5() }} disableRipple>
+              LASTMONTH
+            </MenuItem>
+          </StyledMenu>&nbsp;
+        </Grid>
+      </Grid>
 
       {/* Tab Section */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
-          <Tab label="Un-Assigned Leads" {...a11yProps(0)} />
-          <Tab label="Assigned Leads" {...a11yProps(1)} />
+          <Tab label={"Un-Assigned Leads" + " [" + (count.unassigned ? count.unassigned[0].unassigned_lead : null) + "]"}{...a11yProps(0)} />
+          <Tab label={"Assigned Leads" + " [" + (count.assigned ? count.assigned[0].assigned_lead : null) + "]"}{...a11yProps(1)} />
           <Tab label="Employee Wise Leads" {...a11yProps(2)} />
         </Tabs>
       </Box>

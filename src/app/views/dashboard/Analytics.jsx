@@ -1,4 +1,4 @@
-import { Card, Grid, styled, useTheme } from '@mui/material';
+import { Card, Grid, MenuItem, Select, useTheme, Button } from '@mui/material';
 import { Fragment } from 'react';
 import DoughnutChart from './shared/Doughnut';
 import { SimpleCard } from 'app/components';
@@ -11,8 +11,6 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Col, Row, Form, InputGroup } from 'react-bootstrap';
-import LineGraph from './shared/LineGraph';
-import SampleLine from './shared/MixedGraph';
 import React, { useState } from 'react';
 import EmployeeDashboard from './EmployeeDashboard';
 import EmployeeLine from './shared/EmployeeChart';
@@ -21,10 +19,54 @@ import UserWiseCount from './shared/userLoginWiseCount';
 import TLWiseCount from './shared/TeamLeadCount';
 import EmpWiseCount from './shared/EmpWiseCount';
 import TopEmpDetail from './shared/TopEmpDetail';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { styled, alpha } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
 
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
+}));
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0',
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+  },
 }));
 
 const Title = styled('span')(() => ({
@@ -46,6 +88,7 @@ const H4 = styled('h4')(({ theme }) => ({
   textTransform: 'capitalize',
   color: theme.palette.text.secondary,
 }));
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -78,6 +121,14 @@ function a11yProps(index) {
   };
 }
 const Analytics = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorEl(null);
+  };
 
   const [value, setValue] = useState(0);
   const { palette } = useTheme();
@@ -104,39 +155,11 @@ const Analytics = () => {
           <>
             <SimpleCard title="Dashboard">
 
-              <Row>
-                <Col>
-                  <Form.Label >Apply Filter Search</Form.Label>
-                  <br></br>
-                  <button type="button" className="btn btn-outline-primary"
-                    value={onType}
-                    onClick={() => setOnType('DEFAULT')}>
-                    ALL
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-outline-primary"
-                    value={onType}
-                    onClick={() => setOnType('LASTDAY')}>
-                    Last Day
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-outline-primary"
-                    value={onType}
-                    onClick={() => setOnType('LASTWEEK')}>
-                    Last Week
-                  </button>
-                  &nbsp;
-                  <button type="button" className="btn btn-outline-primary"
-                    value={onType}
-                    onClick={() => setOnType('LASTMONTH')}>
-                    Last Month
-                  </button>
-                  &nbsp;
-                </Col>
-                <Col>
-                  <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
+              <Grid container spacing={4}>
 
-                  <InputGroup className="mb-3">
+                <Grid item xs={12} md={6}>
+                  <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
+                  <InputGroup>
                     <Form.Control
                       value={startDate}
                       onChange={(e) => setstartDate(e.target.value)}
@@ -144,16 +167,62 @@ const Analytics = () => {
                     <Form.Control
                       value={endDate}
                       onChange={(e) => setendDate(e.target.value)}
-                      type="date" />
-                    <button type="button" className="btn btn-outline-primary"
+                      type="date" />&nbsp;
+                    <Button variant='contained'
                       value={onType}
                       onClick={() => setOnType('DATE')}>
                       Search
-                    </button>
+                    </Button>
 
                   </InputGroup>
-                </Col>
-              </Row>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <div className="d-flex justify-content-end">
+                    <Button
+                      style={{ marginTop: '31px' }}
+                      id="demo-customized-button"
+                      size='large'
+                      aria-controls={open ? 'demo-customized-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      variant="contained"
+                      disableElevation
+                      onClick={handleClick}
+                      endIcon={<KeyboardArrowDownIcon />}
+                    >
+                      Apply Filter
+                    </Button>
+                    <StyledMenu
+                      id="demo-customized-menu"
+                      MenuListProps={{
+                        'aria-labelledby': 'demo-customized-button',
+                      }}
+                      className="d-flex justify-content-end"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose5}
+                    >
+                      <MenuItem
+                        onClick={() => { setOnType('DEFAULT'); handleClose5() }} disableRipple>
+                        DEFAULT
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => { setOnType('LASTDAY'); handleClose5() }} disableRipple>
+                        LASTDAY
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => { setOnType('LASTWEEK'); handleClose5() }} disableRipple>
+                        LASTWEEK
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => { setOnType('LASTMONTH'); handleClose5() }} disableRipple>
+                        LASTMONTH
+                      </MenuItem>
+                    </StyledMenu>
+                  </div>
+                </Grid>
+              </Grid>
+
 
               <br></br>
 
@@ -186,13 +255,13 @@ const Analytics = () => {
                       <UserWiseCount />
                     </TabPanel>
                     <TabPanel value={value} index={3}>
-                      <TopEmpDetail></TopEmpDetail>
+                      <TopEmpDetail showData={dashboard}></TopEmpDetail>
                     </TabPanel>
                   </>
                 }
                 else if (roleName == "Branch Manager") {
                   return <>
-                    <TopEmpDetail></TopEmpDetail>
+                    <TopEmpDetail showData={dashboard}></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
@@ -217,7 +286,7 @@ const Analytics = () => {
                 }
                 else if (roleName == "Team Lead") {
                   return <>
-                    <TopEmpDetail></TopEmpDetail>
+                    <TopEmpDetail showData={dashboard}></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
@@ -242,7 +311,7 @@ const Analytics = () => {
                 }
                 else {
                   return <>
-                    <TopEmpDetail></TopEmpDetail>
+                    <TopEmpDetail showData={dashboard}></TopEmpDetail>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />

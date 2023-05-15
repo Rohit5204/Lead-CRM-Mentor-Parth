@@ -170,7 +170,7 @@ const ViewLead = () => {
                 />
               </Col>
             </Row>
-
+            <br />
 
             <Row>
               <Col className="d-flex justify-content-center">

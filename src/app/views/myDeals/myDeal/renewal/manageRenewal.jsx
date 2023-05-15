@@ -65,6 +65,7 @@ const Renewal = () => {
                 <Box className="breadcrumb">
                     <Breadcrumb
                         routeSegments={[
+                            { name: 'Dashboard', path: '/dashboard/default' },
                             { name: 'Renewal List', path: '/myDeal/renewal' },
                             { name: 'Product Renewal' },
                         ]}

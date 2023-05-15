@@ -1,6 +1,7 @@
-import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme } from '@mui/material';
+import { Card, Box, Fab, Grid, Icon, lighten, styled, useTheme, Tooltip, Chip } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { makeStyles } from '@mui/styles';
 import { Row, Col } from 'react-bootstrap'
 import { Small } from 'app/components/Typography';
 import "./statusCard.css";
@@ -16,6 +17,15 @@ import { BASE_URL } from 'app/utils/constant';
 
 
 const StatCards2 = (showData) => {
+
+  const useStyles = makeStyles({
+    root: {
+      transition: "transform 0.15s ease-in-out",
+      "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+    },
+  });
+
+  const classes = useStyles()
   // console.log(showData.showData)
   const { palette } = useTheme();
   const textError = palette.error.main;
@@ -97,78 +107,55 @@ const StatCards2 = (showData) => {
     <AssignmentTurnedInIcon style={{ fontSize: "70px" }}></AssignmentTurnedInIcon>,
   ]
   return (
-    <div className="row align-items-stretch">
+    <Grid container spacing={4} sx={{ mb: '24px' }}>
       {APIData123.map((item, index) => (
-        // if (item.platformName != "") {
-        //   return (
-        <div className="c-dashboardInfo col-lg-3 col-md-6" key={index} >
-          <div className="wrap">
-            <Row className='mb-1'>
-              <Col md="4">
-                <div style={{ color: '#7499e5' }}>
-                  {/* {iconOption[index]} */}
-                  <img key={index} src={listOfImages[index].url} height={80} width={80} style={{ marginTop: '-15px' }} ></img>
-                </div>
-              </Col>
-              <Col style={{ marginLeft: "12px" }}>
-                <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
-                  {item.platformName}
-                </h4>
-                <span className="hind-font ">{item.count}</span>
-              </Col>
-
-            </Row>
-          </div>
-        </div>
-        // )}
-      )
-      )}
-    </div>
-
+        <Grid item xs={12} md={3} key={index}>
+          <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+            <ContentBox>
+              <Grid container spacing={4}>
+                <Grid item xs={7} md={7}>
+                  <Box>
+                    <Small className='mb-2'>{item.platformName}</Small>
+                    <Heading style={{ padding: '10px' }}>{item.count}</Heading>
+                  </Box>
+                </Grid>
+                <Grid item xs={4} md={4}>
+                  <Box>
+                    <img key={index} src={listOfImages[index].url} height={80} width={80} ></img>
+                  </Box>
+                </Grid>
+              </Grid>
+            </ContentBox>
+          </StyledCard>
+        </Grid>
+      ))
+      }
+    </Grid >
   );
 };
-// <div className="c-dashboardInfo col-lg-4 col-md-6" key={index}>
-//   <div className="wrap">
-//     <h6 className="">{item.count}</h6>
-//     <Row>
-//       <Col >
-//         <h5 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title ">
-//           <img key={index} src={listOfImages[index].url} height={70} width={70} ></img>
-//           {item.platformName}
-//         </h5>
-//       </Col>
-//       <br />
-//     </Row>
-//   </div>
-// </div>
-// #282f4e removed
-
-// #EB9694
-// #F4BE65
-// #19CABA
 const StyledCard = styled(Card)(({ theme }) => ({
-  display: 'flex',
+  // display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '24px !important',
-  // background: '#19CABA',
-  [theme.breakpoints.down('sm')]: { padding: '16px !important' },
+  background: theme.palette.background.paper,
+  // [theme.breakpoints.down('sm')]: { padding: '16px !important' },
 }));
 
 const Heading = styled('h6')(({ theme }) => ({
   margin: 0,
   marginTop: '4px',
   fontSize: '18px',
-  color: '#FFFFFF',
   fontWeight: '500',
-  color: theme.palette.primary.main,
 }));
-const ContentBox = styled('div')(() => ({
+const ContentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
-  alignItems: 'center',
+  padding: '10px !important',
+  '& small': { color: theme.palette.text.secondary, fontSize: '16px' },
+  '& .icon': { opacity: 0.6, fontSize: '44px', color: '#1e55c7' },
 }));
+
 
 const FabIcon = styled(Fab)(() => ({
   width: '44px !important',

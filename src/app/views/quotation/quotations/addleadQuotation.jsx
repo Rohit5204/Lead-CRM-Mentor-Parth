@@ -706,7 +706,7 @@ const AddLeadQuotation = () => {
                                         <Col></Col>
                                         <Col>
                                             <b>
-                                                <Form.Label>Tax Rate({tax || '0'}%):</Form.Label>
+                                                <Form.Label>GST ({tax || '0'}%):</Form.Label>
                                             </b>
 
                                             <Form.Label style={{ color: 'green' }} className="ml-4">
@@ -773,8 +773,6 @@ const AddLeadQuotation = () => {
                                                 type="number"
                                                 name="tax"
                                                 id="tax"
-                                                min="5"
-                                                step="1"
                                                 placeholder="Tax Rate"
                                                 value={tax}
                                                 onChange={(event) => setTax(event.target.value)}

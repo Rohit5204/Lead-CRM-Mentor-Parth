@@ -230,7 +230,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
                         </Row>
                     </>
                 }
-                else if (myOptions4 == "Meeting") {
+                else if (myOptions4 == "FT (Meeting)") {
                     return <>
                         <br />
                         <h6>Meeting Detail's</h6>
@@ -303,7 +303,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
                             </button>&nbsp;
                         </>
                     }
-                    else if (myOptions4 == "Meeting") {
+                    else if (myOptions4 == "FT (Meeting)") {
                         return <>
                             <button type="submit"
                                 className="btn btn-secondary"
