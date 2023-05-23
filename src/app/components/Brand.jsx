@@ -24,15 +24,16 @@ const Brand = ({ children }) => {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        <MatxLogo />
-        <StyledSpan mode={mode} className="sidenavHoverShow">
+        {/* <MatxLogo /> */}
+        <img width={'100px'} src="/assets/images/illustrations/CRM LOGO 2-01.png" alt=""></img>
+        {/* <StyledSpan mode={mode} className="sidenavHoverShow">
           Lead CRM
-        </StyledSpan>
+        </StyledSpan> */}
       </Box>
 
-      <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
+      {/* <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
         {children || null}
-      </Box>
+      </Box> */}
     </BrandRoot>
   );
 };

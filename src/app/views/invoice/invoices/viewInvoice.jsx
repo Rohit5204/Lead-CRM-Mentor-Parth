@@ -180,7 +180,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                 </thead>
                                 <tbody >
                                     <tr>
-                                        <td width="60%" className='text-left'> <span> Name   &nbsp;&nbsp;&nbsp;:   Gurunandan Ratanakr Masurkar</span>
+                                        <td width="60%" className='text-left'> <span> Name   &nbsp;&nbsp;&nbsp;:   {theViewInvoice.billTo}</span>
                                             <br />
                                             <span className="font-bold"> GST NO  &nbsp;&nbsp;:   {theViewInvoice.gstNo}</span>
                                             <br />

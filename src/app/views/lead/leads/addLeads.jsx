@@ -223,6 +223,8 @@ const LeadForm = ({ handleDialog }) => {
                 <Icon>₹</Icon>
               </InputGroup.Text>
               <Form.Control
+                disabled
+                type='number'
                 onChange={(e) => setExpectedAmount(e.target.value)}
                 value={expectedAmount}
                 placeholder="Client Expected Amount"

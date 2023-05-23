@@ -96,6 +96,7 @@ const ImportLead = ({ handleDialog }) => {
             else {
                 excelData[i].sourceId = 1
             }
+            excelData[i].expectedAmount = 10000
             excelData[i].status = 1
             excelData[i].assignId = null;
             excelData[i].label = 1;       //Label

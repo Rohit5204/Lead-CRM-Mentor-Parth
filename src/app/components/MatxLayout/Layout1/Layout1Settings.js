@@ -2,7 +2,7 @@ const Layout1Settings = {
   leftSidebar: {
     show: true,
     mode: 'full', // full, close, compact, mobile,
-    theme: 'slateDark1', // View all valid theme colors inside MatxTheme/themeColors.js
+    theme: 'slateDark1', // View all valid theme colors inside MatxTheme/themeColors.js blueDark
     bgImgURL: '/assets/images/sidebar/sidebar-bg-dark.jpg',
   },
   topbar: {

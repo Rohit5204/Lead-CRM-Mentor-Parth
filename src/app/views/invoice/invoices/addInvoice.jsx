@@ -393,7 +393,6 @@ const AddInvoice = () => {
                                             <Form.Control
                                                 id="dateRequired"
                                                 type="date"
-                                                disabled
                                                 name="dateRequired"
                                                 value={invoiceDate}
                                                 onChange={(event) => setInvoiceDate(event.target.value)}

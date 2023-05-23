@@ -1,7 +1,6 @@
 export const navigations = [
   { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
 
-  { label: 'LEADS', type: 'label' },
   {
     name: 'Lead',
     icon: 'send',
@@ -12,9 +11,7 @@ export const navigations = [
       { name: 'Profit/Loss Trader', iconText: 'PL', path: '/leads/manageTrader' },
     ],
   },
-
-  { label: 'QUOTATIONS', type: 'label' },
-  { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
+  { name: 'Quotation', path: '/quotations/manageQuotation', icon: 'work' },
 
   // {
   //   name: 'Quotation List',
@@ -26,8 +23,7 @@ export const navigations = [
   //   ],
   // },
 
-  { label: 'INVOICE', type: 'label' },
-  { name: 'Invoice List', path: '/invoices/ManageInvoiceList', icon: 'receipt' },
+  { name: 'Invoice', path: '/invoices/ManageInvoiceList', icon: 'receipt' },
   // {
   //   name: 'Invoive',
   //   icon: 'receipt',
@@ -37,9 +33,8 @@ export const navigations = [
   //     { name: 'Add Invoice', iconText: 'SI', path: 'invoices/addInvoice' },
   //   ],
   // },
-  { label: 'MY DEALS', type: 'label' },
   {
-    name: 'Deals',
+    name: 'My Deals',
     icon: 'security',
     children: [
       { name: 'Closed Lead', iconText: 'SI', path: '/myDeal/manageDeals' },
@@ -47,7 +42,6 @@ export const navigations = [
       { name: 'Renewal', iconText: 'SI', path: '/myDeal/renewal/manageRenewal' },
     ],
   },
-  { label: 'Email Template', type: 'label' },
   {
     name: 'Email',
     icon: 'email',
@@ -61,7 +55,6 @@ export const navigations = [
 
   // },
 
-  { label: 'Setting', type: 'label' },
   {
     name: 'Setting',
     icon: 'settings_applications',

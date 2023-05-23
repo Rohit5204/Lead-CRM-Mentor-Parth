@@ -117,6 +117,7 @@ const AddEmpBranch = () => {
             }).catch(error => {
                 alert(error.response.data.message)
             });
+        changePage()
     };
 
     const [showPassword, setShowPassword] = useState(false);

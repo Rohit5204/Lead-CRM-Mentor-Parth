@@ -101,7 +101,7 @@ const JwtLogin = () => {
                   required
                   fullWidth
                   id="email"
-                  label="."
+                  label=""
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -115,7 +115,7 @@ const JwtLogin = () => {
                   }}
                 />
                 <Form.Label style={{ fontSize: '20px', color: 'white', fontFamily: 'sans-serif' }}>Password </Form.Label>
-                <TextField
+                {/* <TextField
                   margin="normal"
                   required
                   fullWidth
@@ -145,6 +145,25 @@ const JwtLogin = () => {
                       borderRadius: 20,
                       backgroundColor: 'white'
                     }
+                  }}
+                /> */}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="password"
+                  label=""
+                  name="password"
+                  type='password'
+                  autoComplete="email"
+                  autoFocus
+                  value={passwordlogin}
+                  onChange={(e) => setuserpassword(e.target.value)}
+                  InputProps={{
+                    style: {
+                      borderRadius: 20,
+                      backgroundColor: 'white'
+                    },
                   }}
                 />
 
