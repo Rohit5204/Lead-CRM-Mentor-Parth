@@ -96,6 +96,7 @@ const LeadForm = ({ handleDialog }) => {
     setMyOptions5('')
   };
   //Add data in the table
+  const loggedInUserId = localStorage.getItem('userId')
   const postData = () => {
     var assignedid, platformid, labelid, statusid;
     for (var i = 0; i < id1.length; i++) {
@@ -130,7 +131,7 @@ const LeadForm = ({ handleDialog }) => {
       intrestedIn: myOptions1,
       platformName: myOptions2,
       sourceId: platformid,
-      assignId: assignedid,
+      assignId: loggedInUserId,
       status: statusid,
       label: labelid,
       createdBy: 1,
