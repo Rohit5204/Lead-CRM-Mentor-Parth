@@ -90,6 +90,9 @@ const ImportLead = ({ handleDialog }) => {
             else if (excelData[i].platformName == "Google Ads") {
                 excelData[i].sourceId = 8;
             }
+            else if (excelData[i].platformName == "Web Ads") {
+                excelData[i].sourceId = 9;
+            }
             else if (excelData[i].platformName == "" || null) {
                 excelData[i].sourceId = 1;
             }
@@ -201,8 +204,6 @@ const ImportLead = ({ handleDialog }) => {
                                         <th scope="col">State</th>
                                         <th scope="col">Intersted In</th>
                                         <th scope="col">Platform Name</th>
-                                        <th scope="col">Expected Amount</th>
-                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

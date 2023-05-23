@@ -10,7 +10,6 @@ export const IndividualData = ({ individualExcelData }) => {
       <th>{individualExcelData.stateName}</th>
       <th>{individualExcelData.intrestedIn}</th>
       <th>{individualExcelData.platformName}</th>
-      <th>{individualExcelData.expectedAmount}</th>
     </>
   );
 };
