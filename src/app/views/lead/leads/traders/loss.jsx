@@ -4,6 +4,7 @@ import axios from "axios";
 import { styled } from '@mui/material/styles';
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 
 const StyledTable = styled(Table)(() => ({
@@ -17,7 +18,10 @@ const StyledTable = styled(Table)(() => ({
 }));
 
 const LossTrader = ({ fetch }) => {
+    const location = useLocation();
     const [APIData, setAPIData] = useState([]);
+    const leadId = location.state.leadId;
+    const name = location.state.name
 
     const items = localStorage.getItem('accessToken');
     const roleCode = localStorage.getItem('roleCode');
@@ -29,10 +33,23 @@ const LossTrader = ({ fetch }) => {
         "userId": userId
     }
 
+    // const getLeadTraderData = () => {
+    //     axios.post(BASE_URL + `/api/getLeadTrader`, { headers: headers })
+    //         .then((response) => {
+    //             setAPIData(response.data.data);
+    //         });
+    // }
+
     const getLeadTraderData = () => {
-        axios.post(BASE_URL + `/api/getLeadTrader`, { headers: headers })
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
+            leadId: leadId, userId: 0, statusId: 0, searchKey: "",
+            locationkey: "", platformId: 0, opType: ""
+        },
+            { headers: headers })
             .then((response) => {
-                setAPIData(response.data.data);
+                for (var i = 0; i < response.data.data.length; i++) {
+                    setAPIData(response.data.data[i].traderData);
+                }
             });
     }
     useEffect(() => {
@@ -47,8 +64,9 @@ const LossTrader = ({ fetch }) => {
                         <TableRow>
 
                             <TableCell align="center">Trader Name</TableCell>
-                            <TableCell align="center">Trader Amount</TableCell>
                             <TableCell align="center">Trader Date</TableCell>
+                            <TableCell align="center">Trader Amount</TableCell>
+                            <TableCell align="center">Status</TableCell>
                             <TableCell align="center">Remark</TableCell>
                         </TableRow>
                     </TableHead>
@@ -58,9 +76,12 @@ const LossTrader = ({ fetch }) => {
                                 return (
                                     <TableRow key={index}>
 
-                                        <TableCell align="center">{subscriber.name}</TableCell>
-                                        <TableCell align="center">{subscriber.traderAmt}</TableCell>
+                                        <TableCell align="center">{name}</TableCell>
                                         <TableCell align="center">{new Date(subscriber.traderDate).toLocaleDateString('en-GB')}</TableCell>
+                                        <TableCell align="center">{subscriber.traderAmt}</TableCell>
+                                        <TableCell align="center">
+                                            <Chip label="Loss" color="error" />
+                                        </TableCell>
                                         <TableCell align="center">{subscriber.remarks}</TableCell>
                                     </TableRow>
                                 );

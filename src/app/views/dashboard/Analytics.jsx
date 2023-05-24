@@ -181,6 +181,14 @@ const Analytics = () => {
 
               <Grid item xs={12} md={6}>
                 <SimpleCard>
+                  {/* <Grid container spacing={4}>
+
+                    <Grid item xs={12} md={8}>
+                      <img width={'350px'} height={'100%'} src="/assets/images/banner table.png" alt="">
+
+                      </img>
+                    </Grid>
+                    <Grid item xs={12} md={4}> */}
                   <div className="d-flex justify-content-end">
                     <Button
                       style={{ marginTop: '31px' }}
@@ -224,6 +232,8 @@ const Analytics = () => {
                       </MenuItem>
                     </StyledMenu>
                   </div>
+                  {/* </Grid>
+                  </Grid> */}
                 </SimpleCard>
               </Grid>
 

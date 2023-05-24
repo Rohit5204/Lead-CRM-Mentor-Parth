@@ -9,7 +9,6 @@ export const navigationTL = [
         children: [
             { name: 'Manage Leads', iconText: 'ML', path: '/leads/manageLeads' },
             { name: 'Assign Leads', iconText: 'AL', path: '/leads/assignLeads' },
-            { name: 'Profit/Loss Trader', iconText: 'PL', path: '/leads/manageTrader' },
         ],
     },
     { label: 'Catalogue', type: 'label' },

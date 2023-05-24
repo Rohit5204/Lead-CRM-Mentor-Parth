@@ -8,7 +8,6 @@ export const navigations = [
       { name: 'Manage Leads', iconText: 'ML', path: '/leads/manageLeads' },
       // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
       { name: 'Assign Leads', iconText: 'AL', path: '/leads/assignLeads' },
-      { name: 'Profit/Loss Trader', iconText: 'PL', path: '/leads/manageTrader' },
     ],
   },
   { name: 'Quotation', path: '/quotations/manageQuotation', icon: 'work' },

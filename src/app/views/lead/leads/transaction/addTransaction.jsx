@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Chip, IconButton } from "@mui/material";
+import { Button, Chip, Grid, IconButton } from "@mui/material";
 import { BASE_URL } from "app/utils/constant";
 import axios from "axios";
 import React from "react";
@@ -8,6 +8,8 @@ import { Col, Form, Modal, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import ClearIcon from '@mui/icons-material/Clear';
 import UpdateTransactionLead from "./updateStatus";
+import { Box } from "@mui/system";
+import { Breadcrumb } from "app/components";
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -46,16 +48,28 @@ const TransactionLeads = () => {
     };
     const handleClose = () => { setShow(false); }
 
-    const [show1, setShow1] = useState(false);
-    const handleShow1 = () => {
-        setShow1(true);
-    };
-    const handleClose1 = () => { setShow1(false); }
+    // const [show1, setShow1] = useState(false);
+    // const handleShow1 = () => {
+    //     setShow1(true);
+    // };
+    // const handleClose1 = () => { setShow1(false); }
 
     const blankData = () => {
         setTranDate('')
         setAmount('')
         setRemark('')
+    }
+    const getLeadData = () => {
+        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
+            leadId: leadId, userId: 0, statusId: 0, searchKey: "",
+            locationkey: "", platformId: 0, opType: ""
+        },
+            { headers: headers })
+            .then((response) => {
+                for (var i = 0; i < response.data.data.length; i++) {
+                    setAPIData(response.data.data[i].transactionData);
+                }
+            });
     }
 
     const postTransaction = () => {
@@ -68,51 +82,91 @@ const TransactionLeads = () => {
             isapproved: 1,
             recordStatus: 0
         };
-        // console.log({ followUpData })
         axios.post(BASE_URL + `/api/saveLeadTransaction`, transData,
             { headers: headers });
         blankData()
-        handleClose1()
+
     }
 
     useEffect(() => {
         getLeadData()
-    }, [show, show1]);
+    }, [APIData]);
 
 
-    const getLeadData = () => {
-        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
-            leadId: leadId, userId: 0, statusId: 0, searchKey: "",
-            locationkey: "", platformId: 0, opType: ""
-        },
-            { headers: headers })
-            .then((response) => {
-                for (var i = 0; i < response.data.data.length; i++) {
-                    setAPIData(response.data.data[i].transactionData);
-                    // response.data.data[i].followupData);
-                    // console.log(response.data.data[i].followupData)
-                    // console.log(APIData)
-                }
-            });
-    }
-    const navigate = useNavigate();
-    const changePage = () => {
-        navigate('/leads/manageLeads');
-    };
+
+
     const roleName = window.localStorage.getItem('roleName');
     return (
         <>
             <Container>
+                <Box className="breadcrumb">
+
+                    <Breadcrumb
+                        routeSegments={[{ name: 'Dashboard', path: '/dashboard/default' },
+                        { name: 'Manage Leads', path: '/leads/manageLeads' },
+                        { name: 'Add Lead Transaction ' }]}
+                    />
+                </Box>
                 <div>
-                    <h5>Lead Transaction Record</h5>
+
+                    <Grid container spacing={2}>
+
+                        <Grid item xs={12} md={2}>
+                            <Form.Label>Lead Name</Form.Label>
+
+                            <Form.Control
+                                disabled
+                                type="text"
+                                placeholder="Enter Lead Name"
+                                value={location.state.name}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={2}>
+                            <Form.Label>Transaction Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                placeholder="Enter any Remarks"
+                                onChange={(e) => setTranDate(e.target.value)}
+                                value={tranDate}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Form.Label>Transaction Amount</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter the Amount"
+                                onChange={(e) => setAmount(e.target.value)}
+                                value={amount}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Form.Label>Remarks</Form.Label>
+                            <Form.Control
+                                placeholder="Enter any Remarks"
+                                onChange={(e) => setRemark(e.target.value)}
+                                value={remark}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={2}>
+                            <Button
+                                style={{ marginTop: '30px' }}
+                                id="demo-customized-button"
+                                size='large'
+                                color="success"
+                                variant="contained"
+                                disableElevation
+                                onClick={postTransaction}>Save</Button>
+                        </Grid>
+                    </Grid>
 
 
 
 
+
+                    <br />
                     {/* {JSON.stringify(APIData456)} */}
                     <Row className="mt-2">
                         <Col> <h5 className='text-center'>Transaction Detail's</h5></Col>
-                        <button type='button' className="btn btn-success" onClick={handleShow1}>ADD</button>
                         <br />
                         <table className="table table-striped table-bordered mt-4" style={{ 'borderRadius': '2px' }}>
                             <thead style={{ "color": "MidnightBlue" }} className='text-center'>
@@ -179,7 +233,7 @@ const TransactionLeads = () => {
                 </Modal.Body>
             </Modal>
 
-            <Modal
+            {/* <Modal
                 show={show1}
                 onHide={handleClose1}
                 backdrop="static"
@@ -196,61 +250,7 @@ const TransactionLeads = () => {
                     </IconButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <Row>
-                        <Col>
-                            <Form.Label>Lead ID</Form.Label>
-                            <Form.Control
-                                disabled
-                                type="number"
-                                placeholder="Enter Lead Id"
-                                value={leadId}
-                            // onChange={(e) => setFollowUpDate(e.target.value)}
-                            // value={followUpDate}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Label>Lead Name</Form.Label>
-                            <br />
-                            <Form.Control
-                                disabled
-                                type="text"
-                                placeholder="Enter Lead Name"
-                                value={location.state.name}
-                            // value={followUpTme}
-                            // onChange={(e) => setFollowUpTime(e.target.value)}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Transaction Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                placeholder="Enter any Remarks"
-                                onChange={(e) => setTranDate(e.target.value)}
-                                value={tranDate}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Label>Transaction Amount</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter the Amount"
-                                onChange={(e) => setAmount(e.target.value)}
-                                value={amount}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Label>Remarks</Form.Label>
-                            <Form.Control
-                                placeholder="Enter any Remarks"
-                                onChange={(e) => setRemark(e.target.value)}
-                                value={remark}
-                            />
-                        </Col>
-                    </Row>
+
                     <br />
                     <Row>
                         <Col className="d-flex justify-content-end">
@@ -258,13 +258,11 @@ const TransactionLeads = () => {
                                 Cancel
                             </button>
                             &nbsp;
-                            <button type='button' className="btn btn-success" onClick={postTransaction}>
-                                Save
-                            </button>
+
                         </Col>
                     </Row>
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
         </>
     )
 }

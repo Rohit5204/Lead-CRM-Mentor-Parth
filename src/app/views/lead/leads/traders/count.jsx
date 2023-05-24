@@ -70,7 +70,7 @@ const TraderCount = ({ fetch }) => {
         <Grid container spacing={4} sx={{ mb: '24px' }}>
 
             {totalGain.map((item, index) => (
-                <Grid item xs={12} md={3} key={index}>
+                <Grid item xs={12} md={4} key={index}>
                     <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
                         <ContentBox>
                             <Grid container spacing={4}>
@@ -96,7 +96,7 @@ const TraderCount = ({ fetch }) => {
                 </Grid>
             ))}
             {totalLoss.map((item, index) => (
-                <Grid item xs={12} md={3} key={index}>
+                <Grid item xs={12} md={4} key={index}>
                     <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
                         <ContentBox>
                             <Grid container spacing={4}>

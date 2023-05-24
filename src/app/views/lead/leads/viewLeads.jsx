@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ManageFollowups from './followups/addfollowups';
 import ManageMettings from './meetings/addMeeting';
 import { Link } from 'react-router-dom';
+import ManageTrader from './traders/manageTrader';
 
 const ViewLead = () => {
   const location = useLocation();
@@ -206,13 +207,7 @@ const ViewLead = () => {
             <ManageMettings></ManageMettings>
           </Tab>
           <Tab eventKey="quotations" title="Quotations">
-            <Row>
-              <Col className="text-center">
-                <button type="button" className="btn btn-success" onClick={sendToQuotation}>
-                  Quotation for Lead
-                </button>
-              </Col>
-            </Row>
+            {/* <ManageTrader></ManageTrader> */}
           </Tab>
         </Tabs>
       </SimpleCard>

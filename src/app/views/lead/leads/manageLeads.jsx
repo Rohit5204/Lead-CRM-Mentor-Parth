@@ -110,6 +110,7 @@ function a11yProps(index) {
 }
 
 const ManageLead = () => {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -119,6 +120,16 @@ const ManageLead = () => {
   const handleClose5 = () => {
     setAnchorEl(null);
   };
+
+  /**
+   * AT Quotation Start
+  */
+
+
+
+  /** 
+  *AT Quotation End 
+  */
 
   // Add Form Dailog
   const [showAdd, setShowAdd] = useState(false);
@@ -208,6 +219,7 @@ const ManageLead = () => {
   //   var j = APIData.filter(x => x.statusName == "Lead")
   //   setFetchLeadRow(j)
   // }+
+
   const [obj1, setObj1] = useState(null);
   const [showSatusForm, setSatusForm] = useState(false);
   const handleShow = (subscriber) => {
@@ -246,6 +258,7 @@ const ManageLead = () => {
   const closeMetting = () => { setShowMeetingForm(false); }
 
   const [abc, setABC] = useState({})
+
   const getMasterCount = () => {
     axios.get(BASE_URL + `/api/getManageLeadCount?userId=` + userId,
       { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
@@ -371,18 +384,17 @@ const ManageLead = () => {
               variant="fullWidth"
               aria-label="basic tabs example"
               scrollButtons="auto"
+
             // aria-label="scrollable auto tabs example"
             >
               <Tab label={"Lead" + " [" + (abc.lead ? abc.lead[0].lead_count : 0) + "]"}{...a11yProps(0)} />
               <Tab label={"Followup" + " [" + (abc.followup ? abc.followup[0].followup_count : 0) + "]"} {...a11yProps(1)} />
               <Tab label={"FT (Meeting)" + " [" + (abc.meeting ? abc.meeting[0].meeting_count : 0) + "]"} {...a11yProps(2)} />
               <Tab label={"Ringing" + " [" + (abc.ringing ? abc.ringing[0].ringing_count : 0) + "]"} {...a11yProps(3)} />
-              <Tab label={"AT (Quotation)" + " [0" + "]"} {...a11yProps(4)} />
-              <Tab label={"Invoice" + " [0" + "]"} {...a11yProps(5)} />
+              <Tab label={"AT (Quotation)" + " [" + (abc.quoation ? abc.quoation[0].quoation : 0) + "]"} {...a11yProps(4)} />
+              <Tab label={"Invoice" + " [" + (abc.invoice ? abc.invoice[0].invoice : 0) + "]"} {...a11yProps(5)} />
               <Tab label={"Closed (Paid)" + " [" + (abc.closed ? abc.closed[0].closed_lead : 0) + "]"} {...a11yProps(6)} />
-              <Tab label={"Drop" + " [0" + "]"}{...a11yProps(7)} />
-              {/* <Tab label={"Drop" + " [" + (abc.drop ? abc.drop[0].drop_count : 0) + "]"}{...a11yProps(8)} /> */}
-              {/* <Tab label={"Invoice" + " [" + (abc.invoice ? abc.invoice[0].invoice : 0) + "]"} {...a11yProps(5)} /> */}
+              <Tab label={"Drop" + " [" + (abc.drop ? abc.drop[0].drop_count : 0) + "]"}{...a11yProps(7)} />
 
             </Tabs>
           </Box>
@@ -730,19 +742,18 @@ const ManageLead = () => {
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-
                                 </>
                               }
                               else {
                                 return <>
                                   <Link to="/leads/viewLeads" state={subscriber}>
                                     <IconButton>
-                                      <Icon color="red">visibility</Icon>
+                                      <Icon>visibility</Icon>
                                     </IconButton>
                                   </Link>
                                   <Link to="/leads/editLead" state={subscriber}>
                                     <IconButton>
-                                      <Icon color="success">edit</Icon>
+                                      <Icon>edit</Icon>
                                     </IconButton>
                                   </Link>
                                 </>

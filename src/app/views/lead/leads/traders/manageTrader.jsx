@@ -64,26 +64,15 @@ const ManageTrader = () => {
     const closeAdd = () => setShowAdd(false);
     const openAdd = () => setShowAdd(true);
 
-    const [showReport, setShowReport] = useState(false);
 
-    const closeReport = () => setShowReport(false);
-    const openReport = () => setShowReport(true);
 
     return (
         <Container>
             <Box>
-                <Box className="breadcrumb">
-                    <Breadcrumb
-                        routeSegments={[
-                            { name: 'Manage Leads', path: '/leads/manageLeads' },
-                            { name: 'Manage Trader Detail' },
-                        ]}
-                    />
-                </Box>
 
                 <Grid container spacing={4} sx={{ mb: '24px' }}>
 
-                    <Grid item xs={12} md={9} >
+                    <Grid item xs={12} md={10} >
                         <InputGroup className="mb-3">
                             <Form.Control
                                 placeholder="Search By Lead Name"
@@ -92,31 +81,29 @@ const ManageTrader = () => {
                             />
                         </InputGroup>
                     </Grid>
-                    <Grid item xs={12} md={3} >
+                    <Grid item xs={12} md={2} >
                         <div className="d-flex justify-content-end">
                             <Button variant="contained" color="success" onClick={openAdd}>Add Trader</Button>&nbsp;
-                            <Button variant="contained" color="secondary" onClick={openReport}>Report</Button>
                         </div>
                     </Grid>
 
                 </Grid>
-                {showReport ? <>
-                    <Grid container spacing={4} sx={{ mb: '24px' }}>
 
-                        <Grid item xs={12} md={10} >
+                <Grid container spacing={4} sx={{ mb: '24px' }}>
+
+                    <Grid item xs={12} md={10} >
+                        <div style={{ textAlign: 'center' }}>
                             <TraderCount fetch={showAdd}></TraderCount>
-                        </Grid>
-                        <Grid item xs={12} md={2} >
-                            <div className="d-flex justify-content-end">
-                                <Button variant="contained" color="secondary" onClick={closeReport}>Hide</Button>
-                            </div>
-                        </Grid>
+                        </div>
 
                     </Grid>
 
 
+                </Grid>
 
-                </> : <></>}
+
+
+
 
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs
