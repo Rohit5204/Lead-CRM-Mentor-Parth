@@ -377,10 +377,12 @@ const ManageLead = () => {
               <Tab label={"Followup" + " [" + (abc.followup ? abc.followup[0].followup_count : 0) + "]"} {...a11yProps(1)} />
               <Tab label={"FT (Meeting)" + " [" + (abc.meeting ? abc.meeting[0].meeting_count : 0) + "]"} {...a11yProps(2)} />
               <Tab label={"Ringing" + " [" + (abc.ringing ? abc.ringing[0].ringing_count : 0) + "]"} {...a11yProps(3)} />
-              <Tab label={"AT (Quotation)" + " [" + (abc.quoation ? abc.quoation[0].quoation : 0) + "]"} {...a11yProps(4)} />
-              <Tab label={"Invoice" + " [" + (abc.invoice ? abc.invoice[0].invoice : 0) + "]"} {...a11yProps(5)} />
+              <Tab label={"AT (Quotation)" + " [0" + "]"} {...a11yProps(4)} />
+              <Tab label={"Invoice" + " [0" + "]"} {...a11yProps(5)} />
               <Tab label={"Closed (Paid)" + " [" + (abc.closed ? abc.closed[0].closed_lead : 0) + "]"} {...a11yProps(6)} />
-              <Tab label={"Drop" + " [" + (abc.drop ? abc.drop[0].drop_count : 0) + "]"}{...a11yProps(7)} />
+              <Tab label={"Drop" + " [0" + "]"}{...a11yProps(7)} />
+              {/* <Tab label={"Drop" + " [" + (abc.drop ? abc.drop[0].drop_count : 0) + "]"}{...a11yProps(8)} /> */}
+              {/* <Tab label={"Invoice" + " [" + (abc.invoice ? abc.invoice[0].invoice : 0) + "]"} {...a11yProps(5)} /> */}
 
             </Tabs>
           </Box>
