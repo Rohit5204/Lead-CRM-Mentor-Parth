@@ -79,32 +79,65 @@ const TopEmpDetail = (showData) => {
     }, [totalGain]);
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>
-            {totalGain.map((item, index) => (
-                <Grid item xs={12} md={3} key={index}>
+            {roleCode == "EMP" ? (<>
+                {totalGain.map((item, index) => (
+                    <Grid item xs={12} md={3} key={index}>
 
-                    <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
-                        <ContentBox>
-                            <Grid container spacing={4}>
-                                <Grid item xs={8} md={7}>
-                                    <Box>
-                                        <div className="flex-grow-1 ms-3">
-                                            <h5 className="mb-1">{user} </h5>
-                                            <p className="small text-muted mb-1">Total Lead</p>
-                                            <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
-                                        </div>
-                                    </Box>
+                        <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                            <ContentBox>
+                                <Grid container spacing={4}>
+                                    <Grid item xs={8} md={7}>
+                                        <Box>
+                                            <div className="flex-grow-1 ms-3">
+                                                <h5 className="mb-1">{user} </h5>
+                                                <p className="small text-muted mb-1">Total Lead</p>
+                                                <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
+                                            </div>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={3} md={4}>
+                                        <img src="/assets/images/Male 1.png" alt="" style={{ borderRadius: '10px', width: '105px', marginLeft: '-35px' }} />
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={3} md={4}>
-                                    <img src="/assets/images/Male 1.png" alt="" style={{ borderRadius: '10px', width: '105px', marginLeft: '-35px' }} />
+                            </ContentBox>
+                            <Box style={{ backgroundColor: '#10c469' }}>
+                                <Heading style={{ padding: '10px', color: 'white' }}>Total Amount  ₹  {item.amount}</Heading>
+                            </Box>
+                        </StyledCard>
+                    </Grid>
+                ))}
+            </>) : (<></>)
+            }
+            {roleCode == "TL" ? (<>
+                {totalGain.map((item, index) => (
+                    <Grid item xs={12} md={3} key={index}>
+
+                        <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                            <ContentBox>
+                                <Grid container spacing={4}>
+                                    <Grid item xs={8} md={7}>
+                                        <Box>
+                                            <div className="flex-grow-1 ms-3">
+                                                <h5 className="mb-1">{user} </h5>
+                                                <p className="small text-muted mb-1">Total Lead</p>
+                                                <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
+                                            </div>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={3} md={4}>
+                                        <img src="/assets/images/Male 1.png" alt="" style={{ borderRadius: '10px', width: '105px', marginLeft: '-35px' }} />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </ContentBox>
-                        <Box style={{ backgroundColor: '#10c469' }}>
-                            <Heading style={{ padding: '10px', color: 'white' }}>Total Amount  ₹  {item.amount}</Heading>
-                        </Box>
-                    </StyledCard>
-                </Grid>
-            ))}
+                            </ContentBox>
+                            <Box style={{ backgroundColor: '#10c469' }}>
+                                <Heading style={{ padding: '10px', color: 'white' }}>Total Amount  ₹  {item.amount}</Heading>
+                            </Box>
+                        </StyledCard>
+                    </Grid>
+                ))}
+            </>) : (<></>)
+            }
+
             {statusWiseData.map((item, index) => (
                 <Grid item xs={12} md={3} key={index}>
 

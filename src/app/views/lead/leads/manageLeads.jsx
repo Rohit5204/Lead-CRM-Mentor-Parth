@@ -247,7 +247,7 @@ const ManageLead = () => {
 
   const [abc, setABC] = useState({})
   const getMasterCount = () => {
-    axios.get(BASE_URL + `/api/getManageLeadCount`,
+    axios.get(BASE_URL + `/api/getManageLeadCount?userId=` + userId,
       { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
       .then((response) => {
         setABC(response.data);

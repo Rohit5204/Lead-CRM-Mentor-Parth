@@ -153,11 +153,11 @@ const Analytics = () => {
       <ContentBox className="analytics">
         {roleName == "Admin" || "Branch Manager" ? (
           <>
-            <SimpleCard title="Dashboard">
+            <Grid container spacing={4}>
 
-              <Grid container spacing={4}>
+              <Grid item xs={12} md={6}>
+                <SimpleCard>
 
-                <Grid item xs={12} md={6}>
                   <Form.Label htmlFor="basic-url">Apply Date Range</Form.Label>
                   <InputGroup>
                     <Form.Control
@@ -175,8 +175,12 @@ const Analytics = () => {
                     </Button>
 
                   </InputGroup>
-                </Grid>
-                <Grid item xs={12} md={6}>
+
+                </SimpleCard>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <SimpleCard>
                   <div className="d-flex justify-content-end">
                     <Button
                       style={{ marginTop: '31px' }}
@@ -220,11 +224,13 @@ const Analytics = () => {
                       </MenuItem>
                     </StyledMenu>
                   </div>
-                </Grid>
+                </SimpleCard>
               </Grid>
 
+            </Grid>
 
-              <br></br>
+            <br></br>
+            <SimpleCard>
 
               {/* Tab Section */}
               {(function () {
@@ -341,36 +347,6 @@ const Analytics = () => {
                 </SimpleCard>
               </Grid>
             </Grid>
-            {/* <br />
-            <Grid container spacing={0}>
-              <Grid item lg={12} md={8} sm={12} xs={12}>
-                <SimpleCard title="Lead Wise Chart">
-                  <SampleLine></SampleLine></SimpleCard>
-              </Grid>
-            </Grid>
-            <br />
-            <Grid container spacing={3}>
-              <Grid item lg={8} md={8} sm={12} xs={12}>
-                <SimpleCard title="Monthly Leads">
-                  <LineGraph
-                    height="330px"
-                    color={[palette.error.dark, palette.warning.main, palette.success.main]}
-                  /></SimpleCard>
-                <br></br>
-              </Grid>
-              <Grid item lg={4} md={4} sm={12} xs={12}>
-                <Card sx={{ px: 3, py: 2, mb: 3 }}>
-                  <Title>Total Yearly Leads</Title>
-                  <SubTitle>Last 365 days</SubTitle>
-
-                  <DoughnutChart
-                    height="400px"
-                    color={[palette.error.main, palette.warning.light, palette.success.light, palette.primary.dark]}
-                  />
-                </Card>
-              </Grid>
-            </Grid> */}
-            {/* <Campaigns /> */}
           </>
         ) : (<>
           <EmployeeDashboard />
