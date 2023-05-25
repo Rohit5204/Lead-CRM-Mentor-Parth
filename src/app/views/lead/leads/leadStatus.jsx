@@ -154,9 +154,9 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
     };
     const whatsapp = () => {
 
-        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
+        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
 
-        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
+        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
 
         window.open(url);
     }
@@ -191,7 +191,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Name</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Unity Share Info"}
+                        value={"Boostock Info"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -217,7 +217,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Webiste Link</Form.Label>
                     <Form.Control
                         disabled
-                        value={"www.unityshareinfo.com"}
+                        value={"www.boostock.in"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
