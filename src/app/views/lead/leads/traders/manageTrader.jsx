@@ -1,15 +1,11 @@
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
-import { Breadcrumb } from 'app/components';
-import Tabs from '@mui/material/Tabs';
-import React from 'react';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import ProfitTrader from './profit';
+import { Tabs, Tab, Box, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
 import ClearIcon from '@mui/icons-material/Clear';
 import LossTrader from './loss';
-import { useState } from 'react';
+import ProfitTrader from './profit';
 import { Button, Grid, IconButton } from '@mui/material';
 import { Form, InputGroup, Modal } from 'react-bootstrap';
 import AddTrader from './addtrader';
@@ -98,12 +94,7 @@ const ManageTrader = () => {
 
                     </Grid>
 
-
                 </Grid>
-
-
-
-
 
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs
@@ -148,6 +139,7 @@ const ManageTrader = () => {
                 </Modal.Body>
             </Modal>
         </Container >
+
     )
 }
 export default ManageTrader

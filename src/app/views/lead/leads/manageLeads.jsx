@@ -29,7 +29,7 @@ import {
   Grid,
 } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha, makeStyles } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
 import ImportLead from './importLead';
 import LeadForm from './addLeads';
@@ -79,7 +79,6 @@ const StyledMenu = styled((props) => (
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -379,11 +378,14 @@ const ManageLead = () => {
         <Container className="my-2">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
+              // style={{ backgroundColor: 'orchid' }}   //Highlight,
               value={value}
               onChange={handleCChange}
               variant="fullWidth"
               aria-label="basic tabs example"
               scrollButtons="auto"
+            // textColor="white"
+            // indicatorColor="secondary"
 
             // aria-label="scrollable auto tabs example"
             >
