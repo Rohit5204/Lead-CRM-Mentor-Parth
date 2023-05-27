@@ -156,7 +156,7 @@ const ViewQuotation = ({ theViewQuotation }) => {
                                     // src="https://boostock.in/img/boostock-info-04.png"
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img> */}
-                                    <img width="140" src="/assets/images/illustrations/new-boostock-logo.png" alt="" />
+                                    <img width="140" src="/assets/images/illustrations/LOGO UNITY-01.png" alt="" />
                                 </Col>
                                 <Col className='mt-4'>
                                     <h5 style={{ "color": "MidnightBlue" }}>

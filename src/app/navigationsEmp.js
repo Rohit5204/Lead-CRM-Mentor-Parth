@@ -4,7 +4,7 @@ export const navigationEmp = [
   // { label: 'PAGES', type: 'label' },
 
   { name: 'Manage Leads', path: '/leads/manageLeads', icon: 'send' },
-  { name: 'Profit/Loss Trader', icon: 'work', path: '/leads/manageTrader' },
+  // { name: 'Profit/Loss Trader', icon: 'work', path: '/leads/manageTrader' },
 
 
   { name: 'Catalogue List', path: '/catalogues/userCatalogue', icon: 'work' },
