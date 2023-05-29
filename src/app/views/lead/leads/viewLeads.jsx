@@ -205,9 +205,9 @@ const ViewLead = () => {
           <Tab eventKey="meetings" title="Meetings">
             <ManageMettings></ManageMettings>
           </Tab>
-          <Tab eventKey="quotations" title="Quotations">
+          {/* <Tab eventKey="quotations" title="Quotations">
             <ManageTrader></ManageTrader>
-          </Tab>
+          </Tab> */}
         </Tabs>
       </SimpleCard>
     </Container>

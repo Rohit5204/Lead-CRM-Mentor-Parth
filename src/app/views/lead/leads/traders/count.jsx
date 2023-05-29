@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/styles';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { Small } from 'app/components/Typography';
 import { BASE_URL } from 'app/utils/constant';
+import { useLocation } from 'react-router-dom';
 
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -34,6 +35,7 @@ const Heading = styled('h6')(({ theme }) => ({
 }));
 
 const TraderCount = ({ fetch }) => {
+    const location = useLocation();
     const useStyles = makeStyles({
         root: {
             transition: "transform 0.15s ease-in-out",
@@ -57,7 +59,7 @@ const TraderCount = ({ fetch }) => {
     }
 
     useEffect(() => {
-        axios.get(BASE_URL + `/api/getTraderCount`,
+        axios.get(BASE_URL + `/api/getTraderCount?leadId=` + location.state.leadId,
             { headers: headers })
             .then((response) => {
                 setTotalGain(response.data.profit);

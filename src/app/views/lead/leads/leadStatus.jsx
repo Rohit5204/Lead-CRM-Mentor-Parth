@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { Autocomplete, TextField, FormControl } from '@mui/material';
 import { BASE_URL } from "app/utils/constant";
+import { useRef } from "react";
 
 const LeadStatus = ({ theLeadStatus, handleDialog }) => {
     const [leadId] = useState(theLeadStatus.leadId);
@@ -12,6 +13,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
     const [companyAddress] = useState("Vashi, Navi-Mumbai");
     const [companyContact] = useState("7896541230")
     const [companyWebsite] = useState("www.boostock.in")
+    const [content, setContent] = useState("🌟 Welcome to our family of clients! 🌟 We're thrilled to have you on board and look forward to delivering exceptional service tailored to your needs. Feel free to reach out with any questions or requests. We're here to make your experience with us extraordinary!");
 
     const [statusName, setStatusName] = useState([]);
 
@@ -154,9 +156,9 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
     };
     const whatsapp = () => {
 
-        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
+        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a%0a${content}%0a%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
 
-        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
+        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a${content}%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
 
         window.open(url);
     }
@@ -219,6 +221,18 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                         disabled
                         value={"www.unityshareinfo.com"}
                         placeholder="Enter the Lead Name"
+                    />
+                </Col>
+            </Row>
+            <Row className='mt-1'>
+                <Col>
+                    <Form.Label>Message</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={4}
+                        onChange={(e) => setContent(e.target.value)}
+                        value={content}
+                        placeholder="Welcome Message"
                     />
                 </Col>
             </Row>
