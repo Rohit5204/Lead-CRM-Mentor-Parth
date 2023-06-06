@@ -155,7 +155,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img> */}
 
-                                    <img width="140" src="/assets/images/illustrations/LOGO UNITY-01.png" alt="" />
+                                    <img width="140" src="/assets/images/illustrations/new-boostock-logo.png" alt="" />
                                 </Col>
                                 <Col className='mt-2'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
