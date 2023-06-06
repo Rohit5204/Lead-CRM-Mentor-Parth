@@ -444,11 +444,15 @@ const ManageLead = () => {
                                   <IconButton>
                                     <Icon color="primary">visibility</Icon>
                                   </IconButton>
+                                </Link>
+                                  <Link to="/leads/editLead" state={subscriber}>
+                                    <IconButton>
+                                      <Icon>edit</Icon>
+                                    </IconButton>
+                                  </Link>
                                   <IconButton onClick={() => handleShowLead(subscriber)}>
                                     <WhatsAppIcon color='success' />
                                   </IconButton>
-                                </Link>
-
                                 </>
                               }
                               else {

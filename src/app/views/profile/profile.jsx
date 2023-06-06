@@ -54,7 +54,7 @@ function ManageProfile() {
         setObj1(catalogue);
         setShow(true);
     };
-    const [logo, setLogo] = useState('/assets/images/illustrations/new-boostock-logo.png')
+    const [logo, setLogo] = useState('/assets/images/illustrations/LOGO UNITY-01.png')
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setLogo(URL.createObjectURL(event.target.files[0]));

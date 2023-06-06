@@ -156,9 +156,9 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
     };
     const whatsapp = () => {
 
-        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a%0a${content}%0a%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
+        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from Unity Share Info !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a%0a${content}%0a%0aPlease visit our website for more detail's www.unityshareinfo.com&app_absent=0`;
 
-        let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a%0a${content}%0a%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
+        //let url = `https://web.whatsapp.com/send?phone=${theLeadStatus.mobileNo}&text=Hey,%0aGreetings from BOOSTOCK INFO !!!%0aThanks for showing your interest in ${theLeadStatus.intrestedIn}.%0a%0a${content}%0a%0aPlease visit our website for more detail's www.boostok.in&app_absent=0`;
 
         window.open(url);
     }
@@ -193,7 +193,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Name</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Boostock-Info"}
+                        value={"Unity Share Info"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -201,7 +201,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Address</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Seawoods, Navi Mumbai"}
+                        value={"Nerul, Navi Mumbai"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -211,7 +211,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Contact Number</Form.Label>
                     <Form.Control
                         disabled
-                        value={"7715815877"}
+                        value={"8369204059"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -219,7 +219,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Webiste Link</Form.Label>
                     <Form.Control
                         disabled
-                        value={"www.boostock.in"}
+                        value={"www.unityshareinfo.com"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>

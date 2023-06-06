@@ -178,7 +178,7 @@ const ReviewInvoice = ({ show, setIsOpen, invoiceInfo, items, onAddNextInvoice }
                 <div className="p-4">
                   <Row>
                     <Col>
-                      <img width="200" src="/assets/images/illustrations/boostock-info-04.svg" alt="" />
+                      <img width="200" src="/assets/images/illustrations/LOGO UNITY-01.png" alt="" />
                     </Col>
                     <Col></Col>
                     <Col className='mt-4'>
