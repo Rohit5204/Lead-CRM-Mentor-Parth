@@ -14,6 +14,7 @@ import StatusChange from './statusChange';
 import FollowupStatusChange from './followupStatus';
 import MettingStatusChange from './meetingStatusChange';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
 import LeadStatus from './leadStatus';
 import {
   Box,
@@ -494,7 +495,7 @@ const ManageLead = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Box className="text-center" width="100%" overflow="auto">
-              {/* Table Section */}
+
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
@@ -607,7 +608,11 @@ const ManageLead = () => {
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-
+                                  <Link to="/leads/manageTrader" state={subscriber}>
+                                    <IconButton>
+                                      <CandlestickChartIcon />
+                                    </IconButton>
+                                  </Link>
                                 </>
                               }
                               else {
@@ -620,6 +625,11 @@ const ManageLead = () => {
                                   <Link to="/leads/editLead" state={subscriber}>
                                     <IconButton>
                                       <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/manageTrader" state={subscriber}>
+                                    <IconButton>
+                                      <CandlestickChartIcon />
                                     </IconButton>
                                   </Link>
                                 </>
@@ -751,7 +761,7 @@ const ManageLead = () => {
                                 </Link>
                                   <Link to="/leads/manageTrader" state={subscriber}>
                                     <IconButton>
-                                      <TimelineIcon />
+                                      <CandlestickChartIcon />
                                     </IconButton>
                                   </Link>
 
@@ -771,7 +781,7 @@ const ManageLead = () => {
                                   </Link>
                                   <Link to="/leads/manageTrader" state={subscriber}>
                                     <IconButton>
-                                      <TimelineIcon />
+                                      <CandlestickChartIcon />
                                     </IconButton>
                                   </Link>
                                 </>
@@ -786,7 +796,6 @@ const ManageLead = () => {
               </StyledTable>
             </Box>
           </TabPanel>
-
           <TabPanel value={value} index={5}>
             <Box className="text-center" width="100%" overflow="auto">
               {/* Table Section */}
@@ -895,13 +904,25 @@ const ManageLead = () => {
                           <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
                             {(function () {
+                              if (roleName == "Employee" && subscriber.statusName == "Closed (Paid)") {
+                                return <>
+                                  <Chip label="Closed"></Chip>
+                                </>
+                              }
+                              else {
+                                return <>
+                                  <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />
+                                </>
+                              }
+                            })()}
+                            {/* {(function () {
                               if (subscriber.statusName == "Closed (Paid)") {
                                 return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
                               }
                               else {
                                 return <Chip label="Not Listed" color="error" />
                               }
-                            })()}
+                            })()} */}
                           </TableCell>
                           <TableCell align="center">
                             {(function () {

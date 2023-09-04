@@ -21,10 +21,11 @@ const isValidToken = (accessToken) => {
   return decodedToken.exp > currentTime;
 };
 
-const setSession = (accessToken, roleName, userName, roleCode, userId, branchName, branchId) => {
+const setSession = (accessToken, roleName, name, userName, roleCode, userId, branchName, branchId) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('roleName', roleName);
+    localStorage.setItem('name', name);
     localStorage.setItem('userName', userName);
     localStorage.setItem('roleCode', roleCode);
     localStorage.setItem('userId', userId);
@@ -34,6 +35,7 @@ const setSession = (accessToken, roleName, userName, roleCode, userId, branchNam
   } else {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('roleName');
+    localStorage.removeItem('name');
     localStorage.removeItem('userName');
     localStorage.removeItem('roleCode');
     localStorage.removeItem('userId');
@@ -104,9 +106,9 @@ export const AuthProvider = ({ children }) => {
       userName,
       password,
     });
-    const { message, accessToken, roleName, user, roleCode, userId, branchName, branchId } =
+    const { message, accessToken, roleName, name, user, roleCode, userId, branchName, branchId } =
       response.data;
-    setSession(accessToken, roleName, userName, roleCode, userId, branchName, branchId);
+    setSession(accessToken, roleName, name, userName, roleCode, userId, branchName, branchId);
     dispatch({
       type: 'LOGIN',
       payload: {
@@ -149,6 +151,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
         const roleName = window.localStorage.getItem('roleName');
+        const name = window.localStorage.getItem('name');
         const userName = window.localStorage.getItem('userName');
         const roleCode = window.localStorage.getItem('roleCode');
         const userId = window.localStorage.getItem('userId');
@@ -157,7 +160,7 @@ export const AuthProvider = ({ children }) => {
         // If we refresh the page also we will be on the same page.
         // Date 08/11/2022 [Rohit Jaiswal]
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken, roleName, userName, roleCode, userId, branchName, branchId);
+          setSession(accessToken, roleName, name, userName, roleCode, userId, branchName, branchId);
           const response = await axios.get('/');
           const { user } = response.data;
 

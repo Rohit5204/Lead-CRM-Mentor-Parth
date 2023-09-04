@@ -47,6 +47,8 @@ const TraderCount = ({ fetch }) => {
 
     const [totalGain, setTotalGain] = useState([]);
     const [totalLoss, setTotalLoss] = useState([]);
+    const [followUp, setfollowUp] = useState([]);
+    const [runner, setrunner] = useState([]);
     const items = localStorage.getItem('accessToken');
 
 
@@ -57,28 +59,34 @@ const TraderCount = ({ fetch }) => {
         "roleCode": roleCode,
         "userId": userId
     }
+    const leadId = location.state.leadId
 
-    useEffect(() => {
-        axios.get(BASE_URL + `/api/getTraderCount?leadId=` + location.state.leadId,
+    const getCount = () => {
+        axios.get(BASE_URL + `/api/getTraderCount?lead_id=` + leadId,
             { headers: headers })
             .then((response) => {
                 setTotalGain(response.data.profit);
                 setTotalLoss(response.data.loss);
+                setfollowUp(response.data.followup);
+                setrunner(response.data.runner)
             });
-    }, [fetch]);
+    }
+    useEffect(() => {
+        getCount()
+    }, []);
 
 
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>
 
             {totalGain.map((item, index) => (
-                <Grid item xs={12} md={4} key={index}>
+                <Grid item xs={12} md={3} key={index}>
                     <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
                         <ContentBox>
                             <Grid container spacing={4}>
                                 <Grid item xs={8} md={8}>
                                     <Box>
-                                        <Heading className='mb-2'>₹ {item.total_amount}</Heading>
+                                        <Heading className='mb-2'>₹  {item.total_amount != null ? item.total_amount : 0}</Heading>
                                         <Small className='mb-2'>Profit Amount</Small>
                                     </Box>
                                 </Grid>
@@ -98,13 +106,13 @@ const TraderCount = ({ fetch }) => {
                 </Grid>
             ))}
             {totalLoss.map((item, index) => (
-                <Grid item xs={12} md={4} key={index}>
+                <Grid item xs={12} md={3} key={index}>
                     <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
                         <ContentBox>
                             <Grid container spacing={4}>
                                 <Grid item xs={8} md={8}>
                                     <Box>
-                                        <Heading className='mb-2'>₹{item.total_amount}</Heading>
+                                        <Heading className='mb-2'>₹ {item.total_amount != null ? item.total_amount : 0}</Heading>
                                         <Small className='mb-2'>Loss Amount</Small>
                                     </Box>
                                 </Grid>
@@ -119,6 +127,58 @@ const TraderCount = ({ fetch }) => {
                         </ContentBox>
                         <Box style={{ backgroundColor: '#ff5b5b' }}>
                             <Heading style={{ padding: '10px', color: 'white' }}>Total Loss Count <b>{item.total_loss}</b></Heading>
+                        </Box>
+                    </StyledCard>
+                </Grid>
+            ))}
+            {followUp.map((item, index) => (
+                <Grid item xs={12} md={3} key={index}>
+                    <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                        <ContentBox>
+                            <Grid container spacing={4}>
+                                <Grid item xs={8} md={8}>
+                                    <Box>
+                                        <Heading className='mb-2'>₹ {item.total_amount != null ? item.total_amount : 0}</Heading>
+                                        <Small className='mb-2'>Follow Up </Small>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3} md={3}>
+                                    <Box>
+                                        <Tooltip title="Profit Lead" placement="top">
+                                            <CurrencyRupeeIcon className="icon" style={{ fontSize: '50px', color: '#f9c851' }}></CurrencyRupeeIcon>
+                                        </Tooltip>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </ContentBox>
+                        <Box style={{ backgroundColor: '#f9c851' }}>
+                            <Heading style={{ padding: '10px', color: 'white' }}>Total FollowUp Count <b>{item.total_followUp}</b></Heading>
+                        </Box>
+                    </StyledCard>
+                </Grid>
+            ))}
+            {runner.map((item, index) => (
+                <Grid item xs={12} md={3} key={index}>
+                    <StyledCard elevation={11} style={{ boxShadow: '80px 90px' }} className={classes.root}>
+                        <ContentBox>
+                            <Grid container spacing={4}>
+                                <Grid item xs={8} md={8}>
+                                    <Box>
+                                        <Heading className='mb-2'>₹ {item.total_amount != null ? item.total_amount : 0}</Heading>
+                                        <Small className='mb-2'>Runner Amount</Small>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={3} md={3}>
+                                    <Box>
+                                        <Tooltip title="Loss Lead" placement="top">
+                                            <CurrencyRupeeIcon className="icon" style={{ fontSize: '50px', color: '#188ae2' }}></CurrencyRupeeIcon>
+                                        </Tooltip>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </ContentBox>
+                        <Box style={{ backgroundColor: '#188ae2' }}>
+                            <Heading style={{ padding: '10px', color: 'white' }}>Total Runner Count <b>{item.total_runner}</b></Heading>
                         </Box>
                     </StyledCard>
                 </Grid>

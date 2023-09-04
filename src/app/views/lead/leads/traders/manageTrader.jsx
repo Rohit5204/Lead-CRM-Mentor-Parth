@@ -10,6 +10,8 @@ import { Button, Grid, IconButton } from '@mui/material';
 import { Form, InputGroup, Modal } from 'react-bootstrap';
 import AddTrader from './addtrader';
 import TraderCount from './count';
+import FollowUpTrader from './followup';
+import Runner from './runner';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -82,18 +84,15 @@ const ManageTrader = () => {
                             <Button variant="contained" color="success" onClick={openAdd}>Add Trader</Button>&nbsp;
                         </div>
                     </Grid>
-
                 </Grid>
 
                 <Grid container spacing={4} sx={{ mb: '24px' }}>
 
-                    <Grid item xs={12} md={10} >
+                    <Grid item xs={12} md={12} >
                         <div style={{ textAlign: 'center' }}>
                             <TraderCount fetch={showAdd}></TraderCount>
                         </div>
-
                     </Grid>
-
                 </Grid>
 
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -104,8 +103,9 @@ const ManageTrader = () => {
                         aria-label="basic tabs example"
                     >
                         <Tab label="Profit Trader" {...a11yProps(0)} />
-
                         <Tab label="Loss Trader" {...a11yProps(1)} />
+                        <Tab label="Follow Up" {...a11yProps(2)} />
+
 
                     </Tabs>
                 </Box>
@@ -114,6 +114,9 @@ const ManageTrader = () => {
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <LossTrader fetch={showAdd}></LossTrader>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <FollowUpTrader fetch={showAdd}></FollowUpTrader>
                 </TabPanel>
 
             </Box>

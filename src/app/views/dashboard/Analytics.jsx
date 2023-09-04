@@ -22,6 +22,7 @@ import TopEmpDetail from './shared/TopEmpDetail';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
+import EmpPerformance from './shared/EmpPerformance';
 
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -249,10 +250,10 @@ const Analytics = () => {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <Tabs value={value} onChange={handleCChange} variant="fullWidth" aria-label="basic tabs example">
                         <Tab label="Total Lead" {...a11yProps(0)} />
-                        {/* <Tab label="Label Wise" {...a11yProps(1)} /> */}
-                        <Tab label="Status Wise" {...a11yProps(1)} />
-                        <Tab label="Branch Wise" {...a11yProps(2)} />
-                        <Tab label="Top 3 Employee" {...a11yProps(3)} />
+                        <Tab label="Label Wise" {...a11yProps(1)} />
+                        <Tab label="Status Wise" {...a11yProps(2)} />
+                        <Tab label="Branch Wise" {...a11yProps(3)} />
+                        <Tab label="Top 3 Employee" {...a11yProps(4)} />
                       </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
@@ -261,16 +262,16 @@ const Analytics = () => {
                       </div>
 
                     </TabPanel>
-                    {/* <TabPanel value={value} index={1}>
-                      <LabelWiseCount showData={dashboard} />
-                    </TabPanel> */}
                     <TabPanel value={value} index={1}>
-                      <StatusWiseCard showData={dashboard} />
+                      <LabelWiseCount showData={dashboard} />
                     </TabPanel>
                     <TabPanel value={value} index={2}>
-                      <UserWiseCount />
+                      <StatusWiseCard showData={dashboard} />
                     </TabPanel>
                     <TabPanel value={value} index={3}>
+                      <UserWiseCount />
+                    </TabPanel>
+                    <TabPanel value={value} index={4}>
                       <TopEmpDetail showData={dashboard}></TopEmpDetail>
                     </TabPanel>
                   </>
@@ -348,6 +349,10 @@ const Analytics = () => {
                 }
               })()}
 
+            </SimpleCard>
+            <br></br>
+            <SimpleCard title="Employee Wise Performance">
+              <EmpPerformance></EmpPerformance>
             </SimpleCard>
             <br></br>
             <Grid container spacing={0}>

@@ -1,3 +1,5 @@
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+
 export const navigationBM = [
     { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
     // { name: 'Employee Dashboard', path: '/dashboard/employeeDashboard', icon: 'dashboard' },
@@ -65,6 +67,7 @@ export const navigationBM = [
             { name: 'Catalogue List', iconText: 'Cat', path: '/catalogues/manageCatalogue' },
         ],
     },
+    { name: 'Reward', path: '/reward/manageReward', icon: <EmojiEventsIcon /> },
     // { label: 'Digital Card', type: 'label' },
     // {
     //     name: 'Digital Card',

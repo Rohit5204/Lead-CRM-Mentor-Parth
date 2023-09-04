@@ -54,7 +54,7 @@ const TopEmpDetail = (showData) => {
 
     const rank = ["Rank 1", "Rank 2", "Rank 3"]
 
-    const user = localStorage.getItem('userName')
+    const user = localStorage.getItem('name')
 
     const items = localStorage.getItem('accessToken');
     const roleCode = localStorage.getItem('roleCode');
@@ -89,7 +89,7 @@ const TopEmpDetail = (showData) => {
                                     <Grid item xs={8} md={7}>
                                         <Box>
                                             <div className="flex-grow-1 ms-3">
-                                                <h5 className="mb-1">{user} </h5>
+                                                <h6 className="mb-1">{user} </h6>
                                                 <p className="small text-muted mb-1">Total Lead</p>
                                                 <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
                                             </div>
@@ -118,7 +118,7 @@ const TopEmpDetail = (showData) => {
                                     <Grid item xs={8} md={7}>
                                         <Box>
                                             <div className="flex-grow-1 ms-3">
-                                                <h5 className="mb-1">{user} </h5>
+                                                <h6 className="mb-1">{user} </h6>
                                                 <p className="small text-muted mb-1">Total Lead</p>
                                                 <p className="mb-0" style={{ fontSize: '24px' }}>{item.leadCount}</p>
                                             </div>
@@ -147,9 +147,9 @@ const TopEmpDetail = (showData) => {
                                 <Grid item xs={8} md={7}>
                                     <Box>
                                         <div className="flex-grow-1 ms-3">
-                                            <h5 className="mb-1">{item.firstName} {item.lastName}</h5>
+                                            <h6 className="mb-1">{item.firstName} {item.lastName}</h6>
                                             <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>{rank[index]}</p>
-                                            <p className="small text-muted mb-1">Total Lead</p>
+                                            <p className="small text-muted mb-1">Total Leads</p>
                                             <p className="mb-0" style={{ fontSize: '24px' }}>{item.total_lead_count}</p>
                                         </div>
                                     </Box>

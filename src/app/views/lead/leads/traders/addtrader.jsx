@@ -39,10 +39,9 @@ const AddTrader = ({ handleDialog }) => {
     const [remarks, setremarks] = useState()
     const [status, setstatus] = useState(0)
 
-
-
-
-
+    const [compStatus, setcompStatus] = useState(1)
+    const [compAmt, setcompAmt] = useState()
+    const [plAmt, setplAmt] = useState()
 
     const postTransaction = () => {
         const transData = {
@@ -51,7 +50,10 @@ const AddTrader = ({ handleDialog }) => {
             traderDate: traderDate,
             remarks: remarks,
             status: status,
-            createdBy: userId
+            createdBy: userId,
+            compStatus: compStatus,
+            compAmt: compAmt,
+            plAmt: plAmt
         };
         axios.post(BASE_URL + `/api/saveLeadTrader`, transData,
             { headers: headers });
@@ -95,7 +97,7 @@ const AddTrader = ({ handleDialog }) => {
 
                 <Row>
                     <Col>
-                        <Form.Label>Transaction Date</Form.Label>
+                        <Form.Label>Trading Date</Form.Label>
                         <Form.Control
                             type="date"
                             placeholder="Enter any Remarks"
@@ -104,8 +106,21 @@ const AddTrader = ({ handleDialog }) => {
                         />
                     </Col>
                     <Col>
-                        <FormControl sx={{ m: 0, width: '100%' }} size="small" className="mt-1">
-                            <Form.Label>Status</Form.Label>
+                        <Form.Label>Trading Amount</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter the Trading Amount"
+                            onChange={(e) => settraderAmt(e.target.value)}
+                            value={traderAmt}
+                        />
+                    </Col>
+
+
+                </Row>
+                <Row>
+                    <Col>
+                        <FormControl sx={{ m: 0, width: '100%' }} size="small">
+                            <Form.Label>Client Status</Form.Label>
                             <Select required value={status}
                                 label="."
                                 onChange={(e) => setstatus(e.target.value)}>
@@ -114,19 +129,39 @@ const AddTrader = ({ handleDialog }) => {
                             </Select>
                         </FormControl>
                     </Col>
-
-                </Row>
-                <Row>
                     <Col>
                         <Form.Label>Profit/Loss Amount</Form.Label>
                         <Form.Control
                             type="number"
-                            placeholder="Enter the Amount"
-                            onChange={(e) => settraderAmt(e.target.value)}
-                            value={traderAmt}
+                            placeholder="Enter the Profit/Loss Amount"
+                            onChange={(e) => setplAmt(e.target.value)}
+                            value={plAmt}
                         />
                     </Col>
 
+                </Row>
+                <Row>
+                    <Col>
+                        <FormControl sx={{ m: 0, width: '100%' }} size="small">
+                            <Form.Label>Company Status</Form.Label>
+                            <Select required value={compStatus}
+                                label="."
+                                onChange={(e) => setcompStatus(e.target.value)}>
+                                <MenuItem value={0}>Paid</MenuItem>
+                                <MenuItem value={1}>Follow Up</MenuItem>
+                                <MenuItem value={2}>Runner</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Col>
+                    <Col>
+                        <Form.Label>Company Amount</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter the Company Amount"
+                            onChange={(e) => setcompAmt(e.target.value)}
+                            value={compAmt}
+                        />
+                    </Col>
                 </Row>
                 <Row>
                     <Col>

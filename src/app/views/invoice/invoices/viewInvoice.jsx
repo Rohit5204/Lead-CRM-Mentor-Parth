@@ -155,7 +155,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     // "/assets/images/payment-card/boostock-logo.jpg"
                                     ></img> */}
 
-                                    <img width="140" src="/assets/images/illustrations/LOGO UNITY-01.png" alt="" />
+                                    <img width="140" src="/assets/images/illustrations/new-boostock-logo.png" alt="" />
                                 </Col>
                                 <Col className='mt-2'>
                                     <h5 style={{ "color": "MidnightBlue" }}>
@@ -168,7 +168,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                                     <span>Contact No :- {APIData.contactNo}</span>
                                     <br />
                                     <span className="font-bold">Email :- {APIData.email}</span>
-                                </Col>
+                                </Col>q
                             </Row>
                             <br />
                             <table className="table table-striped table-bordered" style={{ 'borderRadius': '2px' }}>
@@ -220,8 +220,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
 
                                 <tbody className='text-center'>
                                     <tr>
-
-                                        <td> {theViewInvoice.gsName} </td>
+                                        <td>{theViewInvoice.gsName} </td>
                                         <td>{theViewInvoice.duration}</td>
                                         <td>{theViewInvoice.amount}</td>
                                         <td>{subtotal}</td>
@@ -278,7 +277,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             {/* hide amd show condition */}
                             {Object.keys(installments).length > 0 ? (
                                 <div>
-                                    < h5 style={{ "color": "MidnightBlue" }}> Installment Information</h5>
+                                    <h5 style={{ "color": "MidnightBlue" }}> Installment Information</h5>
                                     <Row>
                                         <Col>
                                             <b><Form.Label> No. of Installment : </Form.Label></b>
@@ -334,7 +333,7 @@ const ViewInvoice = ({ theViewInvoice }) => {
                             ) : (
                                 <div></div>
                             )}
-                            <div >
+                            <div>
                                 <Row>
                                     <Col style={{ "color": "MidnightBlue" }}>
                                         <h5>Term & Condition</h5>

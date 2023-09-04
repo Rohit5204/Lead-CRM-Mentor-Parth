@@ -65,8 +65,10 @@ const LossTrader = ({ fetch }) => {
 
                             <TableCell align="center">Trader Name</TableCell>
                             <TableCell align="center">Trader Date</TableCell>
-                            <TableCell align="center">Trader Amount</TableCell>
-                            <TableCell align="center">Status</TableCell>
+                            <TableCell align="center">Trading Amount</TableCell>
+                            <TableCell align="center">Loss Amount</TableCell>
+                            <TableCell align="center">Pending Amount</TableCell>
+                            <TableCell align="center">Client Status</TableCell>
                             <TableCell align="center">Remark</TableCell>
                         </TableRow>
                     </TableHead>
@@ -79,6 +81,8 @@ const LossTrader = ({ fetch }) => {
                                         <TableCell align="center">{name}</TableCell>
                                         <TableCell align="center">{new Date(subscriber.traderDate).toLocaleDateString('en-GB')}</TableCell>
                                         <TableCell align="center">{subscriber.traderAmt}</TableCell>
+                                        <TableCell align="center">{subscriber.plAmt}</TableCell>
+                                        <TableCell align="center">{subscriber.compAmt}</TableCell>
                                         <TableCell align="center">
                                             <Chip label="Loss" color="error" />
                                         </TableCell>

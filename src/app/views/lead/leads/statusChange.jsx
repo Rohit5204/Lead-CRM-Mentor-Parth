@@ -192,7 +192,7 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
                     </FormControl>
                 </Col>
             </Row>
-            {(function () {
+            {/* {(function () {
                 if (myOptions4 == "FollowUp") {
                     return <>
                         <br />
@@ -289,10 +289,19 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
 
                     </>
                 }
-            })()}
+            })()} */}
+            <Form.Label>Remark</Form.Label>
+            <Form.Control
+                as="textarea"
+                rows={3}
+                onChange={(e) => setRemarks(e.target.value)}
+                value={remarks}
+                required
+                placeholder="Comment"
+            />
             <br />
             <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-                {(function () {
+                {/* {(function () {
                     if (myOptions4 == "FollowUp") {
                         return <>
                             <button type="submit"
@@ -322,7 +331,12 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
                             </button>
                         </>
                     }
-                })()}
+                })()} */}
+                <button type="submit"
+                    className="btn btn-success"
+                    // style={{ margin: 5 + 'px' }}
+                    onClick={updateLead}>Update Status
+                </button>
             </div>
         </div>
     )

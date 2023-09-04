@@ -193,7 +193,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Name</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Boostock-Info"}
+                        value={"Unity Share Info"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -201,7 +201,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Address</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Seawoods, Navi Mumbai"}
+                        value={"Vashi, Navi Mumbai"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -219,7 +219,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Webiste Link</Form.Label>
                     <Form.Control
                         disabled
-                        value={"www.boostock.in"}
+                        value={"www.unityshareinfo.com"}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
