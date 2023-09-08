@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ClearIcon from '@mui/icons-material/Clear';
 import UpdateTransactionLead from "./updateStatus";
 import { Box } from "@mui/system";
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import { Breadcrumb } from "app/components";
 
 const Container = styled('div')(({ theme }) => ({
@@ -122,7 +123,7 @@ const TransactionLeads = () => {
                             />
                         </Grid>
                         <Grid item xs={12} md={2}>
-                            <Form.Label>Transaction Date</Form.Label>
+                            <Form.Label>Trading Date</Form.Label>
                             <Form.Control
                                 type="date"
                                 placeholder="Enter any Remarks"
@@ -131,10 +132,10 @@ const TransactionLeads = () => {
                             />
                         </Grid>
                         <Grid item xs={12} md={3}>
-                            <Form.Label>Transaction Amount</Form.Label>
+                            <Form.Label>Company Paid Amount</Form.Label>
                             <Form.Control
                                 type="number"
-                                placeholder="Enter the Amount"
+                                placeholder="Enter the Company Paid Amount"
                                 onChange={(e) => setAmount(e.target.value)}
                                 value={amount}
                             />
@@ -172,8 +173,8 @@ const TransactionLeads = () => {
                             <thead style={{ "color": "MidnightBlue" }} className='text-center'>
                                 <tr>
                                     <th>Sr No.</th>
-                                    <th>Transaction Date</th>
-                                    <th>Transaction Amount</th>
+                                    <th>Trading Date</th>
+                                    <th>Paid Amount</th>
                                     <th>Remarks</th>
                                     <th>Approved</th>
                                 </tr>

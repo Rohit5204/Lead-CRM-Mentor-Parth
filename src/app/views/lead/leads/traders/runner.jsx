@@ -5,6 +5,9 @@ import { styled } from '@mui/material/styles';
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import ClearIcon from '@mui/icons-material/Clear';
+import LeadStatusChange from "./statusChange";
 
 
 const StyledTable = styled(Table)(() => ({
@@ -17,7 +20,7 @@ const StyledTable = styled(Table)(() => ({
     },
 }));
 
-const Runner = ({ fetch }) => {
+const RunnerTrader = ({ fetch }) => {
     const location = useLocation();
     const [APIData, setAPIData] = useState([]);
     const leadId = location.state.leadId;
@@ -32,13 +35,14 @@ const Runner = ({ fetch }) => {
         "roleCode": roleCode,
         "userId": userId
     }
+    const [obj1, setObj1] = useState(null);
+    const [showAdd, setShowAdd] = useState(false);
 
-    // const getLeadTraderData = () => {
-    //     axios.post(BASE_URL + `/api/getLeadTrader`, { headers: headers })
-    //         .then((response) => {
-    //             setAPIData(response.data.data);
-    //         });
-    // }
+    const closeAdd = () => setShowAdd(false);
+    const openAdd = (subscriber) => {
+        setObj1(subscriber);
+        setShowAdd(true);
+    }
     const getLeadTraderData = () => {
         axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: leadId, userId: 0, statusId: 0, searchKey: "",
@@ -66,7 +70,7 @@ const Runner = ({ fetch }) => {
                             <TableCell align="center">Trading Date</TableCell>
                             <TableCell align="center">Trading Amount</TableCell>
                             <TableCell align="center">Profit Amount</TableCell>
-                            <TableCell align="center">Un-Paid Amount</TableCell>
+                            <TableCell align="center">Pending Amount</TableCell>
                             <TableCell align="center">Client Status</TableCell>
                             <TableCell align="center">Remark</TableCell>
                         </TableRow>
@@ -83,7 +87,7 @@ const Runner = ({ fetch }) => {
                                         <TableCell align="center">{subscriber.plAmt}</TableCell>
                                         <TableCell align="center">{subscriber.compAmt}</TableCell>
                                         <TableCell align="center">
-                                            <Chip label="Runner" color="danger" />
+                                            <Chip label="Runner" color="error" onClick={() => openAdd(subscriber)} />
                                         </TableCell>
                                         <TableCell align="center">{subscriber.remarks}</TableCell>
                                     </TableRow>
@@ -93,7 +97,27 @@ const Runner = ({ fetch }) => {
                     </TableBody>
                 </StyledTable>
             </Box>
+            <Modal
+                backdrop="static"
+                keyboard={false}
+                show={showAdd}
+                onHide={closeAdd}
+                animation={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header>
+                    <h5>Update Client Status</h5>
+                    <IconButton type="button" onClick={closeAdd}>
+                        <ClearIcon />
+                    </IconButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <LeadStatusChange theViewData={obj1} handleDialog={closeAdd}></LeadStatusChange>
+                </Modal.Body>
+            </Modal>
         </>
     )
 }
-export default Runner
+export default RunnerTrader

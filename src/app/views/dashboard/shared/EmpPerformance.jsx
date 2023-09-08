@@ -56,25 +56,25 @@ const EmpPerformance = () => {
                         <TableRow>
 
                             <TableCell align="center">Employee Name</TableCell>
-                            <TableCell align="center">FT (Meeting)</TableCell>
-                            <TableCell align="center">AT (Quotation)</TableCell>
+                            <TableCell align="center">FT (Fresh Trader)</TableCell>
+                            <TableCell align="center">AT (Active Trader)</TableCell>
                             <TableCell align="center">Total Amount</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {APIData.map((subscriber, index) => {
+                            if (subscriber.assignId != 1) {
+                                return (
+                                    <TableRow key={index}>
 
-                            return (
-                                <TableRow key={index}>
+                                        <TableCell align="center">{subscriber.firstName + " " + subscriber.lastName}</TableCell>
+                                        <TableCell align="center">{subscriber.FT_count}</TableCell>
+                                        <TableCell align="center">{subscriber.AT_count}</TableCell>
+                                        <TableCell align="center">{subscriber.total_amount}</TableCell>
 
-                                    <TableCell align="center">{subscriber.firstName + " " + subscriber.lastName}</TableCell>
-                                    <TableCell align="center">{subscriber.AT_count}</TableCell>
-                                    <TableCell align="center">{subscriber.FT_count}</TableCell>
-                                    <TableCell align="center">{subscriber.total_amount}</TableCell>
-
-                                </TableRow>
-                            );
-
+                                    </TableRow>
+                                );
+                            }
                         })}
                     </TableBody>
                 </StyledTable>

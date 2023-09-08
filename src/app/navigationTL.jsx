@@ -19,6 +19,16 @@ export const navigationTL = [
     { label: 'QUOTATIONS', type: 'label' },
     { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
 
+    {
+        name: 'Attendance',
+        icon: 'person',
+        children: [
+            { name: 'View Attendance', iconText: 'ML', path: '/manageAttandance' },
+            // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+            { name: 'Leave Request', iconText: 'AL', path: '/leads/assignLeads' },
+        ],
+    },
+
     // {
     //   name: 'Quotation List',
     //   icon: 'work',
@@ -57,6 +67,16 @@ export const navigationTL = [
         path: '/manageEmailMessage',
     },
     { name: 'Reward', path: '/reward/manageReward', icon: <EmojiEventsIcon /> },
+
+    {
+        name: 'Attendance',
+        icon: 'person',
+        children: [
+            { name: 'View Attendance', iconText: 'ML', path: '/manageAttandance' },
+            // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+            { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
+        ],
+    },
     // { label: 'Digital Card', type: 'label' },
     // {
     //     name: 'Digital Card',

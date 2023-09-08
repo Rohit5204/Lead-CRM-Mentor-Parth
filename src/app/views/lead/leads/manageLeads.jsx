@@ -426,7 +426,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "Lead") {
@@ -503,7 +503,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remark</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -517,7 +517,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "FollowUp") {
@@ -574,7 +574,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -588,7 +588,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "FT (Meeting)") {
@@ -654,7 +654,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -668,7 +668,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "Ringing") {
@@ -725,7 +725,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -739,7 +739,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "AT (Quotation)") {
@@ -761,10 +761,14 @@ const ManageLead = () => {
                                 </Link>
                                   <Link to="/leads/manageTrader" state={subscriber}>
                                     <IconButton>
-                                      <CandlestickChartIcon />
+                                      <CandlestickChartIcon color='success' />
                                     </IconButton>
                                   </Link>
-
+                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                    <IconButton>
+                                      <CurrencyRupeeIcon color='primary' />
+                                    </IconButton>
+                                  </Link>
                                 </>
                               }
                               else {
@@ -782,6 +786,11 @@ const ManageLead = () => {
                                   <Link to="/leads/manageTrader" state={subscriber}>
                                     <IconButton>
                                       <CandlestickChartIcon />
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
+                                    <IconButton>
+                                      <CurrencyRupeeIcon />
                                     </IconButton>
                                   </Link>
                                 </>
@@ -806,7 +815,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -820,7 +829,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "Invoice") {
@@ -840,11 +849,6 @@ const ManageLead = () => {
                                     <Icon color="red">visibility</Icon>
                                   </IconButton>
                                 </Link>
-                                  <Link to="/leads/transaction/addTransaction" state={subscriber}>
-                                    <IconButton>
-                                      <CurrencyRupeeIcon color='primary' />
-                                    </IconButton>
-                                  </Link>
 
                                 </>
                               }
@@ -858,6 +862,11 @@ const ManageLead = () => {
                                   <Link to="/leads/editLead" state={subscriber}>
                                     <IconButton>
                                       <Icon color="success">edit</Icon>
+                                    </IconButton>
+                                  </Link>
+                                  <Link to="/leads/manageTrader" state={subscriber}>
+                                    <IconButton>
+                                      <CandlestickChartIcon />
                                     </IconButton>
                                   </Link>
                                   <Link to="/leads/transaction/addTransaction" state={subscriber}>
@@ -887,7 +896,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -901,7 +910,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (roleName == "Employee" && subscriber.statusName == "Closed (Paid)") {
@@ -948,6 +957,11 @@ const ManageLead = () => {
                                       <Icon color="success">edit</Icon>
                                     </IconButton>
                                   </Link>
+                                  <Link to="/leads/manageTrader" state={subscriber}>
+                                    <IconButton>
+                                      <CandlestickChartIcon />
+                                    </IconButton>
+                                  </Link>
                                   <Link to="/leads/transaction/addTransaction" state={subscriber}>
                                     <IconButton>
                                       <CurrencyRupeeIcon color='primary' />
@@ -975,7 +989,7 @@ const ManageLead = () => {
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -989,7 +1003,7 @@ const ManageLead = () => {
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">₹ {subscriber.expectedAmount}</TableCell>
+                          <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "Drop") {

@@ -11,7 +11,7 @@ import { Form, InputGroup, Modal } from 'react-bootstrap';
 import AddTrader from './addtrader';
 import TraderCount from './count';
 import FollowUpTrader from './followup';
-import Runner from './runner';
+import RunnerTrader from './runner';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -105,7 +105,7 @@ const ManageTrader = () => {
                         <Tab label="Profit Trader" {...a11yProps(0)} />
                         <Tab label="Loss Trader" {...a11yProps(1)} />
                         <Tab label="Follow Up" {...a11yProps(2)} />
-
+                        <Tab label="Runner" {...a11yProps(3)} />
 
                     </Tabs>
                 </Box>
@@ -118,7 +118,9 @@ const ManageTrader = () => {
                 <TabPanel value={value} index={2}>
                     <FollowUpTrader fetch={showAdd}></FollowUpTrader>
                 </TabPanel>
-
+                <TabPanel value={value} index={3}>
+                    <RunnerTrader fetch={showAdd}></RunnerTrader>
+                </TabPanel>
             </Box>
 
             <Modal
