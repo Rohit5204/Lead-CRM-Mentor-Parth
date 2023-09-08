@@ -55,6 +55,8 @@ const ManageLeave = () => {
         navigate('/catalogues/addCatalogue');
     };
 
+    const fullName = localStorage.getItem('name')
+
     const [updateStatus, setUpdateStatus] = useState(false)
     //Dialog Form
 
@@ -81,7 +83,7 @@ const ManageLeave = () => {
     };
     const getLeaveData = async () => {
         if (roleCode == "EMP") {
-            await axios.get(BASE_URL1 + `/getLeave?empName=` + "Rohit")
+            await axios.get(BASE_URL1 + `/getLeave?empName=` + fullName)
                 .then((response) => {
                     setAPIData(response.data);
                 }
