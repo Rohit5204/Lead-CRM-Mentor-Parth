@@ -78,6 +78,8 @@ export const navigationBM = [
             { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
         ],
     },
+
+    { name: 'Leader Board', path: '/manageLeaderBoard', icon: <EmojiEventsIcon /> },
     // { label: 'Digital Card', type: 'label' },
     // {
     //     name: 'Digital Card',

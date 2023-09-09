@@ -20,6 +20,8 @@ export const navigationEmp = [
       { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
     ],
   },
+
+  { name: 'Leader Board', path: '/manageLeaderBoard', icon: <EmojiEventsIcon /> },
   // { label: 'QUOTATIONS', type: 'label' },
   // { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
 

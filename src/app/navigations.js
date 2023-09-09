@@ -77,7 +77,7 @@ export const navigations = [
       { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
     ],
   },
-
+  { name: 'Leader Board', path: '/manageLeaderBoard', icon: <EmojiEventsIcon /> },
   // {
   //   name: 'Session/Auth',
   //   icon: 'security',
