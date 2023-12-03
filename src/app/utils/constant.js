@@ -4,11 +4,8 @@ export const navbarHeight = 60
 export const sidenavCompactWidth = 80
 export const containedLayoutWidth = 1200
 
-//Boostock Database
-export const BASE_URL = 'http://52.23.184.78:3002'
+// Local Server IP
+export const BASE_URL = 'http://192.168.0.132:4002'
 
-//Unity Share
-//export const BASE_URL = 'http://54.226.244.163:3001'
-
-
-//54.226.244.163
+// AWS Sever IP :-
+// export const BASE_URL = 'http://13.233.104.27:3002'
