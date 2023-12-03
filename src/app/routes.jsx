@@ -17,7 +17,8 @@ import profileRoutes from './views/profile/profileRoute';
 import myDealRoutes from './views/myDeals/myDealRoutes';
 import emailRoutes from './views/email/emailCatalogueRoute';
 import rewardRoutes from './views/reward/rewardRoutes';
-
+import accountRoues from './views/account/acountRoutes';
+import leaderRoutes from './views/leaderBoard/leaderBoardRoutes'
 
 const routes = [
   {
@@ -40,7 +41,9 @@ const routes = [
       ...profileRoutes,
       ...myDealRoutes,
       ...emailRoutes,
-      ...rewardRoutes
+      ...rewardRoutes,
+      ...accountRoues,
+      ...leaderRoutes
     ],
   },
   ...sessionRoutes,

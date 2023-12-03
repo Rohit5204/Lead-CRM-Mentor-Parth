@@ -10,6 +10,18 @@ export const navigationEmp = [
 
   { name: 'Catalogue List', path: '/catalogues/userCatalogue', icon: 'work' },
   { name: 'Reward', path: '/reward/manageReward', icon: <EmojiEventsIcon /> },
+
+  {
+    name: 'Attendance',
+    icon: 'person',
+    children: [
+      { name: 'View Attendance', iconText: 'ML', path: '/manageAttandance' },
+      // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+      { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
+    ],
+  },
+
+  { name: 'Leader Board', path: '/manageLeaderBoard', icon: <EmojiEventsIcon /> },
   // { label: 'QUOTATIONS', type: 'label' },
   // { name: 'Quotation List', path: '/quotations/manageQuotation', icon: 'work' },
 

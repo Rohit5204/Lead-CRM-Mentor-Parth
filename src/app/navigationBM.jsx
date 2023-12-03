@@ -68,6 +68,18 @@ export const navigationBM = [
         ],
     },
     { name: 'Reward', path: '/reward/manageReward', icon: <EmojiEventsIcon /> },
+
+    {
+        name: 'Attendance',
+        icon: 'person',
+        children: [
+            { name: 'Attendance Report', iconText: 'AR', path: '/attandanceReport' },
+            // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
+            { name: 'Leave Request', iconText: 'LR', path: '/manageLeave' },
+        ],
+    },
+
+    { name: 'Leader Board', path: '/manageLeaderBoard', icon: <EmojiEventsIcon /> },
     // { label: 'Digital Card', type: 'label' },
     // {
     //     name: 'Digital Card',

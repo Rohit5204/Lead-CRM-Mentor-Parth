@@ -7,5 +7,10 @@ export const containedLayoutWidth = 1200
 // Local Server IP
 export const BASE_URL = 'http://192.168.0.132:4002'
 
-// AWS Sever IP :-
-// export const BASE_URL = 'http://13.233.104.27:3002'
+export const BASE_URL1 = 'http://192.168.0.132:3002/api'
+
+//Unity Share
+//export const BASE_URL = 'http://54.226.244.163:3001'
+
+
+//54.226.244.163
