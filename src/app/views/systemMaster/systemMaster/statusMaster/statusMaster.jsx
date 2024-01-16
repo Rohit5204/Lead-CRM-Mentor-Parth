@@ -53,7 +53,7 @@ const StatusMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=statusmaster`,
                 { headers: headers })
             .then((response) => {
-                setAPIData(response.data.data);
+                setAPIData(response.data.status);
             });
     }, [APIData]);
 

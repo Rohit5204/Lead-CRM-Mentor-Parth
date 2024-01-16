@@ -54,7 +54,7 @@ const LabelMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=labelmaster`,
                 { headers: headers })
             .then((response) => {
-                setAPIData(response.data.data);
+                setAPIData(response.data.status);
             });
     }, [APIData]);
 

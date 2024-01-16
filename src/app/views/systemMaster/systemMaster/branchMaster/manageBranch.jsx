@@ -54,8 +54,8 @@ const BranchMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=branchmaster`,
                 { headers: headers })
             .then((response) => {
-                console.log(response.data.data)
-                setBranchData(response.data.data);
+                console.log(response.data.status)
+                setBranchData(response.data.status);
             });
     }, [BranchData]);
 

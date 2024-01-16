@@ -90,7 +90,7 @@ const ManageTrader = () => {
 
                     <Grid item xs={12} md={12} >
                         <div style={{ textAlign: 'center' }}>
-                            <TraderCount fetch={showAdd}></TraderCount>
+                            {/* <TraderCount fetch={showAdd}></TraderCount> */}
                         </div>
                     </Grid>
                 </Grid>

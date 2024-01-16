@@ -26,9 +26,9 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
-            for (var i = 0; i < res.data.data.length; i++) {
-                setStatusName(current => [...current, res.data.data[i].name]);
-                setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
+            for (var i = 0; i < res.data.status.length; i++) {
+                setStatusName(current => [...current, res.data.status[i].name]);
+                setId3(current => [...current, res.data.status[i].id, res.data.status[i].name])
             }
         });
     }, [])

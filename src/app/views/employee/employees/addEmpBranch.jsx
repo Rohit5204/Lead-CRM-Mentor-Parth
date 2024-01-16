@@ -59,23 +59,23 @@ const AddEmpBranch = () => {
     useEffect(() => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
-                for (var i = 0; i < res.data.data.length; i++) {
-                    if (res.data.data[i].roleId == 2) {
-                        setUserData(current => [...current, res.data.data[i].firstName + " "
-                            + res.data.data[i].lastName]);
-                        setId3(current => [...current, res.data.data[i].userId, res.data.data[i].firstName
-                            + " " + res.data.data[i].lastName])
+                for (var i = 0; i < res.data.status.length; i++) {
+                    if (res.data.status[i].roleId == 2) {
+                        setUserData(current => [...current, res.data.status[i].firstName + " "
+                            + res.data.status[i].lastName]);
+                        setId3(current => [...current, res.data.status[i].userId, res.data.status[i].firstName
+                            + " " + res.data.status[i].lastName])
                     }
                 }
             });
         axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((res) => {
-                for (var i = 0; i < res.data.data.length; i++) {
-                    if (res.data.data[i].roleId == 3) {
-                        setUserTLData(current => [...current, res.data.data[i].firstName + " "
-                            + res.data.data[i].lastName]);
-                        setId4(current => [...current, res.data.data[i].userId, res.data.data[i].firstName
-                            + " " + res.data.data[i].lastName])
+                for (var i = 0; i < res.data.status.length; i++) {
+                    if (res.data.status[i].roleId == 3) {
+                        setUserTLData(current => [...current, res.data.status[i].firstName + " "
+                            + res.data.status[i].lastName]);
+                        setId4(current => [...current, res.data.status[i].userId, res.data.status[i].firstName
+                            + " " + res.data.status[i].lastName])
                     }
                 }
             });

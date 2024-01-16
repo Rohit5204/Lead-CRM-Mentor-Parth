@@ -54,7 +54,7 @@ const AssignMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=assignmaster`,
                 { headers: headers })
             .then((response) => {
-                setAPIData(response.data.data);
+                setAPIData(response.data.status);
             });
     }, [APIData]);
 

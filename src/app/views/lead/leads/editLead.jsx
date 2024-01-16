@@ -63,9 +63,9 @@ const EditUser = () => {
   useEffect(() => {
 
     axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
-      for (var i = 0; i < res.data.data.length; i++) {
-        setAssignTo(current => [...current, res.data.data[i].firstName + " " + res.data.data[i].lastName]);
-        setId1(current => [...current, res.data.data[i].userId, res.data.data[i].firstName + " " + res.data.data[i].lastName])
+      for (var i = 0; i < res.data.status.length; i++) {
+        setAssignTo(current => [...current, res.data.status[i].firstName + " " + res.data.status[i].lastName]);
+        setId1(current => [...current, res.data.status[i].userId, res.data.status[i].firstName + " " + res.data.status[i].lastName])
       }
     });
     axios.post(BASE_URL + `/api/getCatalogue`, { catId: 0, }, { headers: headers }).then((res) => {
@@ -74,21 +74,21 @@ const EditUser = () => {
       }
     });
     axios.get(BASE_URL + `/api/getMasterData?masterName=platformmaster`, { headers: headers }).then((res) => {
-      for (var i = 0; i < res.data.data.length; i++) {
-        setPlatformName(current => [...current, res.data.data[i].platformName]);
-        setSourceId(current => [...current, res.data.data[i].id, res.data.data[i].platformName])
+      for (var i = 0; i < res.data.status.length; i++) {
+        setPlatformName(current => [...current, res.data.status[i].platformName]);
+        setSourceId(current => [...current, res.data.status[i].id, res.data.status[i].platformName])
       }
     });
     axios.get(BASE_URL + `/api/getMasterData?masterName=labelmaster`, { headers: headers }).then((res) => {
-      for (var i = 0; i < res.data.data.length; i++) {
-        setLabelName(current => [...current, res.data.data[i].name]);
-        setId2(current => [...current, res.data.data[i].id, res.data.data[i].name])
+      for (var i = 0; i < res.data.status.length; i++) {
+        setLabelName(current => [...current, res.data.status[i].name]);
+        setId2(current => [...current, res.data.status[i].id, res.data.status[i].name])
       }
     });
     axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
-      for (var i = 0; i < res.data.data.length; i++) {
-        setStatusName(current => [...current, res.data.data[i].name]);
-        setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
+      for (var i = 0; i < res.data.status.length; i++) {
+        setStatusName(current => [...current, res.data.status[i].name]);
+        setId3(current => [...current, res.data.status[i].id, res.data.status[i].name])
       }
     });
   }, []);

@@ -112,7 +112,7 @@ const PlatformMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=platformmaster`,
                 { headers: headers })
             .then((response) => {
-                setAPIData(response.data.data);
+                setAPIData(response.data.status);
             });
     }, [APIData]);
 

@@ -65,7 +65,8 @@ const ManageAllEmployee = () => {
     useEffect(() => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((response) => {
-                setUserData(response.data.data);
+                console.log(response.data.status)
+                setUserData(response.data.status);
             });
     }, [userData]);
 
@@ -143,9 +144,6 @@ const ManageAllEmployee = () => {
                                                 <Icon color="success">edit</Icon>
                                             </IconButton>
                                         </Link>
-                                        {/* <IconButton>
-                      <Icon color="warning">delete</Icon>
-                    </IconButton> */}
                                     </TableCell>
                                 </TableRow>
 

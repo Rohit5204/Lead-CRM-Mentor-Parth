@@ -64,7 +64,7 @@ const ManageEmployee = () => {
   useEffect(() => {
     axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
       { headers: headers }).then((response) => {
-        setUserData(response.data.data);
+        setUserData(response.data.status);
       });
   }, [userData]);
 

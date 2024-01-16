@@ -81,32 +81,12 @@ const ManageEmailMessage = () => {
     const [idData, setIdData] = useState([]);
     const [myOptions, setMyOptions] = useState(null);
 
-    // const connection = () => {
-    //     // Connect to the WebSocket server
-    //     const socket = new WebSocket('ws://localhost:8080');
-
-    //     socket.addEventListener('open', () => {
-    //         console.log('WebSocket connection established');
-
-    //         // Send a message to the server
-    //         socket.send('Hello, server!');
-    //     });
-
-    //     socket.addEventListener('message', (event) => {
-    //         console.log('Message received from server:', event.data);
-    //     });
-
-    //     socket.addEventListener('close', () => {
-    //         console.log('WebSocket connection closed');
-    //     });
-    // }
-
     useEffect(() => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers }).then((res) => {
-                for (var i = 0; i < res.data.data.length; i++) {
-                    setCategoryData(current => [...current, res.data.data[i].emailCategory]);
-                    setIdData(current => [...current, res.data.data[i].id, res.data.data[i].emailCategory
+                for (var i = 0; i < res.data.status.length; i++) {
+                    setCategoryData(current => [...current, res.data.status[i].emailCategory]);
+                    setIdData(current => [...current, res.data.status[i].id, res.data.status[i].emailCategory
                     ])
                 }
             });

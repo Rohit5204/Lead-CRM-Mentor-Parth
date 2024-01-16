@@ -19,25 +19,28 @@ const Div = styled('div')(() => ({
   margin: '410px',
 }));
 const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
-  // console.log(theEditCatalogue)
   const [id, setId] = useState(theEditCatalogue.id);
   const [gsType, setGsType] = useState(theEditCatalogue.gsType);
   const [gsName, setGsName] = useState(theEditCatalogue.gsName);
   const [gsPrice, setGsPrice] = useState(theEditCatalogue.gsPrice);
   const [catStatus, setCatStatus] = useState(theEditCatalogue.status);
   const [gsDescription, setGsDescription] = useState(theEditCatalogue.gsDescription);
-  const [duration, setDuration] = useState(0)
-
+  const [duration, setDuration] = useState(0);
   const [assignTo, setAssignTo] = useState([]);
   const [id1, setId1] = useState([]);
   const [myOptions3, setMyOptions3] = useState(theEditCatalogue.durationName);
 
   useEffect(() => {
-    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
-      { headers: headers }).then((res) => {
-        for (var i = 0; i < res.data.data.length; i++) {
-          setAssignTo(current => [...current, res.data.data[i].name]);
-          setId1(current => [...current, res.data.data[i].id, res.data.data[i].name])
+    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`, { headers: headers })
+      .then((res) => {
+        if (Array.isArray(res.data.status)) {
+          for (var i = 0; i < res.data.status.length; i++) {
+            setAssignTo(current => [...current, res.data.status[i].name]);
+            setId1(current => {
+              const newId1 = [...current, res.data.status[i].id, res.data.status[i].name];
+              return newId1;
+            });
+          }
         }
       });
   }, []);
@@ -49,13 +52,13 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
     "x-access-token": items,
     "roleCode": roleCode,
     "userId": userId
-  }
+  };
 
-  const updateCatalogue = (e) => {
-    var catdurationid
+  const updateCatalogue = () => {
+    var catdurationid;
     for (var i = 0; i < id1.length; i++) {
-      if (myOptions3 == id1[i]) {
-        catdurationid = id1[i - 1]
+      if (myOptions3 === id1[i]) {
+        catdurationid = id1[i - 1];
       }
     }
     const UpdateCatalogue = {
@@ -68,16 +71,17 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
       actionBy: 1,
       durationId: catdurationid
     };
-    axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue,
-      { headers: headers }).then(() => useEffect);
-    handleDialog();
+    axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue, { headers: headers })
+      .then(() => handleDialog());
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
   const changePage = () => {
-    handleDialog()
-  }
+    handleDialog();
+  };
   return (
     <Container>
       {/* <SimpleCard title="Update Catalogue Detail's"> */}

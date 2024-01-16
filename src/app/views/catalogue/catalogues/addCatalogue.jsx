@@ -38,12 +38,18 @@ const AddCatalogue = () => {
     "roleCode": roleCode,
     "userId": userId
   }
+
   useEffect(() => {
-    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
-      { headers: headers }).then((res) => {
-        for (var i = 0; i < res.data.data.length; i++) {
-          setAssignTo(current => [...current, res.data.data[i].name]);
-          setId1(current => [...current, res.data.data[i].id, res.data.data[i].name])
+    axios.get(BASE_URL + `/api/getMasterData?masterName=durationmaster`, { headers: headers })
+      .then((res) => {
+        if (Array.isArray(res.data.status)) {
+          for (var i = 0; i < res.data.status.length; i++) {
+            setAssignTo(current => [...current, res.data.status[i].name]);
+            setId1(current => {
+              const newId1 = [...current, res.data.status[i].id, res.data.status[i].name];
+              return newId1;
+            });
+          }
         }
       });
   }, []);

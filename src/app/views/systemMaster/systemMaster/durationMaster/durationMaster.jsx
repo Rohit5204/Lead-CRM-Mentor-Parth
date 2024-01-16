@@ -54,7 +54,7 @@ const DurationMaster = () => {
             .get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
                 { headers: headers })
             .then((response) => {
-                setAPIDataDuration(response.data.data);
+                setAPIDataDuration(response.data.status);
             });
     }, [APIDataDuration]);
 

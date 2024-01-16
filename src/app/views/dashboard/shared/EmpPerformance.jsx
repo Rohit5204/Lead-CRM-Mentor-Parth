@@ -39,7 +39,7 @@ const EmpPerformance = () => {
         axios.get(BASE_URL + `/api/getEmployeePerform`,
             { headers: headers })
             .then((response) => {
-                console.log(response.data.data)
+                // console.log(response.data.data)
                 setAPIData(response.data.data);
 
             });
@@ -67,7 +67,7 @@ const EmpPerformance = () => {
                                 return (
                                     <TableRow key={index}>
 
-                                        <TableCell align="center">{subscriber.firstName + " " + subscriber.lastName}</TableCell>
+                                        <TableCell align="center">{subscriber.name}</TableCell>
                                         <TableCell align="center">{subscriber.FT_count}</TableCell>
                                         <TableCell align="center">{subscriber.AT_count}</TableCell>
                                         <TableCell align="center">{subscriber.total_amount}</TableCell>
