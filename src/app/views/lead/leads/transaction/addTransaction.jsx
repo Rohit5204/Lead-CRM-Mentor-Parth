@@ -56,7 +56,6 @@ const TransactionLeads = () => {
     // const handleClose1 = () => { setShow1(false); }
 
     const blankData = () => {
-        setTranDate('')
         setAmount('')
         setRemark('')
     }

@@ -200,7 +200,7 @@ const EditUser = () => {
             <Col>
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
-                disabled
+
                 onChange={(e) => setMobileNo(e.target.value)}
                 value={mobileNo}
                 placeholder="Customer Mobile Number"
@@ -219,7 +219,7 @@ const EditUser = () => {
             <Col>
               <Form.Label>Email</Form.Label>
               <Form.Control
-                readOnly
+
                 onChange={(e) => setEmailId(e.target.value)}
                 value={emailId}
                 placeholder="Customer Email"

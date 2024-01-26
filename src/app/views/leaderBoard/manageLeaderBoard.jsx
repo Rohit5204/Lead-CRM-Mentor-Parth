@@ -40,6 +40,16 @@ const ManageLeaderBoard = () => {
 
     const [APIData, setAPIData] = useState([]);
 
+    const currentDate = new Date();
+    const monthNames = [
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    ];
+
+    const currentMonthName = monthNames[currentDate.getMonth()];
+    const currentYear = currentDate.getFullYear();
+
     const items = localStorage.getItem('accessToken');
     const roleCode = localStorage.getItem('roleCode');
     const userId = localStorage.getItem('userId');
@@ -91,7 +101,7 @@ const ManageLeaderBoard = () => {
                 </Box>
                 <Box className="text-center" width="100%" overflow="auto">
                     {/* Table Section */}
-                    <h4>Leader Board For September 2023</h4>
+                    <h4>Leader Board For {currentMonthName} {currentYear}</h4>
                     <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                         <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                             <TableRow>
@@ -108,7 +118,7 @@ const ManageLeaderBoard = () => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell align="center">Rank - {index + 1}</TableCell>
-                                        <TableCell align="center">{catalogue.firstName + " " + catalogue.lastName}</TableCell>
+                                        <TableCell align="center">{catalogue.employeeName}</TableCell>
                                         <TableCell align="center">{catalogue.AT_count}</TableCell>
                                         <TableCell align="center">₹ {catalogue.total_amount}</TableCell>
                                     </TableRow>

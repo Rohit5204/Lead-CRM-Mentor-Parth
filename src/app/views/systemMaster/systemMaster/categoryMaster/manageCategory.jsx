@@ -53,7 +53,7 @@ const CategoryMaster = () => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers })
             .then((response) => {
-                setBranchData(response.data.data);
+                setBranchData(response.data.status);
             });
     }, [BranchData]);
 

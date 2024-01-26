@@ -12,6 +12,7 @@ import AddTrader from './addtrader';
 import TraderCount from './count';
 import FollowUpTrader from './followup';
 import RunnerTrader from './runner';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -62,7 +63,10 @@ const ManageTrader = () => {
     const closeAdd = () => setShowAdd(false);
     const openAdd = () => setShowAdd(true);
 
-
+    const navigate = useNavigate();
+    const changePage = () => {
+        navigate('/leads/manageLeads');
+    };
 
     return (
         <Container>
@@ -81,6 +85,9 @@ const ManageTrader = () => {
                     </Grid>
                     <Grid item xs={12} md={2} >
                         <div className="d-flex justify-content-end">
+                            <Button variant="contained" onClick={changePage}>
+                                Back
+                            </Button>&nbsp;
                             <Button variant="contained" color="success" onClick={openAdd}>Add Trader</Button>&nbsp;
                         </div>
                     </Grid>
