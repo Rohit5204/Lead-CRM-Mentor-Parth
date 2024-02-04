@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Chip, Grid, IconButton } from "@mui/material";
+import { Button, Chip, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { BASE_URL } from "app/utils/constant";
 import axios from "axios";
 import React from "react";
@@ -20,6 +20,20 @@ const Container = styled('div')(({ theme }) => ({
         [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
     },
 }));
+
+const TotalAmountDisplay = ({ totalAmount }) => (
+    <>
+        <Form.Label>Total Approved Amount</Form.Label>
+        <Form.Control
+            disabled
+            type="number"
+            placeholder="Auto Calculated Amount"
+            value={totalAmount}
+        />
+
+
+    </>
+);
 const TransactionLeads = () => {
     const today = new Date();
     const numberOfDaysToAdd = 0;
@@ -59,6 +73,8 @@ const TransactionLeads = () => {
         setAmount('')
         setRemark('')
     }
+    const [totalAmount, setTotalAmount] = useState(0);
+
     const getLeadData = () => {
         axios.post(BASE_URL + `/api/getFilteredLeadData`, {
             leadId: leadId, userId: 0, statusId: 0, searchKey: "",
@@ -87,9 +103,47 @@ const TransactionLeads = () => {
         blankData()
 
     }
+    const navigate = useNavigate();
+    const changePage = () => {
+        navigate('/leads/manageLeads');
+    };
+
+    const updateLead = () => {
+        const UpdateUser = {
+            leadId: leadId,
+            remarks: "Updated Amount Added",
+            statusId: location.state.status,
+            actionBy: parseInt(userId),
+            isMeeting: 1,
+            name: location.state.name,
+            mobileNo: location.state.mobileNo,
+            streetName: location.state.streetName,
+            cityName: location.state.cityName,
+            stateName: location.state.stateName,
+            zipCode: location.state.zipCode,
+            countryName: location.state.countryName,
+            intrestedIn: location.state.intrestedIn,
+            sourceId: location.state.sourceId,
+            assignId: location.state.assignId,
+            label: location.state.label,
+            alternateMobile: location.state.alternateMobile,
+            clientName: location.state.clientName,
+            expectedAmount: totalAmount,
+            emailId: location.state.emailId
+        };
+        console.log({ UpdateUser });
+        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser,
+            { headers: headers });
+        changePage();
+    }
 
     useEffect(() => {
         getLeadData()
+        const sumOfAmount = APIData
+            .filter(transaction => transaction.isapproved != 1)
+            .reduce((acc, transaction) => acc + transaction.amount, 0);
+
+        setTotalAmount(sumOfAmount);
     }, [APIData]);
 
 
@@ -159,14 +213,32 @@ const TransactionLeads = () => {
                         </Grid>
                     </Grid>
 
+                    <Grid container spacing={2} alignItems="center">
 
+                        <Grid item xs={12} md={2}>
+                            <TotalAmountDisplay totalAmount={totalAmount} />
+                        </Grid>
+                        <Grid item xs={12} md={2}>
+                            <Button
+                                style={{ marginTop: '30px' }}
+                                id="demo-customized-button"
+                                size='large'
+                                color="primary"
+                                variant="contained"
+                                disableElevation
+                                onClick={updateLead}
+                            >
+                                Save to Lead
+                            </Button>
+                        </Grid>
+                    </Grid>
 
 
 
                     <br />
                     {/* {JSON.stringify(APIData456)} */}
                     <Row className="mt-2">
-                        <Col> <h5 className='text-center'>Transaction Detail's</h5></Col>
+                        <Col><h5 className='text-center'>Transaction Detail's</h5></Col>
                         <br />
                         <table className="table table-striped table-bordered mt-4" style={{ 'borderRadius': '2px' }}>
                             <thead style={{ "color": "MidnightBlue" }} className='text-center'>
@@ -209,6 +281,7 @@ const TransactionLeads = () => {
 
                     </Row>
                 </div>
+
 
             </Container>
 

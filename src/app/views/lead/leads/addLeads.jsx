@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
-import { Icon } from '@mui/material';
+import { Icon, MenuItem, FormControl, Select } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
 
 const LeadForm = ({ handleDialog }) => {
@@ -16,7 +16,7 @@ const LeadForm = ({ handleDialog }) => {
   const [cityName, setCityName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [countryName, setCountryName] = useState('India');
-  const [expectedAmount, setExpectedAmount] = useState(10000);
+  const [expectedAmount, setExpectedAmount] = useState(2500);
 
   const [intrestedIn, setIntrestedIn] = useState([]);
   const [platformName, setPlatformName] = useState([]);
@@ -217,7 +217,7 @@ const LeadForm = ({ handleDialog }) => {
             </InputGroup>
           </Col>
           <Col>
-            <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
+            {/* <h6 className="mt-1">Amount&nbsp;&nbsp;&nbsp;  &nbsp;</h6>
             <InputGroup className="mb-2">
 
               <InputGroup.Text id="basic-addon1">
@@ -229,7 +229,22 @@ const LeadForm = ({ handleDialog }) => {
                 onChange={(e) => setExpectedAmount(e.target.value)}
                 value={expectedAmount}
                 placeholder="Client Expected Amount"
-              /></InputGroup>
+              /></InputGroup> */}
+            <FormControl sx={{ m: 0, width: '100%' }} size="small" >
+
+              <InputGroup>
+                <Form.Label>Amount</Form.Label>
+              </InputGroup>
+              <Select
+                value={expectedAmount}
+                label="."
+                onChange={(e) => setExpectedAmount(e.target.value)}
+              >
+                <MenuItem value={2500}>2500</MenuItem>
+                <MenuItem value={5000}>5000</MenuItem>
+                <MenuItem value={10000}>10000</MenuItem>
+              </Select>
+            </FormControl>
           </Col>
         </Row>
 

@@ -135,7 +135,7 @@ const EditUser = () => {
       leadId: leadId,
       remarks: remarks,
       statusId: statusid,
-      actionBy: 1,
+      actionBy: userId,
       isMeeting: 1,
       name: name,
       mobileNo: mobileNo,
@@ -145,12 +145,13 @@ const EditUser = () => {
       zipCode: zipCode,
       countryName: countryName,
       intrestedIn: myOptions1,
-      sourceId: platformid,
+      sourceId: 1,
       assignId: assignedid,
       label: labelid,
       alternateMobile: alternateMobile,
       clientName: clientName,
-      expectedAmount: expectedAmount
+      expectedAmount: expectedAmount,
+      emailId: emailId
     };
     console.log({ UpdateUser });
     e.preventDefault();

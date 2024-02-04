@@ -26,7 +26,6 @@ const AddCatalogue = () => {
 
   //empty the form Text
   const blankForm = () => {
-    setCatType('');
     setPrice('');
     setDescription('');
   };
@@ -171,12 +170,12 @@ const AddCatalogue = () => {
                   <Form.Control
                     required
                     type="number"
-                    min={5000}
+                    min={1}
                     onChange={(e) => setPrice(e.target.value)}
                     value={price}
                     placeholder="Enter the Price"
                   /> <Form.Control.Feedback type="invalid">
-                    Price should be grater than 4999.
+                    Price should be grater than 0.
                   </Form.Control.Feedback>
                 </Col>
               </Row>

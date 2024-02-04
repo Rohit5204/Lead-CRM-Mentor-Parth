@@ -408,6 +408,7 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -422,6 +423,9 @@ const ManageLead = () => {
                     if (subscriber.statusName == "Lead") {
                       return (
                         <TableRow key={index}>
+                          <TableCell align="center"><IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton></TableCell>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
@@ -451,9 +455,7 @@ const ManageLead = () => {
                                       <Icon>edit</Icon>
                                     </IconButton>
                                   </Link>
-                                  <IconButton onClick={() => handleShowLead(subscriber)}>
-                                    <WhatsAppIcon color='success' />
-                                  </IconButton>
+
                                 </>
                               }
                               else {
@@ -468,9 +470,7 @@ const ManageLead = () => {
                                       <Icon>edit</Icon>
                                     </IconButton>
                                   </Link>
-                                  <IconButton onClick={() => handleShowLead(subscriber)}>
-                                    <WhatsAppIcon color='success' />
-                                  </IconButton>
+
                                 </>
                               }
                             })()}
@@ -499,6 +499,7 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -513,6 +514,9 @@ const ManageLead = () => {
                     if (subscriber.statusName == "FollowUp") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
@@ -570,6 +574,7 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -584,6 +589,9 @@ const ManageLead = () => {
                     if (subscriber.statusName == "FT (Meeting)") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
@@ -650,6 +658,7 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -664,6 +673,9 @@ const ManageLead = () => {
                     if (subscriber.statusName == "Ringing") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
@@ -721,11 +733,12 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Remarks</TableCell>
+                    <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -735,11 +748,14 @@ const ManageLead = () => {
                     if (subscriber.statusName == "AT (Quotation)") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">{subscriber.remarks}</TableCell>
+                          <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (subscriber.statusName == "AT (Quotation)") {
@@ -811,11 +827,12 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Remarks</TableCell>
+                    <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -825,18 +842,25 @@ const ManageLead = () => {
                     if (subscriber.statusName == "Invoice") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">{subscriber.remarks}</TableCell>
+                          <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
                             {(function () {
-                              if (subscriber.statusName == "Invoice") {
-                                return <Chip label="Invoice" color="primary" onClick={(e) => handleShow(subscriber)} />;
-                              }
-                              else {
-                                return <Chip label="Not Listed" color="error" />
+                              if (roleName === "Admin" || roleName === "Branch Manager") {
+                                if (subscriber.statusName === "Invoice") {
+                                  return <Chip label="Invoice" color="primary" onClick={(e) => handleShow(subscriber)} />;
+                                } else {
+                                  return <Chip label="Not Listed" color="error" />;
+                                }
+                              } else {
+
+                                return <Chip label="Invoice" color="primary" />;
                               }
                             })()}
                           </TableCell>
@@ -892,11 +916,12 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
-                    <TableCell align="center">Remarks</TableCell>
+                    <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -906,11 +931,14 @@ const ManageLead = () => {
                     if (subscriber.statusName == "Closed (Paid)") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
-                          <TableCell align="center">{subscriber.remarks}</TableCell>
+                          <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
                             {(function () {
                               if (roleName == "Employee" && subscriber.statusName == "Closed (Paid)") {
@@ -924,14 +952,7 @@ const ManageLead = () => {
                                 </>
                               }
                             })()}
-                            {/* {(function () {
-                              if (subscriber.statusName == "Closed (Paid)") {
-                                return <Chip label="Closed" onClick={(e) => handleShow(subscriber)} />;
-                              }
-                              else {
-                                return <Chip label="Not Listed" color="error" />
-                              }
-                            })()} */}
+
                           </TableCell>
                           <TableCell align="center">
                             {(function () {
@@ -985,6 +1006,7 @@ const ManageLead = () => {
               <StyledTable className="table table-striped table-bordered" style={{ 'borderRadius': '1px' }}>
                 <TableHead style={{ borderLeft: '1px solid red', borderRight: '1px solid red' }} className='text-center'>
                   <TableRow>
+                    <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -999,6 +1021,9 @@ const ManageLead = () => {
                     if (subscriber.statusName == "Drop") {
                       return (
                         <TableRow key={index}>
+                          <IconButton onClick={() => handleShowLead(subscriber)}>
+                            <WhatsAppIcon color='success' />
+                          </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
                           <TableCell align="center">{subscriber.emailId}</TableCell>

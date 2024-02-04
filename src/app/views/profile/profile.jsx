@@ -259,7 +259,7 @@ function ManageProfile() {
                                                             <Form.Control
                                                                 value={gstNo}
                                                                 onChange={(e) => setGstNo(e.target.value)}
-                                                                placeholder="Country"
+                                                                placeholder="Enter the GST No"
                                                                 type="text"
                                                             ></Form.Control>
                                                         </Form.Group>
@@ -282,7 +282,8 @@ function ManageProfile() {
                                                     <Form.Group>
                                                         <label>Account Holder Name</label>
                                                         <Form.Control
-                                                            defaultValue="Lead CRM Tracker"
+                                                            value={name}
+
                                                             placeholder="Company"
                                                             type="text"
                                                         ></Form.Control>

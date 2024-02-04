@@ -1,16 +1,46 @@
+import { BASE_URL } from "app/utils/constant";
+import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 const LeadStatus = ({ theLeadStatus, handleDialog }) => {
+
+    const [compnayData, setCompanyData] = useState([])
+    const getCompanyData = () => {
+        axios
+            .post(BASE_URL +
+                `/api/getCompanyMaster`,
+                { id: 0 },
+                { headers: headers }
+            )
+            .then((response) => {
+                setCompanyData(response.data.data[0]);
+                console.log(response.data.data[0])
+            });
+    }
     const [leadId] = useState(theLeadStatus.leadId);
     const [name] = useState(theLeadStatus.name);
     const [content, setContent] = useState("🌟 Welcome to our family of clients! 🌟 We're thrilled to have you on board and look forward to delivering exceptional service tailored to your needs. Feel free to reach out with any questions or requests. We're here to make your experience with us extraordinary.");
 
     const [paymentOption, setPaymentOption] = useState('upi');
     const [upiId, setUpiId] = useState('');
-    const [bankName, setBankName] = useState('');
-    const [accountNo, setAccountNo] = useState('');
-    const [ifsc, setIfsc] = useState('');
+    const [bankName, setBankName] = useState(compnayData.bankName);
+    const [accountNo, setAccountNo] = useState(compnayData.accountNo);
+    const [ifsc, setIfsc] = useState(compnayData.ifsc);
+
+    const items = localStorage.getItem('accessToken');
+    const roleCode = localStorage.getItem('roleCode');
+    const userId = localStorage.getItem('userId');
+    const headers = {
+        "x-access-token": items,
+        "roleCode": roleCode,
+        "userId": userId
+    }
+
+    useEffect(() => {
+        getCompanyData()
+    }, []);
 
     const constructMessage = () => {
         if (paymentOption === 'upi') {
@@ -65,7 +95,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Name</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Unity Share Info"}
+                        value={compnayData.name}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -73,7 +103,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Company Address</Form.Label>
                     <Form.Control
                         disabled
-                        value={"Vashi, Navi Mumbai"}
+                        value={compnayData.address}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -83,7 +113,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Contact Number</Form.Label>
                     <Form.Control
                         disabled
-                        value={"7715815877"}
+                        value={compnayData.contactNo}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -91,7 +121,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                     <Form.Label>Website Link</Form.Label>
                     <Form.Control
                         disabled
-                        value={"www.unityshareinfo.com"}
+                        value={compnayData.logo}
                         placeholder="Enter the Lead Name"
                     />
                 </Col>
@@ -138,7 +168,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                         <Form.Label>Bank Name</Form.Label>
                         <Form.Control
                             type="text"
-                            value={bankName}
+                            value={compnayData.bankName}
                             onChange={(e) => setBankName(e.target.value)}
                             placeholder="Enter Bank Name"
                         />
@@ -147,7 +177,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                         <Form.Label>Account No</Form.Label>
                         <Form.Control
                             type="text"
-                            value={accountNo}
+                            value={compnayData.accountNo}
                             onChange={(e) => setAccountNo(e.target.value)}
                             placeholder="Enter Account No"
                         />
@@ -156,7 +186,7 @@ const LeadStatus = ({ theLeadStatus, handleDialog }) => {
                         <Form.Label>IFSC</Form.Label>
                         <Form.Control
                             type="text"
-                            value={ifsc}
+                            value={compnayData.ifsc}
                             onChange={(e) => setIfsc(e.target.value)}
                             placeholder="Enter IFSC"
                         />
