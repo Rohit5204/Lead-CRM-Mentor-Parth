@@ -29,6 +29,7 @@ function ManageProfile() {
     const [name, setName] = useState(location.state.name);
     const [contactNo, setcontactNo] = useState(location.state.contactNo);
     const [email, setEmail] = useState(location.state.email);
+    const [website, setWebsite] = useState(location.state.logo);
     const [companyAddress, setCompanyAddress] = useState(location.state.address);
     const [gstNo, setGstNo] = useState(location.state.gstNo);
     const [pincode, setPincode] = useState(location.state.pincode);
@@ -54,8 +55,8 @@ function ManageProfile() {
         setObj1(catalogue);
         setShow(true);
     };
-    // const [logo, setLogo] = useState('/assets/images/illustrations/new-boostock-logo.png')
-    const [logo, setLogo] = useState('/assets/images/illustrations/LOGO UNITY-01.png')
+    const [logo, setLogo] = useState('/assets/images/illustrations/new-boostock-logo.png')
+    //const [logo, setLogo] = useState('/assets/images/illustrations/LOGO UNITY-01.png')
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setLogo(URL.createObjectURL(event.target.files[0]));
@@ -72,7 +73,7 @@ function ManageProfile() {
     }
     const userCard = {
         id: id,
-        logo: "company.png",
+        logo: website,
         contactNo: contactNo,
         companyAddress: companyAddress,
         email: email,
@@ -260,6 +261,17 @@ function ManageProfile() {
                                                                 value={gstNo}
                                                                 onChange={(e) => setGstNo(e.target.value)}
                                                                 placeholder="Enter the GST No"
+                                                                type="text"
+                                                            ></Form.Control>
+                                                        </Form.Group>
+                                                    </Col>
+                                                    <Col md="4">
+                                                        <Form.Group>
+                                                            <label>Company Website</label>
+                                                            <Form.Control
+                                                                value={website}
+                                                                onChange={(e) => setWebsite(e.target.value)}
+                                                                placeholder="Enter the Company Website"
                                                                 type="text"
                                                             ></Form.Control>
                                                         </Form.Group>
@@ -791,7 +803,7 @@ function ManageProfile() {
                             <h5>Update Online Platform Account</h5>
                         </Modal.Header>
                         <Modal.Body>
-                            <EditPlatformAccount theEditPlatformAccount={obj1} handleDialog={handleClose}></EditPlatformAccount>
+                            <EditPlatformAccount theEditPlatformAccount={obj1} handleDialog={handleClose} onTableRefresh={getAccountsData}></EditPlatformAccount>
                         </Modal.Body>
                         <Modal.Footer>
                             <button

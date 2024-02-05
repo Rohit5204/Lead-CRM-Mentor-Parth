@@ -108,12 +108,9 @@ const ManageCatalogue = () => {
         setAPIData(response.data.data);
       });
   }
-  const handleUpdateStatus = () => {
-
-  }
   useEffect(() => {
     getCatalogueData()
-  }, [APIData]);
+  }, []);
   const roleName = window.localStorage.getItem('roleName');
   return (
     <Container>
@@ -218,7 +215,7 @@ const ManageCatalogue = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <EditCatalogue theEditCatalogue={obj1} handleDialog={handleClose} />
+            <EditCatalogue theEditCatalogue={obj1} handleDialog={handleClose} onTableRefresh={getCatalogueData} />
           </Modal.Body>
         </Modal>
 
@@ -238,7 +235,7 @@ const ManageCatalogue = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <StatusCatalogue theStatusCatalogue={obj2} handleDialogStatus={handleCloseStatus}></StatusCatalogue>
+            <StatusCatalogue theStatusCatalogue={obj2} handleDialogStatus={handleCloseStatus} onTableRefresh={getCatalogueData}></StatusCatalogue>
           </Modal.Body>
         </Modal>
       </Box>

@@ -153,13 +153,13 @@ const ManageInvoiceList = () => {
   const [sendMailObj, setSendMailObj] = useState(null);
   const [APIData, setAPIData] = useState([]);
   const [sendInvoiceList, setSendInvoiceList] = useState([])
+  const [invoiceStatusData, setInvoiceStatusData] = useState([])
 
   const [show, setShow] = useState(false);
   const [showMail, setShowMail] = useState(false);
   //Dialog Form
   const handleClose = () => setShow(false);
   const handleCloseMail = () => setShowMail(false);
-
   const handleSendMail = (invoice) => {
     setSendMailObj(invoice);
     setShowMail(true);
@@ -171,6 +171,7 @@ const ManageInvoiceList = () => {
   const items = localStorage.getItem('accessToken');
   const roleCode = localStorage.getItem('roleCode');
   const userId = localStorage.getItem('userId');
+  const roleName = window.localStorage.getItem('roleName');
   const headers = {
     "x-access-token": items,
     "roleCode": roleCode,
@@ -189,10 +190,6 @@ const ManageInvoiceList = () => {
       });
   }
 
-  useEffect(() => {
-    getInvoiceDraft()
-  }, [APIData]);
-
   const sendInvoiceListData = () => {
     axios.post(BASE_URL + `/api/getInvoiceData`,
       { invoiceid: 0, empId: 0, statusId: 2, searchKey: searchBox, opType: onType }, { headers: headers })
@@ -200,12 +197,7 @@ const ManageInvoiceList = () => {
         setSendInvoiceList(response.data.data);
       });
   }
-  useEffect(() => {
-    sendInvoiceListData()
-  }, [sendInvoiceList]);
-
-  const [invoiceStatusData, setInvoiceStatusData] = useState([])
-  useEffect(() => {
+  const getFilteredLeadData = () => {
     axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
@@ -218,7 +210,7 @@ const ManageInvoiceList = () => {
       .then((response) => {
         setInvoiceStatusData(response.data.data);
       });
-  }, [invoiceStatusData]);
+  }
 
   const [obj2, setObj2] = useState(null);
   const [showSatusForm, setSatusForm] = useState(false);
@@ -239,9 +231,19 @@ const ManageInvoiceList = () => {
       });
   }
 
+  const statusCheck = () => {
+    getMasterCount()
+    getInvoiceDraft()
+    sendInvoiceListData()
+  }
+
   useEffect(() => {
     getMasterCount()
-  }, []);
+    getFilteredLeadData()
+    getInvoiceDraft()
+    sendInvoiceListData()
+  }, [onType, searchBox]);
+
   return (
     <Container>
       <Box>
@@ -364,13 +366,18 @@ const ManageInvoiceList = () => {
                           <TableCell align="center">{subscriber.emailId}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.intrestedIn}</TableCell>
+
                           <TableCell align="center">
                             {(function () {
-                              if (subscriber.statusName == "Invoice") {
-                                return <Chip label="Invoice" color="primary" onClick={(e) => handleShowStatus(subscriber)} />;
-                              }
-                              else {
-                                return <Chip label="Not Listed" color="error" />
+                              if (roleName === "Admin" || roleName === "Branch Manager") {
+                                if (subscriber.statusName == "Invoice") {
+                                  return <Chip label="Invoice" color="primary" onClick={(e) => handleShowStatus(subscriber)} />;
+                                }
+                                else {
+                                  return <Chip label="Not Listed" color="error" />
+                                }
+                              } else {
+                                return <Chip label="Invoice" color="primary" />
                               }
                             })()}
                           </TableCell>
@@ -503,7 +510,7 @@ const ManageInvoiceList = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <StatusChange theStatusChange={obj2} handleDialog={handleCloseStatus}></StatusChange>
+            <StatusChange theStatusChange={obj2} handleDialog={handleCloseStatus} onTableRefresh={getFilteredLeadData}></StatusChange>
           </Modal.Body>
 
         </Modal>
@@ -527,7 +534,7 @@ const ManageInvoiceList = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <SendInvoiceMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendInvoiceMail>
+            <SendInvoiceMail theClientMail={sendMailObj} handleDialog={handleCloseMail} onTableRefresh={statusCheck}></SendInvoiceMail>
           </Modal.Body>
         </Modal>
         <Modal

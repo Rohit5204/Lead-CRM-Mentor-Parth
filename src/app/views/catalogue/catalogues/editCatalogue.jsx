@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
   margin: '410px',
 }));
-const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
+const EditCatalogue = ({ theEditCatalogue, handleDialog, onTableRefresh }) => {
   const [id, setId] = useState(theEditCatalogue.id);
   const [gsType, setGsType] = useState(theEditCatalogue.gsType);
   const [gsName, setGsName] = useState(theEditCatalogue.gsName);
@@ -57,8 +57,8 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
   const updateCatalogue = () => {
     var catdurationid;
     for (var i = 0; i < id1.length; i++) {
-      if (myOptions3 === id1[i]) {
-        catdurationid = id1[i - 1];
+      if (myOptions3 === id1[i + 1]) { // Modify this line to check the correct index
+        catdurationid = id1[i];
       }
     }
     const UpdateCatalogue = {
@@ -69,10 +69,17 @@ const EditCatalogue = ({ theEditCatalogue, handleDialog }) => {
       description: gsDescription,
       catStatus: catStatus,
       actionBy: 1,
-      durationId: catdurationid
+      durationId: catdurationid,
     };
+
     axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue, { headers: headers })
-      .then(() => handleDialog());
+      .then(() => {
+        handleDialog();
+        onTableRefresh();
+      })
+      .catch(error => {
+        console.error("Error updating catalogue:", error);
+      });
   };
 
   const handleSubmit = (e) => {

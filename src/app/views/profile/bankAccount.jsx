@@ -11,7 +11,7 @@ import { BASE_URL } from 'app/utils/constant';
 const Div = styled('div')(() => ({
     margin: '6px 0px 0px 350px',
 }));
-const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
+const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog, onTableRefresh }) => {
     // console.log(theEditPlatformAccount)
     const [id, setId] = useState(theEditPlatformAccount.id);
     const [companyId, setcompanyId] = useState(theEditPlatformAccount.companyId);
@@ -36,11 +36,18 @@ const EditPlatformAccount = ({ theEditPlatformAccount, handleDialog }) => {
             "roleCode": roleCode,
             "userId": userId
         }
-        // console.log({ UpdateData });
+
         e.preventDefault();
-        axios.post(BASE_URL + `/api/updateCompanyAccounts`, UpdateData,
-            { headers: headers }).then(() => useEffect);
-        handleDialog();
+        axios.post(BASE_URL + `/api/updateCompanyAccounts`, UpdateData, { headers: headers })
+            .then(() => {
+                // Call the callback function to refresh the table
+                onTableRefresh();
+                handleDialog();
+            })
+            .catch(error => {
+                console.error("Error updating data:", error);
+                // Handle error as needed
+            });
     };
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -168,6 +168,7 @@ const ManageQuotation = () => {
   };
   const items = localStorage.getItem('accessToken');
   const roleCode = localStorage.getItem('roleCode');
+  const roleName = window.localStorage.getItem('roleName');
   const userId = localStorage.getItem('userId');
   const headers = {
     "x-access-token": items,
@@ -207,14 +208,8 @@ const ManageQuotation = () => {
     },
   ];
   const [onType, setOnType] = useState('')
-  //get method  http://35.89.6.16:4002/api
   const [searchBox, setSearchBox] = useState('')
-  // const searchData = (value) => {
-  //   if (value != '') {
-  //     var j = APIData.filter(x => x.quotationNumber == value || x.gsName == value || x.quotationDate == value || x.billTo == value || x.clientContact == value || x.grandTotal == value)
-  //     setAPIData(j)
-  //   }
-  // }
+
   const fetchAllLead = () => {
     axios.post(BASE_URL + `/api/getQuotationData`,
       {
@@ -236,13 +231,7 @@ const ManageQuotation = () => {
   }
   const [QuotationStatusData, setQuotationStatusData] = useState([])
 
-  useEffect(() => {
-    fetchAllLead()
-  }, [APIData]);
-  useEffect(() => {
-    fetchSendList()
-  }, [sendListData]);
-  useEffect(() => {
+  const getFilteredLeadData = () => {
     axios.post(BASE_URL + `/api/getFilteredLeadData`, {
       leadId: 0,
       userId: 0,
@@ -255,7 +244,13 @@ const ManageQuotation = () => {
       .then((response) => {
         setQuotationStatusData(response.data.data);
       });
-  }, [QuotationStatusData]);
+  }
+  const statusCheck = () => {
+    getMasterCount()
+    fetchAllLead()
+    fetchSendList()
+  }
+
   const [obj2, setObj2] = useState(null);
   const [showSatusForm, setSatusForm] = useState(false);
   const handleShowStatus = (subscriber) => {
@@ -277,7 +272,11 @@ const ManageQuotation = () => {
 
   useEffect(() => {
     getMasterCount()
-  }, []);
+    getFilteredLeadData()
+    fetchAllLead()
+    fetchSendList()
+  }, [onType, searchBox]);
+
   return (
     <Container>
       <Box>
@@ -328,19 +327,19 @@ const ManageQuotation = () => {
               onClose={handleClose5}
             >
               <MenuItem
-                onClick={() => { setOnType('DEFAULT'); fetchAllLead(); handleClose5() }} disableRipple>
+                onClick={() => { setOnType('DEFAULT'); handleClose5() }} disableRipple>
                 DEFAULT
               </MenuItem>
               <MenuItem
-                onClick={() => { setOnType('LASTDAY'); fetchAllLead(); handleClose5() }} disableRipple>
+                onClick={() => { setOnType('LASTDAY'); handleClose5() }} disableRipple>
                 LASTDAY
               </MenuItem>
               <MenuItem
-                onClick={() => { setOnType('LASTWEEK'); fetchAllLead(); handleClose5() }} disableRipple>
+                onClick={() => { setOnType('LASTWEEK'); handleClose5() }} disableRipple>
                 LASTWEEK
               </MenuItem>
               <MenuItem
-                onClick={() => { setOnType('LASTMONTH'); fetchAllLead(); handleClose5() }} disableRipple>
+                onClick={() => { setOnType('LASTMONTH'); handleClose5() }} disableRipple>
                 LASTMONTH
               </MenuItem>
             </StyledMenu>
@@ -400,11 +399,15 @@ const ManageQuotation = () => {
                           <TableCell align="center">{subscriber.intrestedIn}</TableCell>
                           <TableCell align="center">
                             {(function () {
-                              if (subscriber.statusName == "AT (Quotation)") {
-                                return <Chip label="Quotation" color="primary" onClick={(e) => handleShowStatus(subscriber)} />;
-                              }
-                              else {
-                                return <Chip label="Not Listed" color="error" />
+                              if (roleName === "Admin" || roleName === "Branch Manager") {
+                                if (subscriber.statusName == "AT (Quotation)") {
+                                  return <Chip label="Quotation" color="primary" onClick={(e) => handleShowStatus(subscriber)} />;
+                                }
+                                else {
+                                  return <Chip label="Not Listed" color="error" />
+                                }
+                              } else {
+                                return <Chip label="Quotation" color="primary" />
                               }
                             })()}
                           </TableCell>
@@ -553,7 +556,7 @@ const ManageQuotation = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <StatusChange theStatusChange={obj2} handleDialog={handleCloseStatus}></StatusChange>
+            <StatusChange theStatusChange={obj2} handleDialog={handleCloseStatus} onTableRefresh={getFilteredLeadData}></StatusChange>
           </Modal.Body>
 
         </Modal>
@@ -573,7 +576,7 @@ const ManageQuotation = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <SendQuotationMail theClientMail={sendMailObj} handleDialog={handleCloseMail}></SendQuotationMail>
+            <SendQuotationMail theClientMail={sendMailObj} handleDialog={handleCloseMail} onTableRefresh={statusCheck}></SendQuotationMail>
           </Modal.Body>
 
         </Modal>

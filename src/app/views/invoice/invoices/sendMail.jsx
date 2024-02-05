@@ -4,7 +4,7 @@ import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { Autocomplete, TextField } from '@mui/material';
 import { BASE_URL } from "app/utils/constant";
 
-const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
+const SendInvoiceMail = ({ theClientMail, handleDialog, onTableRefresh }) => {
     // console.log(theClientMail)
     const [selectedFile, setSelectedFile] = useState();
     const [invoiceNumber] = useState(theClientMail.invoiceNumber);
@@ -79,11 +79,16 @@ const SendInvoiceMail = ({ theClientMail, handleDialog }) => {
         // }
         console.log({ data: data1, file: selectedFile })
 
-        await axios.post(BASE_URL + '/api/sendInvoiceMail',
-            formData, {
+        await axios.post(BASE_URL + `/api/sendInvoiceMail`, formData, {
             headers: headers
         })
-        handleDialog();
+            .then(() => {
+                handleDialog();
+                onTableRefresh();
+            })
+            .catch(error => {
+                console.error("Error sending in mail:", error);
+            });
     };
     const changePage = () => {
         handleDialog();

@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const StatusCatalogue = ({ theStatusCatalogue, handleDialogStatus }) => {
+const StatusCatalogue = ({ theStatusCatalogue, handleDialogStatus, onTableRefresh }) => {
     // console.log(theStatusCatalogue)
     const [id, setId] = useState(theStatusCatalogue.id);
     const [gsType, setGsType] = useState(theStatusCatalogue.gsType);
@@ -51,11 +51,11 @@ const StatusCatalogue = ({ theStatusCatalogue, handleDialogStatus }) => {
         "userId": userId
     }
 
-    const updateCatalogue = (e) => {
-        var catdurationid
+    const updateCatalogue = () => {
+        var catdurationid;
         for (var i = 0; i < id1.length; i++) {
             if (myOptions3 == id1[i]) {
-                catdurationid = id1[i - 1]
+                catdurationid = id1[i - 1];
             }
         }
         const UpdateCatalogue = {
@@ -66,13 +66,20 @@ const StatusCatalogue = ({ theStatusCatalogue, handleDialogStatus }) => {
             description: gsDescription,
             catStatus: catStatus,
             actionBy: 1,
-            durationId: catdurationid
+            durationId: catdurationid,
         };
-        axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue,
-            { headers: headers }).then(() => useEffect);
-        handleDialogStatus();
-    };
 
+        axios.post(BASE_URL + `/api/upsertCatalogue`, UpdateCatalogue, { headers: headers })
+            .then(() => {
+                // Call the callback function to refresh the table
+                onTableRefresh();
+                handleDialogStatus();
+            })
+            .catch(error => {
+                console.error("Error updating catalogue:", error);
+                // Handle error as needed
+            });
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
     };

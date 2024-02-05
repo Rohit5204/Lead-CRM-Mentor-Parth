@@ -4,7 +4,7 @@ import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { Icon, MenuItem, FormControl, Select } from '@mui/material';
 import { BASE_URL } from 'app/utils/constant';
 
-const LeadForm = ({ handleDialog }) => {
+const LeadForm = ({ handleDialog, onTableRefresh }) => {
 
   const [name, setName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -139,13 +139,15 @@ const LeadForm = ({ handleDialog }) => {
       clientName: clientName,
       expectedAmount: expectedAmount
     }
-    console.log({ AddLead })
-    axios.post(BASE_URL + `/api/saveLeadGenerationData`,
-      [AddLead], { headers: headers }).then((res) => {
+
+    axios.post(BASE_URL + `/api/saveLeadGenerationData`, [AddLead], { headers: headers })
+      .then((res) => {
         alert(res.data.message)
         handleDialog();
-      }).catch(error => {
-        alert(error.response.data.message)
+        onTableRefresh();
+      })
+      .catch(error => {
+        console.error("Error adding in managed Lead:", error);
       });
 
   };

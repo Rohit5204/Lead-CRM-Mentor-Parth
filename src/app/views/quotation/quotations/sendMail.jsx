@@ -4,7 +4,7 @@ import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { Autocomplete, TextField } from '@mui/material';
 import { BASE_URL } from "app/utils/constant";
 
-const SendQuotationMail = ({ theClientMail, handleDialog }) => {
+const SendQuotationMail = ({ theClientMail, handleDialog, onTableRefresh }) => {
     // console.log(theClientMail)
     const [selectedFile, setSelectedFile] = useState();
     const [quotationNumber] = useState(theClientMail.quotationNumber);
@@ -59,11 +59,16 @@ const SendQuotationMail = ({ theClientMail, handleDialog }) => {
         // for (var pair of formData.entries()) {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
-        await axios.post(BASE_URL + '/api/sendQuotationMail',
-            formData, {
+        await axios.post(BASE_URL + `/api/sendQuotationMail`, formData, {
             headers: headers
         })
-        handleDialog();
+            .then(() => {
+                handleDialog();
+                onTableRefresh();
+            })
+            .catch(error => {
+                console.error("Error sending in mail:", error);
+            });
     };
     const changeDialog = () => {
         handleDialog()

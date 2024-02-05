@@ -65,7 +65,7 @@ const AddCatalogue = () => {
       {
         catId: 0,
         catType: catType,
-        price: price,
+        price: parseInt(price),
         gsName: name,
         description: description,
         catStatus: 1,
@@ -175,7 +175,7 @@ const AddCatalogue = () => {
                     value={price}
                     placeholder="Enter the Price"
                   /> <Form.Control.Feedback type="invalid">
-                    Price should be grater than 0.
+                    Price should be grater than 1.
                   </Form.Control.Feedback>
                 </Col>
               </Row>

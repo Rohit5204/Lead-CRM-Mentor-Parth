@@ -4,7 +4,7 @@ import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { Autocomplete, TextField, FormControl } from '@mui/material';
 import { BASE_URL } from "app/utils/constant";
 
-const StatusChange = ({ theStatusChange, handleDialog }) => {
+const StatusChange = ({ theStatusChange, handleDialog, onTableRefresh }) => {
     // console.log(theClientMail)
     const [leadId] = useState(theStatusChange.leadId);
     const [name] = useState(theStatusChange.name);
@@ -26,28 +26,13 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=statusmaster`, { headers: headers }).then((res) => {
-            for (var i = 0; i < res.data.data.length; i++) {
-                setStatusName(current => [...current, res.data.data[i].name]);
-                setId3(current => [...current, res.data.data[i].id, res.data.data[i].name])
+            for (var i = 0; i < res.data.status.length; i++) {
+                setStatusName(current => [...current, res.data.status[i].name]);
+                setId3(current => [...current, res.data.status[i].id, res.data.status[i].name])
             }
         });
     }, [])
 
-
-    const getFetchLeadData = () => {
-        axios.post(BASE_URL + `/api/getFilteredLeadData`, {
-            leadId: 0,
-            userId: 0,
-            statusId: 0,
-            searchKey: "",
-            locationkey: "",
-            platformId: 0,
-            opType: ""
-        }, { headers: { "x-access-token": items, "roleCode": roleCode, "userId": userId } })
-            .then((response) => {
-                setAPIData(response.data.data);
-            });
-    }
     const updateLead = (e) => {
         var statusid;
         for (var i = 0; i < id3.length; i++) {
@@ -74,14 +59,18 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
             label: theStatusChange.label,
             alternateMobile: theStatusChange.alternateMobile,
             clientName: theStatusChange.clientName,
-            expectedAmount: theStatusChange.expectedAmount
+            expectedAmount: theStatusChange.expectedAmount,
+            emailId: theStatusChange.emailId
         };
         e.preventDefault();
-        console.log(UpdateUser)
-        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser,
-            { headers: headers });
-        getFetchLeadData()
-        handleDialog()
+        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser, { headers: headers })
+            .then(() => {
+                handleDialog();
+                onTableRefresh();
+            })
+            .catch(error => {
+                console.error("Error updating the Staus in Quotation:", error);
+            });
     };
     return (
         <div>

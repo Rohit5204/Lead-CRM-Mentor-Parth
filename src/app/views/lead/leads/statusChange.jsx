@@ -4,7 +4,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import { Autocomplete, TextField, FormControl } from '@mui/material';
 import { BASE_URL } from "app/utils/constant";
 
-const StatusChange = ({ theStatusChange, handleDialog }) => {
+const StatusChange = ({ theStatusChange, handleDialog, onTableRefresh }) => {
     const [leadId] = useState(theStatusChange.leadId);
     const [name] = useState(theStatusChange.name);
 
@@ -74,14 +74,17 @@ const StatusChange = ({ theStatusChange, handleDialog }) => {
             label: theStatusChange.label,
             alternateMobile: theStatusChange.alternateMobile,
             clientName: theStatusChange.clientName,
-            expectedAmount: theStatusChange.expectedAmount
+            expectedAmount: theStatusChange.expectedAmount,
+            emailId: theStatusChange.emailId
         };
-        // e.preventDefault();
-        console.log(UpdateUser)
-        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser,
-            { headers: headers });
-        // getFetchLeadData()
-        handleDialog()
+        axios.post(BASE_URL + `/api/updateLeadData`, UpdateUser, { headers: headers })
+            .then(() => {
+                handleDialog();
+                onTableRefresh();
+            })
+            .catch(error => {
+                console.error("Error updating the Status in managed Lead:", error);
+            });
     };
     const [followUpDate, setFollowUpDate] = useState("");
     const [followUpTme, setFollowUpTime] = useState("");

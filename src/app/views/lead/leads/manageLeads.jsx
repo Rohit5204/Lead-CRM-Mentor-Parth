@@ -267,10 +267,15 @@ const ManageLead = () => {
         setABC(response.data);
       });
   }
+  const statusCheck = () => {
+    getFetchLeadData()
+    getMasterCount()
+  }
+
   useEffect(() => {
     getMasterCount()
     getFetchLeadData()
-  }, [APIData]);
+  }, [searchBox, locationkey, onType]);
 
   return (
     <>
@@ -336,19 +341,19 @@ const ManageLead = () => {
                 onClose={handleClose5}
               >
                 <MenuItem
-                  onClick={() => { setOnType('DEFAULT'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  onClick={() => { setOnType('DEFAULT'); handleClose5() }} disableRipple>
                   DEFAULT
                 </MenuItem>
                 <MenuItem
-                  onClick={() => { setOnType('LASTDAY'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  onClick={() => { setOnType('LASTDAY'); handleClose5() }} disableRipple>
                   LASTDAY
                 </MenuItem>
                 <MenuItem
-                  onClick={() => { setOnType('LASTWEEK'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  onClick={() => { setOnType('LASTWEEK'); handleClose5() }} disableRipple>
                   LASTWEEK
                 </MenuItem>
                 <MenuItem
-                  onClick={() => { setOnType('LASTMONTH'); getFetchLeadData(); handleClose5() }} disableRipple>
+                  onClick={() => { setOnType('LASTMONTH'); handleClose5() }} disableRipple>
                   LASTMONTH
                 </MenuItem>
               </StyledMenu>&nbsp;
@@ -1112,7 +1117,7 @@ const ManageLead = () => {
               </IconButton>
             </Modal.Header>
             <Modal.Body>
-              <StatusChange theStatusChange={obj1} handleDialog={handleClose}></StatusChange>
+              <StatusChange theStatusChange={obj1} handleDialog={handleClose} onTableRefresh={statusCheck}></StatusChange>
             </Modal.Body>
 
           </Modal>
@@ -1198,7 +1203,7 @@ const ManageLead = () => {
             </IconButton>
           </Modal.Header>
           <Modal.Body>
-            <LeadForm handleDialog={closeAdd}></LeadForm>
+            <LeadForm handleDialog={closeAdd} onTableRefresh={statusCheck}></LeadForm>
           </Modal.Body>
         </Modal>
 
