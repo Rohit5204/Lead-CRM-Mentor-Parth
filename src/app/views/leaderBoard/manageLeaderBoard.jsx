@@ -69,7 +69,7 @@ const ManageLeaderBoard = () => {
 
     useEffect(() => {
         getLeaderBoard()
-    }, [APIData]);
+    }, []);
 
     const roleName = window.localStorage.getItem('roleName');
 

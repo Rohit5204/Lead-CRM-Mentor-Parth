@@ -79,7 +79,7 @@ const ManageRecovery = () => {
     }
     useEffect(() => {
         fetchRecovery()
-    }, [userData]);
+    }, [startDate, endDate]);
 
     return (
         <Container>

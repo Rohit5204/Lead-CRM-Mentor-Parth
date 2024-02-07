@@ -62,13 +62,17 @@ const ManageAllEmployee = () => {
         "userId": userId
     }
     //get method
-    useEffect(() => {
+
+    const getUserMaster = () => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`,
             { headers: headers }).then((response) => {
                 console.log(response.data.status)
                 setUserData(response.data.status);
             });
-    }, [userData]);
+    }
+    useEffect(() => {
+        getUserMaster()
+    }, []);
 
     return (
         <Container>

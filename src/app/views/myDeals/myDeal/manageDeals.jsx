@@ -125,7 +125,7 @@ const ManageDeals = () => {
     }
     useEffect(() => {
         getFetchLeadData()
-    }, [APIData]);
+    }, [searchBox, locationkey, onType]);
 
 
 

@@ -70,7 +70,7 @@ const StatCards = (showData) => {
       .then((response) => {
         setTotalPipeline(response.data.data);
       });
-  }, [totalPipeline]);
+  }, [showData]);
 
   useEffect(() => {
     axios.post(BASE_URL + `/api/getDashboardTotalLeadData`, {
@@ -82,7 +82,7 @@ const StatCards = (showData) => {
       .then((response) => {
         setTotalLead(response.data.data);
       });
-  }, [totalLead]);
+  }, [showData]);
 
   useEffect(() => {
     axios.post(BASE_URL + `/api/getDashboardOrderGainData`, {
@@ -94,7 +94,7 @@ const StatCards = (showData) => {
       .then((response) => {
         setTotalGain(response.data.data);
       });
-  }, [totalGain]);
+  }, [showData]);
   useEffect(() => {
     axios.post(BASE_URL + `/api/getDashboardOrderLossData`, {
       opType: showData.showData.opType,
@@ -105,7 +105,7 @@ const StatCards = (showData) => {
       .then((response) => {
         setTotalLoss(response.data.data);
       });
-  }, [totalLoss]);
+  }, [showData]);
 
 
   return (

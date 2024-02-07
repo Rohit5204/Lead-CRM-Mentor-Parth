@@ -10,9 +10,16 @@ import { BASE_URL } from 'app/utils/constant';
 const EditEmployee = () => {
     const location = useLocation();
     // console.log(location.state);
+    const roleName = window.localStorage.getItem('roleName');
     const navigate = useNavigate();
     const changePage = () => {
-        navigate('/employees/manageEmployee');
+        if (roleName == "Admin" || "Branch Manager") {
+            navigate('/employees/manageAllEmployee');
+        }
+        else {
+            navigate('/employees/manageEmployee');
+        }
+
     };
     const [id, setId] = useState(location.state.userId);
     const [firstName, setfirstName] = useState(location.state.firstName);

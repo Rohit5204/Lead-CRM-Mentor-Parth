@@ -37,7 +37,7 @@ const StatusWiseCard = (showData) => {
                 console.log(response.data.data)
                 setStatusWiseData(response.data.data);
             });
-    }, [statusWiseData]);
+    }, [showData]);
 
     const iconOption = [
         <SendIcon style={{ fontSize: "65px" }}></SendIcon>,

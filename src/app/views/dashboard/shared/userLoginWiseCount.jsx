@@ -43,7 +43,7 @@ const UserWiseCount = () => {
     }
     useEffect(() => {
         getDashboardDataFetch()
-    }, [userWiseCount]);
+    }, []);
 
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>

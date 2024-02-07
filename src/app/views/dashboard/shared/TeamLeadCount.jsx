@@ -43,7 +43,7 @@ const TLWiseCount = () => {
     }
     useEffect(() => {
         getDashboardDataFetch()
-    }, [TLWiseCount]);
+    }, []);
 
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>

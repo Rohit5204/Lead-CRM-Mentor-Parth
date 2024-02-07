@@ -19,7 +19,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditEmail = ({ theEditEmail, handleDialog }) => {
+const EditEmail = ({ theEditEmail, handleDialog, handleRefresh }) => {
     // console.log(theEditEmail)
     const editor = useRef(null);
     const [id, setId] = useState(theEditEmail.id);
@@ -41,7 +41,7 @@ const EditEmail = ({ theEditEmail, handleDialog }) => {
             { headers: headers }).then((response) => {
                 setEmailData(response.data.data);
             });
-    }, [emailData]);
+    }, []);
 
     const [categoryData, setCategoryData] = useState([])
     const [idData, setIdData] = useState([]);
@@ -74,6 +74,7 @@ const EditEmail = ({ theEditEmail, handleDialog }) => {
         console.log({ AddEmail })
         await axios.post(BASE_URL + '/api/emailTemplateUpsert', AddEmail,
             { headers: headers });
+        handleRefresh()
         handleDialog()
 
     }

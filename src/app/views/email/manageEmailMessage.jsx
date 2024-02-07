@@ -61,6 +61,11 @@ const ManageEmailMessage = () => {
     const [emailSubject, setEmailSubject] = useState('');
 
     const [emailData, setEmailData] = useState([]);
+
+    const [categoryData, setCategoryData] = useState([])
+    const [idData, setIdData] = useState([]);
+    const [myOptions, setMyOptions] = useState(null);
+
     const items = localStorage.getItem('accessToken');
     const roleCode = localStorage.getItem('roleCode');
     const userId = localStorage.getItem('userId');
@@ -70,18 +75,14 @@ const ManageEmailMessage = () => {
         "userId": userId
     }
     //get method
-    useEffect(() => {
+    const getEmailData = () => {
         axios.get(BASE_URL + `/api/getEmailTemplate?_id=0`,
             { headers: headers }).then((response) => {
                 setEmailData(response.data.data);
             });
-    }, [emailData]);
+    }
 
-    const [categoryData, setCategoryData] = useState([])
-    const [idData, setIdData] = useState([]);
-    const [myOptions, setMyOptions] = useState(null);
-
-    useEffect(() => {
+    const getEmailCategoryMaster = () => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers }).then((res) => {
                 for (var i = 0; i < res.data.status.length; i++) {
@@ -90,6 +91,11 @@ const ManageEmailMessage = () => {
                     ])
                 }
             });
+    }
+
+    useEffect(() => {
+        getEmailData()
+        getEmailCategoryMaster()
     }, []);
     const postData = async () => {
         var catdataid
@@ -105,9 +111,10 @@ const ManageEmailMessage = () => {
             emailBody: content,
             recordStatus: 1
         }
-        console.log({ AddEmail })
+        // console.log({ AddEmail })
         await axios.post(BASE_URL + '/api/emailTemplateUpsert', AddEmail,
             { headers: headers });
+        getEmailData();
 
     }
     const handleSubmit = (e) => {
@@ -278,7 +285,7 @@ const ManageEmailMessage = () => {
                     <Modal.Title>Update Email Template</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditEmail theEditEmail={obj1} handleDialog={handleClose1} />
+                    <EditEmail theEditEmail={obj1} handleDialog={handleClose1} handleRefresh={getEmailData} />
                 </Modal.Body>
             </Modal>
         </Container>

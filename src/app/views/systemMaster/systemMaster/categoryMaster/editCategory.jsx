@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditCategory = ({ theEditCategory, handleDialog }) => {
+const EditCategory = ({ theEditCategory, handleDialog, handleRefresh }) => {
     console.log(theEditCategory)
     const [id, setId] = useState(theEditCategory.id);
     const [masterName, setMasterName] = useState('Email');
@@ -46,6 +46,7 @@ const EditCategory = ({ theEditCategory, handleDialog }) => {
         axios.post(BASE_URL + `/api/mastersUpsert`, UpdatePlatform, { headers: headers })
             .then(() => useEffect);
         setInputText('');
+        handleRefresh();
         handleDialog()
     };
     const handleSubmit = (e) => {

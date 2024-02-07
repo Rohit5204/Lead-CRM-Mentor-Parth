@@ -80,7 +80,7 @@ const ManageReward = () => {
 
     useEffect(() => {
         getRewardData()
-    }, [APIData]);
+    }, []);
     const roleName = window.localStorage.getItem('roleName');
     return (
         <Container>
@@ -189,7 +189,7 @@ const ManageReward = () => {
                     </IconButton>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddReward handleDialog={handleCloseForm}></AddReward>
+                    <AddReward handleDialog={handleCloseForm} handleRefresh={getRewardData}></AddReward>
                 </Modal.Body>
             </Modal>
             <Modal

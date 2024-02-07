@@ -76,7 +76,7 @@ const TopEmpDetail = (showData) => {
             .then((response) => {
                 setTotalGain(response.data.data);
             });
-    }, [totalGain]);
+    }, [showData]);
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>
             {roleCode == "EMP" ? (<>

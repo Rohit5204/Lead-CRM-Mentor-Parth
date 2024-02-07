@@ -66,7 +66,7 @@ const ManageEmployee = () => {
       { headers: headers }).then((response) => {
         setUserData(response.data.status);
       });
-  }, [userData]);
+  }, []);
 
   return (
     <Container>

@@ -48,15 +48,17 @@ const DurationMaster = () => {
         "roleCode": roleCode,
         "userId": userId
     }
-
-    useEffect(() => {
+    const getDurationMaster = () => {
         axios
             .get(BASE_URL + `/api/getMasterData?masterName=durationmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIDataDuration(response.data.status);
             });
-    }, [APIDataDuration]);
+    }
+    useEffect(() => {
+        getDurationMaster()
+    }, []);
 
     const postData = () => {
         console.log({
@@ -72,7 +74,7 @@ const DurationMaster = () => {
                 addedBy: 1,
                 updatedBy: 1,
             }, { headers: headers })
-            .then(() => useEffect);
+            .then(() => getDurationMaster());
     };
 
     const deleteData = (e, i) => {
@@ -85,6 +87,7 @@ const DurationMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getDurationMaster()
     };
 
     const handleClose = () => setShow(false);
@@ -242,7 +245,7 @@ const DurationMaster = () => {
                     <Modal.Title>Update Duration Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <DurationStatus theDurationStatus={obj1} handleDialog={handleClose} />
+                    <DurationStatus theDurationStatus={obj1} handleDialog={handleClose} handleRefresh={getDurationMaster} />
                 </Modal.Body>
 
             </Modal>

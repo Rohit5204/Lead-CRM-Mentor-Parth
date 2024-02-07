@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
   margin: '410px',
 }));
-const EditPlatform = ({ theEditPlatform, handleDialog }) => {
+const EditPlatform = ({ theEditPlatform, handleDialog, handleRefresh }) => {
   console.log(theEditPlatform)
   const [id, setId] = useState(theEditPlatform.id);
   const [masterName, setMasterName] = useState('Platform');
@@ -52,6 +52,7 @@ const EditPlatform = ({ theEditPlatform, handleDialog }) => {
     setInputText('');
     setplatformIcon('');
     setplatformColor('');
+    handleRefresh();
     handleDialog();
   };
   const changePage = () => {

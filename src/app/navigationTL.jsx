@@ -25,7 +25,7 @@ export const navigationTL = [
         children: [
             { name: 'View Attendance', iconText: 'ML', path: '/manageAttandance' },
             // { name: 'Add Lead', iconText: 'SI', path: '/leads/addLeads' },
-            { name: 'Leave Request', iconText: 'AL', path: '/leads/assignLeads' },
+            { name: 'Leave Request', iconText: 'AL', path: '/manageLeave' },
         ],
     },
 

@@ -48,15 +48,17 @@ const LabelMaster = () => {
         "roleCode": roleCode,
         "userId": userId
     }
-
-    useEffect(() => {
+    const getLableMaster = () => {
         axios
             .get(BASE_URL + `/api/getMasterData?masterName=labelmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.status);
             });
-    }, [APIData]);
+    }
+    useEffect(() => {
+        getLableMaster()
+    }, []);
 
     const postData = () => {
         console.log({
@@ -72,7 +74,7 @@ const LabelMaster = () => {
                 addedBy: 1,
                 updatedBy: 1,
             }, { headers: headers })
-            .then(() => useEffect);
+            .then(() => getLableMaster());
     };
 
     const deleteData = (e, i) => {
@@ -85,6 +87,7 @@ const LabelMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getLableMaster()
     };
 
     const handleClose = () => setShow(false);
@@ -277,7 +280,7 @@ const LabelMaster = () => {
                     <Modal.Title>Update Label Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditLabel theEditLabel={obj1} handleDialog={handleClose} />
+                    <EditLabel theEditLabel={obj1} handleDialog={handleClose} handleRefresh={getLableMaster} />
                 </Modal.Body>
 
             </Modal>

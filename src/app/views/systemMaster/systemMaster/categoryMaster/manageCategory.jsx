@@ -48,14 +48,16 @@ const CategoryMaster = () => {
         "roleCode": roleCode,
         "userId": userId
     }
-
-    useEffect(() => {
+    const getCategoryMaster = () => {
         axios.get(BASE_URL + `/api/getMasterData?masterName=emailcategorymaster`,
             { headers: headers })
             .then((response) => {
                 setBranchData(response.data.status);
             });
-    }, [BranchData]);
+    }
+    useEffect(() => {
+        getCategoryMaster()
+    }, []);
 
     const postData = () => {
         console.log({
@@ -71,7 +73,7 @@ const CategoryMaster = () => {
                 addedBy: 1,
                 updatedBy: 1,
             }, { headers: headers })
-            .then(() => useEffect);
+            .then(() => getCategoryMaster());
     };
 
     const deleteData = (e, i) => {
@@ -84,6 +86,7 @@ const CategoryMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getCategoryMaster();
     };
 
     const handleClose = () => setShow(false);
@@ -238,7 +241,7 @@ const CategoryMaster = () => {
                     <Modal.Title>Update Category Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditCategory theEditCategory={obj1} handleDialog={handleClose} />
+                    <EditCategory theEditCategory={obj1} handleDialog={handleClose} handleRefresh={getCategoryMaster} />
                 </Modal.Body>
             </Modal>
         </div>

@@ -193,18 +193,15 @@ const AssignLead = () => {
         setAPIData(response.data.data);
       });
   }
-  useEffect(() => {
-    getFetchLeadData()
-  }, [APIData])
 
-  useEffect(() => {
+  const getUserMaster = () => {
     axios.get(BASE_URL + `/api/getMasterData?masterName=usermaster`, { headers: headers }).then((res) => {
       for (var i = 0; i < res.data.status.length; i++) {
         setAssignTo(current => [...current, res.data.status[i].firstName + " " + res.data.status[i].lastName]);
         setId1(current => [...current, res.data.status[i].userId, res.data.status[i].firstName + " " + res.data.status[i].lastName])
       }
     });
-  }, []);
+  }
 
   const blankForm = () => {
     setIdFrom('');
@@ -272,8 +269,10 @@ const AssignLead = () => {
   }
 
   useEffect(() => {
+    getUserMaster()
+    getFetchLeadData()
     getMasterCount()
-  }, []);
+  }, [searchBox, locationkey, onType,]);
 
   return (
     <Container>

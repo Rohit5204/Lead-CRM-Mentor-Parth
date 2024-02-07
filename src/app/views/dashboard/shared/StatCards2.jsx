@@ -56,7 +56,7 @@ const StatCards2 = (showData) => {
   }
   useEffect(() => {
     getDashboardDataFetch()
-  }, [APIData123]);
+  }, [showData]);
 
 
   // const CancelToken = axios.CancelToken;

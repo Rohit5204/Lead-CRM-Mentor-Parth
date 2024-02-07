@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from 'app/utils/constant';
 
 
-const AddReward = ({ handleDialog }) => {
+const AddReward = ({ handleDialog, handleRefresh }) => {
 
     const today = new Date();
     const numberOfDaysToAdd = 0;
@@ -41,6 +41,7 @@ const AddReward = ({ handleDialog }) => {
         }
         axios.post(BASE_URL + `/api/saveReward`, data,
             { headers: headers });
+        handleRefresh();
         handleDialog();
     }
 

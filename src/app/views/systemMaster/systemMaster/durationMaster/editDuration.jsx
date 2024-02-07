@@ -17,7 +17,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const DurationStatus = ({ theDurationStatus, handleDialog }) => {
+const DurationStatus = ({ theDurationStatus, handleDialog, handleRefresh }) => {
     console.log(theDurationStatus)
     const [id, setId] = useState(theDurationStatus.id);
     const [masterName, setMasterName] = useState('Duration');
@@ -45,6 +45,7 @@ const DurationStatus = ({ theDurationStatus, handleDialog }) => {
         axios.post(BASE_URL + `/api/mastersUpsert`, UpdatePlatform, { headers: headers })
             .then(() => useEffect);
         setInputText('');
+        handleRefresh();
         handleDialog();
     };
     const handleSubmit = (e) => {

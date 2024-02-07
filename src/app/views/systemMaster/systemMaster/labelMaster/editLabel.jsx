@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditLabel = ({ theEditLabel, handleDialog }) => {
+const EditLabel = ({ theEditLabel, handleDialog, handleRefresh }) => {
     console.log(theEditLabel)
     const [id, setId] = useState(theEditLabel.id);
     const [masterName, setMasterName] = useState('Label');
@@ -46,6 +46,7 @@ const EditLabel = ({ theEditLabel, handleDialog }) => {
         axios.post(BASE_URL + `/api/mastersUpsert`, UpdatePlatform, { headers: headers })
             .then(() => useEffect);
         setInputText('');
+        handleRefresh();
         handleDialog()
     };
     const handleSubmit = (e) => {

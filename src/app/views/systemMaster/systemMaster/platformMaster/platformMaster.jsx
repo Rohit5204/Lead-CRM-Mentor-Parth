@@ -107,14 +107,17 @@ const PlatformMaster = () => {
         addedBy: 1,
         updatedBy: 1,
     }
-    useEffect(() => {
+    const getPlatformMaster = () => {
         axios
             .get(BASE_URL + `/api/getMasterData?masterName=platformmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.status);
             });
-    }, [APIData]);
+    }
+    useEffect(() => {
+        getPlatformMaster()
+    }, []);
 
     const postData = () => {
         console.log({
@@ -124,7 +127,7 @@ const PlatformMaster = () => {
         axios
             .post(BASE_URL + `/api/mastersUpsert`, PlatformPayload,
                 { headers: headers })
-            .then(() => useEffect);
+            .then(() => getPlatformMaster());
     };
 
     const deleteData = (e, i) => {
@@ -137,6 +140,7 @@ const PlatformMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getPlatformMaster()
     };
 
     const handleClose = () => setShow(false);
@@ -343,7 +347,7 @@ const PlatformMaster = () => {
                     <Modal.Title>Update Platform Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditPlatform theEditPlatform={obj1} handleDialog={handleClose} />
+                    <EditPlatform theEditPlatform={obj1} handleDialog={handleClose} handleRefresh={getPlatformMaster} />
                 </Modal.Body>
             </Modal>
 

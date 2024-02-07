@@ -47,15 +47,17 @@ const StatusMaster = () => {
         "roleCode": roleCode,
         "userId": userId
     }
-
-    useEffect(() => {
+    const getStatusMaster = () => {
         axios
             .get(BASE_URL + `/api/getMasterData?masterName=statusmaster`,
                 { headers: headers })
             .then((response) => {
                 setAPIData(response.data.status);
             });
-    }, [APIData]);
+    }
+    useEffect(() => {
+        getStatusMaster()
+    }, []);
 
     const postData = () => {
         console.log({
@@ -71,7 +73,7 @@ const StatusMaster = () => {
                 addedBy: 1,
                 updatedBy: 1,
             }, { headers: headers })
-            .then(() => useEffect);
+            .then(() => getStatusMaster());
     };
 
     const deleteData = (e, i) => {
@@ -84,6 +86,7 @@ const StatusMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getStatusMaster()
     };
 
     const handleClose = () => setShow(false);
@@ -275,7 +278,7 @@ const StatusMaster = () => {
                     <Modal.Title>Update Status Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditStatus theEditStatus={obj1} handleDialog={handleClose} />
+                    <EditStatus theEditStatus={obj1} handleDialog={handleClose} handleRefresh={getStatusMaster} />
                 </Modal.Body>
 
             </Modal>

@@ -48,8 +48,7 @@ const BranchMaster = () => {
         "roleCode": roleCode,
         "userId": userId
     }
-
-    useEffect(() => {
+    const getBranchMaster = () => {
         axios
             .get(BASE_URL + `/api/getMasterData?masterName=branchmaster`,
                 { headers: headers })
@@ -57,7 +56,10 @@ const BranchMaster = () => {
                 console.log(response.data.status)
                 setBranchData(response.data.status);
             });
-    }, [BranchData]);
+    }
+    useEffect(() => {
+        getBranchMaster();
+    }, []);
 
     const postData = () => {
         console.log({
@@ -73,7 +75,7 @@ const BranchMaster = () => {
                 addedBy: 1,
                 updatedBy: 1,
             }, { headers: headers })
-            .then(() => useEffect);
+            .then(() => getBranchMaster());
     };
 
     const deleteData = (e, i) => {
@@ -86,6 +88,7 @@ const BranchMaster = () => {
             addedBy: 1,
             updatedBy: 1,
         }, { headers: headers });
+        getBranchMaster();
     };
 
     const handleClose = () => setShow(false);
@@ -240,7 +243,7 @@ const BranchMaster = () => {
                     <Modal.Title>Update Branch Master</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditBranch theEditBranch={obj1} handleDialog={handleClose} />
+                    <EditBranch theEditBranch={obj1} handleDialog={handleClose} handleRefresh={getBranchMaster} />
                 </Modal.Body>
             </Modal>
         </div>

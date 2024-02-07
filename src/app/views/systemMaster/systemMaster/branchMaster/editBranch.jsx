@@ -18,7 +18,7 @@ const Container = styled('div')(({ theme }) => ({
 const Div = styled('div')(() => ({
     margin: '410px',
 }));
-const EditBranch = ({ theEditBranch, handleDialog }) => {
+const EditBranch = ({ theEditBranch, handleDialog, handleRefresh }) => {
     console.log(theEditBranch)
     const [id, setId] = useState(theEditBranch.branchId);
     const [masterName, setMasterName] = useState('Branch');
@@ -46,6 +46,7 @@ const EditBranch = ({ theEditBranch, handleDialog }) => {
         axios.post(BASE_URL + `/api/mastersUpsert`, UpdatePlatform, { headers: headers })
             .then(() => useEffect);
         setInputText('');
+        handleRefresh();
         handleDialog()
     };
     const handleSubmit = (e) => {

@@ -65,7 +65,7 @@ const LabelWiseCount = (showData) => {
     }
     useEffect(() => {
         getDashboardDataFetch()
-    }, [labelWiseData]);
+    }, [showData]);
 
     return (
         <Grid container spacing={4} sx={{ mb: '24px' }}>

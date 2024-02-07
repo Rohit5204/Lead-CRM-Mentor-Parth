@@ -54,10 +54,10 @@ const Renewal = () => {
     //get method
     useEffect(() => {
         axios.post(BASE_URL + `/api/getRenewalInstalments`,
-            { "userId": 1 }, { headers: headers }).then((response) => {
+            { "userId": parseInt(userId) }, { headers: headers }).then((response) => {
                 setRenewData(response.data.data);
             });
-    }, [renewData]);
+    }, []);
 
     return (
         <Container>
