@@ -145,7 +145,7 @@ const EditUser = () => {
       zipCode: zipCode,
       countryName: countryName,
       intrestedIn: myOptions1,
-      sourceId: 1,
+      sourceId: platformid,
       assignId: assignedid,
       label: labelid,
       alternateMobile: alternateMobile,

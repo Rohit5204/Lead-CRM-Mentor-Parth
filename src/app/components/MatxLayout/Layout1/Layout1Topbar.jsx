@@ -120,6 +120,9 @@ const Layout1Topbar = () => {
 
         <Box display="flex" alignItems="center">
           {/* <MatxSearchBox /> */}
+          <a href="http://www.itechaccount.com" style={{ fontWeight: 'bold', color: 'black' }}>
+            <u>Click to Access Attendance Portal</u>
+          </a>
 
           {/* <NotificationProvider> */}
           <NotificationBar />

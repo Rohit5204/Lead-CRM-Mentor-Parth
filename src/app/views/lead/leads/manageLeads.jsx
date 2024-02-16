@@ -416,7 +416,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -433,7 +433,7 @@ const ManageLead = () => {
                           </IconButton></TableCell>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
@@ -507,7 +507,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Remark</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -524,7 +524,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
@@ -582,7 +582,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -599,7 +599,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
@@ -666,7 +666,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -683,7 +683,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
@@ -741,7 +741,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -758,7 +758,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
@@ -835,7 +835,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -852,7 +852,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
@@ -924,7 +924,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Total Amount</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -941,7 +941,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.expectedAmount}</TableCell>
                           <TableCell align="center">
@@ -1014,7 +1014,7 @@ const ManageLead = () => {
                     <TableCell align="center">Share</TableCell>
                     <TableCell align="center">Lead Id</TableCell>
                     <TableCell align="center">Lead Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Assigned Employee</TableCell>
                     <TableCell align="center">Mobile Number</TableCell>
                     <TableCell align="center">Remarks</TableCell>
                     <TableCell align="center">Status</TableCell>
@@ -1031,7 +1031,7 @@ const ManageLead = () => {
                           </IconButton>
                           <TableCell align="center">{subscriber.leadId}</TableCell>
                           <TableCell align="center">{subscriber.name}</TableCell>
-                          <TableCell align="center">{subscriber.emailId}</TableCell>
+                          <TableCell align="center">{subscriber.assignedUser}</TableCell>
                           <TableCell align="center">{subscriber.mobileNo}</TableCell>
                           <TableCell align="center">{subscriber.remarks}</TableCell>
                           <TableCell align="center">
